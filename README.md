@@ -4,6 +4,7 @@
 ![duck](https://i.gifer.com/embedded/download/XOsX.gif)
 
 ## Specs:
+```
 - Đọc truyện
     - Tìm kiếm
     - Comment
@@ -45,7 +46,7 @@
         - Tạo thăm dò
         - Tạo thông báo
         - Biểu đồ lượng người truy cập/tương tác/ lượt xem
-        
+```      
 ## Requirements
 
 ## Environments
@@ -59,3 +60,6 @@
 - Socketio
 - Express
 - Axios
+
+
+![](https://i.gifer.com/XVo6.gif)
