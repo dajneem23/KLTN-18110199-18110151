@@ -1,6 +1,8 @@
 # KLTN-18110199-18110151
 `Khóa luận tốt nghiệp 18110199-18110151`
 
+![duck](https://i.gifer.com/embedded/download/XOsX.gif)
+
 ## Specs:
 - Đọc truyện
     - Tìm kiếm
