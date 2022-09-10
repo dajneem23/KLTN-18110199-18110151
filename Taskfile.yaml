@@ -1,0 +1,81 @@
+version: '3'
+
+env:
+  BACKUP_DIR: .
+
+vars:
+  DC_PROJECT: 1fox-wikiblock
+  ENV_FILE: docker.env
+
+dotenv: ['docker.env']
+
+tasks:
+  docker_up:
+    desc: Initialize Docker Compose services for development.
+    cmds:
+      - docker-compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml up --remove-orphans -d
+
+  ps:
+    desc: View Docker Compose service processes.
+    cmds:
+      - docker-compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml ps
+
+  exec_db:
+    desc: Login into database shell
+    cmds:
+      - docker-compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml exec postgres bash
+
+  exec_db_as_root:
+    desc: Login into database shell
+    cmds:
+      - docker-compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml exec -u root postgres bash
+
+  exec_db_shell:
+    desc: Login into database shell
+    cmds:
+      - docker-compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml exec postgres psql -U ${DB_USERNAME} ${DB_NAME}
+
+  backup_db:
+    desc: Backup database
+    cmds:
+      - docker-compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml exec -u root postgres pg_dump --inserts --attribute-inserts -U ${DB_USERNAME} ${DB_NAME} -f /var/backups/${DB_NAME}.sql
+      - docker compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml cp postgres:/var/backups/${DB_NAME}.sql ${BACKUP_DIR}/${DB_NAME}.sql
+      - echo "Done!"
+
+  restore_db:
+    desc: Restore database
+    cmds:
+      - docker compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml cp ${BACKUP_DIR}/${DB_NAME}.sql postgres:/var/backups/${DB_NAME}.sql
+      - docker-compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml exec -u root postgres psql -U ${DB_USERNAME} ${DB_NAME} -f /var/backups/${DB_NAME}.sql
+      - echo "Done!"
+
+  docker_stop:
+    desc: Stop all Docker Compose services.
+    cmds:
+      - docker-compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml stop
+
+  docker_down:
+    desc: Destroy all Docker Compose services.
+    cmds:
+      - docker-compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml down -v
+
+  docker_recreate:
+    desc: Recreate all Docker Compose services a.
+    cmds:
+      - docker-compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml down -v && docker-compose -p {{.DC_PROJECT}} --env-file {{.ENV_FILE}} -f docker-compose.dev.yaml up --remove-orphans -d
+
+  db_create:
+    desc: Recreate all Docker Compose services a.
+    cmds:
+      - yarn migration:generate && yarn migration:run
+
+  server:
+    desc: Run development server
+    cmds:
+      - cd server && yarn dev
+      - echo "Done!"
+  client:
+    desc: Run development client
+    cmds:
+      - cd client && yarn serve
+      - echo "Done!"

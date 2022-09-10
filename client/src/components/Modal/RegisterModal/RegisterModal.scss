@@ -1,0 +1,78 @@
+.registerModal {
+	&__content {
+		border: none;
+		border-radius: 32px;
+		box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
+		width: 542px;
+		background-color: #ffffff;
+	}
+	&__body {
+		height: 100%;
+		width: 542px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 50px 0;
+		font-family: NotoSansJPRegular;
+		position: relative;
+	}
+	&__title {
+		font-size: 16px;
+		color: #4d4d4d;
+		font-weight: 400;
+		margin-bottom: 30px;
+	}
+	&__contentBlock {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		row-gap: 10px;
+		margin-bottom: 40px;
+	}
+	&__textBlock {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+	&__url {
+		font-size: 14px;
+		color: #4d4d4d;
+		font-weight: 400;
+	}
+	&__copyBtn {
+		width: 185px;
+		height: 27px;
+		background-color: #808080;
+		color: #ffff;
+		border-radius: 13.5px;
+		font-size: 14px;
+		font-family: NotoSansJPRegular;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+	&__closeBtn {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		right: 20px;
+		top: 20px;
+		cursor: pointer;
+	}
+	&__closeIcon {
+		content: url('../../../assets/Icon/CloseBtn.svg');
+		width: 10px;
+		height: 10px;
+		display: block;
+	}
+}
+p {
+	color: #989898;
+	font-size: 13px;
+	margin: 0;
+}

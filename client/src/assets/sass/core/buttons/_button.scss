@@ -1,0 +1,154 @@
+//
+// Icon buttons
+//
+
+// General styles
+
+.btn {
+	position: relative;
+	text-transform: $btn-text-transform;
+	transition: $transition-base;
+	letter-spacing: $btn-letter-spacing;
+	font-size: $input-btn-font-size;
+	will-change: transform;
+
+	// &:hover {
+	// 	@include box-shadow($btn-hover-box-shadow);
+	// 	transform: translateY($btn-hover-translate-y);
+	// }
+
+	&:not(:last-child) {
+		margin-right: 0.5rem;
+	}
+
+	// Icons
+
+	i:not(:first-child),
+	svg:not(:first-child) {
+		margin-left: 0.5rem;
+	}
+
+	i:not(:last-child),
+	svg:not(:last-child) {
+		margin-right: 0.5rem;
+	}
+}
+
+// Remove translateY and margin animation when btn is included in a btn-group or input-group
+
+.btn-group,
+.input-group {
+	.btn {
+		margin-right: 0;
+		transform: translateY(0);
+	}
+}
+
+// Size variations
+
+.btn-sm {
+	font-size: $input-btn-font-size-sm;
+}
+
+.btn-lg {
+	font-size: $input-btn-font-size-lg;
+}
+
+// Some quick fixes (to revise)
+
+// Fixes
+[class*='btn-outline-'] {
+	border-width: 1px;
+}
+
+.btn-outline-secondary {
+	color: darken(theme-color('secondary'), 50%);
+}
+
+.btn-inner--icon {
+	i:not(.fas):not(.fab) {
+		position: relative;
+		top: 2px;
+	}
+}
+
+.btn-link {
+	font-weight: $btn-font-weight;
+	box-shadow: none;
+
+	// &:hover {
+	//     box-shadow: none;
+	//     transform: none;
+	// }
+}
+
+.btn-neutral {
+	color: theme-color('primary');
+}
+
+.customButton {
+	box-shadow: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 4px 0px;
+	font-family: NotoSansJPBold;
+	text-decoration: none;
+	color: white;
+	&__direct {
+		background-color: #38497c;
+		border: 2px solid #38497c;
+		width: 114px;
+		font-size: 12px;
+		border-radius: 20px;
+	}
+	&__edit {
+		width: 74px;
+		border: 2px solid #969696;
+		color: #969696;
+		background-color: #fff;
+		font-size: 12px;
+		border-radius: 20px;
+	}
+	&__submit {
+		width: 156px;
+		border-radius: 13.5px;
+		border: 2px solid #cba76e;
+		font-size: 14px;
+		background-color: #cba76e;
+	}
+	&__delete {
+		width: 156px;
+		border-radius: 13.5px;
+		border: 2px solid #808080;
+		font-size: 14px;
+		background-color: #808080;
+	}
+	&__search {
+		width: 156px;
+		border-radius: 13.5px;
+		border: 2px solid #38497c;
+		font-size: 14px;
+		background-color: #38497c;
+	}
+}
+
+// .custom-button {
+// 	border: none !important;
+// 	width: 156px !important;
+// 	height: 27px !important;
+// 	border-radius: 13.5px !important;
+// 	font-weight: unset !important;
+// 	border: none !important;
+// 	color: white;
+// 	font-family: NotoSansJPBold !important;
+// 	font-size: 14px;
+// 	&.--submit {
+// 	}
+// 	&.--delete {
+// 		background-color: #808080;
+// 	}
+// 	&.--search {
+// 		background-color: #38497c;
+// 	}
+// }

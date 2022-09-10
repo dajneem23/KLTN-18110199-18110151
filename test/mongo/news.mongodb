@@ -1,0 +1,90 @@
+// MongoDB Playground
+// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// Make sure you are connected to enable completions and to be able to run a playground.
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// Select the database to use.
+use('wikiblock');
+
+
+// Insert a few documents into the sales collection.
+db.news.insertMany(
+  [  {
+    "_id": "630de1451d1096097587dba2",
+    "slug": "the-landmark-2-millionth-ens-domain-has-been-minted-as-it-retains-a-top-10-spot-on-opensea's-secondary-market-1661854021562",
+    "trans": [
+      {
+        "title": "Miền ENS thứ 2 triệu mang tính bước ngoặt đã được đúc kết khi nó vẫn giữ được vị trí top 10 trên thị trường thứ cấp của OpenSea",
+        "summary": "Ngày Ethereum hợp nhất với Proof-of-sake có thể là thời điểm quan trọng nhất đối với tương lai của Internet",
+        "content": "Sàn giao dịch tiền điện tử hàng đầu, Coinbase đã ra mắt Viện Coinbase mới để thúc đẩy cuộc tranh luận về chính sách xung quanh tiền điện tử và tương lai của Web3. Viện tập trung vào việc cung cấp các nghiên cứu, phân tích và hiểu biết sâu sắc về không gian Web3. tài chính. Nó tập trung xung quanh bốn trụ cột chính bao gồm: tiến hành và xuất bản nghiên cứu, tổ chức các cuộc thảo luận hợp tác với các chuyên gia, thúc đẩy quan hệ đối tác với các tổ chức và nâng cao kiến thức công khai về tiền điện tử và Web3. ",
+        "headings": [
+          "Báo cáo nghiên cứu mới"
+        ],
+        "lang": "vi",
+        "slug": "mien-ens-thu-2-trieu-mang-tinh-buoc-ngoat-dja-djuoc-djuc-ket-khi-no-van-giu-djuoc-vi-tri-top-10-tren-thi-truong-thu-cap-cua-opensea-1661854021562"
+      }
+    ],
+    "categories": [],
+    "coin_tags": [],
+    "company_tags": [],
+    "content": "Leading cryptocurrency exchange, Coinbase has launched a new Coinbase Institute to advance policy debate around crypto and the future of Web3. The institute is focused on providing research, analysis, and insights about the Web3 space.According to the official Coinbase website, the institute is designed to bring together leaders across a range of subjects to “fuel progress on decentralization, web3, and the future of finance”. It is centered around four key pillars which include: conducting and publishing research, hosting collaborative discussions with experts, foraging partnerships with institutions, and advancing public knowledge of crypto and Web3. ",
+    "created_at": "2022-08-30T10:06:48.148Z",
+    "created_by": "admin",
+    "deleted": false,
+    "headings": [
+      "New research reports"
+    ],
+    "keywords": [],
+    "number_relate_article": 2,
+    "photos": [
+      "https://cryptoslate.com/wp-content/themes/cryptoslate-2020/imgresize/timthumb.php?src=https://cryptoslate.com/wp-content/uploads/2022/05/coinbase-crypto.jpg&w=600&h=315&q=75"
+    ],
+    "product_tags": [],
+    "source": "https://cryptoslate.com/using-share-of-trade-volume-sotv-to-assess-dexs/",
+    "stars": 0,
+    "summary": "The day Ethereum merges to proof-of-sake may be the most important moment for the future of the internet",
+    "title": "The landmark 2 millionth ENS domain has been minted as it retains a top 10 spot on OpenSea's secondary market",
+    "updated_at": "2022-08-30T10:06:48.148Z",
+    "views": 0
+  },
+  {
+    "_id": "630de5331d1096097587df18",
+    "slug": "limit-break's-digidaigaku-nft-collection-rises-by-over-100percent-as-firm-raises-dollar200m",
+    "trans": [
+      {
+        "title": "Bộ sưu tập NFT của Limit Break’s DigiDaigaku tăng hơn 100% khi công ty huy động được 200 triệu đô la",
+        "summary": "Ngày Ethereum hợp nhất với Proof-of-sake có thể là thời điểm quan trọng nhất đối với tương lai của Internet",
+        "content": "Sàn giao dịch tiền điện tử hàng đầu, Coinbase đã ra mắt Viện Coinbase mới để thúc đẩy cuộc tranh luận về chính sách xung quanh tiền điện tử và tương lai của Web3. Viện tập trung vào việc cung cấp các nghiên cứu, phân tích và hiểu biết sâu sắc về không gian Web3. tài chính. Nó tập trung xung quanh bốn trụ cột chính bao gồm: tiến hành và xuất bản nghiên cứu, tổ chức các cuộc thảo luận hợp tác với các chuyên gia, thúc đẩy quan hệ đối tác với các tổ chức và nâng cao kiến thức công khai về tiền điện tử và Web3. ",
+        "headings": [
+          "Báo cáo nghiên cứu mới"
+        ],
+        "lang": "vi",
+        "slug": "bo-suu-tap-nft-cua-limit-break's-digidaigaku-tang-hon-100percent-khi-cong-ty-huy-djong-djuoc-200-trieu-djo-la"
+      }
+    ],
+    "categories": [],
+    "coin_tags": [],
+    "company_tags": [],
+    "content": "Leading cryptocurrency exchange, Coinbase has launched a new Coinbase Institute to advance policy debate around crypto and the future of Web3. The institute is focused on providing research, analysis, and insights about the Web3 space.According to the official Coinbase website, the institute is designed to bring together leaders across a range of subjects to “fuel progress on decentralization, web3, and the future of finance”. It is centered around four key pillars which include: conducting and publishing research, hosting collaborative discussions with experts, foraging partnerships with institutions, and advancing public knowledge of crypto and Web3. ",
+    "created_at": "2022-08-30T10:10:11.125Z",
+    "created_by": "admin",
+    "deleted": false,
+    "headings": [
+      "New research reports"
+    ],
+    "keywords": [],
+    "number_relate_article": 2,
+    "photos": [
+      "https://cryptoslate.com/wp-content/themes/cryptoslate-2020/imgresize/timthumb.php?src=https://cryptoslate.com/wp-content/uploads/2022/05/coinbase-crypto.jpg&w=600&h=315&q=75"
+    ],
+    "product_tags": [],
+    "source": "https://cryptoslate.com/using-share-of-trade-volume-sotv-to-assess-dexs/",
+    "stars": 0,
+    "summary": "The day Ethereum merges to proof-of-sake may be the most important moment for the future of the internet",
+    "title": "Limit Break’s DigiDaigaku NFT collection rises by over 100% as firm raises $200m",
+    "updated_at": "2022-08-30T10:10:11.125Z",
+    "views": 0
+  }]
+)
+
+// Run a find command to view items sold on April 4th, 2014.

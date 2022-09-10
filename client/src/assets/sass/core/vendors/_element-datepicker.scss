@@ -1,0 +1,48 @@
+//For Comode project
+.el-input--prefix {
+	width: 100% !important;
+	.el-input__inner {
+		background-color: #f7f8f8 !important;
+		border: 0px !important;
+		border-radius: 7px !important;
+		font-size: 11px !important;
+		font-family: NotoSansJPRegular;
+		display: flex !important;
+		align-items: center !important;
+		height: 32px !important;
+		padding-bottom: 3px !important;
+		padding-left: 40px !important;
+	}
+}
+
+.el-range-editor.el-input__inner {
+	width: 260px !important;
+	background-color: #f7f8f8 !important;
+	border: 0px !important;
+	border-radius: 7px !important;
+	display: flex !important;
+	align-items: center !important;
+	height: 32px !important;
+}
+
+.el-date-editor {
+	.el-range-separator {
+		line-height: 25px !important;
+		padding: 0px !important;
+	}
+
+	.el-range-input {
+		background-color: #f7f8f8 !important;
+		font-size: 11px !important;
+		font-family: NotoSansJPRegular;
+		padding-bottom: 3px !important;
+	}
+
+	.el-range__icon {
+		font-size: 17px !important;
+	}
+}
+
+.el-icon-date::before {
+	font-size: 17px !important;
+}
