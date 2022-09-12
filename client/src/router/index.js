@@ -2,6 +2,9 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import Error from '../views//ErrorView/ErrorView.vue';
+import ReadingManga from '../views/ReadingMangaView/ReadingMangaView.vue';
+import WatchingFilm from '../views/WatchingFilmView/WatchingFilm.vue';
+import Chatting from '../views/ChatView/ChatView.vue';
 
 Vue.use(VueRouter);
 
@@ -23,6 +26,21 @@ const routes = [
     path: '/error',
     name: 'error',
     component: Error,
+  },
+  {
+    path: '/manga/',
+    name: 'manga',
+    component: ReadingManga,
+  },
+  {
+    path: '/movie/',
+    name: 'movie',
+    component: WatchingFilm,
+  },
+  {
+    path: '/chat/',
+    name: 'chat',
+    component: Chatting,
   },
 ];
 

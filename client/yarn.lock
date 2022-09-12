@@ -1866,10 +1866,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ant-design-vue@^3.2.12:
-  version "3.2.12"
-  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-3.2.12.tgz#996361982884b1d0d82186dba67962983bc1fbac"
-  integrity sha512-CPsoWJ3t+sqq/EPINPXb4fC5/9iKkUdYOfK9M9kLKbXlRN3MAoVwWUbaFnUqc+ngtbEpn/d69hTF/Eh7MeWMhQ==
+ant-design-vue@^3.3.0-beta.3:
+  version "3.3.0-beta.3"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-3.3.0-beta.3.tgz#8f2ce68d79ded96367068564be26c71bfd77388f"
+  integrity sha512-xA7clMwKRw2S6E8etiq7FRN8qktRW6xr9HBuEuUDQwsbxLIy1kVKfiTbdbh+CklmasKGd9qvEJbzc65U/HJeOw==
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons-vue" "^6.1.0"
@@ -8671,7 +8671,7 @@ vue-hot-reload-api@^2.3.0:
     hash-sum "^2.0.0"
     loader-utils "^2.0.0"
 
-vue-loader@^15.9.2:
+vue-loader@15.10.0, vue-loader@^15.9.2:
   version "15.10.0"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.10.0.tgz#2a12695c421a2a2cc2138f05a949d04ed086e38b"
   integrity sha512-VU6tuO8eKajrFeBzMssFUP9SvakEeeSi1BxdTH5o3+1yUyrldp8IERkSdXlMI2t4kxF2sqYUDsQY+WJBxzBmZg==

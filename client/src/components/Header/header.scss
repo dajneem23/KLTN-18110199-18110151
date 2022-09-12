@@ -19,7 +19,10 @@ button:focus {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 15px;
+  padding: 5px 15px;
+  .header-nav_logo {
+    width: 267px;
+  }
   .header-nav_left {
     display: flex;
     justify-content: center;
@@ -29,27 +32,41 @@ button:focus {
       justify-content: center;
       align-items: center;
       .category-item {
+        width: 100px;
+        height: 60px;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 10px;
+        margin: 0px 10px;
         cursor: pointer;
         padding: 0 20px;
-        height: 40px;
-        border-top: 3px solid transparent;
-        color: black;
+        // border-bottom: 3px solid transparent;
+        .category-item_icon {
+          width: 25px;
+          fill: var(--primary-blue_3);
+        }
       }
     }
-    .header-logo {
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-    }
+  }
+  .header-logo {
+    width: 60px;
+    height: 55px;
+    cursor: pointer;
+  }
+  .header-nav_right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 .category-item:hover {
-  border-top: 3px solid var(--primary-blue_2) !important;
+  // border-bottom: 3px solid var(--primary-blue_2) !important;
+  background-color: #cccccc;
+  border-radius: 6px;
   transition: ease-in-out 0.3s;
+  .title_tooltip {
+    display: inline;
+  }
 }
 .btn-defaultt {
   margin-left: 10px;
@@ -67,12 +84,39 @@ button:focus {
   transition: all 0.3s ease-in-out;
 }
 .btn-none {
+  color: black;
   border: none;
   background-color: transparent;
   padding: 10px 10px;
+  cursor: pointer;
 }
 @media (min-width: 1024px) {
   .header-nav {
-    max-width: 1192px;
+    max-width: 80%;
   }
+}
+/*----------------*/
+.title_tooltip {
+  display: none;
+  // position: absolute;
+  // top: 70px;
+  width: 120px;
+  background-color: #cccccc;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px 0;
+  position: absolute;
+  z-index: 1;
+  top: 70px;
+}
+.title_tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #cccccc transparent;
 }
