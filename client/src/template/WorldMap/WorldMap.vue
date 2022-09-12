@@ -12,12 +12,12 @@ export default {
   props: {
     mapData: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     points: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -28,15 +28,12 @@ export default {
       borderColor: 'white',
       highlightBorderColor: 'white',
       bubbleHighlightFillColor: '#11cdef',
-      bubbleFillColor: '#fb6340'
+      bubbleFillColor: '#fb6340',
     };
   },
   methods: {
     generateColors(length) {
-      return d3
-        .scaleLinear()
-        .domain([0, length])
-        .range([this.color1, this.color2]);
+      return d3.scaleLinear().domain([0, length]).range([this.color1, this.color2]);
     },
     generateMapColors() {
       let mapDataValues = Object.values(this.mapData);
@@ -44,24 +41,24 @@ export default {
       let colors = this.generateColors(maxVal);
       let mapData = {};
       let fills = {
-        defaultFill: '#EDF0F2'
+        defaultFill: '#EDF0F2',
       };
       for (let key in this.mapData) {
         let val = this.mapData[key];
         fills[key] = colors(val);
         mapData[key] = {
           fillKey: key,
-          value: val
+          value: val,
         };
       }
       return {
         mapData,
-        fills
+        fills,
       };
     },
     async initVectorMap() {
       let DataMap = await import('datamaps');
-      DataMap = DataMap.default || DataMap
+      DataMap = DataMap.default || DataMap;
       let { fills, mapData } = this.generateMapColors();
       let worldMap = new DataMap({
         scope: 'world',
@@ -76,8 +73,8 @@ export default {
           highlightFillColor: this.highlightFillColor,
           highlightBorderColor: this.highlightBorderColor,
           highlightBorderWidth: 1,
-          highlightBorderOpacity: 1
-        }
+          highlightBorderOpacity: 1,
+        },
       });
       let bubbleOptions = {
         radius: 2,
@@ -87,18 +84,18 @@ export default {
         fillColor: this.bubbleFillColor,
         borderColor: this.bubbleFillColor,
         highlightFillColor: this.bubbleHighlightFillColor,
-        highlightBorderColor: this.bubbleHighlightFillColor
-      }
-      let bubblePoints = this.points.map(point => {
+        highlightBorderColor: this.bubbleHighlightFillColor,
+      };
+      let bubblePoints = this.points.map((point) => {
         return {
           ...bubbleOptions,
-          ...point
-        }
-      })
+          ...point,
+        };
+      });
       worldMap.bubbles(bubblePoints, {
-        popupTemplate: function(geo, data) {
-          return '<div class="hoverinfo">' + data.name
-        }
+        popupTemplate: function (geo, data) {
+          return '<div class="hoverinfo">' + data.name;
+        },
       });
       let resizeFunc = worldMap.resize.bind(worldMap);
       window.addEventListener(
@@ -106,22 +103,21 @@ export default {
         () => {
           throttle(resizeFunc, 40);
         },
-        false
+        false,
       );
     },
     randomString() {
-      let text = "";
-      let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      let text = '';
+      let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-      for (let i = 0; i < 5; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      for (let i = 0; i < 5; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
 
       return text;
-    }
+    },
   },
   async mounted() {
     this.initVectorMap();
-  }
+  },
 };
 </script>
 <style></style>

@@ -66,5 +66,5 @@ export {
   Collapse,
   CollapseItem,
   LoadingPanel,
-  AsyncWorldMap
+  AsyncWorldMap,
 };

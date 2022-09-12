@@ -13,13 +13,7 @@
       </a>
     </b-card-header>
     <collapse-transition :duration="animationDuration">
-      <div
-        v-show="active"
-        :id="`content-${itemId}`"
-        role="tabpanel"
-        :aria-labelledby="title"
-        class="collapsed"
-      >
+      <div v-show="active" :id="`content-${itemId}`" role="tabpanel" :aria-labelledby="title" class="collapsed">
         <div class="card-body"><slot></slot></div>
       </div>
     </collapse-transition>
@@ -31,41 +25,41 @@ import { CollapseTransition } from 'vue2-transitions';
 export default {
   name: 'collapse-item',
   components: {
-    CollapseTransition
+    CollapseTransition,
   },
   props: {
     title: {
       type: String,
       default: '',
-      description: 'Collapse item title'
+      description: 'Collapse item title',
     },
-    id: String
+    id: String,
   },
   inject: {
     animationDuration: {
-      default: 250
+      default: 250,
     },
     multipleActive: {
-      default: false
+      default: false,
     },
     addItem: {
-      default: () => {}
+      default: () => {},
     },
     removeItem: {
-      default: () => {}
+      default: () => {},
     },
     deactivateAll: {
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   computed: {
     itemId() {
       return this.id || this.title;
-    }
+    },
   },
   data() {
     return {
-      active: false
+      active: false,
     };
   },
   methods: {
@@ -75,8 +69,8 @@ export default {
         this.deactivateAll();
       }
       this.active = !wasActive;
-      console.log(this.active)
-    }
+      console.log(this.active);
+    },
   },
   mounted() {
     this.addItem(this);
@@ -86,7 +80,7 @@ export default {
       this.$el.parentNode.removeChild(this.$el);
     }
     this.removeItem(this);
-  }
+  },
 };
 </script>
 <style></style>

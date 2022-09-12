@@ -2,9 +2,8 @@
 // Chart extension for making the bars rounded
 // Code from: https://codepen.io/jedtrow/full/ygRYgo
 //
-import Chart from 'chart.js'
-Chart.elements.Rectangle.prototype.draw = function() {
-
+import Chart from 'chart.js';
+Chart.elements.Rectangle.prototype.draw = function () {
   let ctx = this._chart.ctx;
   let vm = this._view;
   let left, right, top, bottom, signX, signY, borderSkipped, radius;
@@ -69,7 +68,7 @@ Chart.elements.Rectangle.prototype.draw = function() {
     [left, bottom],
     [left, top],
     [right, top],
-    [right, bottom]
+    [right, bottom],
   ];
 
   // Find first (starting) corner with fallback to 'bottom'
@@ -91,7 +90,7 @@ Chart.elements.Rectangle.prototype.draw = function() {
     corner = cornerAt(i);
     let nextCornerId = i + 1;
     if (nextCornerId == 4) {
-      nextCornerId = 0
+      nextCornerId = 0;
     }
 
     let nextCorner = cornerAt(nextCornerId);
@@ -120,7 +119,6 @@ Chart.elements.Rectangle.prototype.draw = function() {
     ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
     ctx.lineTo(x, y + radius);
     ctx.quadraticCurveTo(x, y, x + radius, y);
-
   }
 
   ctx.fill();

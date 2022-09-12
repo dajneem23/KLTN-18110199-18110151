@@ -12,17 +12,17 @@ import { LoadingPanel } from '@/components';
 const WorldMap = () => ({
   component: import('./WorldMap.vue'),
   loading: LoadingPanel,
-  delay: 200
+  delay: 200,
 });
 export default {
   inheritAttrs: false,
   components: {
-    WorldMap
-  }
+    WorldMap,
+  },
 };
 </script>
 <style>
-  .world-map-container {
-    min-height: 500px;
-  }
+.world-map-container {
+  min-height: 500px;
+}
 </style>

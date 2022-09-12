@@ -1,10 +1,5 @@
 <template>
-  <div
-    id="accordion"
-    role="tablist"
-    aria-multiselectable="true"
-    class="accordion"
-  >
+  <div id="accordion" role="tablist" aria-multiselectable="true" class="accordion">
     <slot></slot>
   </div>
 </template>
@@ -16,18 +11,18 @@ export default {
     animationDuration: {
       type: Number,
       default: 250,
-      description: 'Collapse animation duration'
+      description: 'Collapse animation duration',
     },
     multipleActive: {
       type: Boolean,
       default: true,
-      description: 'Whether you can have multiple collapse items opened at the same time'
+      description: 'Whether you can have multiple collapse items opened at the same time',
     },
     activeIndex: {
       type: Number,
       default: -1,
-      description: 'Active collapse item index'
-    }
+      description: 'Active collapse item index',
+    },
   },
   provide() {
     return {
@@ -35,12 +30,12 @@ export default {
       multipleActive: this.multipleActive,
       addItem: this.addItem,
       removeItem: this.removeItem,
-      deactivateAll: this.deactivateAll
+      deactivateAll: this.deactivateAll,
     };
   },
   data() {
     return {
-      items: []
+      items: [],
     };
   },
   methods: {
@@ -58,7 +53,7 @@ export default {
       }
     },
     deactivateAll() {
-      this.items.forEach(item => {
+      this.items.forEach((item) => {
         item.active = false;
       });
     },
@@ -66,7 +61,7 @@ export default {
       if (this.activeIndex !== -1) {
         this.items[this.activeIndex].active = true;
       }
-    }
+    },
   },
   mounted() {
     this.$nextTick(() => {
@@ -76,8 +71,8 @@ export default {
   watch: {
     activeIndex() {
       this.activateItem();
-    }
-  }
+    },
+  },
 };
 </script>
 

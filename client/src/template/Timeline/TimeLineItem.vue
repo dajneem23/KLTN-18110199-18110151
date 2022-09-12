@@ -11,20 +11,20 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'time-line-item',
-    props: {
-      inverted: Boolean,
-      title: String,
-      badgeType: {
-        type: String,
-        default: 'success'
-      },
-      badgeIcon: {
-        type: String,
-        default: ''
-      }
-    }
-  };
+export default {
+  name: 'time-line-item',
+  props: {
+    inverted: Boolean,
+    title: String,
+    badgeType: {
+      type: String,
+      default: 'success',
+    },
+    badgeIcon: {
+      type: String,
+      default: '',
+    },
+  },
+};
 </script>
 <style></style>
