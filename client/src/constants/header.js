@@ -7,6 +7,7 @@ export const HEADER_ITEM = {
     icon: '',
     order: '',
     path: '/login/',
+    ref: 'login'
   },
   register: {
     title: {
@@ -16,6 +17,7 @@ export const HEADER_ITEM = {
     icon: '',
     order: '',
     path: '/register/',
+    ref: 'register'
   },
   home: {
     title: {
@@ -25,6 +27,7 @@ export const HEADER_ITEM = {
     icon: '',
     order: '',
     path: '/',
+    ref: 'home'
   },
   manga: {
     title: {
@@ -34,6 +37,7 @@ export const HEADER_ITEM = {
     icon: '',
     order: '',
     path: '/manga/',
+    ref: 'manga'
   },
   movie: {
     title: {
@@ -43,6 +47,7 @@ export const HEADER_ITEM = {
     icon: '',
     order: '',
     path: '/movie/',
+    ref: 'movie'
   },
   chat: {
     title: {
@@ -52,5 +57,6 @@ export const HEADER_ITEM = {
     icon: '',
     order: '',
     path: '/chat/',
+    ref: 'chat'
   },
 };
