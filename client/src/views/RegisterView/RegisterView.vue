@@ -1,0 +1,76 @@
+<template>
+  <div class="wrapper wrapper_1" @submit.prevent="register">
+    <form class="form-login bgc-white">
+      <h3>{{ REGISTER_ITEM.headerTitle.title[lang] }}</h3>
+      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.fullName.error }">
+        {{ REGISTER_ITEM.fullName.error }}
+      </div>
+      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.fullName.error }">
+        <div class="input-icon fill-gray">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path
+              d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"
+            />
+          </svg>
+        </div>
+        <input
+          type="text"
+          :placeholder="REGISTER_ITEM.fullName.title[lang]"
+          class="form-input"
+          v-model="account.fullname"
+          @blur="fullnameValidate()"
+        />
+      </div>
+      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.userName.error }">
+        {{ REGISTER_ITEM.userName.error }}
+      </div>
+      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.userName.error }">
+        <div class="input-icon fill-gray">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path
+              d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"
+            />
+          </svg>
+        </div>
+        <input
+          type="text"
+          :placeholder="REGISTER_ITEM.userName.title[lang]"
+          class="form-input"
+          v-model="account.username"
+          @blur="usernameValidate()"
+        />
+      </div>
+      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.passWord.error }">
+        {{ REGISTER_ITEM.passWord.error }}
+      </div>
+      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.passWord.error }">
+        <div class="input-icon fill-gray">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path
+              d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"
+            />
+          </svg>
+        </div>
+        <input
+          type="password"
+          :placeholder="REGISTER_ITEM.passWord.title[lang]"
+          class="form-input"
+          v-model="account.password"
+          @blur="passwordValiate()"
+        />
+      </div>
+      <div class="form-button">
+        <button class="btn-primary bgc-blue cl-white" type="submit">
+          {{ REGISTER_ITEM.registerButton.title[lang] }}
+        </button>
+      </div>
+      <div class="form-more">
+        <router-link to="/login/">
+          <span>{{ REGISTER_ITEM.loginAccount.title[lang] }} </span>
+        </router-link>
+      </div>
+    </form>
+  </div>
+</template>
+<script src="./registerview"></script>
+<style lang="scss" src="../LoginView/loginView.scss" scoped></style>

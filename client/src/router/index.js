@@ -5,6 +5,8 @@ import Error from '../views//ErrorView/ErrorView.vue';
 import ReadingManga from '../views/ReadingMangaView/ReadingMangaView.vue';
 import WatchingFilm from '../views/WatchingFilmView/WatchingFilm.vue';
 import Chatting from '../views/ChatView/ChatView.vue';
+import Login from '../views/LoginView/LoginView.vue';
+import Register from '../views/RegisterView/RegisterView.vue'
 
 Vue.use(VueRouter);
 
@@ -41,6 +43,16 @@ const routes = [
     path: '/chat/',
     name: 'chat',
     component: Chatting,
+  },
+  {
+    path: '/login/',
+    name: 'login',
+    component: Login,
+  },
+  {
+    path: '/register/',
+    name: 'register',
+    component: Register,
   },
 ];
 

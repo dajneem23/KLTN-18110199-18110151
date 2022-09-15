@@ -1,0 +1,55 @@
+.btn-defaultt {
+  margin-left: 10px;
+  border-radius: 20px;
+  border: transparent solid;
+  padding: 8px 24px;
+  color: #000;
+  cursor: pointer;
+}
+.btn-primary {
+  width: 250px;
+  height: 35px;
+  margin-top: 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn-google {
+  width: 250px;
+  height: 35px;
+  margin-top: 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  background-color: rgb(255, 35, 35);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    width: 20px;
+    fill: var(--white);
+  }
+  span {
+    padding-left: 10px;
+  }
+}
+.btn-defaultt:hover,
+.btn-primary:hover,
+.btn-google:hover {
+  // background-color: var(--primary-blue_3);
+  // background-color: #5fa1e3;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  transition: all 0.3s ease-in-out;
+}
+.btn-none {
+  border: none;
+  background-color: transparent;
+  padding: 10px 10px;
+  cursor: pointer;
+}
