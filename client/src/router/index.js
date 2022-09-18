@@ -6,15 +6,20 @@ import ReadingManga from '../views/ReadingMangaView/ReadingMangaView.vue';
 import WatchingFilm from '../views/WatchingFilmView/WatchingFilm.vue';
 import Chatting from '../views/ChatView/ChatView.vue';
 import Login from '../views/LoginView/LoginView.vue';
-import Register from '../views/RegisterView/RegisterView.vue'
-
+import Register from '../views/RegisterView/RegisterView.vue';
+import Header from '../components/Header/index.vue';
+import Footer from '../components/Footer/index.vue';
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView,
+    components: {
+      header: Header,
+      default: HomeView,
+      footer: Footer
+    }
   },
   {
     path: '/about',
@@ -27,22 +32,38 @@ const routes = [
   {
     path: '/error',
     name: 'error',
-    component: Error,
+    components: {
+      // header: Header,
+      default: Error,
+      // footer: Footer
+    }
   },
   {
     path: '/manga/',
     name: 'manga',
-    component: ReadingManga,
+    components: {
+      header: Header,
+      default: ReadingManga,
+      footer: Footer
+    }
   },
   {
     path: '/movie/',
     name: 'movie',
-    component: WatchingFilm,
+    components: {
+      header: Header,
+      default: WatchingFilm,
+      footer: Footer
+    }
   },
   {
     path: '/chat/',
     name: 'chat',
-    component: Chatting,
+    components: {
+      header: Header,
+      default: Chatting,
+      footer: Footer
+    }
   },
   {
     path: '/login/',

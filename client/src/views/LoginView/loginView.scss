@@ -16,15 +16,19 @@ h3 {
 }
 .form-login {
   width: 450px;
-  height: 50%;
-  padding: 0px 50px;
+  // height: 50%;
+  // padding: 0px 50px;
   margin: auto 0;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
 }
 .input-box {
-  width: 100%;
+  width: 80%;
   border-radius: 5px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,6 +50,8 @@ h3 {
   outline: none;
 }
 .check-re {
+  width: 80%;
+  margin: 10px auto;
   margin-top: 25px;
   display: flex;
   align-items: center;
@@ -81,15 +87,17 @@ h3 {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin: 20px 0;
 }
 .form-more {
+  width: 80%;
+  margin: 35px auto;
   position: relative;
-  bottom: -15px;
   display: flex;
   justify-content: space-between;
 }
 .error-title {
+  width: 80%;
+  margin: 0 auto;
   height: 25px;
   visibility: hidden;
   display: flex;

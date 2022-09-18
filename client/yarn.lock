@@ -8715,6 +8715,11 @@ vue-types@^3.0.0:
   dependencies:
     is-plain-object "3.0.1"
 
+vue2-transitions@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/vue2-transitions/-/vue2-transitions-0.3.0.tgz#765fc0d743103fcfe2d10f431697d8873a075c17"
+  integrity sha512-m1ad8K8kufqiEhj5gXHkkqOioI5sW0FaMbRiO0Tv2WFfGbO2eIKrfkFiO3HPQtMJboimaLCN4p/zL81clLbG4w==
+
 vue@^2.6.11:
   version "2.7.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.7.10.tgz#ae516cc6c88e1c424754468844218fdd5e280f40"

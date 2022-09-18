@@ -32,6 +32,12 @@ export const REGISTER_ITEM = {
       en: 'Create account',
     },
   },
+  googleButton: {
+    title: {
+      vi: 'Google',
+      en: 'Google',
+    },
+  },
   loginAccount: {
     title: {
       vi: 'Đã có tài khoản, đăng nhập!',

@@ -1,18 +1,21 @@
 <template>
-  <div>
-    <!-- <Header></Header> -->
-    <router-view></router-view>
-    <!-- <Footer></Footer> -->
+  <div id="app">
+      <router-view name="header"></router-view>
+      <main>
+          <fade-transition origin="center" mode="out-in" :duration="0">
+              <router-view/>
+          </fade-transition>
+      </main>
+      <router-view name="footer"></router-view>
   </div>
 </template>
 <script>
-import Header from './components/Header/index.vue';
-import Footer from './components/Footer/index.vue';
+import { FadeTransition } from "vue2-transitions";
+
 export default {
-  components: {
-    Header,
-    Footer,
-  },
+components: {
+  FadeTransition
+}
 };
 </script>
-<style lang="scss"></style>
+
