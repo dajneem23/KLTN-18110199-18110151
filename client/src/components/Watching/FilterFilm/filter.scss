@@ -1,0 +1,44 @@
+.filter-box {
+  min-width: 80%;
+  max-height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+select {
+  width: 145px;
+  height: 35px;
+  font-size: 15px;
+  border-radius: 5px;
+  background-color: var(--white);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  cursor: pointer;
+  option {
+    width: 125px;
+    max-height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+select:focus-visible {
+  outline-offset: none !important;
+}
+option:hover {
+  background-color: black;
+}
+.box-category {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  label {
+    margin: 10px;
+  }
+}
+.box-category + .box-category {
+  margin-left: 25px;
+}
+/*--------------------------*/
+.btn-box {
+
+
+}

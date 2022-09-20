@@ -39,9 +39,31 @@
     padding-left: 10px;
   }
 }
+.btn-filter {
+  width: 100px;
+  height: 40px;
+  margin-left: 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  background-color: var(--primary-blue_3);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    width: 20px;
+    fill: var(--white);
+  }
+  span {
+    padding-left: 10px;
+  }
+}
 .btn-defaultt:hover,
 .btn-primary:hover,
-.btn-google:hover {
+.btn-google:hover,
+.btn-filter:hover {
   // background-color: var(--primary-blue_3);
   // background-color: #5fa1e3;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;

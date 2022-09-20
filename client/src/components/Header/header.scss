@@ -9,8 +9,11 @@ button:focus {
   outline: none !important;
 }
 .navbar {
+  position: fixed;
+  z-index: 999;
   padding: 0;
   width: 100%;
+  max-height: 70px;
   display: flex;
   justify-content: center;
   // box-shadow: var(--primary-blue_3) 0px 3px 6px, var(--primary-blue_3) 0px 3px 6px;
@@ -74,6 +77,10 @@ button:focus {
 
 .active {
   border-radius: 6px;
+  background-color: var(--primary-blue_3);
+  .category-item_icon {
+    fill: var(--white);
+  }
 }
 /*----------------*/
 .title_tooltip {
@@ -98,7 +105,7 @@ button:focus {
 //   border-width: 7px;
 //   border-style: solid;
 //   border-color: transparent transparent #fff transparent;
-  
+
 // }
 @media (min-width: 1024px) {
   .header-nav {
