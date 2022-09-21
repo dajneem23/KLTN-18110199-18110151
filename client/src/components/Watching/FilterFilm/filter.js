@@ -9,6 +9,9 @@ export default {
     getFilter() {
       console.log(FILTER_ITEM.filterFilm);
     },
+    ungetFilter() {
+      console.log('Bo loc');
+    },
   },
   data() {
     return {

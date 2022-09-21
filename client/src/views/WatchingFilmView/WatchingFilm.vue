@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper bgc-white">
     <FilterFilm></FilterFilm>
+    <ListFilm></ListFilm>
   </div>
 </template>
 

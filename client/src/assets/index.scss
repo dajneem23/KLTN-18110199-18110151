@@ -5,6 +5,7 @@
   --white: #fff;
   --black: #000;
   --gray: #b3b3b3;
+  --dark-gray: #666666;
   --primary-blue: #5680e9;
   --primary-blue_2: #84ceeb;
   --primary-blue_3: #5ab9ea;
@@ -18,4 +19,10 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+.text-gray {
+  color: var(--dark-gray);
+}
+.text-dark-gray {
+  color: var(--dark-gray);
 }

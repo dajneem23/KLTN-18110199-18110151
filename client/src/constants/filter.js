@@ -1,7 +1,7 @@
 export const FILTER_ITEM = {
   country: {
     label: {
-      vi: 'Quốc Gia',
+      vi: 'Quốc gia',
       en: 'Country',
     },
     listData: {
