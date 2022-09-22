@@ -1,4 +1,5 @@
 import { HEADER_ITEM } from '../../constants';
+var mark = 'home';
 
 export default {
   name: 'Header',
@@ -8,24 +9,32 @@ export default {
       this.$refs.manga.classList.remove('active');
       this.$refs.movie.classList.remove('active');
       this.$refs.chat.classList.remove('active');
+      mark = 'home';
+      console.log(mark)
     },
     onMangaBtnClick: function () {
       this.$refs.manga.classList.add('active');
       this.$refs.home.classList.remove('active');
       this.$refs.movie.classList.remove('active');
       this.$refs.chat.classList.remove('active');
+      mark = 'manga';
+      console.log(mark)
     },
     onMovieBtnClick: function () {
       this.$refs.movie.classList.add('active');
       this.$refs.manga.classList.remove('active');
       this.$refs.home.classList.remove('active');
       this.$refs.chat.classList.remove('active');
+      mark = 'movie';
+      console.log(mark)
     },
     onChatBtnClick: function () {
       this.$refs.chat.classList.add('active');
       this.$refs.movie.classList.remove('active');
       this.$refs.manga.classList.remove('active');
       this.$refs.home.classList.remove('active');
+      mark = 'chat';
+      console.log(mark)
     },
   },
   data() {
@@ -34,4 +43,6 @@ export default {
       HEADER_ITEM,
     };
   },
+  mounted(){
+  }
 };

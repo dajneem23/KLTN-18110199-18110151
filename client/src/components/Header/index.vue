@@ -9,7 +9,7 @@
       <div class="header-nav_left">
         <div class="category">
           <router-link :to="HEADER_ITEM.home.path">
-            <div class="category-item active" :ref="HEADER_ITEM.home.ref" @click="onHomeBtnClick">
+            <div class="category-item" :ref="HEADER_ITEM.home.ref" @click="onHomeBtnClick">
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                   <path

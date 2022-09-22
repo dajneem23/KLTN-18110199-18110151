@@ -26,3 +26,18 @@ html {
 .text-dark-gray {
   color: var(--dark-gray);
 }
+.active {
+  .page-link {
+    background-color: var(--primary-blue_3);
+    border-radius: 5px;
+    color: var(--white);
+  }
+}
+.disabled {
+  .page-link {
+    color: var(--black);
+    pointer-events: none;
+  cursor: default;
+    opacity: 0.5;
+  }
+}
