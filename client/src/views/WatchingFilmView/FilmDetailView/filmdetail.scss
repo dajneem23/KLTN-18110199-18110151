@@ -1,0 +1,41 @@
+.detailFilm-wrapper {
+  padding-top: 75px;
+}
+.screen-watching {
+  height: 90vh;
+}
+.film-info{
+  width: 70%;
+  margin: 0 auto;
+  padding:40px ;
+  .film-img{
+    width: 300px;
+    border-radius: 5px;
+  }
+}
+.film-cmt{
+  height: 50vh;
+}
+.film-box-1{
+  display: flex;
+  align-items: flex-end;
+  .film-info-des{
+    width: 50%;
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
+    .film-des-item{
+      display: flex;
+      align-items: center;
+      height: 50px;
+    }
+  }
+}
+.film-box-2{
+  margin: 20px 0;
+  .film-title{
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+}

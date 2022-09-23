@@ -9,6 +9,7 @@ import Login from '../views/LoginView/LoginView.vue';
 import Register from '../views/RegisterView/RegisterView.vue';
 import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
+import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -18,8 +19,8 @@ const routes = [
     components: {
       header: Header,
       default: HomeView,
-      footer: Footer
-    }
+      footer: Footer,
+    },
   },
   {
     path: '/about',
@@ -36,7 +37,7 @@ const routes = [
       // header: Header,
       default: Error,
       // footer: Footer
-    }
+    },
   },
   {
     path: '/manga/',
@@ -44,8 +45,8 @@ const routes = [
     components: {
       header: Header,
       default: ReadingManga,
-      footer: Footer
-    }
+      footer: Footer,
+    },
   },
   {
     path: '/movie/',
@@ -53,8 +54,8 @@ const routes = [
     components: {
       header: Header,
       default: WatchingFilm,
-      footer: Footer
-    }
+      footer: Footer,
+    },
   },
   {
     path: '/chat/',
@@ -62,8 +63,8 @@ const routes = [
     components: {
       header: Header,
       default: Chatting,
-      footer: Footer
-    }
+      footer: Footer,
+    },
   },
   {
     path: '/login/',
@@ -74,6 +75,16 @@ const routes = [
     path: '/register/',
     name: 'register',
     component: Register,
+  },
+  {
+    path: '/movie/details/:filmId/',
+    name: 'details',
+    components: {
+      header: Header,
+      default: Details,
+      footer: Footer,
+    },
+    props: true,
   },
 ];
 

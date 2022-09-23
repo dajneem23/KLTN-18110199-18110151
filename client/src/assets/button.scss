@@ -63,7 +63,8 @@
 .btn-defaultt:hover,
 .btn-primary:hover,
 .btn-google:hover,
-.btn-filter:hover {
+.btn-filter:hover,
+.btn-like:hover {
   // background-color: var(--primary-blue_3);
   // background-color: #5fa1e3;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
@@ -78,5 +79,21 @@
 .btn-unfilter {
   svg {
     text-decoration: underline;
+  }
+}
+.btn-like {
+  height: 40px;
+  width: 100px;
+  border-radius: 5px;
+  border: 1px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg{
+    width: 20px;
+  }
+  svg+span{
+    margin: 5px;
   }
 }

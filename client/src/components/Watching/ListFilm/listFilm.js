@@ -1,9 +1,7 @@
 import Card from '../../Card/index.vue';
 import { LIST_FILM } from '../../../constants/listfilm';
 
-const customStyles = {
-
-};
+const customStyles = {};
 export default {
   components: {
     Card,
@@ -19,9 +17,5 @@ export default {
     onChangePage(pageOfItems) {
       this.pageOfItems = pageOfItems;
     },
-  },
-  mounted() {
-    var style = document.querySelector('.active');
-    console.log(style);
   },
 };
