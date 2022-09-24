@@ -2,14 +2,25 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import Error from '../views//ErrorView/ErrorView.vue';
-
+import ReadingManga from '../views/ReadingMangaView/ReadingMangaView.vue';
+import WatchingFilm from '../views/WatchingFilmView/WatchingFilm.vue';
+import Chatting from '../views/ChatView/ChatView.vue';
+import Login from '../views/LoginView/LoginView.vue';
+import Register from '../views/RegisterView/RegisterView.vue';
+import Header from '../components/Header/index.vue';
+import Footer from '../components/Footer/index.vue';
+import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView,
+    components: {
+      header: Header,
+      default: HomeView,
+      footer: Footer,
+    },
   },
   {
     path: '/about',
@@ -22,7 +33,58 @@ const routes = [
   {
     path: '/error',
     name: 'error',
-    component: Error,
+    components: {
+      // header: Header,
+      default: Error,
+      // footer: Footer
+    },
+  },
+  {
+    path: '/manga/',
+    name: 'manga',
+    components: {
+      header: Header,
+      default: ReadingManga,
+      footer: Footer,
+    },
+  },
+  {
+    path: '/movie/',
+    name: 'movie',
+    components: {
+      header: Header,
+      default: WatchingFilm,
+      footer: Footer,
+    },
+  },
+  {
+    path: '/chat/',
+    name: 'chat',
+    components: {
+      header: Header,
+      default: Chatting,
+      footer: Footer,
+    },
+  },
+  {
+    path: '/login/',
+    name: 'login',
+    component: Login,
+  },
+  {
+    path: '/register/',
+    name: 'register',
+    component: Register,
+  },
+  {
+    path: '/movie/details/:filmId/',
+    name: 'details',
+    components: {
+      header: Header,
+      default: Details,
+      footer: Footer,
+    },
+    props: true,
   },
 ];
 
