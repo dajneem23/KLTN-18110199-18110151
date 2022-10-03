@@ -1,10 +1,10 @@
-import { Inject, Service } from 'typedi';
+import Container, { Inject, Service } from 'typedi';
 import Logger from '@/core/logger';
-import { throwErr } from '@/utils/common';
+import { throwErr, toOutPut } from '@/utils/common';
 import { alphabetSize12 } from '@/utils/randomString';
 import { AuthError } from '@/modules/auth/auth.error';
 import { SystemError } from '@/core/errors/CommonError';
-import { UserModel } from './user.model';
+import { UserModel, userModelToken } from './user.model';
 import { CreateUpdateUserInput, User, UserOutput } from './user.type';
 import { toUserOutput } from './user.util';
 import { UserError } from '@/modules/user/user.error';
@@ -22,8 +22,7 @@ import { generateTextAlias } from '@/utils/text';
 export class UserService {
   private logger = new Logger('UserService');
 
-  @Inject()
-  private userModel: UserModel;
+  private model: UserModel = Container.get(userModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;
@@ -40,9 +39,6 @@ export class UserService {
   /**
    * A bridge allows another service access to the Model layer
    */
-  get collection() {
-    return this.userModel.collection;
-  }
 
   /**
    * Generate user ID
@@ -62,8 +58,8 @@ export class UserService {
           total_count: [{ count } = { count: 0 }],
           items,
         },
-      ] = (await this.userModel.collection
-        .aggregate([
+      ] = (await this.model
+        .get([
           {
             $match: {
               ...match,
@@ -102,7 +98,7 @@ export class UserService {
   async create(userInput: CreateUpdateUserInput) {
     try {
       // Check duplicated
-      const isDuplicated = !!(await this.userModel.collection.countDocuments({ email: userInput.email }));
+      const isDuplicated = !!(await this.model._collection.countDocuments({ email: userInput.email }));
       if (isDuplicated) throwErr(new AuthError('EMAIL_ALREADY_EXISTS'));
       // Create user
       const now = new Date();
@@ -118,7 +114,7 @@ export class UserService {
         updated_at: now,
       };
       // Insert user to database
-      const { acknowledged } = await this.userModel.collection.insertOne(user);
+      const { acknowledged } = await this.model._collection.insertOne(user);
       if (!acknowledged) {
         throwErr(new SystemError(`MongoDB insertOne() failed! Payload: ${JSON.stringify(user)}`));
       }
@@ -135,10 +131,10 @@ export class UserService {
    */
   async getById(id: User['id']) {
     try {
-      const user = await this.userModel.collection.findOne({ id });
+      const user = await this.model._collection.findOne({ id });
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[getById:success]', { id, email: user.email });
-      return toUserOutput(user);
+      return toUserOutput(user as any);
     } catch (err) {
       this.logger.error('[getById:error]', err.message);
       throw err;
@@ -150,7 +146,7 @@ export class UserService {
    */
   async update(id: User['id'], data: Partial<User>) {
     try {
-      const { value: user } = await this.userModel.collection.findOneAndUpdate(
+      const { value: user } = await this.model._collection.findOneAndUpdate(
         { id },
         {
           $set: {
@@ -163,7 +159,7 @@ export class UserService {
       );
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[update:success]', { email: user.email });
-      return toUserOutput(user);
+      return toUserOutput(user as any);
     } catch (err) {
       this.logger.error('[update:error]', err.message);
       if (err.code === 11000 && err.keyPattern?.email) throwErr(new AuthError('EMAIL_ALREADY_EXISTS'));
@@ -210,7 +206,7 @@ export class UserService {
     try {
       await withMongoTransaction(async (session) => {
         // Delete user
-        const { value: user } = await this.userModel.collection.findOneAndDelete({ id: userId }, { session });
+        const { value: user } = await this.model._collection.findOneAndDelete({ id: userId }, { session });
         if (!user) throwErr(new UserError('USER_NOT_FOUND'));
         if (user.roles.includes('admin')) throwErr(new UserError('CANNOT_DELETE_ADMIN_ACCOUNT'));
         // Delete other parts
@@ -231,116 +227,14 @@ export class UserService {
       throw err;
     }
   }
-  async updateFavoriteNews(userId: string, newsId: string) {
-    try {
-      if (!(await $queryByList({ collection: 'news', values: [newsId] }))) {
-        throwErr(new SystemError(`News not found!`));
-      }
-      const { value: user } = await this.userModel.collection.findOneAndUpdate(
-        { id: userId },
-        {
-          $addToSet: { favorite_news: newsId },
-        },
-        { returnDocument: 'after' },
-      );
-      if (!user) throwErr(new UserError('USER_NOT_FOUND'));
-      this.logger.debug('[updateFavoriteNews:success]', { userId, newsId });
-      return toUserOutput({ favorite_news: user.favorite_news } as User);
-    } catch (err) {
-      this.logger.error('[addNews:error]', err);
-      throw err;
-    }
-  }
-  async saveNews(userId: string, newsId: string) {
-    try {
-      if (!(await $queryByList({ collection: 'news', values: [newsId] }))) {
-        throwErr(new SystemError(`News not found!`));
-      }
-      const { value: user } = await this.userModel.collection.findOneAndUpdate(
-        { id: userId },
-        {
-          $addToSet: { saved_news: newsId },
-        },
-        { returnDocument: 'after' },
-      );
-      if (!user) throwErr(new UserError('USER_NOT_FOUND'));
-      this.logger.debug('[saveNews:success]', { userId, newsId });
-      return toUserOutput({ saved_news: user.saved_news } as User);
-    } catch (err) {
-      this.logger.error('[addNews:error]', err);
-      throw err;
-    }
-  }
-  async followCategory(id: string, categoryId: string) {
-    try {
-      if (!(await $queryByList({ collection: 'categories', values: [categoryId] }))) {
-        throwErr(new SystemError(`Categories not found!`));
-      }
-      const {
-        value: user,
-        ok,
-        lastErrorObject: { updatedExisting },
-      } = await this.userModel.collection.findOneAndUpdate(
-        { id },
-        {
-          $set: {
-            updated_at: new Date(),
-          },
-          $addToSet: {
-            followings: new ObjectId(categoryId),
-          },
-        },
-        { returnDocument: 'after' },
-      );
-      if (!updatedExisting) throwErr(new UserError('USER_NOT_FOUND'));
-      if (!ok)
-        throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ id, categoryId })}`));
-      this.logger.debug('[update:success]', { email: user.email });
-      return {
-        followings: user.followings,
-      };
-    } catch (err) {
-      this.logger.error('[update:error]', err.message);
-      throw err;
-    }
-  }
-  async unfollowCategory(id: string, categoryId: string) {
-    try {
-      const {
-        value: user,
-        ok,
-        lastErrorObject: { updatedExisting },
-      } = await this.userModel.collection.findOneAndUpdate(
-        { id },
-        {
-          $set: {
-            updated_at: new Date(),
-          },
-          $pull: {
-            followings: new ObjectId(categoryId),
-          },
-        },
-        { returnDocument: 'after' },
-      );
-      if (!updatedExisting) throwErr(new UserError('USER_NOT_FOUND'));
-      if (!ok)
-        throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ id, categoryId })}`));
-      this.logger.debug('[update:success]', { email: user.email });
-      return {
-        followings: user.followings,
-      };
-    } catch (err) {
-      this.logger.error('[update:error]', err.message);
-      throw err;
-    }
-  }
+
   async push(id: any, ...data: any) {
     try {
       const {
         value: user,
         ok,
         lastErrorObject: { updatedExisting },
-      } = await this.userModel.collection.findOneAndUpdate(
+      } = await this.model._collection.findOneAndUpdate(
         { id },
         {
           $set: {
@@ -356,7 +250,7 @@ export class UserService {
       if (!ok) throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ id, data })}`));
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[update:success]', { email: user.email });
-      return toUserOutput(user);
+      return toOutPut({ item: user, keys: this.model._keys });
     } catch (err) {
       this.logger.error('[update:error]', err.message);
       throw err;
@@ -368,7 +262,7 @@ export class UserService {
         value: user,
         ok,
         lastErrorObject: { updatedExisting },
-      } = await this.userModel.collection.findOneAndUpdate(
+      } = await this.model._collection.findOneAndUpdate(
         { id },
         {
           $set: {
@@ -384,7 +278,7 @@ export class UserService {
       if (!ok) throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ id, data })}`));
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[update:success]', { email: user.email });
-      return toUserOutput(user);
+      return toOutPut({ item: user, keys: this.model._keys });
     } catch (err) {
       this.logger.error('[update:error]', err.message);
       throw err;

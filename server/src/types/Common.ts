@@ -119,57 +119,10 @@ export interface BaseInformationModel extends BaseModel {
   avatar?: string;
 
   short_description?: string;
-
-  twitter?: string;
-
-  telegram?: string;
-
-  facebook?: string;
-
-  instagram?: string;
-
-  linkedin?: string;
-
-  github?: string;
-
-  medium?: string;
-
-  discord?: string;
-
-  youtube?: string;
-
-  website?: string;
-
-  websites?: string[];
-
-  blog?: string;
-
-  reddit?: string;
-
-  gitter?: string;
-
-  bitcoin_talk?: string;
-
-  rocket_chat?: string;
-
-  video?: string;
-
-  explorer?: string;
-}
-
-export enum WorkType {
-  CURRENT = 'current',
-  PREVIOUS = 'previous',
-}
-
-export enum DEVELOPMENT_STATUS {
-  WORKING_PRODUCT = 'working_product',
-  ON_GOING_DEVELOPMENT = 'on_going_development',
-  ALPHA_VERSION = 'alpha_version',
-  BETA_VERSION = 'beta_version',
-  DEFUNCT = 'defunct',
-  UNKNOWN = 'unknown',
-  PROTOTYPE_MVP = 'prototype_mvp',
+  urls: {
+    url: string;
+    type: string;
+  }[];
 }
 
 export type ContractAddress = {
@@ -231,55 +184,12 @@ export type BaseServiceOutput = {
   data?: Array<any>;
 };
 
-export type TeamPerson = {
-  name: string;
-  position: string;
-  contacts?: Array<{
-    name: string;
-    url: string;
-  }>;
-};
-export type Support = {
-  name: string;
-  url: string;
-};
-export type ResearchPaper = {
-  title: string;
-  url: string;
-};
-
-export type Technology = {
-  blockchain?: string;
-  hash_algorithm?: string;
-  consensus?: string;
-  'org._structure'?: string;
-  open_source?: string;
-  hardware_wallet?: string;
-  development_status?: string;
-};
 export type IcoDetail = {
   investor_supply?: string;
   total_supply?: string;
   hard_cap?: string;
   start_date?: string;
   end_date?: string;
-};
-
-export type ProductInfomation = {
-  parent_company?: string;
-  team_location?: string;
-  blockchain?: string;
-  token?: string;
-  release?: string;
-  software_license?: string;
-};
-export type App = {
-  name: string;
-  url: string;
-};
-export type Media = {
-  type: string;
-  url: string;
 };
 
 export enum LANG_CODE {
@@ -301,46 +211,29 @@ export const PRIVATE_KEYS = [
   'deleted',
   'trans',
 ];
-export type ForeignReLationship = {
-  name: string;
-  foreign_id: string;
-  type?: string;
-  [key: string]: any;
-};
-export enum NewsStatus {
-  DRAFT = 'draft',
-  PENDING = 'pending',
-  APPROVE = 'approve',
-  PROCESSING = 'processing',
-  PUBLISHED = 'published',
+
+export enum COLLECTION_NAMES {
+  events = 'events',
+  news = 'news',
+  projects = 'projects',
+  persons = 'persons',
+  companies = 'companies',
+  organizations = 'organizations',
+  funds = 'funds',
+  users = 'users',
+  categories = 'categories',
+  tags = 'tags',
+  verifications = 'verifications',
+  glossaries = 'glossaries',
+  blockchains = 'blockchains',
+  products = 'products',
+  countries = 'countries',
+  'auth-sessions' = 'auth-sessions',
+  coins = 'coins',
+  settings = 'settings',
+  exchanges = 'exchanges',
 }
-export enum FundraisingRound {
-  UNKNOWN = 'Unknown',
-  PRE_SEED = 'Pre-Seed',
-  SEED = 'Seed',
-  ANGEL = 'Angel',
-  INVESTORS = 'Investors',
-  BRIDGE = 'Bridge',
-  MEZZABINE = 'Mezzanine',
-  PRE_PUBLIC = 'Pre-Public',
-  PUBLIC = 'Public',
-  SERIES_A = 'Series A',
-  SERIES_B = 'Series B',
-  SERIES_C = 'Series C',
-  SERIES_D = 'Series D',
-  SERIES_E = 'Series E',
-  SERIES_F = 'Series F',
-}
-export type FundraisingRoundDetail = {
-  round_name: string;
-  valuation?: string;
-  description?: string;
-  announcement?: string;
-  amount?: number;
-  anum?: string;
-  number_of_rounds?: string;
-  record_id?: string;
-  stage: FundraisingRound | string;
-  posts?: string[];
-  date: Date;
-};
+/**
+ *  @description - Remove all special characters from a string to make it a valid URL
+ */
+export const RemoveSlugPattern = /[`~!@#$%^&*()+{}[\]\\|,.//?;':"]/g;
