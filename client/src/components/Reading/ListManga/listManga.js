@@ -1,16 +1,13 @@
-import Card from '../../CardFilm/index.vue';
-import { LIST_FILM } from '../../../constants/listfilm';
-
-const customStyles = {};
+import CardManga from '../../CardManga/index.vue';
+import { LIST_MANGA } from '../../../constants/listmanga';
 export default {
   components: {
-    Card,
+    CardManga,
   },
   data() {
     return {
-      LIST_FILM,
+      LIST_MANGA,
       pageOfItems: [],
-      customStyles,
     };
   },
   methods: {

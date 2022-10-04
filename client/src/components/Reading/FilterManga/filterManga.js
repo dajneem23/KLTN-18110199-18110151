@@ -1,13 +1,13 @@
 import DropDown from '../../Dropdown/index.vue';
-import { FILTER_ITEM } from '../../../constants/filterFilm';
+import { FILTERMANGA_ITEM } from '../../../constants/filterManga';
 export default {
-  name: 'FilterFilm',
+  name: 'FilterManga',
   components: {
     DropDown,
   },
   methods: {
     getFilter() {
-      console.log(FILTER_ITEM.filterFilm);
+      console.log(FILTERMANGA_ITEM.filterFilm);
     },
     ungetFilter() {
       console.log('Bo loc');
@@ -15,7 +15,7 @@ export default {
   },
   data() {
     return {
-      FILTER_ITEM,
+      FILTERMANGA_ITEM,
     };
   },
 };

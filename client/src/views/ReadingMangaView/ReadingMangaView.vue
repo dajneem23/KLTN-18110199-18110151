@@ -1,13 +1,8 @@
-<template lang="">
-  <div>
-    Reading
+<template>
+  <div class="wrapper-reading">
+    <FilterManga></FilterManga>
+    <ListManga></ListManga>
   </div>
 </template>
-<script>
-export default {
-  
-}
-</script>
-<style lang="">
-  
-</style>
+<script src="./readingMangaView"></script>
+<style lang="scss" src="./readingMangaView.scss" scoped></style>
