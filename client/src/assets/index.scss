@@ -47,4 +47,31 @@ html {
     opacity: 0.5;
   }
 }
-
+.screen-reading {
+  padding-top: 20px;
+  .VueCarousel {
+    max-height: 92vh;
+    max-width: 78%;
+    margin: 0px auto 0px auto;
+  }
+  .VueCarousel-slide {
+    display: flex;
+    justify-content: center;
+    img {
+      height: 930px;
+      object-fit: contain;
+    }
+  }
+  .VueCarousel-dot-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0 !important;
+    .VueCarousel-dot {
+      margin: 0 !important;
+    }
+    .VueCarousel-dot--active {
+      background-color: var(--primary-blue_3) !important;
+    }
+  }
+}

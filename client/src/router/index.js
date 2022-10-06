@@ -10,6 +10,7 @@ import Register from '../views/RegisterView/RegisterView.vue';
 import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
 import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
+import DetailManga from '../views/ReadingMangaView/DetailMangaView/detailMangaView.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -82,6 +83,16 @@ const routes = [
     components: {
       header: Header,
       default: Details,
+      footer: Footer,
+    },
+    props: true,
+  },
+  {
+    path: '/manga/details/:mangaId/',
+    name: 'detailmanga',
+    components: {
+      header: Header,
+      default: DetailManga,
       footer: Footer,
     },
     props: true,
