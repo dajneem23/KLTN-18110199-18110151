@@ -15,17 +15,17 @@ export class UserModel extends BaseModel {
       indexes: [
         {
           field: {
-            name: 1,
+            email: 1,
           },
           options: {
             unique: true,
           },
         },
-        {
-          field: {
-            name: 'text',
-          },
-        },
+        // {
+        //   field: {
+        //     email: 'text',
+        //   },
+        // },
         {
           field: {
             slug: 1,

@@ -55,7 +55,7 @@ export const protect =
 /**
  * [Private] Authentication middleware
  */
-// export const protectPrivateAPI = (): RequestHandler => async (req, res, next) => {
+// export const protect = (): RequestHandler => async (req, res, next) => {
 //   try {
 //     const decoded = await verifyAccessToken(req.headers);
 //     if (!decoded.roles || !decoded.roles.includes('admin')) {

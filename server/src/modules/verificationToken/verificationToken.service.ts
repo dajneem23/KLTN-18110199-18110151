@@ -50,7 +50,7 @@ export default class VerificationTokenService {
         data: {
           to: user.email,
           params: {
-            'user-fullname': user.full_name,
+            'user-fullname': user.name,
             'verify-url': verificationToken.url,
           },
         },
@@ -126,7 +126,7 @@ export default class VerificationTokenService {
         data: {
           to: user.email,
           params: {
-            'user-fullname': user.full_name,
+            'user-fullname': user.name,
             'confirm-request-code': verificationToken.token,
           },
         },
