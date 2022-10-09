@@ -1,4 +1,6 @@
 import { LOGIN_ITEM } from '../../constants/loginpage';
+import { AuthService } from '@/services';
+import { mapState } from 'vuex';
 export default {
   name: 'LoginView',
   data() {
@@ -11,6 +13,9 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState(['userInfo']),
+  },
   methods: {
     usernameValidate() {
       LOGIN_ITEM.userName.error = '';
@@ -18,7 +23,7 @@ export default {
         LOGIN_ITEM.userName.error = 'Username is required';
       }
     },
-    passwordValiate() {
+    passwordValidate() {
       LOGIN_ITEM.passWord.error = '';
       if (!this.account.password.trim()) {
         LOGIN_ITEM.passWord.error = 'Password is required';
@@ -26,10 +31,21 @@ export default {
     },
     validate() {
       this.usernameValidate();
-      this.passwordValiate();
+      this.passwordValidate();
     },
-    login() {
+    async login() {
       this.validate();
+      console.log({ AuthService });
+      const [result, error] = await AuthService.login({
+        loginId: this.account.username,
+        password: this.account.password,
+      });
+      console.log([result, error]);
+      if (result) {
+        const { user } = result;
+        this.$store.commit('setUserInfo', user);
+        this.$store.commit('setIsAuthenticated', true);
+      }
       console.log(this.account);
     },
   },
