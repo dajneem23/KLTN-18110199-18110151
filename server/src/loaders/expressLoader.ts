@@ -99,7 +99,13 @@ const expressLoader = (): Express => {
   // Secure the Express apps by setting various HTTP headers
   app.use(helmet());
   // Configuring CORS (Cross Origin Resource Sharing)
-  app.use(cors());
+  app.use(
+    cors({
+      origin: 'http://localhost:8080',
+      optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+      credentials: true,
+    }),
+  );
 
   app.use((req, res, next) => {
     logger.info(
