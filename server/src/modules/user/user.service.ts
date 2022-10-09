@@ -151,7 +151,7 @@ export class UserService {
         {
           $set: {
             ...data,
-            ...(data.full_name && { _full_name_alias: generateTextAlias(data.full_name) }),
+            ...(data.name && { _full_name_alias: generateTextAlias(data.name) }),
             updated_at: new Date(),
           },
         },

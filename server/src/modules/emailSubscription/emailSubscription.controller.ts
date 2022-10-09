@@ -2,7 +2,7 @@ import { Inject, Service } from 'typedi';
 import httpStatusCode from 'http-status';
 import { Controller, Auth, Res, Get, Put, Body, Params } from '@/utils/expressDecorators';
 import { Response } from 'express';
-import { protect, protectPrivateAPI } from '@/api/middlewares/protect';
+import { protect, protect } from '@/api/middlewares/protect';
 import { JWTPayload } from '@/modules/auth/authSession.type';
 import EmailSubscriptionService from '@/modules/emailSubscription/emailSubscription.service';
 import * as emailSubscriptionValidation from './emailSubscription.validation';
@@ -33,13 +33,13 @@ export default class EmailSubscriptionController {
   // PRIVATE ROUTES
   // ----------------------------------------------------------------
 
-  @Get('/private/users/:id/email-subscription', [protectPrivateAPI()])
+  @Get('/private/users/:id/email-subscription', [protect()])
   async privateGet(@Res() res: Response, @Params() params: { id: string }) {
     const result = await this.emailSubscriptionService.getEmailSubscription(params.id);
     res.status(httpStatusCode.OK).json(result);
   }
 
-  @Put('/private/users/:id/email-subscription', [emailSubscriptionValidation.update, protectPrivateAPI()])
+  @Put('/private/users/:id/email-subscription', [emailSubscriptionValidation.update, protect()])
   async privateUpdate(@Res() res: Response, @Params() params: { id: string }, @Body() body: any) {
     const result = await this.emailSubscriptionService.updateEmailSubscription(params.id, body);
     res.status(httpStatusCode.OK).json(result);

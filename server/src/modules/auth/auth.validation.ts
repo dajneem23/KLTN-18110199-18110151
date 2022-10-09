@@ -9,7 +9,7 @@ export const login = validate({
 
 export const register = validate({
   [Segments.BODY]: Joi.object({
-    full_name: Joi.string().required(),
+    name: Joi.string().required(),
     email: Joi.string().email().required(),
     phone: Joi.string().required(),
     password: Joi.string().min(6).max(64).required(),
