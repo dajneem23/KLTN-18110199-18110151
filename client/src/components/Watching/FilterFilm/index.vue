@@ -1,13 +1,16 @@
 <template>
   <div class="filter-box bgc-white">
     <div class="box-category">
-      <DropDown :data="FILTER_ITEM.category"></DropDown>
+      <DropDown :data="FILTER_ITEM.category" type="film"></DropDown>
     </div>
     <div class="box-category">
-      <DropDown :data="FILTER_ITEM.country"></DropDown>
+      <DropDown :data="FILTER_ITEM.country" type="film"></DropDown>
     </div>
     <div class="box-category">
-      <DropDown :data="FILTER_ITEM.year"></DropDown>
+      <DropDown :data="FILTER_ITEM.year" type="film"></DropDown>
+    </div>
+    <div class="box-search box-category">
+      <input type="text" class="search-input" placeholder="Search..." v-model="FILTER_ITEM.filterFilm.name"/>
     </div>
     <div class="btn-box">
       <div class="btn-filter" v-on:click="getFilter()">

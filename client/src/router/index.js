@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import HomeView from '../views/HomeView/HomeView.vue';
+import NewsView from '../views/NewsView/newsView.vue';
 import Error from '../views//ErrorView/ErrorView.vue';
 import ReadingManga from '../views/ReadingMangaView/ReadingMangaView.vue';
 import WatchingFilm from '../views/WatchingFilmView/WatchingFilm.vue';
@@ -10,6 +11,7 @@ import Register from '../views/RegisterView/RegisterView.vue';
 import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
 import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
+import DetailManga from '../views/ReadingMangaView/DetailMangaView/detailMangaView.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -67,6 +69,15 @@ const routes = [
     },
   },
   {
+    path: '/news/',
+    name: 'news',
+    components: {
+      header: Header,
+      default: NewsView,
+      footer: Footer,
+    },
+  },
+  {
     path: '/login/',
     name: 'login',
     component: Login,
@@ -82,6 +93,16 @@ const routes = [
     components: {
       header: Header,
       default: Details,
+      footer: Footer,
+    },
+    props: true,
+  },
+  {
+    path: '/manga/details/:mangaId/',
+    name: 'detailmanga',
+    components: {
+      header: Header,
+      default: DetailManga,
       footer: Footer,
     },
     props: true,

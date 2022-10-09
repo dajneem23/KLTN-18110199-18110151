@@ -1,5 +1,5 @@
 import DropDown from '../../Dropdown/index.vue';
-import { FILTER_ITEM } from '../../../constants/filter';
+import { FILTER_ITEM } from '../../../constants/filterFilm';
 export default {
   name: 'FilterFilm',
   components: {

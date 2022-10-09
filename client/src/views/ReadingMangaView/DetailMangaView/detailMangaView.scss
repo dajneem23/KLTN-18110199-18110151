@@ -1,0 +1,136 @@
+.detailmanga-wrapper {
+  padding-top: 70px;
+}
+.screen-reading {
+}
+.manga-info {
+  width: 70%;
+  margin: 0 auto;
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .manga-img {
+    width: 250px;
+    border-radius: 5px;
+    margin-right: 40px;
+  }
+}
+.manga-cmt {
+  height: 50vh;
+}
+.manga-box-1 {
+  display: flex;
+  align-items: flex-end;
+}
+.manga-box-2 {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  .manga-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .manga-info-des {
+    width: 50%;
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
+    .manga-des-item {
+      display: flex;
+      align-items: center;
+      height: 50px;
+    }
+  }
+}
+#container {
+  padding-top: 5px;
+  video {
+    width: 100%;
+    height: 100%;
+    max-height: 800px;
+  }
+}
+.manga-cmt {
+  width: 50%;
+  height: 100%;
+  margin: 0 auto 60px auto;
+  padding: 20px 40px;
+  border: 1px solid var(--gray);
+  border-radius: 5px;
+  .write-cmt-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px var(--gray) solid;
+    textarea {
+      min-width: 90%;
+      max-width: 90%;
+      max-height: 100px;
+      min-height: 100px;
+      border: none;
+      margin-right: 15px;
+      padding: 15px;
+
+      resize: none;
+    }
+    textarea:focus-visible {
+      outline: none;
+    }
+  }
+}
+.cmt-box {
+  width: 100%;
+  padding: 15px 0;
+  .user-cmt {
+    margin-top: 15px;
+    .cmt-header {
+      display: flex;
+      .cmt-avt {
+        img {
+          width: 50px;
+          height: 50px;
+          background-repeat: no-repeat;
+          background-size: cover;
+          border-radius: 50%;
+        }
+      }
+      .cmt-info {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+        .cmt-time {
+          font-size: 13px;
+        }
+      }
+    }
+    .cmt-content {
+      margin-top: 10px;
+    }
+    .cmt-footer {
+      display: flex;
+    }
+  }
+  .cmt-rep {
+    padding-left: 25px;
+    margin-left: 25px;
+    border-left: 1px var(--gray) solid;
+  }
+}
+.manga-chapter {
+  width: 70%;
+  padding: 0px 40px 40px 40px;
+  margin: 10px auto;
+  button {
+    width: 40px;
+    height: 40px;
+    color: var(--white);
+    background-color: var(--primary-blue);
+    border: none;
+    border-radius: 5px;
+  }
+  button + button {
+    margin-left: 5px;
+  }
+}

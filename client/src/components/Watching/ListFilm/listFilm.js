@@ -1,4 +1,4 @@
-import Card from '../../Card/index.vue';
+import Card from '../../CardFilm/index.vue';
 import { LIST_FILM } from '../../../constants/listfilm';
 
 const customStyles = {};

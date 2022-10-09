@@ -4,7 +4,7 @@
 :root {
   --white: #fff;
   --black: #000;
-  --gray: #b3b3b3;
+  --gray: #dbdbdb;
   --dark-gray: #666666;
   --primary-blue: #5680e9;
   --primary-blue_2: #84ceeb;
@@ -22,6 +22,9 @@ html {
 }
 .text-black {
   color: var(--black);
+}
+.text-blue {
+  color: var(--primary-blue);
 }
 .text-gray {
   color: var(--dark-gray);
@@ -42,5 +45,33 @@ html {
     pointer-events: none;
     cursor: default;
     opacity: 0.5;
+  }
+}
+.screen-reading {
+  padding-top: 20px;
+  .VueCarousel {
+    max-height: 92vh;
+    max-width: 78%;
+    margin: 0px auto 0px auto;
+  }
+  .VueCarousel-slide {
+    display: flex;
+    justify-content: center;
+    img {
+      height: 930px;
+      object-fit: contain;
+    }
+  }
+  .VueCarousel-dot-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0 !important;
+    .VueCarousel-dot {
+      margin: 0 !important;
+    }
+    .VueCarousel-dot--active {
+      background-color: var(--primary-blue_3) !important;
+    }
   }
 }

@@ -1,6 +1,15 @@
 <template>
   <div class="detailFilm-wrapper">
-    <div class="screen-watching bgc-gray"></div>
+    <div class="screen-watching bgc-black">
+      <div id="container">
+        <video id="player" playsinline controls data-poster="/path/to/poster.jpg">
+          <source src="../../../assets/video/dasaitulucdau.mp4" type="video/mp4" />
+
+          <!-- Captions are optional -->
+          <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default />
+        </video>
+      </div>
+    </div>
     <div class="film-info">
       <div class="film-box-1">
         <img
@@ -11,37 +20,32 @@
         <div class="film-info-des">
           <div>
             <div class="text-dark-gray film-des-item">
-              Thể loại:
+              {{ FILMDETAIL_ITEM.category.title[lang] }}:
               <span class="text-black">Phim hài</span>
             </div>
             <div class="text-dark-gray film-des-item">
-              Đạo diễn:
+              {{ FILMDETAIL_ITEM.directors.title[lang] }}:
               <span class="text-black">Rambo</span>
             </div>
           </div>
           <div>
-            <div class="text-dark-gray film-des-item">Quốc gia: 
+            <div class="text-dark-gray film-des-item">
+              {{ FILMDETAIL_ITEM.nation.title[lang] }}:
               <span class="text-black">Việt Nam</span>
             </div>
-            <div class="text-dark-gray film-des-item">Thời lượng: 
-              <span class="text-black">
-                1 giờ 45 phút
-
-              </span>
+            <div class="text-dark-gray film-des-item">
+              {{ FILMDETAIL_ITEM.time.title[lang] }}:
+              <span class="text-black"> 1 giờ 45 phút </span>
             </div>
           </div>
           <div>
-            <div class="text-dark-gray film-des-item">Năm phát hành: 
-            <span class="text-black">
-              2022
-
-            </span>
+            <div class="text-dark-gray film-des-item">
+              {{ FILMDETAIL_ITEM.year.title[lang] }}:
+              <span class="text-black"> 2022 </span>
             </div>
-            <div class="text-dark-gray film-des-item">Rating: 
-            <span class="text-black">
-              95%
-
-            </span>
+            <div class="text-dark-gray film-des-item">
+              {{ FILMDETAIL_ITEM.rating.title[lang] }}:
+              <span class="text-black"> 95% </span>
             </div>
           </div>
           <div>
@@ -75,8 +79,27 @@
         </div>
       </div>
     </div>
-    <div class="film-cmt bgc-blue"></div>
+    <div class="film-cmt">
+      <div class="write-cmt-box">
+        <textarea class="input-cmt" type="text" placeholder="Hãy chia sẻ cảm nghĩ về bài viết" value=""></textarea>
+        <button class="btn-send-cmt bgc-blue_3 cl-white">Gửi</button>
+      </div>
+      <div class="cmt-box">
+        <Commentfilm></Commentfilm>
+        <div class="cmt-rep">
+          <Commentfilm></Commentfilm>
+          <div class="cmt-rep">
+            <Commentfilm></Commentfilm>
+          </div>
+          <Commentfilm></Commentfilm>
+          <div class="cmt-rep">
+            <Commentfilm></Commentfilm>
+          </div>
+        </div>
+        <Commentfilm></Commentfilm>
+      </div>
+    </div>
   </div>
 </template>
 <script src="./filmdetail"></script>
-<style lang="scss" src="./filmdetail.scss"></style>
+<style lang="scss" src="./filmdetail.scss" scoped></style>

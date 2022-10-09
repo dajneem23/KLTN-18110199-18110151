@@ -7,6 +7,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Rambo',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '10 ngày trước',
     },
     {
@@ -16,6 +17,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Rambo 2',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '10 ngày trước',
     },
     {
@@ -25,6 +27,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Rambo 3',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '10 ngày trước',
     },
     {
@@ -34,6 +37,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Rambo 4',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '10 ngày trước',
     },
     {
@@ -43,6 +47,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Rambo 5',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '10 ngày trước',
     },
     {
@@ -52,6 +57,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Rambo 6',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '10 ngày trước',
     },
     {
@@ -61,6 +67,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Rambo 7',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '10 ngày trước',
     },
     {
@@ -70,6 +77,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Rambo 8',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '10 ngày trước',
     },
     {
@@ -79,6 +87,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Rambo 9',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '10 ngày trước',
     },
     {
@@ -88,6 +97,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Rambo 10',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '10 ngày trước',
     },
   ],
@@ -99,6 +109,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Mixi',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '2 ngày trước',
     },
     {
@@ -108,6 +119,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Mixi 2',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '2 ngày trước',
     },
     {
@@ -117,6 +129,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Mixi 3',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '2 ngày trước',
     },
     {
@@ -126,6 +139,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Mixi 4',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '2 ngày trước',
     },
     {
@@ -135,6 +149,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Mixi 5',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '2 ngày trước',
     },
     {
@@ -144,6 +159,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Mixi 6',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '2 ngày trước',
     },
   ],
@@ -155,6 +171,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '2N',
       auth: 'Độ Mixi',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '12 ngày trước',
     },
     {
@@ -164,6 +181,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Độ Mixi',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '12 ngày trước',
     },
     {
@@ -173,6 +191,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Độ Mixi',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '12 ngày trước',
     },
     {
@@ -182,6 +201,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Độ Mixi',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '12 ngày trước',
     },
     {
@@ -191,6 +211,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Độ Mixi',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '12 ngày trước',
     },
     {
@@ -200,6 +221,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Độ Mixi',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '12 ngày trước',
     },
     {
@@ -209,6 +231,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Độ Mixi',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '12 ngày trước',
     },
     {
@@ -218,6 +241,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Độ Mixi',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '12 ngày trước',
     },
     {
@@ -227,6 +251,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Độ Mixi',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '12 ngày trước',
     },
     {
@@ -236,6 +261,7 @@ export const LIST_FILM = {
       description:'Đây là mô tả',
       views: '72N',
       auth: 'Độ Mixi',
+      linkVideo: 'https://www.youtube.com/watch?v=sxtn09rY7_w',
       time: '12 ngày trước',
     },
   ]

@@ -29,6 +29,16 @@ export const HEADER_ITEM = {
     path: '/',
     ref: 'home'
   },
+  news: {
+    title: {
+      vi: 'Tin tức',
+      en: 'News',
+    },
+    icon: '',
+    order: '',
+    path: '/news',
+    ref: 'news'
+  },
   manga: {
     title: {
       vi: 'Manga',

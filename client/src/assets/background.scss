@@ -5,6 +5,9 @@
 .bgc-gray {
   background-color: var(--gray);
 }
+.bgc-black {
+  background-color: var(--black);
+}
 .bgc-blue {
   background-color: var(--primary-blue);
 }
@@ -38,6 +41,9 @@
 }
 .fill-white {
   fill: var(--white);
+}
+.fill-red {
+  fill: red;
 }
 .fill-black {
   fill: var(--black);

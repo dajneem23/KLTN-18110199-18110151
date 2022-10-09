@@ -8,26 +8,26 @@ export default {
       account: {
         username: '',
         password: '',
-        fullName: '',
+        fullname: '',
       },
     };
   },
   methods: {
     fullnameValidate() {
       REGISTER_ITEM.fullName.error = '';
-      if (!this.account.fullname) {
+      if (!this.account.fullname.trim()) {
         REGISTER_ITEM.fullName.error = 'Fullname is required';
       }
     },
     usernameValidate() {
       REGISTER_ITEM.userName.error = '';
-      if (!this.account.username) {
+      if (!this.account.username.trim()) {
         REGISTER_ITEM.userName.error = 'Username is required';
       }
     },
     passwordValiate() {
       REGISTER_ITEM.passWord.error = '';
-      if (!this.account.password) {
+      if (!this.account.password.trim()) {
         REGISTER_ITEM.passWord.error = 'Password is required';
       }
     },
@@ -40,6 +40,7 @@ export default {
       this.validate();
       console.log(REGISTER_ITEM.userName.error);
       console.log(REGISTER_ITEM.passWord.error);
+      console.log(REGISTER_ITEM.fullName.error);
       console.log(this.account);
     },
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="footer-wrapper">
     <div class="content">
       <div class="join">
         <router-link to="/join">
