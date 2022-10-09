@@ -2,7 +2,7 @@ import validate, { Joi, Segments } from '@/core/validation';
 
 export const login = validate({
   [Segments.BODY]: Joi.object({
-    username: Joi.string().required(),
+    loginId: Joi.string().required(),
     password: Joi.string().required(),
   }),
 });

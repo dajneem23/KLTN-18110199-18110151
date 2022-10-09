@@ -451,7 +451,7 @@ export class BaseModel {
   }
   async _validate({ ..._content }: any): Promise<any> {
     try {
-      const { categories = [], sub_categories = [], country, title, name, slug } = _content;
+      const { categories = [], sub_categories = [], name, _id } = _content;
       categories.length &&
         (await $refValidation({ collection: 'categories', list: $toObjectId(categories) })) &&
         (_content.categories = $toObjectId(categories));
@@ -462,21 +462,30 @@ export class BaseModel {
           Refname: 'sub_categories',
         })) &&
         (_content.sub_categories = $toObjectId(sub_categories));
-      country && (await $refValidation({ collection: 'countries', list: [country], refKey: 'code' }));
-      title &&
-        !slug &&
-        (_content.slug = slugify(title, {
-          trim: true,
-          lower: true,
-          remove: RemoveSlugPattern,
-        }));
       name &&
-        !slug &&
-        (_content.slug = slugify(name, {
-          trim: true,
-          lower: true,
-          remove: RemoveSlugPattern,
-        }));
+        !_id &&
+        (_content._id = (await this._collection.findOne({
+          _id: slugify(name, {
+            replacement: '-',
+            lower: true,
+            strict: true,
+            remove: RemoveSlugPattern,
+          }),
+        }))
+          ? slugify(name, {
+              replacement: '-',
+              lower: true,
+              strict: true,
+              remove: RemoveSlugPattern,
+            }) +
+            '-' +
+            new Date().getTime()
+          : slugify(name, {
+              replacement: '-',
+              lower: true,
+              strict: true,
+              remove: RemoveSlugPattern,
+            }));
       return _content;
     } catch (err) {
       this.logger.error('validate_error', `[validate:${this._collectionName}:error]`, err.message);

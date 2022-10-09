@@ -22,7 +22,7 @@ import { generateTextAlias } from '@/utils/text';
 export class UserService {
   private logger = new Logger('UserService');
 
-  private model: UserModel = Container.get(userModelToken);
+  public model: UserModel = Container.get(userModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;

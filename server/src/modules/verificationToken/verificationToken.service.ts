@@ -6,7 +6,7 @@ import { VerificationToken } from '@/modules/verificationToken/verificationToken
 import { toVerificationTokenOutput } from '@/modules/verificationToken/verificationToken.util';
 import { throwErr } from '@/utils/common';
 import { VerificationTokenError } from '@/modules/verificationToken/verificationToken.error';
-import { Filter } from 'mongodb';
+import { Filter, WithId } from 'mongodb';
 import { MailJob } from '@/modules/mailer/mail.job';
 import { encodeBase64 } from '@/utils/base64';
 import dayjs from 'dayjs';
@@ -66,7 +66,7 @@ export default class VerificationTokenService {
   /**
    * Generate token and send "request password reset" email
    */
-  async sendPasswordReset(user: User | UserOutput, opts: { redirect_uri: string }) {
+  async sendPasswordReset(user: User | UserOutput | any, opts: { redirect_uri: string }) {
     try {
       const token = await numbersSize6();
       const { value: verificationToken } = await this.verificationTokenModel.collection.findOneAndUpdate(

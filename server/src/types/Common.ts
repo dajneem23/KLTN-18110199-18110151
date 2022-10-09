@@ -68,20 +68,22 @@ export enum CATEGORY_TYPE {
 export type BaseModel = {
   _id?: string;
 
-  foreign_id?: string;
+  name?: string;
 
-  record_id?: string;
+  slug?: string;
 
   metadata?: {
     _admin_note?: string;
     storage?: string;
   };
 
-  need_review?: boolean;
+  _v: number;
 
-  review_status?: string;
+  _histories?: string[];
 
-  reviewed?: boolean;
+  published?: boolean;
+
+  hidden?: boolean;
 
   updated_by?: string;
 
@@ -96,34 +98,31 @@ export type BaseModel = {
   deleted_at?: Date;
 
   deleted?: boolean;
+
+  views: number;
+
+  up_votes?: string[];
+
+  down_votes?: string[];
+
+  reporters?: string[];
+
+  status?: string;
 };
 
-export interface BaseInformationModel extends BaseModel {
-  id?: ObjectId;
-
-  name?: string;
-  // location?: string;
-
-  about?: string;
-
-  categories?: ObjectId[];
-
-  verified?: boolean;
-
-  sponsored?: boolean;
-
-  tel?: string;
-
-  email?: string;
-
-  avatar?: string;
-
-  short_description?: string;
-  urls: {
-    url: string;
-    type: string;
-  }[];
-}
+export const _defaultBaseModel: BaseModel = {
+  _v: 0,
+  views: 0,
+  published: false,
+  hidden: false,
+  deleted: false,
+  up_votes: [],
+  down_votes: [],
+  reporters: [],
+  _histories: [],
+  created_at: new Date(),
+  updated_at: new Date(),
+};
 
 export type ContractAddress = {
   owner: string;
@@ -158,6 +157,7 @@ export const defaultFilter = {
   deleted: false,
 };
 export type BaseServiceInput = {
+  _slug?: string;
   _id?: string;
   _content: {
     [key: string]: any;
@@ -213,25 +213,12 @@ export const PRIVATE_KEYS = [
 ];
 
 export enum COLLECTION_NAMES {
-  events = 'events',
-  news = 'news',
-  projects = 'projects',
-  persons = 'persons',
-  companies = 'companies',
-  organizations = 'organizations',
-  funds = 'funds',
+  stories = 'stories',
   users = 'users',
-  categories = 'categories',
-  tags = 'tags',
   verifications = 'verifications',
-  glossaries = 'glossaries',
-  blockchains = 'blockchains',
-  products = 'products',
-  countries = 'countries',
   'auth-sessions' = 'auth-sessions',
   coins = 'coins',
   settings = 'settings',
-  exchanges = 'exchanges',
 }
 /**
  *  @description - Remove all special characters from a string to make it a valid URL

@@ -92,6 +92,15 @@ export const errors = Object.freeze({
       vi: 'Tài khoản đã bị khóa',
     },
   },
+  ACCESS_DENIED: {
+    message: 'ACCESS DENIED',
+    code: '1004',
+    status: httpStatusCode.UNAUTHORIZED,
+    isPublic: true,
+    locales: {
+      vi: 'Không có quyền truy cập',
+    },
+  },
 });
 
 export class AuthError extends AppError {
