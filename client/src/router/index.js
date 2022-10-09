@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import HomeView from '../views/HomeView/HomeView.vue';
+import NewsView from '../views/NewsView/newsView.vue';
 import Error from '../views//ErrorView/ErrorView.vue';
 import ReadingManga from '../views/ReadingMangaView/ReadingMangaView.vue';
 import WatchingFilm from '../views/WatchingFilmView/WatchingFilm.vue';
@@ -64,6 +65,15 @@ const routes = [
     components: {
       header: Header,
       default: Chatting,
+      footer: Footer,
+    },
+  },
+  {
+    path: '/news/',
+    name: 'news',
+    components: {
+      header: Header,
+      default: NewsView,
       footer: Footer,
     },
   },

@@ -187,6 +187,7 @@ export const FILTER_ITEM = {
   filterFilm: {
     category: '',
     country: '',
-    year:''
+    year: '',
+    name:''
   }
 };

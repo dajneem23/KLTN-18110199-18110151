@@ -7,7 +7,7 @@ export default {
   },
   methods: {
     getFilter() {
-      console.log(FILTERMANGA_ITEM.filterFilm);
+      console.log(FILTERMANGA_ITEM.filterManga);
     },
     ungetFilter() {
       console.log('Bo loc');

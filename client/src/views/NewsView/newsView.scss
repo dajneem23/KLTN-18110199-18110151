@@ -1,0 +1,53 @@
+.news-wrapper {
+  padding-top: 70px;
+  .img-banner {
+    max-width: 1912px;
+    min-height: 515px;
+    background-image: url(https://spiderum.com/banner.78f477df5d7c7b697e99.png);
+    background-size: cover;
+  }
+  .content-banner {
+    .popular-news {
+      h3 {
+        margin-bottom: 20px;
+      }
+      padding: 20px;
+      margin: auto;
+      width: 65%;
+      .news-popular {
+        width: 100%;
+        height: 350px;
+      }
+    }
+    .hot-news {
+      background-color: var(--gray);
+      padding-bottom: 20px;
+      h3 {
+        padding: 20px;
+        width: 65%;
+        margin: auto;
+      }
+      .news-hot {
+        width: 65%;
+        padding: 20px;
+        margin: auto;
+        background-color: brown;
+        height: 330px;
+        margin-bottom: 20px;
+      }
+    }
+    .main-news {
+      width: 65%;
+      padding: 0 20px;
+      margin: auto;
+      margin-bottom: 20px;
+      .main-news-button {
+        padding: 20px 0;
+      }
+      .news-box {
+        height: 300px;
+        background-color: burlywood;
+      }
+    }
+  }
+}

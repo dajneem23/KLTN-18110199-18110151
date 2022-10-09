@@ -188,24 +188,30 @@ export const FILTERMANGA_ITEM = {
       kimdong: {
         vi: 'Kim đồng',
         en: 'Kim đồng',
+        value:'kimdong'
       },
       tuoitre: {
         vi: 'Tuổi trẻ',
         en: 'Tuổi trẻ',
+        value:'tuoitre'
       },
       mangnon: {
         vi: 'Măng non',
         en: 'Măng non',
+        value:'mangnon'
       },
       kenh14: {
         vi: 'Kênh 14',
         en: 'Kênh 14',
+        value:'kenh14'
       },
     },
   },
-  filterFilm: {
+  filterManga: {
     category: '',
     country: '',
     year: '',
+    publishing:'',
+    name: '',
   },
 };

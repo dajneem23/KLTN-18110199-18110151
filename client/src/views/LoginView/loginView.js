@@ -14,13 +14,13 @@ export default {
   methods: {
     usernameValidate() {
       LOGIN_ITEM.userName.error = '';
-      if (!this.account.username) {
+      if (!this.account.username.trim()) {
         LOGIN_ITEM.userName.error = 'Username is required';
       }
     },
     passwordValiate() {
       LOGIN_ITEM.passWord.error = '';
-      if (!this.account.password) {
+      if (!this.account.password.trim()) {
         LOGIN_ITEM.passWord.error = 'Password is required';
       }
     },
@@ -30,8 +30,6 @@ export default {
     },
     login() {
       this.validate();
-      console.log(LOGIN_ITEM.userName.error);
-      console.log(LOGIN_ITEM.passWord.error);
       console.log(this.account);
     },
   },

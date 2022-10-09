@@ -1,16 +1,19 @@
 <template lang="">
   <div class="filter-box bgc-white">
     <div class="box-category">
-      <DropDown :data="FILTERMANGA_ITEM.category"></DropDown>
+      <DropDown :data="FILTERMANGA_ITEM.category" type="manga"></DropDown>
     </div>
     <div class="box-category">
-      <DropDown :data="FILTERMANGA_ITEM.country"></DropDown>
+      <DropDown :data="FILTERMANGA_ITEM.country" type="manga"></DropDown>
     </div>
     <div class="box-category">
-      <DropDown :data="FILTERMANGA_ITEM.year"></DropDown>
+      <DropDown :data="FILTERMANGA_ITEM.year" type="manga"></DropDown>
     </div>
     <div class="box-category">
-      <DropDown :data="FILTERMANGA_ITEM.publishing"></DropDown>
+      <DropDown :data="FILTERMANGA_ITEM.publishing" type="manga"></DropDown>
+    </div>
+    <div class="box-search box-category">
+      <input type="text" class="search-input" placeholder="Search..." v-model="FILTERMANGA_ITEM.filterManga.name" />
     </div>
     <div class="btn-box">
       <div class="btn-filter" v-on:click="getFilter()">
