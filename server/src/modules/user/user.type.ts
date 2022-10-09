@@ -2,11 +2,13 @@ import { ObjectId } from 'mongodb';
 
 export type UserStatus = 'active' | 'inactive' | 'suspended';
 
-export type UserRole = 'admin' | 'user';
+export type UserRole = 'admin' | 'user' | 'guest' | 'creator';
 
-export const RolesWeight: any = {
+export const RolesWeight = {
   admin: 100,
-  user: 1,
+  user: 50,
+  creator: 10,
+  guest: 0,
 };
 
 export type Gender = 'male' | 'female' | 'other';

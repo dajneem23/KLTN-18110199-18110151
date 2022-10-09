@@ -24,7 +24,7 @@ export type RegisterInput = CreateUpdateUserInput;
 export type JWTPayload = Pick<User, 'id' | 'email' | 'email_verified' | 'full_name' | 'picture' | 'roles'>;
 
 export type BearerTokens = {
-  token_type: 'bearer';
+  // token_type: 'bearer';
   access_token: string;
   expires_in: number;
   refresh_token: string;

@@ -21,7 +21,7 @@ export class UserController {
   // PUBLIC ROUTES
   // ----------------------------------------------------------------
 
-  @Get('/users/me', [protect()])
+  @Get('/users/me', [protect({})])
   async getMe(@Res() res: Response, @Auth() auth: JWTPayload) {
     const user = await this.userService.getById(auth.id);
     res.status(httpStatusCode.OK).json(user);
@@ -30,58 +30,6 @@ export class UserController {
   @Put('/users/me', [userValidation.updateMe, protect()])
   async updateMe(@Res() res: Response, @Body() body: any, @Auth() auth: JWTPayload) {
     const user = await this.userService.update(auth.id, body);
-    res.status(httpStatusCode.OK).json(user);
-  }
-  @Patch('/users/me/favorite-news/:id', [protect()])
-  async updateFavoriteNews(
-    @Res() res: Response,
-    @Body() body: any,
-    @Params()
-    params: {
-      id: string;
-    },
-    @Auth() auth: JWTPayload,
-  ) {
-    const user = await this.userService.updateFavoriteNews(auth.id, params.id);
-    res.status(httpStatusCode.OK).json(user);
-  }
-  @Patch('/users/me/save-news/:id', [protect()])
-  async saveNews(
-    @Res() res: Response,
-    @Body() body: any,
-    @Params()
-    params: {
-      id: string;
-    },
-    @Auth() auth: JWTPayload,
-  ) {
-    const user = await this.userService.saveNews(auth.id, params.id);
-    res.status(httpStatusCode.OK).json(user);
-  }
-  @Patch('/users/me/category/follow/:id', [protect()])
-  async followCategory(
-    @Res() res: Response,
-    @Body() body: any,
-    @Params()
-    params: {
-      id: string;
-    },
-    @Auth() auth: JWTPayload,
-  ) {
-    const user = await this.userService.followCategory(auth.id, params.id);
-    res.status(httpStatusCode.OK).json(user);
-  }
-  @Patch('/users/me/category/unfollow/:id', [protect()])
-  async unfollowCategory(
-    @Res() res: Response,
-    @Body() body: any,
-    @Params()
-    params: {
-      id: string;
-    },
-    @Auth() auth: JWTPayload,
-  ) {
-    const user = await this.userService.unfollowCategory(auth.id, params.id);
     res.status(httpStatusCode.OK).json(user);
   }
 

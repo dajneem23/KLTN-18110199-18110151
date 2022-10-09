@@ -118,17 +118,18 @@ export const $query = function ({
   ];
 };
 /**
- *
+ * Create Pagination Pipeline
  * @param {string} $match - $match query
  * @param {Array} pipeline - pipeline query
  * @param {Array} lookups - lookups query
  * @param {Array} condition - condition query
  * @param {Array} more -
- * @returns
+ * @returns pipeline
  */
 export const $pagination = ({
   items,
   $lookups,
+  $addFields,
   condition,
   $more,
   $projects,
@@ -139,6 +140,7 @@ export const $pagination = ({
   $match?: any;
   $sort?: any;
   $projects?: any[];
+  $addFields?: any;
   $sets?: any[];
   items?: any[];
   $lookups?: any[];
@@ -153,6 +155,7 @@ export const $pagination = ({
     {
       $match,
     },
+    ...((!!$addFields && [{ $addFields }]) || []),
     ...((!!$lookups && [...$lookups]) || []),
     ...((!!$sets && [...$sets]) || []),
     ...((!!$projects && [...$projects]) || []),

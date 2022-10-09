@@ -1,17 +1,22 @@
 import { Service, Token } from 'typedi';
-import { User } from './user.type';
-import { keys } from 'ts-transformer-keys';
+import { Story } from './story.type';
 import { BaseModel } from '../base/base.model';
+import { keys } from 'ts-transformer-keys';
 
-const COLLECTION_NAME = 'users';
-const TOKEN_NAME = '_userModel';
-export const userModelToken = new Token<UserModel>(TOKEN_NAME);
-@Service(userModelToken)
-export class UserModel extends BaseModel {
+const COLLECTION_NAME = 'stories';
+const TOKEN_NAME = '_storyModel';
+export const storyModelToken = new Token<CoinModel>(TOKEN_NAME);
+/**
+ * @class CoinModel
+ * @extends BaseModel
+ * @description Coin model: Coin model for all story related operations
+ */
+@Service(storyModelToken)
+export class CoinModel extends BaseModel {
   constructor() {
     super({
       collectionName: COLLECTION_NAME,
-      _keys: keys<User>(),
+      _keys: keys<Story>(),
       indexes: [
         {
           field: {
