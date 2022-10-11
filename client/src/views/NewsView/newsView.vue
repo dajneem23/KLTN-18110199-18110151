@@ -4,18 +4,34 @@
     <div class="content-banner">
       <div class="popular-news">
         <h3>Phổ biến nhất</h3>
-        <div class="news-popular bgc-blue"></div>
+        <div class="news-popular">
+          <CardNews style_x="card-news-x"></CardNews>
+          <CardNews style_x="card-news-x"></CardNews>
+          <CardNews style_x="card-news-x"></CardNews>
+          <CardNews style_x="card-news-x"></CardNews>
+        </div>
       </div>
       <div class="hot-news">
         <h3>Nổi bật nhất</h3>
-        <div class="news-hot"></div>
+        <div class="news-hot">
+          <CardNews style_x="card-news-y"></CardNews>
+          <CardNews style_x="card-news-y"></CardNews>
+          <CardNews style_x="card-news-y"></CardNews>
+          <CardNews style_x="card-news-y"></CardNews>
+        </div>
       </div>
       <div class="main-news">
         <div class="main-news-button">
-          <button>Dành cho bạn</button>
-          <button>Đánh giá cao nhất</button>
+          <SwitchButton contentL="Mới nhất" contentR="Phổ biến nhất"></SwitchButton>
         </div>
-        <div class="news-box"></div>
+        <div class="news-box">
+          <CardNews style_x="card-news-x" font_title="f20"></CardNews>
+          <CardNews style_x="card-news-x" font_title="f20"></CardNews>
+          <CardNews style_x="card-news-x" font_title="f20"></CardNews>
+          <CardNews style_x="card-news-x" font_title="f20"></CardNews>
+          <CardNews style_x="card-news-x" font_title="f20"></CardNews>
+          <CardNews style_x="card-news-x" font_title="f20"></CardNews>
+        </div>
       </div>
     </div>
   </div>

@@ -8,6 +8,8 @@
   }
   .content-banner {
     .popular-news {
+      width: 100%;
+
       h3 {
         margin-bottom: 20px;
       }
@@ -16,7 +18,10 @@
       width: 65%;
       .news-popular {
         width: 100%;
-        height: 350px;
+        height: 360px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
       }
     }
     .hot-news {
@@ -31,9 +36,12 @@
         width: 65%;
         padding: 20px;
         margin: auto;
-        background-color: brown;
         height: 330px;
         margin-bottom: 20px;
+
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 20px;
       }
     }
     .main-news {
@@ -45,8 +53,9 @@
         padding: 20px 0;
       }
       .news-box {
-        height: 300px;
-        background-color: burlywood;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 20px;
       }
     }
   }

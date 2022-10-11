@@ -84,8 +84,10 @@
       max-height: 500px;
       overflow: scroll;
       overflow-x: hidden;
+      // display: flex;
+      flex-direction: column;
       .news-write-cmt {
-        // display: flex;
+        display: flex;
         justify-content: center;
         align-items: center;
         border-bottom: 1px var(--gray) solid;

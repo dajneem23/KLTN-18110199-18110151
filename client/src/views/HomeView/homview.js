@@ -1,6 +1,6 @@
 import axios from 'axios';
 import InfiniteLoading from 'vue-infinite-loading';
-import News from '../../components/News/index.vue';
+import News from '../../components/Blog/index.vue';
 export default {
   components: {
     InfiniteLoading,
