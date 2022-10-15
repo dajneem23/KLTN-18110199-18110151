@@ -1,0 +1,11 @@
+use('wikiblock')
+
+db.persons.find({name: {
+
+    $regex: a,
+
+    $options: 'i'
+
+}
+}
+).pretty()

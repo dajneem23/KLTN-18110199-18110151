@@ -1,0 +1,53 @@
+.notiModal {
+	&__content {
+		border: none;
+		border-radius: 32px;
+		box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
+		width: 542px;
+		background-color: #ffffff;
+	}
+	&__body {
+		height: 100%;
+		width: 542px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		padding: 40px 0 25px;
+		position: relative;
+	}
+	&__notiContent {
+		color: #4d4d4d;
+		font-size: 16px;
+		font-family: NotoSansJPBold;
+		margin-bottom: 40px;
+		white-space: pre-line;
+		text-align: center;
+	}
+	&__buttonContainer {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		column-gap: 10px;
+		> button {
+			width: 116px;
+			height: 27px;
+			border-radius: 13.5px;
+			border: 2px solid;
+			font-size: 13px;
+			font-family: NotoSansJPBold;
+			background-color: white;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+	&__cancelBtn {
+		border-color: #969696;
+		color: #969696;
+	}
+	&__acceptBtn {
+		border-color: #c8a475;
+		color: #c8a475;
+	}
+}

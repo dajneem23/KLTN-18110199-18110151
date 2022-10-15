@@ -1,0 +1,32 @@
+POST http://localhost:8084/content/v1/events
+Content-Type: application/json
+
+{
+  "name": "fox_test",
+  "introduction": "1fox_test",
+  "startDate": "2022-08-05 06:39:48.079",
+  "endDate": "2022-08-02 14:39:48.079",
+  "phone": "123456789",
+  "email": "1fox@global.com",
+  "website": "www.1fox.com",
+  "type": "offline",
+  "categories":[
+    {"id":"35e358ae-b87a-4976-9c5c-e9b79000c5e0"}
+  ],
+  "cryptoAssetTags":[
+    {"id":"e250211b-1803-4fa8-9e01-22e0cab2d940"},
+    {"id":"c28756f5-691b-47c0-a02b-555b21060799"}
+  ],
+  "country":"4d974a77-15ce-49a8-9a97-3560c1828239"
+}
+
+#####################related####################################################
+GET http://localhost:8084/content/v1/events/related/?page=1&perPage=3&category=b83ce10e-5f0a-4153-b7b0-57cdb9d90c56&cryptoAssetTags=216380c9-dd0a-487d-a8db-2ef73d06ecae&cryptoAssetTags=3bd12e3d-82ce-47da-96e9-f7fe88b621cd&sortBy=event.startDate&sortOrder=ASC
+#####################related####################################################
+GET http://localhost:8084/content/v1/events/related/?page=1&perPage=3&category=e023fd64-d163-45c6-a740-26f62f0b2136&cryptoAssetTags=a095cc1e-dbbf-477d-9e0f-fb08ab0c1dac&cryptoAssetTags=ad1bcc71-8fd8-488a-bd32-d916adc1c7ff&sortOrder=ASC
+#####################related###################################################
+GET http://localhost:8084/content/v1/events/related/?page=1&perPage=3&category=e023fd64-d163-45c6-a740-26f62f0b2136&cryptoAssetTags=a095cc1e-dbbf-477d-9e0f-fb08ab0c1dac&cryptoAssetTags=ad1bcc71-8fd8-488a-bd32-d916adc1c7ff
+######################trending##################################################
+GET   http://localhost:8084/content/v1/events/trending/?page=1&perPage=3&country=4d974a77-15ce-49a8-9a97-3560c1828239
+######################significant##################################################
+GET   http://localhost:8084/content/v1/events/significant/?page=1&perPage=3&country=20b1d4cb-5233-47f7-9a30-53ef05399627

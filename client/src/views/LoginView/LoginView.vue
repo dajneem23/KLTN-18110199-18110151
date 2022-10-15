@@ -1,0 +1,70 @@
+<template>
+  <div class="wrapper" @submit.prevent="login()">
+    <form class="form-login bgc-white">
+      <h3>{{ LOGIN_ITEM.headerTitle.title[lang] }}</h3>
+      <div class="error-title" v-bind:class="{ 'show-error': LOGIN_ITEM.userName.error }">
+        {{ LOGIN_ITEM.userName.error }}
+      </div>
+      <div class="input-box bgc-white" v-bind:class="{ 'input-error': LOGIN_ITEM.userName.error }">
+        <div class="input-icon fill-gray">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path
+              d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"
+            />
+          </svg>
+        </div>
+        <input
+          type="text"
+          :placeholder="LOGIN_ITEM.userName.title[lang]"
+          class="form-input"
+          v-model="account.username"
+          @blur="usernameValidate()"
+        />
+      </div>
+      <div class="error-title" v-bind:class="{ 'show-error': LOGIN_ITEM.passWord.error }">
+        {{ LOGIN_ITEM.passWord.error }}
+      </div>
+      <div class="input-box bgc-white" v-bind:class="{ 'input-error': LOGIN_ITEM.passWord.error }">
+        <div class="input-icon fill-gray">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path
+              d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"
+            />
+          </svg>
+        </div>
+        <input
+          type="password"
+          :placeholder="LOGIN_ITEM.passWord.title[lang]"
+          class="form-input"
+          v-model="account.password"
+          @blur="passwordValidate()"
+        />
+      </div>
+      <div class="check-re">
+        <input type="checkbox" name="remember" id="remember" class="remember-check" />
+        <span>{{ LOGIN_ITEM.rememberMe.title[lang] }} </span>
+      </div>
+      <div class="form-button">
+        <button class="btn-primary bgc-blue cl-white" type="submit">{{ LOGIN_ITEM.loginButton.title[lang] }}</button>
+        <button class="btn-google">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+            <path
+              d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
+            />
+          </svg>
+          <span> {{ LOGIN_ITEM.googleButton.title[lang] }} </span>
+        </button>
+      </div>
+      <div class="form-more">
+        <router-link to="">
+          <span>{{ LOGIN_ITEM.forgotPw.title[lang] }} </span>
+        </router-link>
+        <router-link to="/register/">
+          <span>{{ LOGIN_ITEM.createAccount.title[lang] }} </span>
+        </router-link>
+      </div>
+    </form>
+  </div>
+</template>
+<script src="./loginView"></script>
+<style lang="scss" src="./loginView.scss" scoped></style>

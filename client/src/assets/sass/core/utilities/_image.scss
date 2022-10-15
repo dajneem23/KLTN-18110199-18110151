@@ -1,0 +1,15 @@
+//
+// Image
+//
+
+.img-center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.seal-img {
+	width: 70px !important;
+	height: 70px !important;
+	object-fit: contain;
+}

@@ -1,0 +1,12 @@
+//find country by code
+ use('wikiblock')
+ db.countries.find({
+  code:'UK'
+ })
+db.countries.aggregate([
+  {
+    $match: {
+      code: 'US'
+    }
+  }
+])

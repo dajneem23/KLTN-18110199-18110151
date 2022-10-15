@@ -1,0 +1,61 @@
+.filter-box {
+  min-width: 100%;
+  min-height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  margin: 0px auto;
+  // border-bottom: 1px gray solid;
+}
+select {
+  width: 145px;
+  height: 35px;
+  font-size: 15px;
+  border-radius: 5px;
+  background-color: var(--white);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  cursor: pointer;
+  option {
+    width: 125px;
+    max-height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+select:focus-visible {
+  outline-offset: none !important;
+}
+option:hover {
+  background-color: black;
+}
+.box-category {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  label {
+    margin: 10px;
+  }
+}
+.box-category + .box-category {
+  margin-left: 25px;
+}
+/*--------------------------*/
+.btn-box {
+  display: flex;
+}
+/*----------------*/
+.filterMange-box {
+  min-width: 1913px;
+}
+.box-search {
+  .search-input {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 10px;
+  }
+}

@@ -1,0 +1,54 @@
+.side-bar--custom {
+	background-color: transparent;
+	border: none;
+	box-shadow: none;
+	display: block;
+	.scrollbar-inner {
+		background-color: #e9e8e7;
+	}
+}
+
+.navbar-vertical {
+	&.navbar-expand-xs {
+		padding: 20px 0px 20px 20px;
+	}
+}
+
+.g-sidenav-show {
+	.scrollbar-inner {
+		border-radius: 35px;
+		padding: 0 25px 30px 25px;
+	}
+}
+
+.g-sidenav-hidden,
+.g-sidenav-hide {
+	.navbar-expand-xs {
+		padding: 20px 0px 20px;
+	}
+	.scrollbar-inner {
+		border-radius: 20px;
+		padding: 0 0 30px;
+	}
+}
+
+.g-sidenav-hidden.g-sidenav-show {
+	.navbar-expand-xs {
+		padding: 20px 0px 20px 20px;
+	}
+	.scrollbar-inner {
+		border-radius: 35px;
+		padding: 0 25px 30px 25px;
+	}
+}
+
+@media only screen and (max-width: 922px) {
+	.navbar-vertical {
+		&.navbar-expand-xs {
+			padding: 0;
+		}
+		.scrollbar-inner {
+			border-radius: 0 20px 20px 0;
+		}
+	}
+}

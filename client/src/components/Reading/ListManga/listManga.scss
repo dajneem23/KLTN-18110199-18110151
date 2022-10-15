@@ -1,0 +1,70 @@
+.listManga-wrapper {
+  width: 76.8%;
+  padding: 100px 20px;
+  margin: 0 auto;
+}
+.list-new-box {
+  width: 100%;
+  padding: 0 20px;
+  h3 {
+    margin: 15px 0;
+    text-align: left;
+  }
+}
+.list-new-box + .list-new-box {
+  margin-top: 40px;
+}
+.list-new {
+  padding-top: 10px;
+  width: 100%;
+  height: 270px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  overflow-x: scroll;
+  .list-new-item {
+    padding: 10px 9px;
+  }
+}
+.list-all-box {
+  width: 100%;
+  padding: 0 20px;
+  h3 {
+    margin: 20px 0;
+    text-align: left;
+  }
+  .list-all {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+    .card + .card {
+      margin: 0;
+    }
+  }
+}
+.paganition-box {
+  width: 100%;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+/*--------------------------------*/
+::-webkit-scrollbar {
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--gray);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue_2);
+}

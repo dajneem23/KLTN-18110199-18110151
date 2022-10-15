@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;500;700&display=swap');
+@import './button.scss';
+@import './background.scss';
+:root {
+  --white: #fff;
+  --black: #000;
+  --gray: #dbdbdb;
+  --dark-gray: #666666;
+  --primary-blue: #5680e9;
+  --primary-blue_2: #84ceeb;
+  --primary-blue_3: #5ab9ea;
+  --primary-purple_light: #c1c8e4;
+  --primary-purple_dark: #8860d0;
+}
+html {
+  font-family: 'Noto Sans', sans-serif;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.text-black {
+  color: var(--black);
+}
+.text-blue {
+  color: var(--primary-blue);
+}
+.text-gray {
+  color: var(--dark-gray);
+}
+.text-dark-gray {
+  color: var(--dark-gray);
+}
+.active {
+  .page-link {
+    background-color: var(--primary-blue_3);
+    border-radius: 5px;
+    color: var(--white);
+  }
+}
+.disabled {
+  .page-link {
+    color: var(--black);
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+  }
+}
+.screen-reading {
+  padding-top: 20px;
+  .VueCarousel {
+    max-height: 92vh;
+    max-width: 78%;
+    margin: 0px auto 0px auto;
+  }
+  .VueCarousel-slide {
+    display: flex;
+    justify-content: center;
+    img {
+      height: 930px;
+      object-fit: contain;
+    }
+  }
+  .VueCarousel-dot-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0 !important;
+    .VueCarousel-dot {
+      margin: 0 !important;
+    }
+    .VueCarousel-dot--active {
+      background-color: var(--primary-blue_3) !important;
+    }
+  }
+}
