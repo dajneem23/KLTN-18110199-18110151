@@ -55,7 +55,7 @@
 
 ## Environments
 - Node 18
-- Vue 2/3
+- Vue 2
 - Mongodb
 
 ## Libary
