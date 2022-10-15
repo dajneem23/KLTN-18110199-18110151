@@ -5,27 +5,27 @@ import { alphabetSize12 } from '@/utils/randomString';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import AuthService from '../auth/auth.service';
 import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject } from '@/utils/mongoDB';
-import { StoryError, storyModelToken, storyErrors, _story } from '.';
+import { NewsError, newsModelToken, newsErrors, _news } from '.';
 import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS } from '@/types/Common';
 import { isNil, omit } from 'lodash';
-const TOKEN_NAME = '_storyService';
+const TOKEN_NAME = '_newsService';
 /**
  * A bridge allows another service access to the Model layer
- * @export StoryService
- * @class StoryService
+ * @export NewsService
+ * @class NewsService
  * @extends {BaseService}
  */
-export const StoryServiceToken = new Token<StoryService>(TOKEN_NAME);
+export const NewsServiceToken = new Token<NewsService>(TOKEN_NAME);
 /**
- * @class StoryService
+ * @class NewsService
  * @extends BaseService
- * @description Story Service for all story related operations
+ * @description News Service for all news related operations
  */
-@Service(StoryServiceToken)
-export class StoryService {
-  private logger = new Logger('StoryService');
+@Service(NewsServiceToken)
+export class NewsService {
+  private logger = new Logger('NewsService');
 
-  private model = Container.get(storyModelToken);
+  private model = Container.get(newsModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;
@@ -33,8 +33,8 @@ export class StoryService {
   @Inject()
   private authService: AuthService;
 
-  private error(msg: keyof typeof storyErrors) {
-    return new StoryError(msg);
+  private error(msg: keyof typeof newsErrors) {
+    return new NewsError(msg);
   }
 
   get outputKeys() {
@@ -48,7 +48,7 @@ export class StoryService {
     return alphabetSize12();
   }
   /**
-   * Create a new Story
+   * Create a new News
    * @param _content
    * @param _subject
    * @returns {Promise<BaseServiceOutput>}
@@ -61,7 +61,7 @@ export class StoryService {
           name,
         },
         {
-          ..._story,
+          ..._news,
           ..._content,
           categories,
           ...(_subject && { created_by: _subject }),
@@ -99,7 +99,7 @@ export class StoryService {
   }
 
   /**
-   * Delete story
+   * Delete news
    * @param _id
    * @param {ObjectId} _subject
    * @returns {Promise<void>}
@@ -118,7 +118,7 @@ export class StoryService {
   }
 
   /**
-   *  Query story
+   *  Query news
    * @param {any} _filter
    * @param {BaseQuery} _query
    * @returns {Promise<BaseServiceOutput>}
@@ -165,9 +165,9 @@ export class StoryService {
     }
   }
   /**
-   * Get Story by ID
-   * @param id - Story ID
-   * @returns { Promise<BaseServiceOutput> } - Story
+   * Get News by ID
+   * @param id - News ID
+   * @returns { Promise<BaseServiceOutput> } - News
    */
   async getById({ _id, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
@@ -200,9 +200,9 @@ export class StoryService {
     }
   }
   /**
-   * Get Story by slug
-   * @param id - Story ID
-   * @returns { Promise<BaseServiceOutput> } - Story
+   * Get News by slug
+   * @param id - News ID
+   * @returns { Promise<BaseServiceOutput> } - News
    */
   async getBySlug({ _slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {

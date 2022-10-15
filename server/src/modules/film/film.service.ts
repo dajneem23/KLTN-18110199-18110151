@@ -5,27 +5,27 @@ import { alphabetSize12 } from '@/utils/randomString';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import AuthService from '../auth/auth.service';
 import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject } from '@/utils/mongoDB';
-import { StoryError, storyModelToken, storyErrors, _story } from '.';
+import { FilmError, FilmModelToken, FilmErrors, _Film } from '.';
 import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS } from '@/types/Common';
 import { isNil, omit } from 'lodash';
-const TOKEN_NAME = '_storyService';
+const TOKEN_NAME = '_FilmService';
 /**
  * A bridge allows another service access to the Model layer
- * @export StoryService
- * @class StoryService
+ * @export FilmService
+ * @class FilmService
  * @extends {BaseService}
  */
-export const StoryServiceToken = new Token<StoryService>(TOKEN_NAME);
+export const FilmServiceToken = new Token<FilmService>(TOKEN_NAME);
 /**
- * @class StoryService
+ * @class FilmService
  * @extends BaseService
- * @description Story Service for all story related operations
+ * @description Film Service for all Film related operations
  */
-@Service(StoryServiceToken)
-export class StoryService {
-  private logger = new Logger('StoryService');
+@Service(FilmServiceToken)
+export class FilmService {
+  private logger = new Logger('FilmService');
 
-  private model = Container.get(storyModelToken);
+  private model = Container.get(FilmModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;
@@ -33,8 +33,8 @@ export class StoryService {
   @Inject()
   private authService: AuthService;
 
-  private error(msg: keyof typeof storyErrors) {
-    return new StoryError(msg);
+  private error(msg: keyof typeof FilmErrors) {
+    return new FilmError(msg);
   }
 
   get outputKeys() {
@@ -48,7 +48,7 @@ export class StoryService {
     return alphabetSize12();
   }
   /**
-   * Create a new Story
+   * Create a new Film
    * @param _content
    * @param _subject
    * @returns {Promise<BaseServiceOutput>}
@@ -61,7 +61,7 @@ export class StoryService {
           name,
         },
         {
-          ..._story,
+          ..._Film,
           ..._content,
           categories,
           ...(_subject && { created_by: _subject }),
@@ -99,7 +99,7 @@ export class StoryService {
   }
 
   /**
-   * Delete story
+   * Delete Film
    * @param _id
    * @param {ObjectId} _subject
    * @returns {Promise<void>}
@@ -118,7 +118,7 @@ export class StoryService {
   }
 
   /**
-   *  Query story
+   *  Query Film
    * @param {any} _filter
    * @param {BaseQuery} _query
    * @returns {Promise<BaseServiceOutput>}
@@ -165,9 +165,9 @@ export class StoryService {
     }
   }
   /**
-   * Get Story by ID
-   * @param id - Story ID
-   * @returns { Promise<BaseServiceOutput> } - Story
+   * Get Film by ID
+   * @param id - Film ID
+   * @returns { Promise<BaseServiceOutput> } - Film
    */
   async getById({ _id, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
@@ -200,9 +200,9 @@ export class StoryService {
     }
   }
   /**
-   * Get Story by slug
-   * @param id - Story ID
-   * @returns { Promise<BaseServiceOutput> } - Story
+   * Get Film by slug
+   * @param id - Film ID
+   * @returns { Promise<BaseServiceOutput> } - Film
    */
   async getBySlug({ _slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
