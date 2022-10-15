@@ -218,6 +218,9 @@ export enum COLLECTION_NAMES {
   verifications = 'verifications',
   'auth-sessions' = 'auth-sessions',
   coins = 'coins',
+  news = 'news',
+  manga = 'manga',
+  films = 'films',
   settings = 'settings',
 }
 /**
