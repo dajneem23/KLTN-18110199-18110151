@@ -53,10 +53,10 @@
 ```      
 ## Requirements
 
-## Environments
-- Node 18
-- Vue 2
-- Mongodb
+## Tech
+- <img width=20 height=20 src="https://nodejs.org/static/images/logo.svg">  Node 18
+- <img width=20 height=20 src="https://vi.vuejs.org/images/logo.png"> Vue 2 
+- <img width=20 height=20 src="https://stackjava.com/wp-content/uploads/2018/07/mongodb.png">Mongodb
 
 ## Libary
 - Bootrap
