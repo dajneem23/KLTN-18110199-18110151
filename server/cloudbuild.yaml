@@ -1,7 +1,7 @@
 steps:
 # Build the container image
 - name: gcr.io/cloud-builders/docker
-  args: ['build', '-t', 'gcr.io/zinc-union-365709/${_SERVICE_NAME}:${SHORT_SHA}', '.']
+  args: ['build', '-t', 'gcr.io/zinc-union-365709/${_SERVICE_NAME}:${SHORT_SHA}', '/server']
   id: Building the container image
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
