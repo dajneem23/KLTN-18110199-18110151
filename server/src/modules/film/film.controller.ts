@@ -8,7 +8,7 @@ import { protect } from '@/api/middlewares/protect';
 import { JWTPayload } from '../auth/authSession.type';
 import { BaseQuery, BaseServiceInput } from '@/types/Common';
 import { RolesWeight } from '../user';
-@Controller('/stories')
+@Controller('/films')
 export class FilmController {
   private service = Container.get(FilmServiceToken);
 
