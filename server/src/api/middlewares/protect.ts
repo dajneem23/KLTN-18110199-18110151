@@ -30,9 +30,9 @@ const verifyAccessToken = async (cookies: any) => {
   // Verify token
   const decoded = AuthService.verifyBearerTokens(accessToken);
   // Check blocklist
-  if (await blocklistService.isOnTemporaryBlockList(decoded.id)) {
-    throwErr(new AuthError('ACCESS_TOKEN_EXPIRED'));
-  }
+  // if (await blocklistService.isOnTemporaryBlockList(decoded.id)) {
+  //   throwErr(new AuthError('ACCESS_TOKEN_EXPIRED'));
+  // }
   return decoded;
 };
 
