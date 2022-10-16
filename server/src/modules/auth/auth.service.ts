@@ -19,7 +19,7 @@ import { MailJob } from '@/modules/mailer/mail.job';
 import VerificationTokenService from '@/modules/verificationToken/verificationToken.service';
 import { Filter, WithId } from 'mongodb';
 // import { DIRedisClient } from '@/loaders/redisClientLoader';
-import { RedisClientType } from 'redis';
+// import { RedisClientType } from 'redis';
 
 @Service()
 export default class AuthService {
