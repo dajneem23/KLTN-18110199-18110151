@@ -26,14 +26,14 @@ export class UserModel extends BaseModel {
         //     email: 'text',
         //   },
         // },
-        {
-          field: {
-            slug: 1,
-          },
-          options: {
-            unique: true,
-          },
-        },
+        // {
+        //   field: {
+        //     slug: 1,
+        //   },
+        //   options: {
+        //     unique: true,
+        //   },
+        // },
       ],
     });
   }
