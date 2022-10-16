@@ -1,10 +1,11 @@
 FROM node:18-alpine
 
 # Create app directory
-WORKDIR /usr/src/app
+RUN mkdir -p /app/server
+WORKDIR /app/server
 
 # Add package.json file
-COPY ./server/package.json ./server/yarn.lock ./
+COPY package.json yarn.lock /app/server/
 
 # Install packages without generate a yarn.lock lockfile
 RUN yarn --pure-lockfile
