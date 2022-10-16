@@ -6,13 +6,15 @@ RUN mkdir -p /server
 WORKDIR /server
 
 # Add package.json file
-COPY /server/package.json /server/yarn.lock .
+COPY /server/package.json /server/yarn.lock ./
+
+COPY /server/package.json /server/yarn.lock ./
 
 # Install packages without generate a yarn.lock lockfile
 RUN yarn --pure-lockfile
 
 # Copy all file from current dir to /app in container
-COPY . .
+COPY ./server/ .
 
 #WORKDIR /server/src
 
