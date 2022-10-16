@@ -13,7 +13,7 @@ RUN yarn --pure-lockfile
 # Copy all file from current dir to /app in container
 COPY . .
 
-WORKDIR src
+WORKDIR /server/src
 
 # Expose port
 EXPOSE 8080
