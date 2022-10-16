@@ -29,7 +29,7 @@
 - Viết Blog
     - Tìm kiếm
     - Comment
-    - Up/Down vote
+    - Up/Down vote tym
     - Like
     - Hỏi đáp/ Hỏi bài(có thể có)
 - Whiteboard
