@@ -1,9 +1,7 @@
 FROM node:18-alpine
 
 # Create app directory
-RUN mkdir -p /server
-
-WORKDIR /server
+WORKDIR /usr/src/app
 
 # Add package.json file
 COPY /server/package.json /server/yarn.lock ./
