@@ -12,6 +12,10 @@ const route = Router();
 export default (app: Application) => {
   app.use(`${env.API_PREFIX}/v1`, route);
 
+  app.use('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+  });
+
   attachControllers(route, [UserController, AuthController]);
 
   attachControllers(route, [FilmController, NewsController, MangaController, StoryController]);
