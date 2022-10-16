@@ -4,7 +4,7 @@ FROM node:18-alpine
 WORKDIR /usr/src/app
 
 # Add package.json file
-COPY ./server/package.json ./server/yarn.lock ./server
+COPY ./server/package.json ./server/yarn.lock ./
 
 # Install packages without generate a yarn.lock lockfile
 RUN yarn --pure-lockfile
