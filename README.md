@@ -64,6 +64,3 @@
 - Socketio
 - Express
 - Axios
-
-
-![](https://i.gifer.com/XVo6.gif)
