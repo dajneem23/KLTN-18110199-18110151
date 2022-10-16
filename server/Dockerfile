@@ -5,7 +5,7 @@ RUN mkdir -p /server
 WORKDIR /server
 
 # Add package.json file
-COPY /server/package.json /server/yarn.lock ./server
+COPY /server/package.json /server/yarn.lock /server
 
 # Install packages without generate a yarn.lock lockfile
 RUN yarn --pure-lockfile
