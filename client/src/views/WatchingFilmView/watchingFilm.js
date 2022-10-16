@@ -5,5 +5,4 @@ export default {
     FilterFilm,
     ListFilm
   },
- 
 };

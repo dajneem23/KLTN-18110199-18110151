@@ -8,10 +8,10 @@
         <div class="card-title">
           {{ data.title }}
         </div>
-        <div class="card-auth text-gray">
+        <div class="card-auth text-dark-gray">
           {{ data.auth }}
         </div>
-        <div class="card-info text-gray">
+        <div class="card-info text-dark-gray">
           <div class="card-info--view">
             {{ data.views }} luợt xem
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">

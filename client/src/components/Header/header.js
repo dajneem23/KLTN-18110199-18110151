@@ -54,6 +54,7 @@ export default {
     return {
       lang: 'vi',
       HEADER_ITEM,
+      isAuthenication: false,
     };
   },
   mounted() {},

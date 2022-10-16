@@ -15,6 +15,7 @@ import DetailManga from '../views/ReadingMangaView/DetailMangaView/detailMangaVi
 import { UserService } from '@/services';
 import { store } from '../store/vuex';
 
+import DetailNews from '../views/NewsView/NewsDetailView/newDetailView.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -106,6 +107,16 @@ const routes = [
     components: {
       header: Header,
       default: DetailManga,
+      footer: Footer,
+    },
+    props: true,
+  },
+  {
+    path: '/news/details/:newsId/',
+    name: 'detailnews',
+    components: {
+      header: Header,
+      default: DetailNews,
       footer: Footer,
     },
     props: true,

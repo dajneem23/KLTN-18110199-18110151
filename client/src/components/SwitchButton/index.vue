@@ -1,12 +1,14 @@
 <template>
   <div class="form-box">
     <div class="button-boxx">
-      <div ref="{buttonRef}" id="btn" class="button"></div>
-      <button type="button" class="toggle-btnn">
-        <span ref="{btnRefL}" class="active-btn"> {{ contentL }} </span>
+      <div id="btn" class="button" ref="btnRef"></div>
+      <button type="button" class="toggle-btnn" @click="onClick1">
+        <span class="active-btn" ref="btnRefL">
+          {{ contentL }}
+        </span>
       </button>
-      <button type="button" class="toggle-btnn">
-        <span ref="{btnRefR}">{{ contentR }}</span>
+      <button type="button" class="toggle-btnn" @click="onClick2">
+        <span ref="btnRefR">{{ contentR }}</span>
       </button>
     </div>
   </div>
