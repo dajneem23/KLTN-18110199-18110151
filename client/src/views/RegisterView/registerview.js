@@ -1,4 +1,5 @@
 import { REGISTER_ITEM } from '../../constants/registerpage';
+import { AuthService } from '@/services';
 export default {
   name: 'LoginView',
   data() {
@@ -6,23 +7,24 @@ export default {
       lang: 'vi',
       REGISTER_ITEM,
       account: {
-        username: '',
+        email: '',
         password: '',
-        fullname: '',
+        name: '',
+        phone:'094100117  '
       },
     };
   },
   methods: {
     fullnameValidate() {
-      REGISTER_ITEM.fullName.error = '';
-      if (!this.account.fullname.trim()) {
-        REGISTER_ITEM.fullName.error = 'Fullname is required';
+      REGISTER_ITEM.name.error = '';
+      if (!this.account.name.trim()) {
+        REGISTER_ITEM.name.error = 'Name is required';
       }
     },
     usernameValidate() {
-      REGISTER_ITEM.userName.error = '';
-      if (!this.account.username.trim()) {
-        REGISTER_ITEM.userName.error = 'Username is required';
+      REGISTER_ITEM.email.error = '';
+      if (!this.account.email.trim()) {
+        REGISTER_ITEM.email.error = 'Email is required';
       }
     },
     passwordValiate() {
@@ -36,11 +38,17 @@ export default {
       this.usernameValidate();
       this.passwordValiate();
     },
-    register() {
+    async register() {
       this.validate();
-      console.log(REGISTER_ITEM.userName.error);
-      console.log(REGISTER_ITEM.passWord.error);
-      console.log(REGISTER_ITEM.fullName.error);
+      console.log({ AuthService });
+      const [result, error] = await AuthService.register(this.account);
+      console.log([result, error]);
+      if (result) {
+        console.log('Đăng ký thành công !');
+        const { user } = result;
+        console.log(user)
+
+      }
       console.log(this.account);
     },
   },

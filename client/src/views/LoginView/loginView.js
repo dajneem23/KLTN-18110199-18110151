@@ -42,9 +42,12 @@ export default {
       });
       console.log([result, error]);
       if (result) {
+        console.log('Đăng nhập thành công !');
         const { user } = result;
         this.$store.commit('setUserInfo', user);
         this.$store.commit('setIsAuthenticated', true);
+        console.log(this.$store.state.isAuthenticated);
+        this.$router.push('/');
       }
       console.log(this.account);
     },

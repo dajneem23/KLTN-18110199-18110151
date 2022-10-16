@@ -16,11 +16,6 @@ export default {
     };
   },
   mounted() {
-    window.onscroll = function () {
-      scrollFunction();
-    };
-  },
-  mounted() {
     window.addEventListener('scroll', this.handleScroll);
   },
   methods: {

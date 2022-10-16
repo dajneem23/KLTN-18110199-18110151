@@ -97,8 +97,8 @@
           <button type="button" class="btn-none">Về Vrum</button>
         </router-link>
 
-        <div v-if="isAuthenication">
-          <h3>Hello, Long!</h3>
+        <div v-if="isAuthenticated">
+          <div class="name-user">{{ userInfo }}</div>
         </div>
         <div v-else>
           <router-link :to="HEADER_ITEM.register.path">

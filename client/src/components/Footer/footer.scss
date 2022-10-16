@@ -3,7 +3,9 @@
   position: relative;
   bottom: 0px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   background-color: var(--primary-blue_3);
 }
 a {
@@ -63,4 +65,7 @@ ul li {
 }
 .footer-category-item {
   text-decoration: none;
+}
+.copy-right {
+  margin: 10px 0;
 }

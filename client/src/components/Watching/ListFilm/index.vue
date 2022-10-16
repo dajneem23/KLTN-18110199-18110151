@@ -24,7 +24,13 @@
         </div>
       </div>
       <div class="paganition-box">
-        <jw-pagination :items="LIST_FILM.allFilm" @changePage="onChangePage" :pageSize="8" :styles="customStyles" class="paganite"></jw-pagination>
+        <jw-pagination
+          :items="LIST_FILM.allFilm"
+          @changePage="onChangePage"
+          :pageSize="12"
+          :styles="customStyles"
+          class="paganite"
+        ></jw-pagination>
       </div>
     </div>
   </div>

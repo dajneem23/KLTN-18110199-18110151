@@ -7,7 +7,7 @@
         </div>
         <div class="news-info">
           <span class="news-user-name">Trần Hoàng Long</span>
-          <span class="news-time text-gray">13 tháng 8</span>
+          <span class="news-time text-dark-gray">13 tháng 8</span>
         </div>
       </div>
       <div class="news-header-bottom">
