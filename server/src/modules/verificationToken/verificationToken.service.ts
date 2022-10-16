@@ -22,8 +22,8 @@ export default class VerificationTokenService {
   @Inject()
   private verificationTokenModel: VerificationTokenModel;
 
-  @Inject()
-  private emailQueue: MailJob;
+  // @Inject()
+  // private emailQueue: MailJob;
 
   /**
    * Generate token and send "request email verification" email
@@ -45,16 +45,16 @@ export default class VerificationTokenService {
         { upsert: true, returnDocument: 'after' },
       );
       // Send email
-      this.emailQueue.addJob({
-        name: 'request-email-verification',
-        data: {
-          to: user.email,
-          params: {
-            'user-fullname': user.name,
-            'verify-url': verificationToken.url,
-          },
-        },
-      });
+      // this.emailQueue.addJob({
+      //   name: 'request-email-verification',
+      //   data: {
+      //     to: user.email,
+      //     params: {
+      //       'user-fullname': user.name,
+      //       'verify-url': verificationToken.url,
+      //     },
+      //   },
+      // });
       this.logger.debug('[sendEmailVerification:success]', { email: user.email, token });
       return toVerificationTokenOutput(verificationToken);
     } catch (err) {
@@ -83,17 +83,17 @@ export default class VerificationTokenService {
         { upsert: true, returnDocument: 'after' },
       );
       // Send email
-      this.emailQueue.addJob({
-        name: 'request-password-reset',
-        data: {
-          to: user.email,
-          params: {
-            'user-fullname': user.full_name,
-            'reset-password-code': verificationToken.token,
-            'reset-password-url': verificationToken.url,
-          },
-        },
-      });
+      // this.emailQueue.addJob({
+      //   name: 'request-password-reset',
+      //   data: {
+      //     to: user.email,
+      //     params: {
+      //       'user-fullname': user.full_name,
+      //       'reset-password-code': verificationToken.token,
+      //       'reset-password-url': verificationToken.url,
+      //     },
+      //   },
+      // });
       this.logger.debug('[sendPasswordReset:success]', { email: user.email, token });
       return toVerificationTokenOutput(verificationToken);
     } catch (err) {
@@ -121,16 +121,16 @@ export default class VerificationTokenService {
         { upsert: true, returnDocument: 'after' },
       );
       // Send email
-      this.emailQueue.addJob({
-        name: 'confirm-request',
-        data: {
-          to: user.email,
-          params: {
-            'user-fullname': user.name,
-            'confirm-request-code': verificationToken.token,
-          },
-        },
-      });
+      // this.emailQueue.addJob({
+      //   name: 'confirm-request',
+      //   data: {
+      //     to: user.email,
+      //     params: {
+      //       'user-fullname': user.name,
+      //       'confirm-request-code': verificationToken.token,
+      //     },
+      //   },
+      // });
       this.logger.debug('[sendConfirmationCode:success]', { email: user.email, token });
       return toVerificationTokenOutput(verificationToken);
     } catch (err) {
