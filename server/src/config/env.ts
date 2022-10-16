@@ -36,7 +36,6 @@ const env = {
   MONGO_URI: getRuntimeEnv('MONGO_URI'),
 
   REDIS_URI: getRuntimeEnv('REDIS_URI'),
-  FRONTEND_HOST: getRuntimeEnv('FRONTEND_HOST'),
   LOG_LEVEL: getRuntimeEnv('LOG_LEVEL') as LogLevel,
   JWT_SECRET: getRuntimeEnv('JWT_SECRET'),
   JWT_ACCESS_TOKEN_EXP: getRuntimeEnv('JWT_ACCESS_TOKEN_EXP'),
@@ -44,10 +43,6 @@ const env = {
   RESET_PASSWORD_TOKEN_EXP: getRuntimeEnv('RESET_PASSWORD_TOKEN_EXP'),
   VERIFY_EMAIL_TOKEN_EXP: getRuntimeEnv('VERIFY_EMAIL_TOKEN_EXP'),
   CONFIRM_REQUEST_TOKEN_EXP: getRuntimeEnv('CONFIRM_REQUEST_TOKEN_EXP'),
-
-  MAILGUN_API_KEY: getRuntimeEnv('MAILGUN_API_KEY'),
-  MAILGUN_PUBLIC_KEY: getRuntimeEnv('MAILGUN_PUBLIC_KEY'),
-  MAILGUN_DOMAIN: getRuntimeEnv('MAILGUN_DOMAIN'),
 };
 
 export default env;

@@ -18,8 +18,8 @@ import { UserError } from '@/modules/user/user.error';
 import { MailJob } from '@/modules/mailer/mail.job';
 import VerificationTokenService from '@/modules/verificationToken/verificationToken.service';
 import { Filter, WithId } from 'mongodb';
-import { DIRedisClient } from '@/loaders/redisClientLoader';
-import { RedisClientType } from 'redis';
+// import { DIRedisClient } from '@/loaders/redisClientLoader';
+// import { RedisClientType } from 'redis';
 
 @Service()
 export default class AuthService {
@@ -34,10 +34,10 @@ export default class AuthService {
   @Inject()
   private userService: UserService;
 
-  @Inject()
-  private emailQueue: MailJob;
+  // @Inject()
+  // private emailQueue: MailJob;
 
-  constructor(@Inject(DIRedisClient) private redisClient: RedisClientType) {}
+  // constructor(@Inject(DIRedisClient) private redisClient: RedisClientType) {}
 
   /**
    * Hash password
@@ -275,15 +275,15 @@ export default class AuthService {
         },
       );
       // Send email
-      this.emailQueue.addJob({
-        name: 'password-changed',
-        data: {
-          to: email,
-          params: {
-            'user-fullname': user.full_name,
-          },
-        },
-      });
+      // this.emailQueue.addJob({
+      //   name: 'password-changed',
+      //   data: {
+      //     to: email,
+      //     params: {
+      //       'user-fullname': user.full_name,
+      //     },
+      //   },
+      // });
       this.logger.debug('[resetPassword:success]', { email });
     } catch (err) {
       this.logger.error('[resetPassword:error]', err);
@@ -314,15 +314,15 @@ export default class AuthService {
         },
       );
       // Send email
-      this.emailQueue.addJob({
-        name: 'password-changed',
-        data: {
-          to: user.email,
-          params: {
-            'user-fullname': user.full_name,
-          },
-        },
-      });
+      // this.emailQueue.addJob({
+      //   name: 'password-changed',
+      //   data: {
+      //     to: user.email,
+      //     params: {
+      //       'user-fullname': user.full_name,
+      //     },
+      //   },
+      // });
       this.logger.debug('[changePassword:success]', { email: user.email });
     } catch (err) {
       this.logger.error('[changePassword:error]', err);

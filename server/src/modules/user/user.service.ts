@@ -13,7 +13,6 @@ import { Filter, ObjectId } from 'mongodb';
 import { BaseQuery, PaginationResult } from '@/types/Common';
 import { $queryByList, withMongoTransaction } from '@/utils/mongoDB';
 import AuthSessionModel from '@/modules/auth/authSession.model';
-import EmailSubscriptionModel from '@/modules/emailSubscription/emailSubscription.model';
 import VerificationTokenModel from '@/modules/verificationToken/verificationToken.model';
 import BlocklistService from '@/modules/auth/blocklist.service';
 import { generateTextAlias } from '@/utils/text';
@@ -26,9 +25,6 @@ export class UserService {
 
   @Inject()
   private authSessionModel: AuthSessionModel;
-
-  @Inject()
-  private emailSubscriptionModel: EmailSubscriptionModel;
 
   @Inject()
   private verificationTokenModel: VerificationTokenModel;
@@ -214,7 +210,7 @@ export class UserService {
           // Delete auth sessions
           this.authSessionModel.collection.deleteMany({ user_id: user.id }, { session }),
           // Delete email subscriptions
-          this.emailSubscriptionModel.collection.deleteMany({ email: user.email }, { session }),
+          // this.emailSubscriptionModel.collection.deleteMany({ email: user.email }, { session }),
           // Delete verification tokens
           this.verificationTokenModel.collection.deleteMany({ email: user.email }, { session }),
         ]);
