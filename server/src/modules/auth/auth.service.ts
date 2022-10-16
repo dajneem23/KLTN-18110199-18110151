@@ -18,7 +18,7 @@ import { UserError } from '@/modules/user/user.error';
 import { MailJob } from '@/modules/mailer/mail.job';
 import VerificationTokenService from '@/modules/verificationToken/verificationToken.service';
 import { Filter, WithId } from 'mongodb';
-import { DIRedisClient } from '@/loaders/redisClientLoader';
+// import { DIRedisClient } from '@/loaders/redisClientLoader';
 import { RedisClientType } from 'redis';
 
 @Service()
@@ -37,7 +37,7 @@ export default class AuthService {
   @Inject()
   private emailQueue: MailJob;
 
-  constructor(@Inject(DIRedisClient) private redisClient: RedisClientType) {}
+  // constructor(@Inject(DIRedisClient) private redisClient: RedisClientType) {}
 
   /**
    * Hash password

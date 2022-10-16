@@ -11,7 +11,7 @@ import 'reflect-metadata';
     // Database (mongodb)
     await (await import('./loaders/mongoDBLoader')).default();
     // Caching (Redis)
-    await (await import('./loaders/redisClientLoader')).default();
+    // await (await import('./loaders/redisClientLoader')).default();
     // Express application
     const app = (await import('./loaders/expressLoader')).default();
 
