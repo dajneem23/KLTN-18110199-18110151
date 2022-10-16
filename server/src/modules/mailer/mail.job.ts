@@ -21,7 +21,7 @@ export class MailJob {
 
     // Init Worker
     this.worker = new Worker('send-email', MailJob.workerProcessor, {
-      connection: this.redisConnection,
+      connection: this.redisConnection as any,
       concurrency: 20,
       limiter: {
         max: 10,
@@ -32,7 +32,7 @@ export class MailJob {
 
     // Init Queue
     this.queue = new Queue('send-email', {
-      connection: this.redisConnection,
+      connection: this.redisConnection as any,
       defaultJobOptions: {
         // The total number of attempts to try the job until it completes
         attempts: 5,

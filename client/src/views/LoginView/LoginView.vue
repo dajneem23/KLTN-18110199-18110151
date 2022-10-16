@@ -37,7 +37,7 @@
           :placeholder="LOGIN_ITEM.passWord.title[lang]"
           class="form-input"
           v-model="account.password"
-          @blur="passwordValiate()"
+          @blur="passwordValidate()"
         />
       </div>
       <div class="check-re">

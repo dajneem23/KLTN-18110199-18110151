@@ -11,6 +11,7 @@ module.exports = {
     resolve: {
       alias: {
         assets: resolveSrc('src/assets'),
+        '@': resolveSrc('src'),
       },
     },
   },
@@ -18,7 +19,6 @@ module.exports = {
     // Enable CSS source maps.
     sourceMap: process.env.NODE_ENV !== 'production',
   },
-  // assetsDir: 'static',
-  // publicPath: '/adminApp/',
+  assetsDir: 'static',
   //Must be the same as url_prefix of adminApp Blueprint in server
 };

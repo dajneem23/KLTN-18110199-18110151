@@ -12,6 +12,9 @@ import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
 import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
 import DetailManga from '../views/ReadingMangaView/DetailMangaView/detailMangaView.vue';
+import { UserService } from '@/services';
+import { store } from '../store/vuex';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -115,4 +118,16 @@ const router = new VueRouter({
   routes,
 });
 
+router.beforeEach(async (to, from, next) => {
+  let [user, error] = await UserService.me();
+  console.log([user, error]);
+  if (user) {
+    store.commit('setUserInfo', user);
+    store.commit('setIsAuthenticated', true);
+  } else {
+    store.commit('setUserInfo', null);
+    store.commit('setIsAuthenticated', false);
+  }
+  next();
+});
 export default router;

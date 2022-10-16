@@ -3,6 +3,10 @@
 
 ![duck](https://i.gifer.com/embedded/download/XOsX.gif)
 
+<h1><a href="https://kltn-18110199-18110151.pages.dev">🌐 Production</a></h1>
+
+<h1><a href="https://develop.kltn-18110199-18110151.pages.dev">⚙️ Develop</a></h1>
+
 ## Specs:
 ```
 - Đọc truyện
@@ -49,10 +53,10 @@
 ```      
 ## Requirements
 
-## Environments
-- Node 18
-- Vue 2/3
-- Mongodb
+## Tech
+- <img width=20 height=20 src="https://nodejs.org/static/images/logo.svg">  Node 18
+- <img width=20 height=20 src="https://vi.vuejs.org/images/logo.png"> Vue 2 
+- <img width=20 height=20 src="https://stackjava.com/wp-content/uploads/2018/07/mongodb.png">Mongodb
 
 ## Libary
 - Bootrap

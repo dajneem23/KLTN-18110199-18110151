@@ -17,7 +17,7 @@ import { alphabetSize12, alphabetSize24 } from '@/utils/randomString';
 import { UserError } from '@/modules/user/user.error';
 import { MailJob } from '@/modules/mailer/mail.job';
 import VerificationTokenService from '@/modules/verificationToken/verificationToken.service';
-import { Filter } from 'mongodb';
+import { Filter, WithId } from 'mongodb';
 import { DIRedisClient } from '@/loaders/redisClientLoader';
 import { RedisClientType } from 'redis';
 
@@ -57,9 +57,9 @@ export default class AuthService {
    * Generate Bearer tokens
    */
   static async generateBearerTokens(user: User | UserOutput) {
-    const payload: JWTPayload = pick(user, 'id', 'email', 'email_verified', 'full_name', 'picture', 'roles');
+    const payload: JWTPayload = pick(user, 'id', 'email', 'email_verified', 'name', 'picture', 'roles');
     const bearerTokens: BearerTokens = {
-      token_type: 'bearer',
+      // token_type: 'bearer',
       access_token: jwt.sign(payload, env.JWT_SECRET, { expiresIn: env.JWT_ACCESS_TOKEN_EXP }),
       expires_in: ms(env.JWT_ACCESS_TOKEN_EXP) / 1000,
       refresh_token: await alphabetSize24(), // e.g. tZ5zeBsZxuNEZrfa2lvex2H3
@@ -111,7 +111,7 @@ export default class AuthService {
   async loginByIdAndPassword(loginID: string, password: string, whiteListRoles: UserRole[] = ['user']) {
     try {
       // Get user
-      const user = await this.userService.collection.findOne({ email: loginID });
+      const user = (await this.userService.model._collection.findOne({ email: loginID })) as WithId<User>;
       // Check password
       if (!user || !(await AuthService.verifyPassword(password, user.password))) {
         throwErr(new AuthError('INCORRECT_LOGIN_ID_OR_PASSWORD'));
@@ -137,7 +137,7 @@ export default class AuthService {
   /**
    * Generate new auth session
    */
-  async generateAuthSession(user: User | UserOutput) {
+  async generateAuthSession(user: User | UserOutput | any) {
     try {
       // Generate tokens
       const bearerTokens = await AuthService.generateBearerTokens(user);
@@ -202,7 +202,7 @@ export default class AuthService {
   async requestEmailVerification(userId: string, opts: { redirect_uri: string }) {
     try {
       // Check user exists
-      const user = await this.userService.collection.findOne({ id: userId });
+      const user = (await this.userService.model._collection.findOne({ id: userId })) as WithId<User>;
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       if (user.email_verified) throwErr(new UserError('EMAIL_ALREADY_VERIFIED'));
       // Generate token and send email
@@ -226,13 +226,13 @@ export default class AuthService {
         token,
       });
       // Update user
-      const { value: user } = await this.userService.collection.findOneAndUpdate(
+      const { value: user } = await this.userService.model._collection.findOneAndUpdate(
         { email },
         { $set: { email_verified: true } },
         { returnDocument: 'after' },
       );
       this.logger.debug('[verifyEmail:success]', { email, token });
-      return toUserOutput(user);
+      return toUserOutput(user as WithId<User>);
     } catch (err) {
       this.logger.error('[verifyEmail:error]', err);
       throw err;
@@ -245,7 +245,7 @@ export default class AuthService {
   async requestPasswordReset(email: string, opts: { redirect_uri: string }) {
     try {
       // Check user exists
-      const user = await this.userService.collection.findOne({ email });
+      const user = await this.userService.model._collection.findOne({ email });
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       // Generate token and send email
       const verificationToken = await this.verificationTokenService.sendPasswordReset(user, opts);
@@ -268,7 +268,7 @@ export default class AuthService {
         token,
       });
       // Update user password
-      const { value: user } = await this.userService.collection.findOneAndUpdate(
+      const { value: user } = await this.userService.model._collection.findOneAndUpdate(
         { email },
         {
           $set: { password: await AuthService.hashPassword(newPassword) },
@@ -297,7 +297,7 @@ export default class AuthService {
   async changePassword(userId: string, currentPassword: string, newPassword: string) {
     try {
       // Find user
-      const user = await this.userService.collection.findOne({ id: userId });
+      const user = await this.userService.model._collection.findOne({ id: userId });
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       // Check valid: current password & new password
       const [isValidPassword, sameAsCurrentPassword] = await Promise.all([
@@ -307,7 +307,7 @@ export default class AuthService {
       if (!isValidPassword) throwErr(new AuthError('INCORRECT_PASSWORD'));
       if (sameAsCurrentPassword) throwErr(new AuthError('INVALID_NEW_PASSWORD'));
       // Update user password
-      await this.userService.collection.findOneAndUpdate(
+      await this.userService.model._collection.findOneAndUpdate(
         { id: userId },
         {
           $set: { password: await AuthService.hashPassword(newPassword) },

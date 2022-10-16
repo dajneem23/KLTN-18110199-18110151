@@ -9,5 +9,5 @@ export const toUserOutput = (item: User | WithId<User>): UserOutput | undefined 
 
 export const toUserPublicResponse = (item: UserOutput | WithId<UserOutput>): UserPublicResponse => {
   if (!item) return undefined;
-  return pick(item, 'id', 'full_name', 'picture');
+  return pick(item, 'id', 'name', 'picture');
 };

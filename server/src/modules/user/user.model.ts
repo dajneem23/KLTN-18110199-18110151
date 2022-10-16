@@ -1,29 +1,40 @@
-import { Db } from 'mongodb';
-import { Inject, Service } from 'typedi';
-import { DIMongoDB } from '@/loaders/mongoDBLoader';
-import { DILogger } from '@/loaders/loggerLoader';
-import Logger from '@/core/logger';
+import { Service, Token } from 'typedi';
 import { User } from './user.type';
+import { keys } from 'ts-transformer-keys';
+import { BaseModel } from '../base/base.model';
 
 const COLLECTION_NAME = 'users';
-
-@Service()
-export class UserModel {
-  private readonly _collection;
-
-  constructor(@Inject(DILogger) private logger: Logger, @Inject(DIMongoDB) private db: Db) {
-    this._collection = db.collection<User>(COLLECTION_NAME);
-    Promise.all([
-      // Unique ID
-
-      // Unique Email
-      this._collection.createIndex('email', { unique: false }),
-    ]).catch((err) => {
-      this.logger.error(err);
+const TOKEN_NAME = '_userModel';
+export const userModelToken = new Token<UserModel>(TOKEN_NAME);
+@Service(userModelToken)
+export class UserModel extends BaseModel {
+  constructor() {
+    super({
+      collectionName: COLLECTION_NAME,
+      _keys: keys<User>(),
+      indexes: [
+        {
+          field: {
+            email: 1,
+          },
+          options: {
+            unique: true,
+          },
+        },
+        // {
+        //   field: {
+        //     email: 'text',
+        //   },
+        // },
+        {
+          field: {
+            slug: 1,
+          },
+          options: {
+            unique: true,
+          },
+        },
+      ],
     });
-  }
-
-  get collection() {
-    return this._collection;
   }
 }

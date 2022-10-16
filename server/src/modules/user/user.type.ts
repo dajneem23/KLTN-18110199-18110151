@@ -2,11 +2,13 @@ import { ObjectId } from 'mongodb';
 
 export type UserStatus = 'active' | 'inactive' | 'suspended';
 
-export type UserRole = 'admin' | 'user';
+export type UserRole = 'admin' | 'user' | 'guest' | 'creator';
 
-export const RolesWeight: any = {
+export const RolesWeight = {
   admin: 100,
-  user: 1,
+  user: 50,
+  creator: 10,
+  guest: 0,
 };
 
 export type Gender = 'male' | 'female' | 'other';
@@ -15,7 +17,8 @@ export type User = {
   // User ID
   id: string;
   // Full name
-  full_name: string;
+  name: string;
+
   _full_name_alias?: string[];
   // Email
   email: string;
@@ -54,8 +57,8 @@ export type User = {
   followings?: ObjectId[];
 };
 
-export type CreateUpdateUserInput = Pick<User, 'full_name' | 'email' | 'phone' | 'password' | 'picture'>;
+export type CreateUpdateUserInput = Pick<User, 'name' | 'email' | 'phone' | 'password' | 'picture'>;
 
 export type UserOutput = Omit<User, 'password'>;
 
-export type UserPublicResponse = Pick<User, 'id' | 'full_name' | 'picture'>;
+export type UserPublicResponse = Pick<User, 'id' | 'name' | 'picture'>;

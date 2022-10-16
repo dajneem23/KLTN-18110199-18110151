@@ -2,14 +2,14 @@ import validate, { Joi, Segments } from '@/core/validation';
 
 export const login = validate({
   [Segments.BODY]: Joi.object({
-    username: Joi.string().required(),
+    loginId: Joi.string().required(),
     password: Joi.string().required(),
   }),
 });
 
 export const register = validate({
   [Segments.BODY]: Joi.object({
-    full_name: Joi.string().required(),
+    name: Joi.string().required(),
     email: Joi.string().email().required(),
     phone: Joi.string().required(),
     password: Joi.string().min(6).max(64).required(),
