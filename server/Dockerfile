@@ -14,7 +14,7 @@ RUN yarn --pure-lockfile
 COPY . .
 
 # Expose port
-EXPOSE 8888
+EXPOSE 8080
 
 # Start service
 CMD [ "yarn", "dev" ]
