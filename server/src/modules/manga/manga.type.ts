@@ -5,6 +5,8 @@ export interface Manga extends BaseModel {
 
   description: string;
 
+  contents: any[];
+
   comments: string[];
 
   shares: string[];
@@ -13,19 +15,20 @@ export interface Manga extends BaseModel {
 
   minutes_to_read: number;
 
-  previous_stories: string[];
+  previous: string[];
 
-  same_stories: string[];
+  same: string[];
 }
 
 export const _manga: Manga = {
   content: '',
   description: '',
+  contents: [],
   comments: [],
   shares: [],
   tags: [],
   minutes_to_read: 0,
-  previous_stories: [],
-  same_stories: [],
+  previous: [],
+  same: [],
   ..._defaultBaseModel,
 };
