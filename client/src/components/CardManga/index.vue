@@ -6,7 +6,7 @@
       </div>
       <div class="card-right">
         <div class="card-title">{{ data.title }}</div>
-        <div class="card-info">
+        <div class="card-info text-dark-gray">
           <div class="card-numchap">
             <span>
               {{ data.numChapter }}

@@ -5,10 +5,10 @@ export const REGISTER_ITEM = {
       en: 'Register',
     },
   },
-  userName: {
+  email: {
     title: {
       vi: 'Tài khoản',
-      en: 'Username',
+      en: 'Email',
     },
     error: '',
   },
@@ -19,7 +19,7 @@ export const REGISTER_ITEM = {
     },
     error: '',
   },
-  fullName: {
+  name: {
     title: {
       vi: 'Họ và tên',
       en: 'Full name',

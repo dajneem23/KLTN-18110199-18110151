@@ -1,8 +1,16 @@
 import { HEADER_ITEM } from '../../constants';
+import { mapState } from 'vuex';
+import { store } from '../../store/vuex';
 var mark = 'home';
 
 export default {
   name: 'Header',
+  computed: {
+    ...mapState(['userInfo', 'isAuthenticated']),
+  },
+  mounted() {
+    console.log(store.state.isAuthenticated);
+  },
   methods: {
     onHomeBtnClick: function () {
       this.$refs.home.classList.add('active');
@@ -56,5 +64,4 @@ export default {
       HEADER_ITEM,
     };
   },
-  mounted() {},
 };

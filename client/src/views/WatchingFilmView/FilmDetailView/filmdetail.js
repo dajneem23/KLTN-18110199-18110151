@@ -9,6 +9,7 @@ export default {
       filmData: [],
       lang: 'vi',
       FILMDETAIL_ITEM,
+      cmt:'',
     };
   },
   props: ['id', 'data'],
@@ -17,6 +18,11 @@ export default {
     console.log(this.$route);
     console.log('mounted');
 
+  },
+  methods: {
+    sendCmt() {
+      console.log(this.cmt)
+    }
   },
 };
 

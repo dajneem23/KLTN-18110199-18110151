@@ -1,0 +1,130 @@
+.news {
+  border: 2px var(--gray) solid;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  .news-header {
+    padding: 20px;
+    .avt-news {
+      height: 50px;
+    }
+    img {
+      width: 50px;
+      height: 50px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 50%;
+    }
+    .news-info {
+      margin-left: 10px;
+      display: flex;
+      flex-direction: column;
+      .news-user-name {
+        font-weight: 600;
+        font-size: 16px;
+      }
+      .news-time {
+        font-size: 13px;
+      }
+    }
+    .news-caption {
+      margin-top: 10px;
+    }
+  }
+  .news-body {
+    img {
+      max-width: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
+  .news-footer {
+    padding: 20px;
+    .news-footer-top {
+      border-bottom: 1px var(--gray) solid;
+      padding-bottom: 10px;
+
+      display: flex;
+      justify-content: space-between;
+      .news-like {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        .couter-like {
+          width: 20px;
+          margin-right: 10px;
+        }
+      }
+      .news-cmt {
+        font-size: 14px;
+        display: flex;
+        svg {
+          width: 20px;
+          margin-right: 10px;
+        }
+      }
+    }
+    .news-footer-body {
+      height: 60px;
+      padding: 10px 0;
+      border-bottom: 1px var(--gray) solid;
+
+      display: flex;
+      justify-content: center;
+      .like-news {
+        width: 50%;
+        span {
+          font-weight: 600;
+          font-size: 16px;
+        }
+      }
+      .btn + .btn {
+        margin-left: 10px;
+      }
+    }
+    .news-footer-bottom {
+      min-height: 200px;
+      max-height: 500px;
+      overflow: scroll;
+      overflow-x: hidden;
+      // display: flex;
+      flex-direction: column;
+      .news-write-cmt {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px var(--gray) solid;
+        textarea {
+          min-width: 90%;
+          max-width: 90%;
+          max-height: 50px;
+          min-height: 50px;
+          border: none;
+          margin-right: 15px;
+          padding: 15px;
+
+          resize: none;
+        }
+        textarea:focus-visible {
+          outline: none;
+        }
+      }
+      .news-cmt-box {
+        padding: 0 40px;
+      }
+    }
+  }
+}
+.news-header-top {
+  display: flex;
+}
+.cmt-rep {
+  padding-left: 25px;
+  margin-left: 25px;
+  border-left: 1px var(--gray) solid;
+}
+.enable {
+  display: flex;
+}
+.disable {
+  display: none;
+}

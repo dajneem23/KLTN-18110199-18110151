@@ -81,8 +81,8 @@
     </div>
     <div class="film-cmt">
       <div class="write-cmt-box">
-        <textarea class="input-cmt" type="text" placeholder="Hãy chia sẻ cảm nghĩ về bài viết" value=""></textarea>
-        <button class="btn-send-cmt bgc-blue_3 cl-white">Gửi</button>
+        <textarea class="input-cmt" type="text" placeholder="Hãy chia sẻ cảm nghĩ về bài viết" value="" v-model="cmt"></textarea>
+        <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
       <div class="cmt-box">
         <Commentfilm></Commentfilm>

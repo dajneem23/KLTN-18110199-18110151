@@ -96,12 +96,18 @@
         <router-link to="/about">
           <button type="button" class="btn-none">Về Vrum</button>
         </router-link>
-        <router-link :to="HEADER_ITEM.register.path">
-          <button type="button" class="btn-none">{{ HEADER_ITEM.register.title[lang] }}</button>
-        </router-link>
-        <router-link :to="HEADER_ITEM.login.path">
-          <button type="button" class="btn-defaultt bgc-blue_3 cl-white">{{ HEADER_ITEM.login.title[lang] }}</button>
-        </router-link>
+
+        <div v-if="isAuthenticated">
+          <div class="name-user">{{ userInfo }}</div>
+        </div>
+        <div v-else>
+          <router-link :to="HEADER_ITEM.register.path">
+            <button type="button" class="btn-none">{{ HEADER_ITEM.register.title[lang] }}</button>
+          </router-link>
+          <router-link :to="HEADER_ITEM.login.path">
+            <button type="button" class="btn-defaultt bgc-blue_3 cl-white">{{ HEADER_ITEM.login.title[lang] }}</button>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
