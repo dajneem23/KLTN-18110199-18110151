@@ -300,7 +300,10 @@ export class BaseModel {
         ok,
         lastErrorObject: { updatedExisting },
       } = await this._collection.findOneAndUpdate(
-        { ...filter },
+        {
+          ...filter,
+          _id: _content._id,
+        },
         {
           $setOnInsert: {
             ..._content,
@@ -319,7 +322,7 @@ export class BaseModel {
       if (!ok) {
         throwErr(this.error('common.database'));
       }
-      if (updatedExisting) {
+      if (updatedExisting && Object.keys(filter).length) {
         throwErr(
           this.error('common.already_exist', [
             {
@@ -476,6 +479,7 @@ export class BaseModel {
               replacement: '-',
               lower: true,
               strict: true,
+              locale: 'vi',
               remove: RemoveSlugPattern,
             }) +
             '-' +
@@ -484,6 +488,7 @@ export class BaseModel {
               replacement: '-',
               lower: true,
               strict: true,
+              locale: 'vi',
               remove: RemoveSlugPattern,
             }));
       return _content;
