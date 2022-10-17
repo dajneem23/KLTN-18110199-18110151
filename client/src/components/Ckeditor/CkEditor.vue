@@ -1,6 +1,5 @@
 <template>
   <div>
-    <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
     <button @click="submitText(editorData)">submit</button>
   </div>
 </template>
