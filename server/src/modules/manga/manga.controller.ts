@@ -83,25 +83,25 @@ export class MangaController {
     _res.status(httpStatus.OK).json(result);
   }
 
-  @Get('/:slug', [])
-  async getBySlugPublic(
-    @Res() _res: Response,
-    @Req() _req: Request,
-    @Query() _query: BaseQuery,
-    @Params()
-    _params: {
-      slug: string;
-    },
-  ) {
-    const { filter, query } = buildQueryFilter(_query);
-    const result = await this.service.getBySlug({
-      _slug: _params.slug,
-      _filter: filter,
-    } as BaseServiceInput);
-    _res.status(httpStatus.OK).json(result);
-  }
+  // @Get('/:slug', [])
+  // async getBySlugPublic(
+  //   @Res() _res: Response,
+  //   @Req() _req: Request,
+  //   @Query() _query: BaseQuery,
+  //   @Params()
+  //   _params: {
+  //     slug: string;
+  //   },
+  // ) {
+  //   const { filter, query } = buildQueryFilter(_query);
+  //   const result = await this.service.getBySlug({
+  //     _slug: _params.slug,
+  //     _filter: filter,
+  //   } as BaseServiceInput);
+  //   _res.status(httpStatus.OK).json(result);
+  // }
 
-  @Get('/:id', [protect()])
+  @Get('/:id', [])
   async getByIdPrivate(
     @Res() _res: Response,
     @Req() _req: Request,

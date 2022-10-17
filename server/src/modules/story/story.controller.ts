@@ -72,6 +72,18 @@ export class StoryController {
     } as BaseServiceInput);
     _res.status(httpStatus.NO_CONTENT).end();
   }
+
+  @Get('/', [])
+  async get(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.query({
+      _filter: filter,
+      _query: query,
+      _permission: 'public',
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+
   @Get('/search', [])
   async search(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery) {
     const { filter, query } = buildQueryFilter(_query);
@@ -83,25 +95,25 @@ export class StoryController {
     _res.status(httpStatus.OK).json(result);
   }
 
-  @Get('/:slug', [])
-  async getBySlugPublic(
-    @Res() _res: Response,
-    @Req() _req: Request,
-    @Query() _query: BaseQuery,
-    @Params()
-    _params: {
-      slug: string;
-    },
-  ) {
-    const { filter, query } = buildQueryFilter(_query);
-    const result = await this.service.getBySlug({
-      _slug: _params.slug,
-      _filter: filter,
-    } as BaseServiceInput);
-    _res.status(httpStatus.OK).json(result);
-  }
+  // @Get('/:slug', [])
+  // async getBySlugPublic(
+  //   @Res() _res: Response,
+  //   @Req() _req: Request,
+  //   @Query() _query: BaseQuery,
+  //   @Params()
+  //   _params: {
+  //     slug: string;
+  //   },
+  // ) {
+  //   const { filter, query } = buildQueryFilter(_query);
+  //   const result = await this.service.getBySlug({
+  //     _slug: _params.slug,
+  //     _filter: filter,
+  //   } as BaseServiceInput);
+  //   _res.status(httpStatus.OK).json(result);
+  // }
 
-  @Get('/:id', [protect()])
+  @Get('/:id', [])
   async getByIdPrivate(
     @Res() _res: Response,
     @Req() _req: Request,
