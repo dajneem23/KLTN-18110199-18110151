@@ -16,6 +16,8 @@ export default {
       scTimer: 0,
       scY: 0,
       posts: [],
+      page: 1,
+      per_page: 10,
     };
   },
   mounted() {
@@ -23,14 +25,22 @@ export default {
   },
   methods: {
     getPosts($state) {
-      axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
-        if (response.data.length) {
-          this.posts.push(...response.data);
-          $state.loaded();
-        } else {
-          $state.complete();
-        }
-      });
+      axios
+        .get('https://jsonplaceholder.typicode.com/posts', {
+          params: {
+            page: +this.page,
+            per_page: +this.per_page,
+          },
+        })
+        .then((response) => {
+          if (response.data.length) {
+            this.posts.push(...response.data);
+            this.page++;
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+        });
     },
   },
 };
