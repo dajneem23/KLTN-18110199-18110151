@@ -9,9 +9,9 @@ import 'vue-plyr/dist/vue-plyr.css';
 import VueCarousel from 'vue-carousel';
 import { store } from './store/vuex';
 // import CKEditor from 'ckeditor4-vue';
-import CKEditor from '@ckeditor/ckeditor5-vue2';
+// import CKEditor from '@ckeditor/ckeditor5-vue2';
 
-Vue.use(CKEditor);
+// Vue.use(CKEditor);
 Vue.use(VueCarousel);
 Vue.use(VuePlyr);
 Vue.use(LazyTube);
