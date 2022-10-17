@@ -34,8 +34,9 @@ export class AuthController {
     const result = await this.authService.loginByIdAndPassword(body.loginId, body.password);
     res.cookie('access_token', result.tokens.access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
+      sameSite: 'none',
     });
     return res.status(httpStatusCode.OK).json(result);
   }

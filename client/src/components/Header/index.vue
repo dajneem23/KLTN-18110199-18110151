@@ -98,7 +98,7 @@
         </router-link>
 
         <div v-if="isAuthenticated">
-          <div class="name-user">{{ userInfo }}</div>
+          <div class="name-user">{{ userInfo?.name }}</div>
         </div>
         <div v-else>
           <router-link :to="HEADER_ITEM.register.path">
