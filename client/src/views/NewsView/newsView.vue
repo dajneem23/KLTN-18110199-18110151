@@ -1,5 +1,5 @@
 <template>
-  <div class="news-wrapper">
+  <div class="news-wrapper bgc-white">
     <div class="img-banner"></div>
     <div class="content-banner">
       <div class="popular-news">

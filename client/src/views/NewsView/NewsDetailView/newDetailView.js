@@ -13,6 +13,7 @@ export default {
       scTimer: 0,
       scY: 0,
       LIST_FILM,
+      cmt:'',
     };
   },
   mounted() {
@@ -32,6 +33,9 @@ export default {
         top: 0,
         behavior: 'smooth',
       });
+    },
+    sendCmt() {
+      console.log(this.cmt)
     },
     goToCmtBox() {
       const element = document.getElementById('cmt');

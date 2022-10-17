@@ -11,6 +11,7 @@ export default {
     return {
       lang: 'vi',
       HOME_ITEM,
+      cmt:'',
     };
   },
   methods: {
@@ -40,5 +41,8 @@ export default {
         return;
       }
     },
+    sendCmt() {
+      console.log(this.cmt)
+    }
   },
 };

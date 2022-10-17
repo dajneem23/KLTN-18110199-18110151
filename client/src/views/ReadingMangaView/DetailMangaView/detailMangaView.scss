@@ -2,6 +2,25 @@
   padding-top: 70px;
 }
 .screen-reading {
+  margin: 0 auto;
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 93vh;
+  overflow: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  .img-manga_item {
+    width: 100%;
+    height: 92vh;
+    scroll-snap-align: start;
+
+    img {
+      width: 100%;
+    }
+  }
 }
 .manga-info {
   width: 70%;

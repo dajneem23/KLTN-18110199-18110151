@@ -70,8 +70,8 @@
       </div>
       <div class="news-footer-bottom disable" id="cmt-box">
         <div class="news-write-cmt" id="cmt-write">
-          <textarea class="input-cmt" type="text" placeholder="Hãy chia sẻ cảm nghĩ về bài viết" value=""></textarea>
-          <button class="btn-send-cmt bgc-blue_3 cl-white">{{ HOME_ITEM.send.title[lang] }}</button>
+          <textarea class="input-cmt" type="text" placeholder="Hãy chia sẻ cảm nghĩ về bài viết" value="" v-model="cmt"></textarea>
+          <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">{{ HOME_ITEM.send.title[lang] }}</button>
         </div>
         <div class="news-cmt-box">
           <Comment></Comment>

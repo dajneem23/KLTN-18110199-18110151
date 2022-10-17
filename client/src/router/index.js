@@ -12,6 +12,7 @@ import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
 import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
 import DetailManga from '../views/ReadingMangaView/DetailMangaView/detailMangaView.vue';
+import ProfileView from '../views/ProfileView/profileView.vue'
 import { UserService } from '@/services';
 import { store } from '../store/vuex';
 
@@ -78,6 +79,15 @@ const routes = [
     components: {
       header: Header,
       default: NewsView,
+      footer: Footer,
+    },
+  },
+  {
+    path: '/profile/',
+    name: 'profile',
+    components: {
+      header: Header,
+      default: ProfileView,
       footer: Footer,
     },
   },

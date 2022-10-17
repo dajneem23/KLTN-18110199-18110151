@@ -46,6 +46,7 @@
       display: flex;
       justify-content: space-between;
       .news-like {
+        font-size: 14px;
         display: flex;
         align-items: center;
         .couter-like {
@@ -54,6 +55,7 @@
         }
       }
       .news-cmt {
+        font-size: 14px;
         display: flex;
         svg {
           width: 20px;

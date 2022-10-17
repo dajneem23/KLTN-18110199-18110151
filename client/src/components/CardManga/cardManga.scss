@@ -35,8 +35,8 @@
     }
   }
 }
-.card-numchap{
-  span{
+.card-numchap {
+  span {
     font-weight: 600;
   }
 }
@@ -45,4 +45,7 @@
 }
 .card + .card {
   margin-left: 20px;
+}
+.card-info {
+  font-size: 15px;
 }
