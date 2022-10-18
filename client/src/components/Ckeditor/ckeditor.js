@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     submitText() {
-      console.log('submitText', this.data);
+      console.log('submitText', this.editorData);
     },
     initEditor({
       // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
@@ -257,8 +257,8 @@ export default {
         });
     },
     handleChange({ editor }) {
-      const data = editor.getData();
-      console.log({ data });
+      this.editorData = editor.getData();
+      console.log({ data: this.editorData });
       console.log('%c Editor Change', 'color:green', { editor });
     },
 
