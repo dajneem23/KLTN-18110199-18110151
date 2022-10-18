@@ -11,7 +11,7 @@
         </button>
       </transition> -->
       <div class="item-home" v-for="(post, index) in posts" :key="index">
-        <News></News>
+        <News :data="post"></News>
       </div>
       <infinite-loading @infinite="getPosts"></infinite-loading>
     </div>

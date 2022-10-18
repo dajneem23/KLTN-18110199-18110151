@@ -97,8 +97,28 @@
           <button type="button" class="btn-none">Về Vrum</button>
         </router-link>
 
-        <div v-if="isAuthenticated">
-          <div class="name-user">{{ userInfo?.name }}</div>
+        <div v-if="isAuthenticated" class="category-item-user">
+          <div class="name-user" @click="showtoolTip">
+            <span>
+              {{ userInfo?.name }}
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" id="caret-down">
+              <path
+                d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
+              />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" id="caret-up" class="caret-hidden">
+              <path
+                d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"
+              />
+            </svg>
+          </div>
+          <div class="title_tooltip-user bgc-white" id="toolTip-user">
+            <router-link to="/profile/">
+              <div class="tooltip-user--item">Trang cá nhân</div>
+            </router-link>
+            <div class="tooltip-user--item" @click="logOut">Đăng xuất</div>
+          </div>
         </div>
         <div v-else>
           <router-link :to="HEADER_ITEM.register.path">
