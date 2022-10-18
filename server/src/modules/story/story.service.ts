@@ -58,7 +58,7 @@ export class StoryService {
       const { name, categories = [] } = _content;
       const value = await this.model.create(
         {
-          name,
+          // name,
         },
         {
           ..._story,

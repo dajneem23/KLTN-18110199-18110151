@@ -101,7 +101,11 @@ const expressLoader = (): Express => {
   // Configuring CORS (Cross Origin Resource Sharing)
   app.use(
     cors({
-      origin: 'https://kltn-18110199-18110151.pages.dev',
+      origin: [
+        'http://localhost:8080',
+        'https://kltn-18110199-18110151.pages.dev',
+        'https://develop.kltn-18110199-18110151.pages.dev',
+      ],
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
       credentials: true,
     }),

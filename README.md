@@ -49,7 +49,7 @@
         - Nhận report
         - Tạo thăm dò
         - Tạo thông báo
-        - Biểu đồ lượng người truy cập/tương tác/ lượt xem
+        - Biểu đồ lượng người truy cập/tương tác/ lượt xem.
 ```      
 ## Requirements
 

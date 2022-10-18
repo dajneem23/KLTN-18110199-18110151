@@ -17,9 +17,6 @@ export class UserModel extends BaseModel {
           field: {
             email: 1,
           },
-          options: {
-            unique: true,
-          },
         },
         // {
         //   field: {
