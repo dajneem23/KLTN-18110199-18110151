@@ -5,14 +5,20 @@ export default {
   components: {
     Comment,
     Carousel,
-    Slide
+    Slide,
+  },
+  props: {
+    data: Object,
   },
   data() {
     return {
       lang: 'vi',
       HOME_ITEM,
-      cmt:'',
+      cmt: '',
     };
+  },
+  mounted() {
+    console.log(item);
   },
   methods: {
     likePost(string, string2) {
@@ -42,7 +48,7 @@ export default {
       }
     },
     sendCmt() {
-      console.log(this.cmt)
-    }
+      console.log(this.cmt);
+    },
   },
 };
