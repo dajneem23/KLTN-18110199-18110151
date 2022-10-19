@@ -1,4 +1,9 @@
+import { mapState } from 'vuex';
+import { store } from '../../store/vuex';
 export default {
+  computed: {
+    ...mapState(['userInfo', 'isAuthenticated']),
+  },
   methods: {
     openCity(cityName, idButton) {
       var i;

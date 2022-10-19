@@ -1,6 +1,8 @@
 import Comment from '../Watching/CommentFilm/index.vue';
 import { HOME_ITEM } from '../../constants/homeview';
+import { onMounted } from 'vue';
 import { Carousel, Slide } from 'vue-carousel';
+
 export default {
   components: {
     Comment,
@@ -18,7 +20,7 @@ export default {
     };
   },
   mounted() {
-    console.log(item);
+
   },
   methods: {
     likePost(string, string2) {
@@ -49,6 +51,9 @@ export default {
     },
     sendCmt() {
       console.log(this.cmt);
+    },
+    getTime() {
+      data.created_at = data.created_at.toLocaleDateString('en-US');
     },
   },
 };

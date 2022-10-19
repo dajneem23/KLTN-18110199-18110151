@@ -35,6 +35,7 @@
             <CardNews style_x="card-news-z" font_title="f20" :data="item"></CardNews>
           </div>
         </div>
+        <!-- <div>{{data}}</div> -->
       </div>
     </div>
   </div>

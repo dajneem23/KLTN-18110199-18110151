@@ -1,0 +1,117 @@
+.storyDetail-wrapper {
+  margin-top: 70px;
+  display: flex;
+  height: 92.5vh;
+  padding: 30px;
+  .boxDetail-left {
+    width: 65%;
+    // background-color: aquamarine;
+    .image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    .slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .boxDetail-right {
+    width: 35%;
+    padding: 30px;
+    background-color: blueviolet;
+    .auth {
+      display: flex;
+      align-items: center;
+      .auth_avt {
+        img {
+          width: 50px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+      }
+    }
+    .content-story {
+      margin: 10px;
+      // width: 100%;
+    }
+  }
+}
+.news-footer {
+  padding: 20px;
+  .news-footer-top {
+    border-bottom: 1px var(--gray) solid;
+    padding-bottom: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    .news-like {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      .couter-like {
+        width: 20px;
+        margin-right: 10px;
+      }
+    }
+    .news-cmt {
+      font-size: 14px;
+      display: flex;
+      svg {
+        width: 20px;
+        margin-right: 10px;
+      }
+    }
+  }
+  .news-footer-body {
+    height: 60px;
+    padding: 10px 0;
+    border-bottom: 1px var(--gray) solid;
+
+    display: flex;
+    justify-content: center;
+    .like-news {
+      width: 50%;
+      span {
+        font-weight: 600;
+        font-size: 16px;
+      }
+    }
+    .btn + .btn {
+      margin-left: 10px;
+    }
+  }
+  .news-footer-bottom {
+    min-height: 200px;
+    max-height: 500px;
+    overflow: scroll;
+    overflow-x: hidden;
+    // display: flex;
+    flex-direction: column;
+    .news-write-cmt {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px var(--gray) solid;
+      textarea {
+        min-width: 90%;
+        max-width: 90%;
+        max-height: 50px;
+        min-height: 50px;
+        border: none;
+        margin-right: 15px;
+        padding: 15px;
+
+        resize: none;
+      }
+      textarea:focus-visible {
+        outline: none;
+      }
+    }
+    .news-cmt-box {
+      padding: 0 40px;
+    }
+  }
+}

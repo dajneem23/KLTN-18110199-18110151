@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bgc-white">
+  <div class="navbar-vrum bgc-white">
     <div class="header-nav">
       <div class="header-nav_logo">
         <router-link to="/">
@@ -93,10 +93,12 @@
         </div>
       </div>
       <div class="header-nav_right">
-        <router-link to="/about">
+        <!-- <router-link to="/about">
           <button type="button" class="btn-none">Về Vrum</button>
-        </router-link>
-
+        </router-link> -->
+        <div class="picture-user">
+          <img :src="userInfo?.picture" alt="" />
+        </div>
         <div v-if="isAuthenticated" class="category-item-user">
           <div class="name-user" @click="showtoolTip">
             <span>

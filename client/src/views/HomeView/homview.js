@@ -1,13 +1,13 @@
 import axios from 'axios';
 import InfiniteLoading from 'vue-infinite-loading';
-import News from '../../components/Blog/index.vue';
+import Story from '../../components/Blog/index.vue';
 import { mapState } from 'vuex';
 import { store } from '../../store/vuex';
 import { StoriesService } from '@/services';
 export default {
   components: {
     InfiniteLoading,
-    News,
+    Story,
   },
   computed: {
     ...mapState(['userInfo', 'isAuthenticated']),
@@ -50,7 +50,7 @@ export default {
       ] = await StoriesService.get({
         params: { page: this.page, per_page: this.per_page },
       });
-      console.log([items, error]);
+      // console.log([items, error]);
       if (!items.length) {
         $state.complete();
       }

@@ -1,11 +1,11 @@
 <template>
-  <div :class="style_x" class="card">
+  <div :class="style_x" class="card-news">
     <router-link :to="{ name: 'detailnews', params: { newsId: data.id, manaData: data } }">
-      <div class="card-img">
+      <div class="card-img-news">
         <img src="../../assets/Icon/anime-bg-3.jpg" alt="" />
       </div>
     </router-link>
-    <div class="card-body">
+    <div class="card-body-news">
       <div class="card-body__category">
         <div class="body__category">Khoa học</div>
         <div class="body__tym" @click="addWishList(2)">

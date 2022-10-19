@@ -13,6 +13,8 @@ import Footer from '../components/Footer/index.vue';
 import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
 import DetailManga from '../views/ReadingMangaView/DetailMangaView/detailMangaView.vue';
 import ProfileView from '../views/ProfileView/profileView.vue';
+import StoryDetailView from '../views/HomeView/StoryDetailView/index.vue';
+import CreateNewsView from '../views/CreateNews/index.vue'
 import { UserService } from '@/services';
 import { store } from '../store/vuex';
 
@@ -102,7 +104,7 @@ const routes = [
     component: Register,
   },
   {
-    path: '/movie/details/:filmId/',
+    path: '/movie/:filmId/',
     name: 'details',
     components: {
       header: Header,
@@ -112,7 +114,7 @@ const routes = [
     props: true,
   },
   {
-    path: '/manga/details/:mangaId/',
+    path: '/manga/:mangaId/',
     name: 'detailmanga',
     components: {
       header: Header,
@@ -122,11 +124,31 @@ const routes = [
     props: true,
   },
   {
-    path: '/news/details/:newsId/',
+    path: '/news/:storyId/',
+    name: 'detailStory',
+    components: {
+      header: Header,
+      default: StoryDetailView,
+      // footer: Footer,
+    },
+    props: true,
+  },
+  {
+    path: '/news/:newsId/',
     name: 'detailnews',
     components: {
       header: Header,
       default: DetailNews,
+      footer: Footer,
+    },
+    props: true,
+  },
+  {
+    path: '/createNews',
+    name: 'createNews',
+    components: {
+      header: Header,
+      default: CreateNewsView,
       footer: Footer,
     },
     props: true,
