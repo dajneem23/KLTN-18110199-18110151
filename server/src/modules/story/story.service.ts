@@ -269,4 +269,19 @@ export class StoryService {
       throw err;
     }
   }
+  async react({ _subject, _id }: BaseServiceInput) {
+    try {
+      const { reacts } = await this.model.update($toMongoFilter({ _id }), {
+        $addToSet: { reacts: _subject },
+      });
+      this.logger.debug('update_success', {});
+      return toOutPut({
+        item: { reacts },
+        keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('react_error', err.message);
+      throw err;
+    }
+  }
 }

@@ -349,7 +349,7 @@ export class BaseModel {
    */
   async update(
     { ...filter }: any,
-    { $set: { updated_at = new Date(), updated_by, ..._content }, ..._updateFilter }: any,
+    { $set: { updated_at = new Date(), ..._content } = {}, ..._updateFilter }: any,
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
@@ -364,7 +364,6 @@ export class BaseModel {
           $set: {
             ..._content,
             updated_at,
-            updated_by,
           },
           ..._updateFilter,
         },
@@ -466,13 +465,15 @@ export class BaseModel {
           Refname: 'sub_categories',
         })) &&
         (_content.sub_categories = $toObjectId(sub_categories));
-      const _name = slugify(name, {
-        replacement: '-',
-        lower: true,
-        strict: true,
-        locale: 'vi',
-        remove: RemoveSlugPattern,
-      });
+      const _name =
+        name &&
+        slugify(name, {
+          replacement: '-',
+          lower: true,
+          strict: true,
+          locale: 'vi',
+          remove: RemoveSlugPattern,
+        });
       name &&
         !_id &&
         (_content._id = (await this._collection.findOne({
@@ -480,7 +481,6 @@ export class BaseModel {
         }))
           ? _name + '-' + new Date().getTime()
           : _name);
-      // console.log(_content._id, '123123');
       return _content;
     } catch (err) {
       this.logger.error('validate_error', `[validate:${this._collectionName}:error]`, err.message);

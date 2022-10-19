@@ -5,6 +5,8 @@ export interface Story extends BaseModel {
 
   description: string;
 
+  reacts: string[];
+
   comments: string[];
 
   images: string[];
@@ -23,6 +25,7 @@ export interface Story extends BaseModel {
 export const _story: Story = {
   content: '',
   description: '',
+  reacts: [],
   comments: [],
   shares: [],
   images: [],

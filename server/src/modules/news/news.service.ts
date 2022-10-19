@@ -269,4 +269,49 @@ export class NewsService {
       throw err;
     }
   }
+  async react({ _subject, _id }: BaseServiceInput) {
+    try {
+      const { reacts } = await this.model.update($toMongoFilter({ _id }), {
+        $addToSet: { reacts: _subject },
+      });
+      this.logger.debug('update_success', {});
+      return toOutPut({
+        item: { reacts },
+        keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('react_error', err.message);
+      throw err;
+    }
+  }
+  async upVote({ _subject, _id }: BaseServiceInput) {
+    try {
+      const { up_vote } = await this.model.update($toMongoFilter({ _id }), {
+        $addToSet: { up_vote: _subject },
+      });
+      this.logger.debug('update_success', {});
+      return toOutPut({
+        item: { up_vote },
+        keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('react_error', err.message);
+      throw err;
+    }
+  }
+  async downVote({ _subject, _id }: BaseServiceInput) {
+    try {
+      const { down_vote } = await this.model.update($toMongoFilter({ _id }), {
+        $addToSet: { down_vote: _subject },
+      });
+      this.logger.debug('update_success', {});
+      return toOutPut({
+        item: { down_vote },
+        keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('react_error', err.message);
+      throw err;
+    }
+  }
 }
