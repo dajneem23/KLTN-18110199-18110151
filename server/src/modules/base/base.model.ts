@@ -91,7 +91,7 @@ export class BaseModel {
         from: 'users',
         refFrom: 'id',
         refTo: 'created_by',
-        select: 'full_name picture avatar',
+        select: 'name picture avatar',
         reName: 'author',
         operation: '$eq',
       }),

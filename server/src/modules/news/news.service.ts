@@ -127,7 +127,7 @@ export class NewsService {
   async query({ _filter, _query, _permission }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
       const { q, categories = [] } = _filter;
-      const { page = 1, per_page, sort_by, sort_order } = _query;
+      const { page = 1, per_page = 10, sort_by, sort_order } = _query;
       const [{ total_count } = { total_count: 0 }, ...items] = await this.model
         .get(
           $pagination({
@@ -147,7 +147,8 @@ export class NewsService {
               }),
             },
             $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories],
+            $lookups: [this.model.$lookups.categories, this.model.$lookups.author],
+            $sets: [this.model.$sets.author],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
