@@ -38,7 +38,7 @@ export const throwErr = (err: Error | any): void => {
  * Get filter and query from Express request query
  */
 export const buildQueryFilter = <T>(reqQuery: BaseQuery & T) => {
-  const { page, per_page, sort_by, sort_order, ...filter } = reqQuery;
+  const { page, per_page = 10, sort_by, sort_order, ...filter } = reqQuery;
   return {
     filter,
     query: { page, per_page, sort_by, sort_order },

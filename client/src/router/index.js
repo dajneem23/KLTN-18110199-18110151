@@ -12,7 +12,7 @@ import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
 import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
 import DetailManga from '../views/ReadingMangaView/DetailMangaView/detailMangaView.vue';
-import ProfileView from '../views/ProfileView/profileView.vue'
+import ProfileView from '../views/ProfileView/profileView.vue';
 import { UserService } from '@/services';
 import { store } from '../store/vuex';
 
@@ -130,6 +130,10 @@ const routes = [
       footer: Footer,
     },
     props: true,
+  },
+  {
+    path: '/test',
+    component: () => import('../components/Ckeditor/CkEditor.vue'),
   },
 ];
 

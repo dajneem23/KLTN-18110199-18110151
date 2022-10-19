@@ -34,8 +34,8 @@ export class AuthController {
   async login(@Res() res: Response, @Body() body: any) {
     const result = await this.authService.loginByIdAndPassword(body.loginId, body.password);
     res.cookie('access_token', result.tokens.access_token, {
-      httpOnly: env.MODE === 'production',
-      secure: true,
+      httpOnly: true,
+      secure: env.MODE === 'production',
       maxAge: 1000 * 60 * 60 * 24 * 30,
       sameSite: 'none',
     });

@@ -5,6 +5,8 @@ export interface News extends BaseModel {
 
   description: string;
 
+  reacts: string[];
+
   comments: string[];
 
   shares: string[];
@@ -21,6 +23,7 @@ export interface News extends BaseModel {
 export const _news: News = {
   content: '',
   description: '',
+  reacts: [],
   comments: [],
   shares: [],
   tags: [],
