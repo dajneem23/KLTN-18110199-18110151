@@ -19,6 +19,7 @@ import { $refValidation } from '@/utils/validation';
 import { COLLECTION_NAMES, PRIVATE_KEYS, RemoveSlugPattern, T } from '@/types';
 import slugify from 'slugify';
 import { omit } from 'lodash';
+import { locale } from 'dayjs';
 
 /**
  * @class BaseModel
@@ -465,32 +466,21 @@ export class BaseModel {
           Refname: 'sub_categories',
         })) &&
         (_content.sub_categories = $toObjectId(sub_categories));
+      const _name = slugify(name, {
+        replacement: '-',
+        lower: true,
+        strict: true,
+        locale: 'vi',
+        remove: RemoveSlugPattern,
+      });
       name &&
         !_id &&
         (_content._id = (await this._collection.findOne({
-          _id: slugify(name, {
-            replacement: '-',
-            lower: true,
-            strict: true,
-            remove: RemoveSlugPattern,
-          }),
+          _id: _name,
         }))
-          ? slugify(name, {
-              replacement: '-',
-              lower: true,
-              strict: true,
-              locale: 'vi',
-              remove: RemoveSlugPattern,
-            }) +
-            '-' +
-            new Date().getTime()
-          : slugify(name, {
-              replacement: '-',
-              lower: true,
-              strict: true,
-              locale: 'vi',
-              remove: RemoveSlugPattern,
-            }));
+          ? _name + '-' + new Date().getTime()
+          : _name);
+      // console.log(_content._id, '123123');
       return _content;
     } catch (err) {
       this.logger.error('validate_error', `[validate:${this._collectionName}:error]`, err.message);
