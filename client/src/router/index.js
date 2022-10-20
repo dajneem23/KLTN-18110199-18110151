@@ -124,7 +124,7 @@ const routes = [
     props: true,
   },
   {
-    path: '/news/:storyId/',
+    path: '/stories/:id/',
     name: 'detailStory',
     components: {
       header: Header,

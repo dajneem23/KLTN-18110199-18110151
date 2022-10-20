@@ -1,11 +1,11 @@
 <template>
   <router-link :to="{ name: 'details', params: { filmId: data.id, filmData: data } }">
-    <div class="card">
-      <div class="card-image">
+    <div class="card-film">
+      <div class="card-image-film">
         <img :src="data.img" alt="" />
       </div>
-      <div class="card-body">
-        <div class="card-title">
+      <div class="card-body-film">
+        <div class="card-title-film">
           {{ data.title }}
         </div>
         <div class="card-auth text-dark-gray">

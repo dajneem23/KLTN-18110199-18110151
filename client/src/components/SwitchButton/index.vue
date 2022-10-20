@@ -1,7 +1,7 @@
 <template>
   <div class="form-box">
     <div class="button-boxx">
-      <div id="btn" class="button" ref="btnRef"></div>
+      <div id="btn" class="button-dev" ref="btnRef"></div>
       <button type="button" class="toggle-btnn" @click="onClick1">
         <span class="active-btn" ref="btnRefL">
           {{ contentL }}

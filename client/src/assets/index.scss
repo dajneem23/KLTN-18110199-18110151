@@ -84,6 +84,21 @@ a:hover {
     }
   }
 }
+.page-item .page-link,
+.page-item span {
+  border-radius: 0% !important;
+  width: 100px !important;
+  display: flex !important;
+  align-items: center;
+  border-radius: 5px !important;
+}
+.page-number .page-link,
+.page-number span {
+  border-radius: 0% !important;
+  width: 50px !important;
+  border-radius: 5px !important;
+}
+
 .dz-preview {
   display: flex;
   padding: 30px;

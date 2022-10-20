@@ -1,4 +1,4 @@
-.card {
+.card-film {
   max-width: 355px;
   min-width: 355px;
   max-height: 315px;
@@ -11,10 +11,10 @@
   }
 }
 
-.card + .card {
+.card-film + .card-film {
   margin-left: 20px;
 }
-.card-image {
+.card-image-film {
   height: 200px;
   // background-image: url(https://i.ytimg.com/vi/5siNvZgGb7o/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBolyqAJltGtNb-2o-SOBAVlDAPIA);
   background-repeat: no-repeat;
@@ -24,10 +24,10 @@
     max-width: 355px;
   }
 }
-.card-body {
+.card-body-film {
   padding: 5px 20px;
 }
-.card-title {
+.card-title-film {
   padding-top: 3px;
   min-height: 50px;
   max-height: 50px;

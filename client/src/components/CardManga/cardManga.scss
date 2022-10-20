@@ -40,10 +40,10 @@
     font-weight: 600;
   }
 }
-.card:hover {
+.card-manga:hover {
   scale: 1.1;
 }
-.card + .card {
+.card-manga + .card-manga {
   margin-left: 20px;
 }
 .card-info {

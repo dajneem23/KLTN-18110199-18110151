@@ -2,7 +2,9 @@ import Comment from '../Watching/CommentFilm/index.vue';
 import { HOME_ITEM } from '../../constants/homeview';
 import { onMounted } from 'vue';
 import { Carousel, Slide } from 'vue-carousel';
-
+import { StoriesService } from '@/services';
+import { mapState } from 'vuex';
+import moment from 'moment'; 
 export default {
   components: {
     Comment,
@@ -17,23 +19,44 @@ export default {
       lang: 'vi',
       HOME_ITEM,
       cmt: '',
+      reacts: [],
+      comments: [],
+      author: { name: 'Unknown' },
     };
   },
-  mounted() {
-
+  computed: {
+    ...mapState(['userInfo', 'isAuthenticated']),
   },
+  watch: {
+    data(newData) {
+      if (newData)
+        Object.keys(newData).map((key) => {
+          if (key == '_v') return;
+          this[key] = newData[key];
+        });
+      // console.log(this);
+    },
+  },
+  created() {
+    if (this.data)
+      Object.keys(this.data).map((key) => {
+        // console.log(key);
+        if (key == '_v') return;
+        this[key] = this.data[key];
+      });
+  },
+  mounted() {},
   methods: {
-    likePost(string, string2) {
-      const valueTitle = document.getElementById(string2);
-      const valueIcon = document.getElementById(string);
-      if (valueTitle.classList.length === 0) {
-        valueIcon.classList.add('fill-blue');
-        valueTitle.classList.add('text-blue');
-      } else {
-        valueIcon.classList.remove('fill-blue');
-        valueTitle.classList.remove('text-blue');
+    moment,
+    async likePost(id) {
+      console.log(id);
+      const [result, error] = await StoriesService.react(id);
+      console.log([result, error]);
+      if (result) {
+        const { reacts } = result;
+        this.reacts = reacts;
+        // console.log(this.reacts, reacts);
       }
-      console.log('ahahah');
     },
     showCmtBox(string) {
       const value = document.getElementById(string);

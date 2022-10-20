@@ -5,7 +5,13 @@ export const StoriesService = {
   get(params) {
     return RequestBase.get(`${this.url}/`, params);
   },
+  getById(id) {
+    return RequestBase.get(`${this.url}/${id}`);
+  },
   create(body) {
     return RequestBase.post(`${this.url}/`, body);
   },
+  react(id) {
+    return RequestBase.patch(`${this.url}/react/${id}`);
+  }
 };
