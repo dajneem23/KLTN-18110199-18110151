@@ -5,7 +5,7 @@ import { alphabetSize12 } from '@/utils/randomString';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import AuthService from '../auth/auth.service';
 import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject } from '@/utils/mongoDB';
-import { MangaError, mangaModelToken, mangaErrors, _manga } from '.';
+import { MangaError, mangaModelToken, mangaErrors, _manga, mangaChapterModelToken, _mangaChaper } from '.';
 import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS } from '@/types/Common';
 import { isNil, omit } from 'lodash';
 const TOKEN_NAME = '_mangaService';
@@ -26,6 +26,8 @@ export class MangaService {
   private logger = new Logger('MangaService');
 
   private model = Container.get(mangaModelToken);
+
+  private mangaChapter = Container.get(mangaChapterModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;
@@ -74,6 +76,33 @@ export class MangaService {
       throw err;
     }
   }
+  /**
+   * Create a new Manga
+   * @param _content
+   * @param _subject
+   * @returns {Promise<BaseServiceOutput>}
+   */
+  async createChapter({ _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
+    try {
+      const { name, categories = [] } = _content;
+      const value = await this.mangaChapter.create(
+        {
+          name,
+        },
+        {
+          ..._mangaChaper,
+          ..._content,
+          categories,
+          ...(_subject && { created_by: _subject }),
+        },
+      );
+      this.logger.debug('create_success', { _content });
+      return toOutPut({ item: value, keys: this.model._keys });
+    } catch (err) {
+      this.logger.error('create_error', err.message);
+      throw err;
+    }
+  }
 
   /**
    * Update category
@@ -85,6 +114,28 @@ export class MangaService {
   async update({ _id, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
       await this.model.update($toMongoFilter({ _id }), {
+        $set: {
+          ..._content,
+          ...(_subject && { updated_by: _subject }),
+        },
+      });
+      this.logger.debug('update_success', { _content });
+      return toOutPut({ item: _content, keys: this.model._keys });
+    } catch (err) {
+      this.logger.error('update_error', err.message);
+      throw err;
+    }
+  }
+  /**
+   * Update category
+   * @param _id
+   * @param _content
+   * @param _subject
+   * @returns {Promise<BaseServiceOutput>}
+   */
+  async updateChapter({ _id, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
+    try {
+      await this.mangaChapter.update($toMongoFilter({ _id }), {
         $set: {
           ..._content,
           ...(_subject && { updated_by: _subject }),
@@ -116,6 +167,24 @@ export class MangaService {
       throw err;
     }
   }
+  /**
+   * Delete manga
+   * @param _id
+   * @param {ObjectId} _subject
+   * @returns {Promise<void>}
+   */
+  async deleteChapter({ _id, _subject }: BaseServiceInput): Promise<void> {
+    try {
+      await this.mangaChapter.delete($toMongoFilter({ _id }), {
+        ...(_subject && { deleted_by: _subject }),
+      });
+      this.logger.debug('delete_success', { _id });
+      return;
+    } catch (err) {
+      this.logger.error('delete_error', err.message);
+      throw err;
+    }
+  }
 
   /**
    *  Query manga
@@ -129,6 +198,53 @@ export class MangaService {
       const { q, categories = [] } = _filter;
       const { page = 1, per_page = 10, sort_by, sort_order } = _query;
       const [{ total_count } = { total_count: 0 }, ...items] = await this.model
+        .get(
+          $pagination({
+            $match: {
+              deleted: false,
+              ...(q && {
+                name: { $regex: q, $options: 'i' },
+              }),
+              ...(categories.length && {
+                $or: [
+                  {
+                    categories: {
+                      $in: $toObjectId(categories),
+                    },
+                  },
+                ],
+              }),
+            },
+            $addFields: this.model.$addFields.categories,
+            $lookups: [this.model.$lookups.categories],
+            ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
+            ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
+          }),
+        )
+        .toArray();
+      this.logger.debug('query_success', { total_count, items });
+      return toPagingOutput({
+        items,
+        total_count,
+        keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('query_error', err.message);
+      throw err;
+    }
+  }
+  /**
+   *  Query manga
+   * @param {any} _filter
+   * @param {BaseQuery} _query
+   * @returns {Promise<BaseServiceOutput>}
+   *
+   **/
+  async queryChapter({ _filter, _query, _permission }: BaseServiceInput): Promise<BaseServiceOutput> {
+    try {
+      const { q, categories = [] } = _filter;
+      const { page = 1, per_page = 10, sort_by, sort_order } = _query;
+      const [{ total_count } = { total_count: 0 }, ...items] = await this.mangaChapter
         .get(
           $pagination({
             $match: {
@@ -200,17 +316,19 @@ export class MangaService {
     }
   }
   /**
-   * Get Manga by slug
+   * Get Manga by ID
    * @param id - Manga ID
    * @returns { Promise<BaseServiceOutput> } - Manga
    */
-  async getBySlug({ _slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async getChapterById({ _id, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      const [item] = await this.model
+      const [item] = await this.mangaChapter
         .get([
           {
             $match: {
-              ...$toMongoFilter({ slug: _slug }),
+              ...$toMongoFilter({
+                _id,
+              }),
             },
           },
           {
@@ -232,6 +350,7 @@ export class MangaService {
       throw err;
     }
   }
+
   /**
    * Search by text index
    * @param {BaseServiceInput} _filter _query
@@ -265,6 +384,22 @@ export class MangaService {
       return toPagingOutput({ items, total_count, keys: this.model._keys });
     } catch (err) {
       this.logger.error('query_error', err.message);
+      throw err;
+    }
+  }
+
+  async react({ _subject, _id }: BaseServiceInput) {
+    try {
+      const { reacts } = await this.model.update($toMongoFilter({ _id }), {
+        $addToSet: { reacts: _subject },
+      });
+      this.logger.debug('update_success', {});
+      return toOutPut({
+        item: { reacts },
+        keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('react_error', err.message);
       throw err;
     }
   }

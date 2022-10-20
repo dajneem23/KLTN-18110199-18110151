@@ -271,9 +271,12 @@ export class NewsService {
   }
   async react({ _subject, _id }: BaseServiceInput) {
     try {
-      const { reacts } = await this.model.update($toMongoFilter({ _id }), {
-        $addToSet: { reacts: _subject },
-      });
+      const { reacts } = await this.model.update(
+        { _id },
+        {
+          $addToSet: { reacts: _subject },
+        },
+      );
       this.logger.debug('update_success', {});
       return toOutPut({
         item: { reacts },
