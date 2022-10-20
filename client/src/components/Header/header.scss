@@ -8,7 +8,7 @@ h1 {
 button:focus {
   outline: none !important;
 }
-.navbar {
+.navbar-vrum {
   max-width: 1912px;
   position: fixed;
   top: 0;
@@ -125,11 +125,11 @@ button:focus {
   width: 220px;
   text-align: center;
   // right: 130px;
-  border-radius: 6px;
+  border-radius: 0 0 5px 5px;
   // padding: 10px 0;
   position: absolute;
   z-index: 1;
-  // top: -70px;
+  top: -70px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   z-index: -999;
   transition: 0.3s;
@@ -142,6 +142,12 @@ button:focus {
     border-radius: 5px;
   }
 }
+.picture-user {
+  img {
+    width: 40px;
+    border-radius: 50%;
+  }
+}
 .name-user {
   cursor: pointer;
 }
@@ -152,7 +158,7 @@ button:focus {
   display: none;
 }
 .top-0 {
-  top: 75px;
+  top: 100px;
 }
 .top-70 {
   top: -100px;

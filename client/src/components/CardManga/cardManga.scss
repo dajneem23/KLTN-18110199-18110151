@@ -1,4 +1,4 @@
-.card {
+.card-manga {
   width: 330px;
   max-height: 229px;
   min-height: 229px;
@@ -21,7 +21,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    .card-title {
+    .card-title-manga {
       min-height: 135px;
       max-height: 135px;
       padding-top: 3px;
@@ -40,10 +40,10 @@
     font-weight: 600;
   }
 }
-.card:hover {
+.card-manga:hover {
   scale: 1.1;
 }
-.card + .card {
+.card-manga + .card-manga {
   margin-left: 20px;
 }
 .card-info {

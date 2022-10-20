@@ -13,11 +13,13 @@ export default {
       scTimer: 0,
       scY: 0,
       LIST_FILM,
-      cmt:'',
+      cmt: '',
     };
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
+
+    // const news
   },
   methods: {
     handleScroll: function () {
@@ -35,7 +37,7 @@ export default {
       });
     },
     sendCmt() {
-      console.log(this.cmt)
+      console.log(this.cmt);
     },
     goToCmtBox() {
       const element = document.getElementById('cmt');

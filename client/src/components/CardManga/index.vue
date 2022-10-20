@@ -1,11 +1,11 @@
 <template>
   <router-link :to="{ name: 'detailmanga', params: { mangaId: data.id, manaData: data } }">
-    <div class="card">
+    <div class="card-manga">
       <div class="card-left">
         <img :src="data.img" alt="" />
       </div>
       <div class="card-right">
-        <div class="card-title">{{ data.title }}</div>
+        <div class="card-title-manga">{{ data.title }}</div>
         <div class="card-info text-dark-gray">
           <div class="card-numchap">
             <span>

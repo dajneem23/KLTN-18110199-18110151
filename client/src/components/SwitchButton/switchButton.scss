@@ -27,9 +27,11 @@
   outline: none;
   position: relative;
   text-align: center;
+  display: flex;
+  align-items: center;
 }
 
-.button {
+.button-dev {
   left: 0;
   top: 0;
   position: absolute;
@@ -51,4 +53,7 @@
   background: var(--white);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+span {
+  font-size: 13px !important;
 }

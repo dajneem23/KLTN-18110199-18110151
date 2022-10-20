@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div>
+      <span>Title</span>
+      <input type="text" />
+    </div>
+    <div>
+      <span>IMG</span>
+      <!-- <UploadFile multiple></UploadFile> -->
+      <DropzoneFileUpload multiple></DropzoneFileUpload>
+    </div>
     <div id="editor"></div>
     <button @click="submitText(editorData)">submit</button>
   </div>

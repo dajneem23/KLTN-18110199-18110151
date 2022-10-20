@@ -9,7 +9,7 @@ export default {
     ...mapState(['userInfo', 'isAuthenticated']),
   },
   mounted() {
-    console.log(store.state.isAuthenticated);
+    // console.log(store.state.isAuthenticated);
   },
   methods: {
     logOut() {
