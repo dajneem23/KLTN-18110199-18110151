@@ -112,34 +112,25 @@ export class StoryController {
       weight: RolesWeight.user,
     }),
   ])
-  async react(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery, @Auth() _auth: JWTPayload) {
+  async react(
+    @Res() _res: Response,
+    @Req() _req: Request,
+    @Query() _query: BaseQuery,
+    @Auth() _auth: JWTPayload,
+    @Params()
+    _params: {
+      id: string;
+    },
+  ) {
     const { filter, query } = buildQueryFilter(_query);
-    // console.log(_auth);
     const result = await this.service.react({
+      _id: _params.id,
       _filter: filter,
       _query: query,
       _subject: _auth.id,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
-
-  // @Get('/:slug', [])
-  // async getBySlugPublic(
-  //   @Res() _res: Response,
-  //   @Req() _req: Request,
-  //   @Query() _query: BaseQuery,
-  //   @Params()
-  //   _params: {
-  //     slug: string;
-  //   },
-  // ) {
-  //   const { filter, query } = buildQueryFilter(_query);
-  //   const result = await this.service.getBySlug({
-  //     _slug: _params.slug,
-  //     _filter: filter,
-  //   } as BaseServiceInput);
-  //   _res.status(httpStatus.OK).json(result);
-  // }
 
   @Get('/:id', [])
   async getByIdPrivate(

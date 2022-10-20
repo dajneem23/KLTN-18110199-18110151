@@ -359,7 +359,7 @@ export class BaseModel {
         ok,
         lastErrorObject: { updatedExisting },
       } = await this._collection.findOneAndUpdate(
-        $toMongoFilter(filter),
+        filter,
         {
           $set: {
             ..._content,

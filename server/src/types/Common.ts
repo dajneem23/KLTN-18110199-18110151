@@ -222,6 +222,7 @@ export enum COLLECTION_NAMES {
   manga = 'manga',
   films = 'films',
   settings = 'settings',
+  'manga-chapters' = 'manga-chapters',
 }
 /**
  *  @description - Remove all special characters from a string to make it a valid URL
