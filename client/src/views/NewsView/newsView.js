@@ -1,13 +1,20 @@
 import axios from 'axios';
 import SwitchButton from '../../components/SwitchButton/index.vue';
 import CardNews from '../../components/CardNews/index.vue';
-import { LIST_FILM } from '../../constants/listfilm';
+import { NewsServices } from '@/services';
 
-import { StoriesService } from '@/services';
+const customStyles = {};
 export default {
   components: {
     SwitchButton,
     CardNews,
+  },
+  data() {
+    return {
+      pageOfItems: [],
+      customStyles,
+      data: [],
+    };
   },
   async mounted() {
     const [
@@ -15,13 +22,13 @@ export default {
         items: [],
       },
       error,
-    ] = await StoriesService.get();
+    ] = await NewsServices.get();
     this.data = items;
+    console.log(items);
   },
-  data() {
-    return {
-      LIST_FILM,
-      data: [],
-    };
+  methods: {
+    onChangePage(pageOfItems) {
+      this.pageOfItems = pageOfItems;
+    },
   },
 };

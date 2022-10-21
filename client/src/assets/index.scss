@@ -98,7 +98,9 @@ a:hover {
   width: 50px !important;
   border-radius: 5px !important;
 }
-
+.page-item.active .page-link {
+  background-color: var(--primary-blue_2);
+}
 .dz-preview {
   display: flex;
   padding: 30px;

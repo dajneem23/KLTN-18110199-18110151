@@ -243,3 +243,9 @@
   border-width: 21.7px 12.5px 0 12.5px;
   border-color: var(--gray) transparent transparent transparent;
 }
+.up-vote {
+  border-color: transparent transparent green transparent !important;
+}
+.down-vote {
+  border-color: red transparent transparent transparent !important;
+}
