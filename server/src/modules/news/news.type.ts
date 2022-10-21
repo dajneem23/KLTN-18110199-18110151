@@ -11,6 +11,8 @@ export interface News extends BaseModel {
 
   shares: string[];
 
+  image?: string;
+
   tags: string[];
 
   minutes_to_read: number;
