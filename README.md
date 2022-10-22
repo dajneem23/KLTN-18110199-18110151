@@ -1,7 +1,7 @@
 # KLTN-18110199-18110151
 `Khóa luận tốt nghiệp 18110199-18110151`
 
-![duck](https://i.gifer.com/embedded/download/XOsX.gif)
+<img src="https://github.githubassets.com/images/mona-loading-dark.gif"/>
 
 <h1><a href="https://kltn-18110199-18110151.pages.dev">🌐 Production</a></h1>
 
