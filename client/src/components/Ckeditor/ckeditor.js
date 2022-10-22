@@ -1,9 +1,11 @@
 import { onMounted, ref } from 'vue';
-import DropzoneFileUpload from '../../template/Inputs/DropzoneFileUpload'
+import DropzoneFileUpload from '../../template/Inputs/DropzoneFileUpload';
+import BaseInput from '../../template/Inputs/BaseInput.vue';
 export default {
   name: 'CkEditor',
   components: {
-    DropzoneFileUpload
+    DropzoneFileUpload,
+    BaseInput,
   },
   data() {
     return {

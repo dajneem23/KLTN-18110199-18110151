@@ -1,0 +1,69 @@
+.edit-profile-wrapper {
+  margin: 70px;
+  // height: 90vh;
+  .edit-box {
+    padding: 50px;
+    width: 60%;
+    margin: 30px auto;
+    .edit-img-cover {
+      height: 350px;
+      background-color: cadetblue;
+    }
+    .edit-user-info-top {
+      width: 100%;
+      margin-top: 20px;
+      height: 240px;
+      // background-color: chartreuse;
+      display: flex;
+      justify-content: space-between;
+      .edit-user-avt {
+        width: 25%;
+        background-color: chartreuse;
+      }
+      .edit-user-story {
+        width: 70%;
+        background-color: cornflowerblue;
+      }
+    }
+    .edit-user-info-bottom {
+      width: 100%;
+      height: 50vh;
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 30px;
+      .edit-box-user-left {
+        padding: 10px;
+        background-color: cornflowerblue;
+      }
+      .edit-box-user-right {
+        padding: 10px;
+        background-color: crimson;
+      }
+    }
+    .edit-button {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+      button {
+        padding: 5px 25px;
+        border-radius: 25px;
+      }
+      button + button {
+        margin-left: 10px;
+      }
+      .button-cancel {
+        border: none;
+        transition: 0.3s;
+      }
+      .button-cancel:hover {
+        background-color: var(--gray);
+      }
+      .button-save {
+        color: var(--white);
+        background-color: var(--primary-blue_3);
+        border: 0ch;
+      }
+    }
+  }
+}

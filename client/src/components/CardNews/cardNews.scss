@@ -13,6 +13,10 @@
   border-radius: 5px;
   display: flex;
   .card-img-news {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
     img {
       min-width: 303px;
       max-width: 303px;

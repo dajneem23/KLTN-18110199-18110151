@@ -4,29 +4,32 @@
   margin-top: 75px;
 }
 .list-new-box {
-  max-width: 100%;
+  width: 100%;
   padding: 0 20px;
   h3 {
     margin: 15px 0;
     text-align: left;
   }
   .list-new {
+    max-width: 100%;
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     overflow-x: scroll;
     .list-new-item {
+      width: 100%;
       padding: 10px 9px;
     }
   }
 }
 .list-all-box {
-  width: 100%;
+  max-width: 100%;
   padding: 0 20px;
   h3 {
     margin: 20px 0;
     text-align: left;
   }
   .list-all {
+    max-width: 100%;
     padding: 10px 7px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);

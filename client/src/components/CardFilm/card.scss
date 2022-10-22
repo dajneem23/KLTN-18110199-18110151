@@ -1,8 +1,8 @@
 .card-film {
-  max-width: 355px;
-  min-width: 355px;
-  max-height: 315px;
-  min-height: 315px;
+  // max-width: 355px;
+  // min-width: 355px;
+  // max-height: 315px;
+  // min-height: 315px;
   border-radius: 5px;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   cursor: pointer;
@@ -21,7 +21,8 @@
   background-size: cover;
   img {
     border-radius: 5px 5px 0 0;
-    max-width: 355px;
+    // max-width: 355px;
+    width: 100%;
   }
 }
 .card-body-film {

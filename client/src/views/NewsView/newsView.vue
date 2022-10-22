@@ -1,6 +1,11 @@
 <template>
   <div class="news-wrapper bgc-white">
     <div class="img-banner"></div>
+    <div class="button-create_news">
+      <router-link to="/createNews">
+        <button>Đăng bài viết</button>
+      </router-link>
+    </div>
     <div class="content-banner">
       <div class="popular-news">
         <h3>Phổ biến nhất</h3>
@@ -34,14 +39,9 @@
           <div v-for="item in pageOfItems">
             <CardNews style_x="card-news-z" font_title="f20" :news="item"></CardNews>
           </div>
-        </div>
-        <div class="paganition-box">
-          <jw-pagination
-            :items="data"
-            @changePage="onChangePage"
-            :pageSize="5"
-            class="paganite"
-          ></jw-pagination>
+          <div class="paganition-box">
+            <jw-pagination :items="data" @changePage="onChangePage" :pageSize="10" class="paganite"></jw-pagination>
+          </div>
         </div>
         <!-- <div>{{data}}</div> -->
       </div>

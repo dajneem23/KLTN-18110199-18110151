@@ -1,16 +1,23 @@
 <template>
-  <div>
-    <div>
-      <span>Title</span>
-      <input type="text" />
+  <div class="box-create">
+    <h1>Tạo bài viết</h1>
+    <div class="box-title">
+      <span class="name-title">Tiêu đề:</span>
+      <input type="text" placeholder="Tiêu đề bài viết....." />
     </div>
-    <div>
-      <span>IMG</span>
-      <!-- <UploadFile multiple></UploadFile> -->
-      <DropzoneFileUpload multiple></DropzoneFileUpload>
+    <div class="box-title">
+      <span class="name-title">Mô tả:</span>
+      <input type="text" placeholder="Mô tả bài viết....." />
     </div>
-    <div id="editor"></div>
-    <button @click="submitText(editorData)">submit</button>
+    <div class="box-images">
+      <span>Hình ảnh: </span>
+      <DropzoneFileUpload multiple class="upload-file"></DropzoneFileUpload>
+    </div>
+    <div class="box-content">
+      <span>Nội dung :</span>
+      <div id="editor" class="ckeditor-cus"></div>
+    </div>
+    <button @click="submitText(editorData)" class="btn-filter">Lưu</button>
   </div>
 </template>
 <!-- <script src="../"></script> -->
