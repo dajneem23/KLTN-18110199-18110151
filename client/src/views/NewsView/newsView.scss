@@ -1,4 +1,5 @@
 .news-wrapper {
+  width: 100%;
   padding-top: 70px;
   .img-banner {
     max-width: 1912px;
@@ -6,6 +7,22 @@
     background: url('../../assets//Icon/perspectives_rebrand_banner.png');
     background-repeat: no-repeat;
     background-size: cover;
+  }
+  .button-create_news {
+    width: 80%;
+    position: relative;
+    top: -300px;
+    display: flex;
+    justify-content: end;
+    button {
+      width: 200px;
+      padding: 15px;
+      border-radius: 45px;
+      font-weight: 600;
+    }
+    button:hover {
+      box-shadow: rgba(0, 0, 0, 0.35) 5px 5px 5px;
+    }
   }
   .content-banner {
     .popular-news {

@@ -13,8 +13,9 @@ import Footer from '../components/Footer/index.vue';
 import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
 import DetailManga from '../views/ReadingMangaView/DetailMangaView/detailMangaView.vue';
 import ProfileView from '../views/ProfileView/profileView.vue';
+import EditProfileView from '../views/ProfileView/EditProfileView/index.vue';
 import StoryDetailView from '../views/HomeView/StoryDetailView/index.vue';
-import CreateNewsView from '../views/CreateNews/index.vue'
+import CreateNewsView from '../views/CreateNews/index.vue';
 import { UserService } from '@/services';
 import { store } from '../store/vuex';
 
@@ -90,6 +91,15 @@ const routes = [
     components: {
       header: Header,
       default: ProfileView,
+      footer: Footer,
+    },
+  },
+  {
+    path: '/profile/edit',
+    name: 'profile',
+    components: {
+      header: Header,
+      default: EditProfileView,
       footer: Footer,
     },
   },

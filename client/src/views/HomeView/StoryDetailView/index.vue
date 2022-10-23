@@ -2,14 +2,10 @@
   <div class="storyDetail-wrapper bgc-black">
     <div class="boxDetail-left">
       <div class="image">
-      <carousel :perPage=1>
-          <!-- <slide v-for="img in this.$route.params.storyData.images" class="slide">
-            <img :src="img" alt="" />
-          </slide> -->
-          <slide v-for="img in images || []" class="slide">
-            <img :src="img" alt="">
+      <carousel :perPage="1">
+          <slide v-for="img in images" class="slide">
+            <img :src="img" :alt="img">
           </slide>
-          
         </carousel>
       </div>
     </div>
@@ -18,8 +14,10 @@
         <div class="auth_avt">
           <img src="../../../assets/Icon/avt-cattoon.png" alt="">
         </div>
-        <div class="auth_name">{{author.name || 'UnKnown'}}</div>
-        <span class="news-time text-dark-gray">{{moment(created_at).fromNow() }}</span>
+        <div class="auth-info">
+          <div class="auth_name">{{author.name || 'UnKnown'}}</div>
+          <span class="news-time text-dark-gray">{{moment(created_at).fromNow() }}</span>
+        </div>
       </div>
       <div class="content-story">
         <div class="content_body">
@@ -67,20 +65,25 @@
         </button>
       </div>
       </div>
-      <div class="news-cmt-box">
+      <div class="news-cmt-box" >
+        <div v-for="comment in comments">
           <Comment></Comment>
-          <div class="cmt-rep">
-            <Comment></Comment>
+          <div v-if="comment?.reply">
+            <div class="cmt-rep" >
+              <div v-for="reply in comment.reply">
+                <Comment></Comment>
+                <div v-if="reply?.reply_2">
+                  <div class="cmt-rep" >
+                    <div v-for="reply_2 in reply.reply_2">
+                      <Comment></Comment>
+                    </div>
+                  </div>
+                </div>
+              </div>
           </div>
-          <Comment></Comment>
-          <div class="cmt-rep">
-            <Comment></Comment>
-            <Comment></Comment>
-            <div class="cmt-rep">
-              <Comment></Comment>
-            </div>
           </div>
         </div>
+      </div>
     </div>
     <!-- {{this.$route.params.storyData.content}} -->
   </div>

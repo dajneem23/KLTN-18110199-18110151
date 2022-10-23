@@ -136,6 +136,13 @@
     }
   }
 }
+.news-cmt-box {
+  padding: 0 40px;
+  max-height: 560px;
+  overflow: auto;
+  overflow-y: scroll;
+  // overflow-x: hidden;
+}
 .cmt-box {
   width: 100%;
   padding: 15px 0;

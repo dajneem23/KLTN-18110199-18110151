@@ -18,7 +18,9 @@ export default {
       lang: 'vi',
       HOME_ITEM,
       reacts: [],
-      comments: [],
+      comments: [
+       
+      ],
       images: [],
       author: { name: 'Unknown' },
       created_at: new Date(),
@@ -33,7 +35,6 @@ export default {
       if (result) {
         const { reacts } = result;
         this.reacts = reacts;
-        // console.log(this.reacts, reacts);
       }
     },
   },

@@ -13,7 +13,7 @@ export default {
     return {
       pageOfItems: [],
       customStyles,
-      data: [],
+      data: {},
     };
   },
   async mounted() {
@@ -24,11 +24,11 @@ export default {
       error,
     ] = await NewsServices.get();
     this.data = items;
-    console.log(items);
+    console.log(this.data);
   },
   methods: {
-    onChangePage(pageOfItems) {
-      this.pageOfItems = pageOfItems;
+    async onChangePage(pageOfItems) {
+      this.pageOfItems = await pageOfItems;
     },
   },
 };

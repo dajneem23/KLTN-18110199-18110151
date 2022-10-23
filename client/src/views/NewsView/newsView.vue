@@ -1,6 +1,11 @@
 <template>
   <div class="news-wrapper bgc-white">
     <div class="img-banner"></div>
+    <div class="button-create_news">
+      <router-link to="/createNews">
+        <button>Đăng bài viết</button>
+      </router-link>
+    </div>
     <div class="content-banner">
       <div class="popular-news">
         <h3>Phổ biến nhất</h3>
@@ -36,14 +41,8 @@
           </div>
         </div>
         <div class="paganition-box">
-          <jw-pagination
-            :items="data"
-            @changePage="onChangePage"
-            :pageSize="5"
-            class="paganite"
-          ></jw-pagination>
+          <jw-pagination :items="data" @changePage="onChangePage" :pageSize="5" class="paganite"></jw-pagination>
         </div>
-        <!-- <div>{{data}}</div> -->
       </div>
     </div>
   </div>

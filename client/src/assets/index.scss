@@ -107,6 +107,17 @@ a:hover {
   .dz-preview-multiple .list-group-lg {
   }
 }
-.dz-image-preview + .dz-image-preview {
-  margin-right: 20px;
+b-list-group {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+}
+b-list-group-item {
+  min-width: 200px;
+}
+.dz-button {
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  color: #5680e9;
 }
