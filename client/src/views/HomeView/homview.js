@@ -48,7 +48,8 @@ export default {
         },
         error,
       ] = await StoriesService.get({
-        params: { page: this.page, per_page: this.per_page },
+        page: this.page,
+        per_page: this.per_page,
       });
       // console.log([items, error]);
       if (!items.length) {

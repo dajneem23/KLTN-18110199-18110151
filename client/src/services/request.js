@@ -33,8 +33,8 @@ export const RequestBase = {
   query(route, params) {
     return axios.get(`${route}`, { params: params }).then(responseCallback).catch(catchError);
   },
-  get(route) {
-    return axios.get(`${route}`).then(responseCallback).catch(catchError);
+  get(route, params) {
+    return axios.get(`${route}`, { params: params }).then(responseCallback).catch(catchError);
   },
   post(route, body) {
     return axios.post(`${route}`, body).then(responseCallback).catch(catchError);
@@ -47,7 +47,7 @@ export const RequestBase = {
   },
   patch(route) {
     return axios.patch(`${route}`).then(responseCallback).catch(catchError);
-  }
+  },
 };
 
 export default RequestBase;
