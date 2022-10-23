@@ -26,22 +26,6 @@ export default {
   },
   methods: {
     async getPosts($state) {
-      // axios
-      //   .get('https://jsonplaceholder.typicode.com/posts', {
-      //     params: {
-      //       page: +this.page,
-      //       per_page: +this.per_page,
-      //     },
-      //   })
-      //   .then((response) => {
-      //     if (response.data.length) {
-      //       this.posts.push(...response.data);
-      //       this.page++;
-      //       $state.loaded();
-      //     } else {
-      //       $state.complete();
-      //     }
-      //   });
       const [
         { items = [], total_count } = {
           items: [],
