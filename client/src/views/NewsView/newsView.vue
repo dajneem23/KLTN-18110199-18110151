@@ -2,7 +2,7 @@
   <div class="news-wrapper bgc-white">
     <div class="img-banner"></div>
     <div class="button-create_news">
-      <router-link to="/createNews">
+      <router-link to="/create-news">
         <button>Đăng bài viết</button>
       </router-link>
     </div>
@@ -36,7 +36,7 @@
           ></SwitchButton>
         </div>
         <div class="news-box">
-          <div v-for="item in pageOfItems">
+          <div v-for="item in pageOfItems" >
             <CardNews style_x="card-news-z" font_title="f20" :news="item"></CardNews>
           </div>
         </div>

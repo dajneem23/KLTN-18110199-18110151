@@ -4,11 +4,17 @@ export default {
   components: {
     CardManga,
   },
+  props: {
+    manga: Object,
+  },
   data() {
     return {
       LIST_MANGA,
       pageOfItems: [],
     };
+  },
+  mounted() {
+    console.log(this.manga);
   },
   methods: {
     onChangePage(pageOfItems) {

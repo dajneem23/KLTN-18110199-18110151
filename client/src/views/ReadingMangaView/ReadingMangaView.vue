@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper-reading bgc-white">
     <FilterManga></FilterManga>
-    <ListManga></ListManga>
+    <ListManga :manga="manga"></ListManga>
   </div>
 </template>
 <script src="./readingMangaView"></script>

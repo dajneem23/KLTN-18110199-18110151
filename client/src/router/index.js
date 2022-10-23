@@ -40,15 +40,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
   },
-  {
-    path: '/error',
-    name: 'error',
-    components: {
-      // header: Header,
-      default: Error,
-      // footer: Footer
-    },
-  },
+
   {
     path: '/manga/',
     name: 'manga',
@@ -154,7 +146,7 @@ const routes = [
     props: true,
   },
   {
-    path: '/createNews',
+    path: '/create-news',
     name: 'createNews',
     components: {
       header: Header,
@@ -162,10 +154,23 @@ const routes = [
       footer: Footer,
     },
     props: true,
+    beforeEnter: (to, from, next) => {
+      authenticate(to, from, next) ? next() :  next('/not-found');
+    
+    },
   },
   {
     path: '/test',
     component: () => import('../components/Ckeditor/CkEditor.vue'),
+  },
+  {
+    path: '/not-found',
+    name: 'error',
+    components: {
+      // header: Header,
+      default: Error,
+      // footer: Footer
+    },
   },
 ];
 
@@ -174,6 +179,10 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+const authenticate = (to, from, next) => {
+  console.log('ftgy6',store.state)
+  return store.state.isAuthenticated;
+};
 
 router.beforeEach(async (to, from, next) => {
   let [user, error] = await UserService.me();

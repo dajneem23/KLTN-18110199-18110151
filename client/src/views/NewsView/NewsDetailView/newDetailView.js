@@ -20,6 +20,7 @@ export default {
       content: '',
       description: '',
       author: {},
+
     };
   },
   computed: {

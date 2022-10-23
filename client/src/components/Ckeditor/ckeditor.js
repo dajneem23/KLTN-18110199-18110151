@@ -11,6 +11,12 @@ export default {
     return {
       editor: null,
       editorData: 'Hello',
+      news: {
+        name: '',
+        content: '',
+        description: '',
+        image: [],
+      },
     };
   },
   watch: {
@@ -22,7 +28,8 @@ export default {
   },
   methods: {
     submitText() {
-      console.log('submitText', this.editorData);
+      this.news.content = this.editorData;
+      console.log(this.news)
     },
     initEditor({
       // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format

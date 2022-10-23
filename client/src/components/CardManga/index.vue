@@ -5,11 +5,11 @@
         <img :src="data.img" alt="" />
       </div>
       <div class="card-right">
-        <div class="card-title-manga">{{ data.title }}</div>
+        <div class="card-title-manga">{{ data.name }}</div>
         <div class="card-info text-dark-gray">
           <div class="card-numchap">
             <span>
-              {{ data.numChapter }}
+              {{ data?.chapters?.length }}
             </span>
             tập
           </div>

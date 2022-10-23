@@ -24,13 +24,7 @@
         </div>
       </div>
       <div class="paganition-box">
-        <jw-pagination
-          :items="LIST_MANGA.allManga"
-          @changePage="onChangePage"
-          :pageSize="12"
-          :styles="customStyles"
-          class="paganite"
-        ></jw-pagination>
+        <jw-pagination :items="manga" @changePage="onChangePage" :pageSize="2" class="paganite"></jw-pagination>
       </div>
     </div>
   </div>

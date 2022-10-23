@@ -33,7 +33,7 @@
         />
       </div>
       <div class="manga-box-2">
-        <div class="manga-title">Anh khoa có cùng đồng bọn đi thanh toán băng đảng xã hội đen</div>
+        <div class="manga-title">{{ manga.name }}</div>
         <div class="manga-info-des">
           <div>
             <div class="text-dark-gray manga-des-item">
@@ -66,7 +66,7 @@
             </div>
           </div>
           <div>
-            <div class="text-dark-gray manga-des-item">72N lượt xem</div>
+            <div class="text-dark-gray manga-des-item">{{ manga.views }} lượt xem</div>
             <button class="btn btn-like bgc-blue" @click="likeManga">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="fill-white">
                 <path
@@ -79,30 +79,16 @@
         </div>
 
         <div>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem reprehenderit deleniti neque optio. Nobis
-          nulla dolores aliquam cupiditate voluptatibus reprehenderit, praesentium ut rerum quo vel, facere nihil
-          mollitia temporibus! Placeat? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem reprehenderit
-          deleniti neque optio. Nobis nulla dolores aliquam cupiditate voluptatibus reprehenderit, praesentium ut rerum
-          quo vel, facere nihil mollitia temporibus! Placeat? Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Dolorem reprehenderit deleniti neque optio. Nobis nulla dolores aliquam cupiditate voluptatibus reprehenderit,
-          praesentium ut rerum quo vel, facere nihil mollitia temporibus! Placeat? Lorem ipsum, dolor sit amet
-          consectetur adipisicing elit. Dolorem reprehenderit deleniti neque optio. Nobis nulla dolores aliquam
-          cupiditate voluptatibus reprehenderit, praesentium ut rerum quo vel, facere nihil mollitia temporibus!
-          Placeat? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem reprehenderit deleniti neque optio.
-          Nobis nulla dolores aliquam cupiditate voluptatibus reprehenderit, praesentium ut rerum quo vel, facere nihil
-          mollitia temporibus! Placeat?
+          {{ manga.description }}
         </div>
       </div>
     </div>
     <div class="manga-chapter">
-      <button onclick="console.log('chapter 1')">1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>7</button>
-      <button>8</button>
+      <div v-for="item in manga.chapters">
+        <!-- <router-link :to="{ name: 'detailmanga', params: { mangaId: data.id, manaData: data } }">
+          <button>{{ item.index }}</button>
+        </router-link> -->
+      </div>
     </div>
     <div class="manga-cmt">
       <div class="write-cmt-box">
@@ -115,7 +101,7 @@
         ></textarea>
         <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
-      <div class="cmt-box">
+      <!-- <div class="cmt-box">
         <Commentfilm></Commentfilm>
         <div class="cmt-rep">
           <Commentfilm></Commentfilm>
@@ -128,7 +114,7 @@
           </div>
         </div>
         <Commentfilm></Commentfilm>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
