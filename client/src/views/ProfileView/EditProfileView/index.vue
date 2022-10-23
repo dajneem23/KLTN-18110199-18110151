@@ -1,7 +1,9 @@
 <template>
   <div class="edit-profile-wrapper">
     <div class="edit-box">
-      <div class="edit-img-cover"></div>
+      <div class="edit-img-cover">
+        <ImageUploader />
+      </div>
       <div class="edit-user-info-top">
         <div class="edit-user-avt"></div>
         <div class="edit-user-story"></div>

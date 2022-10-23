@@ -35,7 +35,6 @@ export default {
       if (result) {
         const { reacts } = result;
         this.reacts = reacts;
-        // console.log(this.reacts, reacts);
       }
     },
   },

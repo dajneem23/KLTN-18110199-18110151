@@ -13,7 +13,7 @@ export default {
     return {
       pageOfItems: [],
       customStyles,
-      data: Object,
+      data: {},
     };
   },
   async mounted() {
@@ -27,8 +27,8 @@ export default {
     console.log(this.data);
   },
   methods: {
-    onChangePage(pageOfItems) {
-      this.pageOfItems = pageOfItems;
+    async onChangePage(pageOfItems) {
+      this.pageOfItems = await pageOfItems;
     },
   },
 };

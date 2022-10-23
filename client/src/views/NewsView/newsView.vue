@@ -39,11 +39,10 @@
           <div v-for="item in pageOfItems">
             <CardNews style_x="card-news-z" font_title="f20" :news="item"></CardNews>
           </div>
-          <div class="paganition-box">
-            <jw-pagination :items="data" @changePage="onChangePage" :pageSize="10" class="paganite"></jw-pagination>
-          </div>
         </div>
-        <!-- <div>{{data}}</div> -->
+        <div class="paganition-box">
+          <jw-pagination :items="data" @changePage="onChangePage" :pageSize="5" class="paganite"></jw-pagination>
+        </div>
       </div>
     </div>
   </div>

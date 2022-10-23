@@ -7,7 +7,7 @@
           :class="{
             'up-vote': up_votes?.includes(userInfo?.id),
           }"
-          @click="upVote"
+          @click="upVote(id)"
         ></div>
         <span>{{ (up_votes.length || 0) - (down_votes.length || 0) }}</span>
 
@@ -16,7 +16,7 @@
           :class="{
             'down-vote': down_votes?.includes(userInfo?.id),
           }"
-          @click="downVote"
+          @click="downVote(id)"
         ></div>
 
         <div class="avt-user">
@@ -47,7 +47,7 @@
       </div>
     </transition>
     <div class="news-content__box">
-      <div class="news-category text-dark-gray">{{ tags }}</div>
+      <div class="news-category text-dark-gray">{{ tags.join('-') }}</div>
       <div class="news-name">
         <h1>{{ name }}</h1>
       </div>
@@ -75,20 +75,25 @@
         ></textarea>
         <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
-      <!-- <div class="cmt-box">
-        <Commentfilm></Commentfilm>
-        <div class="cmt-rep">
-          <Commentfilm></Commentfilm>
-          <div class="cmt-rep">
-            <Commentfilm></Commentfilm>
+      <div class="news-cmt-box" >
+        <div v-for="comment in comments">
+          <Comment></Comment>
+          <div v-if="comment?.reply">
+            <div class="cmt-rep" >
+              <div v-for="reply in comment.reply">
+                <Comment></Comment>
+                <div v-if="reply?.reply_2">
+                  <div class="cmt-rep" >
+                    <div v-for="reply_2 in reply.reply_2">
+                      <Comment></Comment>
+                    </div>
+                  </div>
+                </div>
+              </div>
           </div>
-          <Commentfilm></Commentfilm>
-          <div class="cmt-rep">
-            <Commentfilm></Commentfilm>
           </div>
         </div>
-        <Commentfilm></Commentfilm>
-      </div> -->
+      </div>
     </div>
     <div class="news-relate">
       <div class="relate-title">Bài viết có thể liên quan</div>

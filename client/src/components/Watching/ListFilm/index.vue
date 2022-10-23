@@ -27,7 +27,7 @@
         <jw-pagination
           :items="LIST_FILM.allFilm"
           @changePage="onChangePage"
-          :pageSize="12"
+          :pageSize="6"
           class="paganite"
         ></jw-pagination>
       </div>

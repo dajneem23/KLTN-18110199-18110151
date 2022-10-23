@@ -106,7 +106,15 @@
       svg {
         margin-left: 10px;
         width: 18px;
+        // margin-right: 5px;
+      }
+      .vote-icon {
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      img {
         margin-right: 5px;
+        background-image: var(--gray);
       }
     }
   }
@@ -118,18 +126,10 @@
   margin-bottom: 10px;
 }
 .triangle-up {
-  cursor: pointer;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 12.5px 21.7px 12.5px;
-  border-color: transparent transparent green transparent !important;
+  img {
+    fill: green;
+  }
 }
 .triangle-down {
-  cursor: pointer;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 21.7px 12.5px 0 12.5px;
-  border-color: red transparent transparent transparent;
+  color: red;
 }
