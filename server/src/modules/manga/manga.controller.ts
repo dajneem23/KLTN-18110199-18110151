@@ -183,6 +183,23 @@ export class MangaController {
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
+  @Get('/chapter/:id', [])
+  async getByIdChapter(
+    @Res() _res: Response,
+    @Req() _req: Request,
+    @Query() _query: BaseQuery,
+    @Params()
+    _params: {
+      id: string;
+    },
+  ) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.getChapterById({
+      _id: _params.id,
+      _filter: filter,
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
 
   @Patch('/react/:id', [
     protect({

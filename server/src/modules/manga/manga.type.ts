@@ -5,6 +5,8 @@ export interface Manga extends BaseModel {
 
   description: string;
 
+  image?: string;
+
   chapters: string[];
 
   contents: any[];
@@ -57,7 +59,7 @@ export interface MangaChapter extends BaseModel {
 
   same: string[];
 }
-export const _mangaChaper: MangaChapter = {
+export const _mangaChapter: MangaChapter = {
   content: '',
   description: '',
   images: [],

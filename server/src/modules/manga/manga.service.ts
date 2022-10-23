@@ -4,10 +4,11 @@ import { throwErr, toOutPut, toPagingOutput } from '@/utils/common';
 import { alphabetSize12 } from '@/utils/randomString';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import AuthService from '../auth/auth.service';
-import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject } from '@/utils/mongoDB';
-import { MangaError, mangaModelToken, mangaErrors, _manga, mangaChapterModelToken, _mangaChaper } from '.';
-import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS } from '@/types/Common';
+import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject, $lookup } from '@/utils/mongoDB';
+import { MangaError, mangaModelToken, mangaErrors, _manga, mangaChapterModelToken, _mangaChapter } from '.';
+import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS, RemoveSlugPattern } from '@/types/Common';
 import { isNil, omit } from 'lodash';
+import slugify from 'slugify';
 const TOKEN_NAME = '_mangaService';
 /**
  * A bridge allows another service access to the Model layer
@@ -27,7 +28,7 @@ export class MangaService {
 
   private model = Container.get(mangaModelToken);
 
-  private mangaChapter = Container.get(mangaChapterModelToken);
+  private mangaChapterModel = Container.get(mangaChapterModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;
@@ -44,12 +45,6 @@ export class MangaService {
   }
 
   /**
-   * Generate ID
-   */
-  static async generateID() {
-    return alphabetSize12();
-  }
-  /**
    * Create a new Manga
    * @param _content
    * @param _subject
@@ -57,7 +52,8 @@ export class MangaService {
    */
   async create({ _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      const { name, categories = [] } = _content;
+      const { name, categories = [], chapters = [] } = _content;
+      _content.chapters = await this.recursiveCreateChapter({ chapters, _subject });
       const value = await this.model.create(
         {
           name,
@@ -85,12 +81,12 @@ export class MangaService {
   async createChapter({ _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
       const { name, categories = [] } = _content;
-      const value = await this.mangaChapter.create(
+      const value = await this.mangaChapterModel.create(
         {
           name,
         },
         {
-          ..._mangaChaper,
+          ..._mangaChapter,
           ..._content,
           categories,
           ...(_subject && { created_by: _subject }),
@@ -135,7 +131,7 @@ export class MangaService {
    */
   async updateChapter({ _id, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      await this.mangaChapter.update($toMongoFilter({ _id }), {
+      await this.mangaChapterModel.update($toMongoFilter({ _id }), {
         $set: {
           ..._content,
           ...(_subject && { updated_by: _subject }),
@@ -175,7 +171,7 @@ export class MangaService {
    */
   async deleteChapter({ _id, _subject }: BaseServiceInput): Promise<void> {
     try {
-      await this.mangaChapter.delete($toMongoFilter({ _id }), {
+      await this.mangaChapterModel.delete($toMongoFilter({ _id }), {
         ...(_subject && { deleted_by: _subject }),
       });
       this.logger.debug('delete_success', { _id });
@@ -215,8 +211,29 @@ export class MangaService {
                 ],
               }),
             },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories],
+            $addFields: {
+              ...this.model.$addFields.categories,
+              chapters: {
+                $cond: {
+                  if: {
+                    $ne: [{ $type: '$chapters' }, 'array'],
+                  },
+                  then: [],
+                  else: '$chapters',
+                },
+              },
+            },
+            $lookups: [
+              this.model.$lookups.categories,
+              $lookup({
+                from: 'manga-chapters',
+                refFrom: '_id',
+                refTo: 'chapters',
+                select: 'name description images index',
+                reName: 'chapters',
+                operation: '$in',
+              }),
+            ],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
@@ -244,7 +261,7 @@ export class MangaService {
     try {
       const { q, categories = [] } = _filter;
       const { page = 1, per_page = 10, sort_by, sort_order } = _query;
-      const [{ total_count } = { total_count: 0 }, ...items] = await this.mangaChapter
+      const [{ total_count } = { total_count: 0 }, ...items] = await this.mangaChapterModel
         .get(
           $pagination({
             $match: {
@@ -297,9 +314,28 @@ export class MangaService {
             },
           },
           {
-            $addFields: this.model.$addFields.categories,
+            $addFields: {
+              ...this.model.$addFields.categories,
+              chapters: {
+                $cond: {
+                  if: {
+                    $ne: [{ $type: '$chapters' }, 'array'],
+                  },
+                  then: [],
+                  else: '$chapters',
+                },
+              },
+            },
           },
           this.model.$lookups.categories,
+          $lookup({
+            from: 'manga-chapters',
+            refFrom: '_id',
+            refTo: 'chapters',
+            select: 'name description images index',
+            reName: 'chapters',
+            operation: '$in',
+          }),
           this.model.$lookups.author,
           this.model.$sets.author,
           {
@@ -322,7 +358,7 @@ export class MangaService {
    */
   async getChapterById({ _id, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      const [item] = await this.mangaChapter
+      const [item] = await this.mangaChapterModel
         .get([
           {
             $match: {
@@ -390,9 +426,32 @@ export class MangaService {
 
   async react({ _subject, _id }: BaseServiceInput) {
     try {
-      const { reacts } = await this.model.update($toMongoFilter({ _id }), {
-        $addToSet: { reacts: _subject },
-      });
+      //todo: check if user already react
+      const [item] = await this.model
+        .get([
+          {
+            $match: {
+              _id,
+              reacts: {
+                $in: [_subject],
+              },
+            },
+          },
+        ])
+        .toArray();
+      const { reacts } = item
+        ? await this.model.update(
+            { _id },
+            {
+              $pull: { reacts: _subject },
+            },
+          )
+        : await this.model.update(
+            { _id },
+            {
+              $addToSet: { reacts: _subject },
+            },
+          );
       this.logger.debug('update_success', {});
       return toOutPut({
         item: { reacts },
@@ -402,5 +461,79 @@ export class MangaService {
       this.logger.error('react_error', err.message);
       throw err;
     }
+  }
+  recursiveCreateChapter(
+    {
+      chapters = [],
+      _subject,
+    }: {
+      chapters: any[];
+      _subject: string;
+    },
+    update = false,
+  ): any {
+    return Promise.all(
+      chapters.map(async ({ name, ...content }) => {
+        const _name = slugify(name, {
+          trim: true,
+          lower: true,
+          remove: RemoveSlugPattern,
+        });
+        const _id = (await this.mangaChapterModel._collection.findOne({
+          _id: _name,
+        }))
+          ? _name + '-' + new Date().getTime()
+          : _name;
+        const {
+          value,
+          lastErrorObject: { updatedExisting },
+        } = await this.mangaChapterModel._collection.findOneAndUpdate(
+          {
+            _id,
+          },
+          {
+            $set: {
+              ...((update && {
+                _id,
+                name,
+                updated_at: new Date(),
+                ...content,
+                deleted: false,
+                updated_by: _subject,
+              }) ||
+                {}),
+            },
+          },
+          {
+            upsert: false,
+            returnDocument: 'after',
+          },
+        );
+        if (!updatedExisting) {
+          const { value: newValue } = await this.mangaChapterModel._collection.findOneAndUpdate(
+            {
+              _id,
+            },
+            {
+              $setOnInsert: {
+                _id,
+                name,
+                ...content,
+                updated_at: new Date(),
+                created_at: new Date(),
+                deleted: false,
+                created_by: _subject,
+              },
+            },
+            {
+              upsert: true,
+              returnDocument: 'after',
+            },
+          );
+          return newValue._id;
+        }
+        return value._id;
+      }),
+    );
   }
 }
