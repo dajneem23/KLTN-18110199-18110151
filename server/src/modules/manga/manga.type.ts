@@ -5,6 +5,8 @@ export interface Manga extends BaseModel {
 
   description: string;
 
+  image?: string;
+
   chapters: string[];
 
   contents: any[];
