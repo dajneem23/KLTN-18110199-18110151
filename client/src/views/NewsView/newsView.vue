@@ -1,21 +1,66 @@
 <template>
-  <div class="news-wrapper">
+  <div class="news-wrapper bgc-white">
     <div class="img-banner"></div>
+    <div class="button-create_news">
+      <router-link to="/createNews">
+        <button>Đăng bài viết</button>
+      </router-link>
+    </div>
     <div class="content-banner">
       <div class="popular-news">
         <h3>Phổ biến nhất</h3>
-        <div class="news-popular bgc-blue"></div>
+        <div class="news-popular">
+          <!-- <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews>
+          <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews>
+          <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews>
+          <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews> -->
+        </div>
       </div>
       <div class="hot-news">
         <h3>Nổi bật nhất</h3>
-        <div class="news-hot"></div>
+        <div class="news-hot">
+          <!-- <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews>
+          <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews>
+          <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews>
+          <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews> -->
+        </div>
       </div>
       <div class="main-news">
         <div class="main-news-button">
-          <button>Dành cho bạn</button>
-          <button>Đánh giá cao nhất</button>
+          <SwitchButton
+            contentL="Dành cho bạn"
+            contentR="Đánh giá cao nhất"
+            buttonRef="buttonRef"
+            btnRefL="onTvRef"
+            btnRefR="onTTRef"
+          ></SwitchButton>
         </div>
-        <div class="news-box"></div>
+        <div class="news-box">
+          <div v-for="(item, key) of items">
+            <CardNews :key="item.id" style_x="card-news-z" font_title="f20" :news="item"></CardNews>
+          </div>
+        </div>
+        <div class="paganition-box">
+          <b-pagination
+            v-model="page"
+            :total-rows="total_count"
+            :per-page="per_page"
+            class="mt-4"
+            @change="onChangePage"
+          >
+            <template #first-text><span class="text-success">First</span></template>
+            <template #prev-text><span class="text-danger">Prev</span></template>
+            <template #next-text><span class="text-warning">Next</span></template>
+            <template #last-text><span class="text-info">Last</span></template>
+            <template #ellipsis-text>
+              <img width="50" height="50" src="../../assets/Icon/Ellipsis-1s-200px.svg" alt="" srcset="" />
+            </template>
+            <template #page="{ page, active }">
+              <b v-if="active">{{ page }}</b>
+              <i v-else>{{ page }}</i>
+            </template>
+          </b-pagination>
+        </div>
       </div>
     </div>
   </div>

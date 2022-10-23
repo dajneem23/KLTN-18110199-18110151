@@ -2,7 +2,7 @@
   <div class="">
     <div class="wrapper-home">
       <div class="item-home" v-for="(post, index) in posts" :key="index">
-        <News ></News>
+        <Story :data="post"></Story>
       </div>
       <infinite-loading @infinite="getPosts"></infinite-loading>
     </div>

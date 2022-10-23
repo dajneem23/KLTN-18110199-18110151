@@ -49,10 +49,10 @@ on:
     branches: [ "develop" ]
 
 env:
-  PROJECT_ID: YOUR_PROJECT_ID # TODO: update Google Cloud project id
-  GAR_LOCATION: YOUR_GAR_LOCATION # TODO: update Artifact Registry location
-  SERVICE: YOUR_SERVICE_NAME # TODO: update Cloud Run service name
-  REGION: YOUR_SERVICE_REGION # TODO: update Cloud Run service region
+  PROJECT_ID: 'zinc-union-365709' # TODO: update Google Cloud project id
+  GAR_LOCATION: 'Vietnam' # TODO: update Artifact Registry location
+  SERVICE: 'kltn-18110199-18110151-production' # TODO: update Cloud Run service name
+  REGION: 'us-central1' # TODO: update Cloud Run service region
 
 jobs:
   deploy:

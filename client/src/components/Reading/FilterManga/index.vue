@@ -13,7 +13,7 @@
       <DropDown :data="FILTERMANGA_ITEM.publishing" type="manga"></DropDown>
     </div>
     <div class="box-search box-category">
-      <input type="text" class="search-input" placeholder="Search..." v-model="FILTERMANGA_ITEM.filterManga.name" />
+      <input type="text" class="search-input" placeholder="Tìm kiếm..." v-model="FILTERMANGA_ITEM.filterManga.name" />
     </div>
     <div class="btn-box">
       <div class="btn-filter" v-on:click="getFilter()">

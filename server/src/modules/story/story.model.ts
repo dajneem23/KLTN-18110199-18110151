@@ -5,14 +5,14 @@ import { keys } from 'ts-transformer-keys';
 
 const COLLECTION_NAME = 'stories';
 const TOKEN_NAME = '_storyModel';
-export const storyModelToken = new Token<CoinModel>(TOKEN_NAME);
+export const storyModelToken = new Token<StoryModel>(TOKEN_NAME);
 /**
  * @class CoinModel
  * @extends BaseModel
  * @description Coin model: Coin model for all story related operations
  */
 @Service(storyModelToken)
-export class CoinModel extends BaseModel {
+export class StoryModel extends BaseModel {
   constructor() {
     super({
       collectionName: COLLECTION_NAME,
@@ -22,21 +22,10 @@ export class CoinModel extends BaseModel {
           field: {
             name: 1,
           },
-          options: {
-            unique: true,
-          },
         },
         {
           field: {
             name: 'text',
-          },
-        },
-        {
-          field: {
-            slug: 1,
-          },
-          options: {
-            unique: true,
           },
         },
       ],

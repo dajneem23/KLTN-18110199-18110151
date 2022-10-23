@@ -2,10 +2,10 @@
   <div class="wrapper wrapper_1" @submit.prevent="register">
     <form class="form-login bgc-white">
       <h3>{{ REGISTER_ITEM.headerTitle.title[lang] }}</h3>
-      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.fullName.error }">
-        {{ REGISTER_ITEM.fullName.error }}
+      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.name.error }">
+        {{ REGISTER_ITEM.name.error }}
       </div>
-      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.fullName.error }">
+      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.name.error }">
         <div class="input-icon fill-gray">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
             <path
@@ -15,16 +15,16 @@
         </div>
         <input
           type="text"
-          :placeholder="REGISTER_ITEM.fullName.title[lang]"
+          :placeholder="REGISTER_ITEM.name.title[lang]"
           class="form-input"
-          v-model="account.fullname"
+          v-model="account.name"
           @blur="fullnameValidate()"
         />
       </div>
-      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.userName.error }">
-        {{ REGISTER_ITEM.userName.error }}
+      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.email.error }">
+        {{ REGISTER_ITEM.email.error }}
       </div>
-      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.userName.error }">
+      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.email.error }">
         <div class="input-icon fill-gray">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
             <path
@@ -34,9 +34,9 @@
         </div>
         <input
           type="text"
-          :placeholder="REGISTER_ITEM.userName.title[lang]"
+          :placeholder="REGISTER_ITEM.email.title[lang]"
           class="form-input"
-          v-model="account.username"
+          v-model="account.email"
           @blur="usernameValidate()"
         />
       </div>

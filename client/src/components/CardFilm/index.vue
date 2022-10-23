@@ -1,17 +1,17 @@
 <template>
   <router-link :to="{ name: 'details', params: { filmId: data.id, filmData: data } }">
-    <div class="card">
-      <div class="card-image">
+    <div class="card-film">
+      <div class="card-image-film">
         <img :src="data.img" alt="" />
       </div>
-      <div class="card-body">
-        <div class="card-title">
+      <div class="card-body-film">
+        <div class="card-title-film">
           {{ data.title }}
         </div>
-        <div class="card-auth text-gray">
+        <div class="card-auth text-dark-gray">
           {{ data.auth }}
         </div>
-        <div class="card-info text-gray">
+        <div class="card-info text-dark-gray">
           <div class="card-info--view">
             {{ data.views }} luợt xem
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">

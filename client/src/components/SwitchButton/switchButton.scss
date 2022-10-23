@@ -1,0 +1,59 @@
+.form-box {
+  height: 30px;
+}
+.button-boxx {
+  width: 300px;
+  height: 30px;
+  position: relative;
+  border: 1px solid #000;
+  border-radius: 30px;
+  font-size: 16px;
+  background: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  span {
+    font-weight: 600;
+    color: var(--black);
+  }
+}
+
+.toggle-btnn {
+  padding: 2px 20px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+  position: relative;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.button-dev {
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: 150px;
+  height: 28px;
+  background-color: var(--primary-blue_3);
+  border-radius: 30px;
+  transition: 0.3s;
+}
+.left-0 {
+  left: 0;
+  width: 150px;
+}
+.left-110 {
+  left: 128px;
+  width: 170px;
+}
+.active-btn {
+  background: var(--white);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+span {
+  font-size: 13px !important;
+}

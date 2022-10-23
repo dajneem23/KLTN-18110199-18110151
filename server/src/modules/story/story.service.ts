@@ -58,7 +58,7 @@ export class StoryService {
       const { name, categories = [] } = _content;
       const value = await this.model.create(
         {
-          name,
+          // name,
         },
         {
           ..._story,
@@ -127,7 +127,7 @@ export class StoryService {
   async query({ _filter, _query, _permission }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
       const { q, categories = [] } = _filter;
-      const { page = 1, per_page, sort_by, sort_order } = _query;
+      const { page = 1, per_page = 10, sort_by, sort_order } = _query;
       const [{ total_count } = { total_count: 0 }, ...items] = await this.model
         .get(
           $pagination({
@@ -147,7 +147,8 @@ export class StoryService {
               }),
             },
             $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories],
+            $lookups: [this.model.$lookups.categories, this.model.$lookups.author],
+            $sets: [this.model.$sets.author],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
@@ -265,6 +266,44 @@ export class StoryService {
       return toPagingOutput({ items, total_count, keys: this.model._keys });
     } catch (err) {
       this.logger.error('query_error', err.message);
+      throw err;
+    }
+  }
+  async react({ _subject, _id }: BaseServiceInput) {
+    try {
+      // TODO: check if user already react
+      const [item] = await this.model
+        .get([
+          {
+            $match: {
+              _id,
+              reacts: {
+                $in: [_subject],
+              },
+            },
+          },
+        ])
+        .toArray();
+      const { reacts } = item
+        ? await this.model.update(
+            { _id },
+            {
+              $pull: { reacts: _subject },
+            },
+          )
+        : await this.model.update(
+            { _id },
+            {
+              $addToSet: { reacts: _subject },
+            },
+          );
+      this.logger.debug('update_success', {});
+      return toOutPut({
+        item: { reacts },
+        keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('react_error', err.message);
       throw err;
     }
   }

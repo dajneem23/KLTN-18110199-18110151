@@ -4,16 +4,19 @@ FROM node:18-alpine
 WORKDIR /usr/src/app
 
 # Add package.json file
-COPY package.json yarn.lock ./
+COPY /server/package.json /server/yarn.lock ./
 
 # Install packages without generate a yarn.lock lockfile
 RUN yarn --pure-lockfile
 
 # Copy all file from current dir to /app in container
-COPY . .
+COPY ./server/ .
+
+#WORKDIR /server/src
 
 # Expose port
-EXPOSE 8888
+EXPOSE 8080
+
 
 # Start service
 CMD [ "yarn", "dev" ]

@@ -1,7 +1,7 @@
 # KLTN-18110199-18110151
 `Khóa luận tốt nghiệp 18110199-18110151`
 
-![duck](https://i.gifer.com/embedded/download/XOsX.gif)
+<img with=100 height=100 src="https://github.githubassets.com/images/mona-loading-dark.gif"/>
 
 <h1><a href="https://kltn-18110199-18110151.pages.dev">🌐 Production</a></h1>
 
@@ -29,7 +29,7 @@
 - Viết Blog
     - Tìm kiếm
     - Comment
-    - Up/Down vote
+    - Up/Down vote tym
     - Like
     - Hỏi đáp/ Hỏi bài(có thể có)
 - Whiteboard
@@ -49,7 +49,7 @@
         - Nhận report
         - Tạo thăm dò
         - Tạo thông báo
-        - Biểu đồ lượng người truy cập/tương tác/ lượt xem
+        - Biểu đồ lượng người truy cập/tương tác/ lượt xem.
 ```      
 ## Requirements
 

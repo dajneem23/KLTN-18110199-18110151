@@ -19,6 +19,7 @@ import { $refValidation } from '@/utils/validation';
 import { COLLECTION_NAMES, PRIVATE_KEYS, RemoveSlugPattern, T } from '@/types';
 import slugify from 'slugify';
 import { omit } from 'lodash';
+import { locale } from 'dayjs';
 
 /**
  * @class BaseModel
@@ -90,7 +91,7 @@ export class BaseModel {
         from: 'users',
         refFrom: 'id',
         refTo: 'created_by',
-        select: 'full_name picture avatar',
+        select: 'name picture avatar',
         reName: 'author',
         operation: '$eq',
       }),
@@ -300,7 +301,10 @@ export class BaseModel {
         ok,
         lastErrorObject: { updatedExisting },
       } = await this._collection.findOneAndUpdate(
-        { ...filter },
+        {
+          ...filter,
+          _id: _content._id,
+        },
         {
           $setOnInsert: {
             ..._content,
@@ -319,7 +323,7 @@ export class BaseModel {
       if (!ok) {
         throwErr(this.error('common.database'));
       }
-      if (updatedExisting) {
+      if (updatedExisting && Object.keys(filter).length) {
         throwErr(
           this.error('common.already_exist', [
             {
@@ -345,7 +349,7 @@ export class BaseModel {
    */
   async update(
     { ...filter }: any,
-    { $set: { updated_at = new Date(), updated_by, ..._content }, ..._updateFilter }: any,
+    { $set: { updated_at = new Date(), ..._content } = {}, ..._updateFilter }: any,
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
@@ -355,12 +359,11 @@ export class BaseModel {
         ok,
         lastErrorObject: { updatedExisting },
       } = await this._collection.findOneAndUpdate(
-        $toMongoFilter(filter),
+        filter,
         {
           $set: {
             ..._content,
             updated_at,
-            updated_by,
           },
           ..._updateFilter,
         },
@@ -462,30 +465,22 @@ export class BaseModel {
           Refname: 'sub_categories',
         })) &&
         (_content.sub_categories = $toObjectId(sub_categories));
+      const _name =
+        name &&
+        slugify(name, {
+          replacement: '-',
+          lower: true,
+          strict: true,
+          locale: 'vi',
+          remove: RemoveSlugPattern,
+        });
       name &&
         !_id &&
         (_content._id = (await this._collection.findOne({
-          _id: slugify(name, {
-            replacement: '-',
-            lower: true,
-            strict: true,
-            remove: RemoveSlugPattern,
-          }),
+          _id: _name,
         }))
-          ? slugify(name, {
-              replacement: '-',
-              lower: true,
-              strict: true,
-              remove: RemoveSlugPattern,
-            }) +
-            '-' +
-            new Date().getTime()
-          : slugify(name, {
-              replacement: '-',
-              lower: true,
-              strict: true,
-              remove: RemoveSlugPattern,
-            }));
+          ? _name + '-' + new Date().getTime()
+          : _name);
       return _content;
     } catch (err) {
       this.logger.error('validate_error', `[validate:${this._collectionName}:error]`, err.message);

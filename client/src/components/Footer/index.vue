@@ -38,6 +38,7 @@
         </ul>
       </div>
     </div>
+    <div class="copy-right">© Copyright by 18110151-18110190. All rights reserved.</div>
   </div>
 </template>
 <script src="./footer"></script>

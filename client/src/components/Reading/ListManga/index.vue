@@ -27,7 +27,7 @@
         <jw-pagination
           :items="LIST_MANGA.allManga"
           @changePage="onChangePage"
-          :pageSize="8"
+          :pageSize="12"
           :styles="customStyles"
           class="paganite"
         ></jw-pagination>

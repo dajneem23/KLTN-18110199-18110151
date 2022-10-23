@@ -10,7 +10,7 @@
       <DropDown :data="FILTER_ITEM.year" type="film"></DropDown>
     </div>
     <div class="box-search box-category">
-      <input type="text" class="search-input" placeholder="Search..." v-model="FILTER_ITEM.filterFilm.name"/>
+      <input type="text" class="search-input" placeholder="Tìm kiếm..." v-model="FILTER_ITEM.filterFilm.name"/>
     </div>
     <div class="btn-box">
       <div class="btn-filter" v-on:click="getFilter()">

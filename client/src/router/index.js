@@ -12,9 +12,14 @@ import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
 import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
 import DetailManga from '../views/ReadingMangaView/DetailMangaView/detailMangaView.vue';
+import ProfileView from '../views/ProfileView/profileView.vue';
+import EditProfileView from '../views/ProfileView/EditProfileView/index.vue';
+import StoryDetailView from '../views/HomeView/StoryDetailView/index.vue';
+import CreateNewsView from '../views/CreateNews/index.vue';
 import { UserService } from '@/services';
 import { store } from '../store/vuex';
 
+import DetailNews from '../views/NewsView/NewsDetailView/newDetailView.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -81,6 +86,24 @@ const routes = [
     },
   },
   {
+    path: '/profile/',
+    name: 'profile',
+    components: {
+      header: Header,
+      default: ProfileView,
+      footer: Footer,
+    },
+  },
+  {
+    path: '/profile/edit',
+    name: 'profile',
+    components: {
+      header: Header,
+      default: EditProfileView,
+      footer: Footer,
+    },
+  },
+  {
     path: '/login/',
     name: 'login',
     component: Login,
@@ -91,7 +114,7 @@ const routes = [
     component: Register,
   },
   {
-    path: '/movie/details/:filmId/',
+    path: '/movie/:filmId/',
     name: 'details',
     components: {
       header: Header,
@@ -101,7 +124,7 @@ const routes = [
     props: true,
   },
   {
-    path: '/manga/details/:mangaId/',
+    path: '/manga/:mangaId/',
     name: 'detailmanga',
     components: {
       header: Header,
@@ -109,6 +132,40 @@ const routes = [
       footer: Footer,
     },
     props: true,
+  },
+  {
+    path: '/stories/:id/',
+    name: 'detailStory',
+    components: {
+      header: Header,
+      default: StoryDetailView,
+      // footer: Footer,
+    },
+    props: true,
+  },
+  {
+    path: '/news/:id/',
+    name: 'detailnews',
+    components: {
+      header: Header,
+      default: DetailNews,
+      footer: Footer,
+    },
+    props: true,
+  },
+  {
+    path: '/createNews',
+    name: 'createNews',
+    components: {
+      header: Header,
+      default: CreateNewsView,
+      footer: Footer,
+    },
+    props: true,
+  },
+  {
+    path: '/test',
+    component: () => import('../components/Ckeditor/CkEditor.vue'),
   },
 ];
 

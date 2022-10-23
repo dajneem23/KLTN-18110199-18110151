@@ -1,5 +1,18 @@
 import Container from 'typedi';
-import { Controller, Res, Post, Body, Get, Query, Put, Params, Delete, Req, Auth } from '@/utils/expressDecorators';
+import {
+  Controller,
+  Res,
+  Post,
+  Body,
+  Get,
+  Query,
+  Put,
+  Params,
+  Delete,
+  Req,
+  Auth,
+  Patch,
+} from '@/utils/expressDecorators';
 import { Request, Response } from 'express';
 import { News, NewsServiceToken } from '.';
 import { buildQueryFilter } from '@/utils/common';
@@ -82,26 +95,90 @@ export class NewsController {
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
-
-  @Get('/:slug', [])
-  async getBySlugPublic(
+  @Patch('/react/:id', [
+    protect({
+      weight: RolesWeight.user,
+    }),
+  ])
+  async react(
     @Res() _res: Response,
     @Req() _req: Request,
     @Query() _query: BaseQuery,
+    @Auth() _auth: JWTPayload,
     @Params()
     _params: {
-      slug: string;
+      id: string;
     },
   ) {
     const { filter, query } = buildQueryFilter(_query);
-    const result = await this.service.getBySlug({
-      _slug: _params.slug,
+    const result = await this.service.react({
       _filter: filter,
+      _query: query,
+      _subject: _auth.id,
+      _id: _params.id,
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+  @Patch('/upvote/:id', [
+    protect({
+      weight: RolesWeight.user,
+    }),
+  ])
+  async upVote(
+    @Res() _res: Response,
+    @Req() _req: Request,
+    @Query() _query: BaseQuery,
+    @Auth() _auth: JWTPayload,
+    @Params()
+    _params: {
+      id: string;
+    },
+  ) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.upVote({
+      _filter: filter,
+      _query: query,
+      _subject: _auth.id,
+      _id: _params.id,
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+  @Patch('/downvote/:id', [
+    protect({
+      weight: RolesWeight.user,
+    }),
+  ])
+  async downVote(
+    @Res() _res: Response,
+    @Req() _req: Request,
+    @Query() _query: BaseQuery,
+    @Auth() _auth: JWTPayload,
+    @Params()
+    _params: {
+      id: string;
+    },
+  ) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.downVote({
+      _filter: filter,
+      _query: query,
+      _subject: _auth.id,
+      _id: _params.id,
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+  @Get('/', [])
+  async get(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.query({
+      _filter: filter,
+      _query: query,
+      _permission: 'public',
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
 
-  @Get('/:id', [protect()])
+  @Get('/:id', [])
   async getByIdPrivate(
     @Res() _res: Response,
     @Req() _req: Request,
