@@ -290,7 +290,7 @@ export class NewsService {
   async upVote({ _subject, _id }: BaseServiceInput) {
     try {
       const { up_vote } = await this.model.update($toMongoFilter({ _id }), {
-        $addToSet: { up_vote: _subject },
+        $addToSet: { up_votes: _subject },
       });
       this.logger.debug('update_success', {});
       return toOutPut({
@@ -305,7 +305,7 @@ export class NewsService {
   async downVote({ _subject, _id }: BaseServiceInput) {
     try {
       const { down_vote } = await this.model.update($toMongoFilter({ _id }), {
-        $addToSet: { down_vote: _subject },
+        $addToSet: { down_votes: _subject },
       });
       this.logger.debug('update_success', {});
       return toOutPut({
