@@ -1,5 +1,5 @@
 import { Service, Token } from 'typedi';
-import { Manga } from './manga.type';
+import { Manga, MangaChapter } from './manga.type';
 import { BaseModel } from '../base/base.model';
 import { keys } from 'ts-transformer-keys';
 
@@ -33,7 +33,7 @@ export class MangaModel extends BaseModel {
   }
 }
 
-export const mangaChapterModelToken = new Token<MangaModel>('_mangaModel');
+export const mangaChapterModelToken = new Token<MangaModel>('_mangaChapterModel');
 /**
  * @class CoinModel
  * @extends BaseModel
@@ -44,7 +44,7 @@ export class MangaChapterModel extends BaseModel {
   constructor() {
     super({
       collectionName: 'manga-chapters',
-      _keys: keys<Manga>(),
+      _keys: keys<MangaChapter>(),
       indexes: [
         {
           field: {
