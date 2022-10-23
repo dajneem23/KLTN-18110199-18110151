@@ -271,12 +271,32 @@ export class NewsService {
   }
   async react({ _subject, _id }: BaseServiceInput) {
     try {
-      const { reacts } = await this.model.update(
-        { _id },
-        {
-          $addToSet: { reacts: _subject },
-        },
-      );
+      //todo: check if user already react
+      const [item] = await this.model
+        .get([
+          {
+            $match: {
+              _id,
+              reacts: {
+                $in: [_subject],
+              },
+            },
+          },
+        ])
+        .toArray();
+      const { reacts } = item
+        ? await this.model.update(
+            { _id },
+            {
+              $pull: { reacts: _subject },
+            },
+          )
+        : await this.model.update(
+            { _id },
+            {
+              $addToSet: { reacts: _subject },
+            },
+          );
       this.logger.debug('update_success', {});
       return toOutPut({
         item: { reacts },
@@ -289,12 +309,13 @@ export class NewsService {
   }
   async upVote({ _subject, _id }: BaseServiceInput) {
     try {
-      const { up_votes } = await this.model.update($toMongoFilter({ _id }), {
+      const { up_votes, down_votes } = await this.model.update($toMongoFilter({ _id }), {
         $addToSet: { up_votes: _subject },
+        $pull: { down_votes: _subject },
       });
       this.logger.debug('update_success', {});
       return toOutPut({
-        item: { up_votes },
+        item: { up_votes, down_votes },
         keys: this.model._keys,
       });
     } catch (err) {
@@ -304,12 +325,15 @@ export class NewsService {
   }
   async downVote({ _subject, _id }: BaseServiceInput) {
     try {
-      const { down_votes } = await this.model.update($toMongoFilter({ _id }), {
+      //ToDO: check if user already up vote
+
+      const { down_votes, up_votes } = await this.model.update($toMongoFilter({ _id }), {
         $addToSet: { down_votes: _subject },
+        $pull: { up_votes: _subject },
       });
       this.logger.debug('update_success', {});
       return toOutPut({
-        item: { down_votes },
+        item: { down_votes, up_votes },
         keys: this.model._keys,
       });
     } catch (err) {
