@@ -289,12 +289,12 @@ export class NewsService {
   }
   async upVote({ _subject, _id }: BaseServiceInput) {
     try {
-      const { up_vote } = await this.model.update($toMongoFilter({ _id }), {
-        $addToSet: { up_vote: _subject },
+      const { up_votes } = await this.model.update($toMongoFilter({ _id }), {
+        $addToSet: { up_votes: _subject },
       });
       this.logger.debug('update_success', {});
       return toOutPut({
-        item: { up_vote },
+        item: { up_votes },
         keys: this.model._keys,
       });
     } catch (err) {
@@ -304,12 +304,12 @@ export class NewsService {
   }
   async downVote({ _subject, _id }: BaseServiceInput) {
     try {
-      const { down_vote } = await this.model.update($toMongoFilter({ _id }), {
-        $addToSet: { down_vote: _subject },
+      const { down_votes } = await this.model.update($toMongoFilter({ _id }), {
+        $addToSet: { down_votes: _subject },
       });
       this.logger.debug('update_success', {});
       return toOutPut({
-        item: { down_vote },
+        item: { down_votes },
         keys: this.model._keys,
       });
     } catch (err) {
