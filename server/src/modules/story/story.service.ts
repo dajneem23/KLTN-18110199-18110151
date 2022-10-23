@@ -272,12 +272,31 @@ export class StoryService {
   async react({ _subject, _id }: BaseServiceInput) {
     try {
       // TODO: check if user already react
-      const { reacts } = await this.model.update(
-        { _id },
-        {
-          $addToSet: { reacts: _subject },
-        },
-      );
+      const [item] = await this.model
+        .get([
+          {
+            $match: {
+              _id,
+              reacts: {
+                $in: [_subject],
+              },
+            },
+          },
+        ])
+        .toArray();
+      const { reacts } = item
+        ? await this.model.update(
+            { _id },
+            {
+              $pull: { reacts: _subject },
+            },
+          )
+        : await this.model.update(
+            { _id },
+            {
+              $addToSet: { reacts: _subject },
+            },
+          );
       this.logger.debug('update_success', {});
       return toOutPut({
         item: { reacts },
