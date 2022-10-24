@@ -12,6 +12,7 @@ import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
 import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
 import DetailManga from '../views/ReadingMangaView/DetailMangaView/detailMangaView.vue';
+import DetailChapter from '../views/ReadingMangaView/DetailMangaView/detailChapterView/index.vue';
 import ProfileView from '../views/ProfileView/profileView.vue';
 import EditProfileView from '../views/ProfileView/EditProfileView/index.vue';
 import StoryDetailView from '../views/HomeView/StoryDetailView/index.vue';
@@ -126,6 +127,16 @@ const routes = [
     props: true,
   },
   {
+    path: '/manga/chapter/:id/',
+    name: 'detailchapter',
+    components: {
+      header: Header,
+      default: DetailChapter,
+      footer: Footer,
+    },
+    props: true,
+  },
+  {
     path: '/stories/:id/',
     name: 'detailStory',
     components: {
@@ -155,8 +166,7 @@ const routes = [
     },
     props: true,
     beforeEnter: (to, from, next) => {
-      authenticate(to, from, next) ? next() :  next('/not-found');
-    
+      authenticate(to, from, next) ? next() : next('/not-found');
     },
   },
   {
@@ -180,7 +190,7 @@ const router = new VueRouter({
   routes,
 });
 const authenticate = (to, from, next) => {
-  console.log('ftgy6',store.state)
+  console.log('ftgy6', store.state);
   return store.state.isAuthenticated;
 };
 

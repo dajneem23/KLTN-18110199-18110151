@@ -12,9 +12,9 @@ export default {
   },
   data() {
     return {
-      pageOfItems: 1,
       customStyles,
       items: [],
+      pageOfItems: 1,
       page: 1,
       per_page: 5,
       total_count: 0,

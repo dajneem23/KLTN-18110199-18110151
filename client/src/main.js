@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import './assets/index.scss';
-import JwPagination from 'jw-vue-pagination';
+
 import LazyTube from 'vue-lazytube';
 import VuePlyr from 'vue-plyr';
 import 'vue-plyr/dist/vue-plyr.css';
@@ -19,7 +19,6 @@ Vue.use(VuePlyr);
 Vue.use(LazyTube);
 Vue.use(BootstrapVue);
 
-Vue.component('jw-pagination', JwPagination);
 
 Vue.config.productionTip = false;
 

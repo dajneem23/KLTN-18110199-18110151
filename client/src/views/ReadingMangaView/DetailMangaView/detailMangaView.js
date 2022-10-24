@@ -49,8 +49,8 @@ export default {
       console.log('Like Manga');
     },
     // function change chapter
-    goToChapter() {
-      console.log('Chapter change');
+    goToChapter(id) {
+      console.log(id);
     },
   },
   props: ['id', 'data'],

@@ -27,7 +27,7 @@
   margin: 0 auto;
   padding: 40px;
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   // align-items: center;
   .manga-img {
     width: 250px;
@@ -156,5 +156,27 @@
   }
   button + button {
     margin-left: 5px;
+  }
+}
+.button-change-chapter {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 450px;
+  padding: 30px;
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    svg {
+      width: 15px;
+      margin: 0 10px;
+    }
+    &:hover {
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
   }
 }

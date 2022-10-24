@@ -9,6 +9,7 @@
   }
 }
 .card-news-z {
+  width: 100%;
   max-height: 170px;
   border-radius: 5px;
   display: flex;
@@ -59,6 +60,7 @@
   }
 }
 .card-body-news {
+  min-width: 603px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

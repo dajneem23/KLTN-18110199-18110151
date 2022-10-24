@@ -1,6 +1,7 @@
 import { onMounted, ref } from 'vue';
 import DropzoneFileUpload from '../../template/Inputs/DropzoneFileUpload';
 import BaseInput from '../../template/Inputs/BaseInput.vue';
+import { NewsServices } from '@/services';
 export default {
   name: 'CkEditor',
   components: {
@@ -27,9 +28,13 @@ export default {
     },
   },
   methods: {
-    submitText() {
+    async submitText() {
       this.news.content = this.editorData;
-      console.log(this.news)
+      const result = await NewsServices.create({
+        ...this.news,
+      });
+      console.log(result);
+      alert('Tạo bài viết thành công');
     },
     initEditor({
       // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format

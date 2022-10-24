@@ -2,7 +2,10 @@
   <router-link :to="{ name: 'detailmanga', params: { mangaId: data.id, manaData: data } }">
     <div class="card-manga">
       <div class="card-left">
-        <img :src="data.img" alt="" />
+        <img
+          :src="data.img || 'https://www.themoviedb.org/t/p/w220_and_h330_face/cOyU8ScRGKXChrRsxdrt6nYkzFh.jpg'"
+          alt=""
+        />
       </div>
       <div class="card-right">
         <div class="card-title-manga">{{ data.name }}</div>

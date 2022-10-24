@@ -12,6 +12,6 @@ export const MangaServices = {
     return RequestBase.post(`${this.url}/`, body);
   },
   getChapterById(id) {
-    return RequestBase.patch(`${this.url}/chapter/${id}`);
+    return RequestBase.get(`${this.url}/chapter/${id}`);
   },
 };
