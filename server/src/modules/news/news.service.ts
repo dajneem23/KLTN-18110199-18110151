@@ -341,4 +341,41 @@ export class NewsService {
       throw err;
     }
   }
+  async top({ _query }: BaseServiceInput): Promise<BaseServiceOutput> {
+    try {
+      const { per_page = 10 } = _query;
+      const items = await this.model
+        .get([
+          { $addFields: { votes: { $add: [{ $size: '$up_votes' }, { $size: '$down_votes' }] } } },
+          { $sort: { votes: -1 } },
+          {
+            $limit: per_page,
+          },
+        ])
+        .toArray();
+      this.logger.debug('query_success', { items });
+      return toPagingOutput({ items, total_count: 10 });
+    } catch (err) {
+      this.logger.error('react_error', err.message);
+      throw err;
+    }
+  }
+  async hot({ _query }: BaseServiceInput): Promise<BaseServiceOutput> {
+    try {
+      const { per_page = 10 } = _query;
+      const items = await this.model
+        .get([
+          { $sort: { views: -1 } },
+          {
+            $limit: per_page,
+          },
+        ])
+        .toArray();
+      this.logger.debug('query_success', { items });
+      return toPagingOutput({ items, total_count: 10 });
+    } catch (err) {
+      this.logger.error('react_error', err.message);
+      throw err;
+    }
+  }
 }
