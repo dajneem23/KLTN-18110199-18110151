@@ -5,27 +5,30 @@ import { alphabetSize12 } from '@/utils/randomString';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import AuthService from '../auth/auth.service';
 import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject } from '@/utils/mongoDB';
-import { NewsError, newsModelToken, newsErrors, _news } from '.';
-import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS } from '@/types/Common';
+import { CommentError, commentModelToken, commentErrors, _comment } from '.';
+import { BaseServiceInput, BaseServiceOutput, COLLECTION_NAMES, PRIVATE_KEYS } from '@/types/Common';
 import { isNil, omit } from 'lodash';
-const TOKEN_NAME = '_newsService';
+import { DIMongoDB } from '@/loaders/mongoDBLoader';
+import { Db } from 'mongodb';
+import { SystemError } from '@/core/errors';
+const TOKEN_NAME = '_commentService';
 /**
  * A bridge allows another service access to the Model layer
- * @export NewsService
- * @class NewsService
+ * @export CommentService
+ * @class CommentService
  * @extends {BaseService}
  */
-export const NewsServiceToken = new Token<NewsService>(TOKEN_NAME);
+export const CommentServiceToken = new Token<CommentService>(TOKEN_NAME);
 /**
- * @class NewsService
+ * @class CommentService
  * @extends BaseService
- * @description News Service for all news related operations
+ * @description Comment Service for all comment related operations
  */
-@Service(NewsServiceToken)
-export class NewsService {
-  private logger = new Logger('NewsService');
+@Service(CommentServiceToken)
+export class CommentService {
+  private logger = new Logger('CommentService');
 
-  private model = Container.get(newsModelToken);
+  private model = Container.get(commentModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;
@@ -33,8 +36,8 @@ export class NewsService {
   @Inject()
   private authService: AuthService;
 
-  private error(msg: keyof typeof newsErrors) {
-    return new NewsError(msg);
+  private error(msg: keyof typeof commentErrors) {
+    return new CommentError(msg);
   }
 
   get outputKeys() {
@@ -48,25 +51,41 @@ export class NewsService {
     return alphabetSize12();
   }
   /**
-   * Create a new News
+   * Create a new Comment
    * @param _content
    * @param _subject
    * @returns {Promise<BaseServiceOutput>}
    */
   async create({ _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      const { name, categories = [] } = _content;
+      const { categories = [], type, source_id } = _content;
+      if (!Object.keys(COLLECTION_NAMES).includes(type)) {
+        throw new SystemError('common.collection_not_found');
+      }
+      const _id = await CommentService.generateID();
       const value = await this.model.create(
         {
-          name,
+          _id,
         },
         {
-          ..._news,
+          ..._comment,
           ..._content,
           categories,
           ...(_subject && { created_by: _subject }),
         },
       );
+      await Container.get(DIMongoDB)
+        .collection(type)
+        .updateOne(
+          {
+            _id: source_id,
+          },
+          {
+            $addToSet: {
+              comments: _id,
+            },
+          },
+        );
       this.logger.debug('create_success', { _content });
       return toOutPut({ item: value, keys: this.model._keys });
     } catch (err) {
@@ -99,7 +118,7 @@ export class NewsService {
   }
 
   /**
-   * Delete news
+   * Delete comment
    * @param _id
    * @param {ObjectId} _subject
    * @returns {Promise<void>}
@@ -118,7 +137,7 @@ export class NewsService {
   }
 
   /**
-   *  Query news
+   *  Query comment
    * @param {any} _filter
    * @param {BaseQuery} _query
    * @returns {Promise<BaseServiceOutput>}
@@ -166,9 +185,9 @@ export class NewsService {
     }
   }
   /**
-   * Get News by ID
-   * @param id - News ID
-   * @returns { Promise<BaseServiceOutput> } - News
+   * Get Comment by ID
+   * @param id - Comment ID
+   * @returns { Promise<BaseServiceOutput> } - Comment
    */
   async getById({ _id, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
@@ -201,9 +220,9 @@ export class NewsService {
     }
   }
   /**
-   * Get News by slug
-   * @param id - News ID
-   * @returns { Promise<BaseServiceOutput> } - News
+   * Get Comment by slug
+   * @param id - Comment ID
+   * @returns { Promise<BaseServiceOutput> } - Comment
    */
   async getBySlug({ _slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
@@ -346,7 +365,7 @@ export class NewsService {
       const { per_page = 10 } = _query;
       const items = await this.model
         .get([
-          { $addFields: { votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] } } },
+          { $addFields: { votes: { $add: [{ $size: '$up_votes' }, { $size: '$down_votes' }] } } },
           { $sort: { votes: -1 } },
           {
             $limit: per_page,
@@ -354,7 +373,7 @@ export class NewsService {
         ])
         .toArray();
       this.logger.debug('query_success', { items });
-      return toPagingOutput({ items, total_count: per_page });
+      return toPagingOutput({ items, total_count: 10 });
     } catch (err) {
       this.logger.error('react_error', err.message);
       throw err;
