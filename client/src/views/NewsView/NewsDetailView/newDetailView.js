@@ -2,6 +2,7 @@ import CardNews from '../../../components/CardNews/index.vue';
 import Comment from '../../../components/Watching/CommentFilm';
 import { mapState } from 'vuex';
 import { NewsServices } from '@/services';
+import moment from 'moment'; 
 export default {
   components: {
     CardNews,
@@ -20,6 +21,7 @@ export default {
       content: '',
       description: '',
       author: {},
+
     };
   },
   computed: {
@@ -55,6 +57,7 @@ export default {
     }
   },
   methods: {
+    moment,
     handleScroll: function () {
       if (this.scTimer) return;
       this.scTimer = setTimeout(() => {

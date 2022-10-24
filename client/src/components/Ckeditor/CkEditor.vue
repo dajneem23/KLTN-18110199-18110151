@@ -3,11 +3,11 @@
     <h1>Tạo bài viết</h1>
     <div class="box-title">
       <span class="name-title">Tiêu đề:</span>
-      <input type="text" placeholder="Tiêu đề bài viết....." />
+      <input type="text" placeholder="Tiêu đề bài viết....." v-model="news.name" />
     </div>
     <div class="box-title">
       <span class="name-title">Mô tả:</span>
-      <input type="text" placeholder="Mô tả bài viết....." />
+      <input type="text" placeholder="Mô tả bài viết....." v-model="news.description"/>
     </div>
     <div class="box-images">
       <span>Hình ảnh: </span>

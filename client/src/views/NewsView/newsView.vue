@@ -2,7 +2,7 @@
   <div class="news-wrapper bgc-white">
     <div class="img-banner"></div>
     <div class="button-create_news">
-      <router-link to="/createNews">
+      <router-link to="/create-news">
         <button>Đăng bài viết</button>
       </router-link>
     </div>
@@ -27,13 +27,14 @@
       </div>
       <div class="main-news">
         <div class="main-news-button">
-          <SwitchButton
+          <!-- <SwitchButton
             contentL="Dành cho bạn"
             contentR="Đánh giá cao nhất"
             buttonRef="buttonRef"
             btnRefL="onTvRef"
             btnRefR="onTTRef"
-          ></SwitchButton>
+          ></SwitchButton> -->
+          <h2>Tất cả</h2>
         </div>
         <div class="news-box">
           <div v-for="(item, key) of items">
@@ -48,9 +49,9 @@
             class="mt-4"
             @change="onChangePage"
           >
-            <template #first-text><span class="text-success">First</span></template>
-            <template #prev-text><span class="text-danger">Prev</span></template>
-            <template #next-text><span class="text-warning">Next</span></template>
+            <template #first-text><span class="text-info">First</span></template>
+            <template #prev-text><span class="text-info">Prev</span></template>
+            <template #next-text><span class="text-info">Next</span></template>
             <template #last-text><span class="text-info">Last</span></template>
             <template #ellipsis-text>
               <img width="50" height="50" src="../../assets/Icon/Ellipsis-1s-200px.svg" alt="" srcset="" />
