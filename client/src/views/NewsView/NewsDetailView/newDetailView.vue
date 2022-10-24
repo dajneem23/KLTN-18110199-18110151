@@ -56,7 +56,7 @@
         <img :src="author.picture" alt="" />
         <div>
           <div class="news-auth_name">{{ author.name }}</div>
-          <div class="news-date">14 thang 10</div>
+          <div class="news-date">{{ moment(created_at).fromNow() }}</div>
         </div>
       </div>
       <div class="news-content">
@@ -75,22 +75,22 @@
         ></textarea>
         <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
-      <div class="news-cmt-box" >
+      <div class="news-cmt-box">
         <div v-for="comment in comments">
           <Comment></Comment>
           <div v-if="comment?.reply">
-            <div class="cmt-rep" >
+            <div class="cmt-rep">
               <div v-for="reply in comment.reply">
                 <Comment></Comment>
                 <div v-if="reply?.reply_2">
-                  <div class="cmt-rep" >
+                  <div class="cmt-rep">
                     <div v-for="reply_2 in reply.reply_2">
                       <Comment></Comment>
                     </div>
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
           </div>
         </div>
       </div>

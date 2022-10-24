@@ -5,10 +5,11 @@
 /*-------------------------------*/
 .listManga-wrapper {
   width: 76.8%;
-  padding: 100px 20px;
+  padding: 20px 20px;
   margin: 0 auto;
 }
 .list-new-box {
+  display: block;
   width: 100%;
   padding: 0 20px;
   h3 {
@@ -24,7 +25,7 @@
   width: 100%;
   height: 270px;
   display: grid;
-  grid-template-columns: repeat(4 , 1fr);
+  grid-template-columns: repeat(4, 1fr);
   overflow-x: scroll;
   .list-new-item {
     padding: 10px 9px;
@@ -51,6 +52,38 @@
   margin: 20px auto;
   display: flex;
   justify-content: center;
+}
+.search-box {
+  width: 30%;
+  margin: 40px auto 0px auto;
+  padding: 0px 0px 0px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--gray);
+  border-radius: 50px;
+  input {
+    width: 90%;
+    height: 50px;
+    margin-right: 20px;
+    border: none;
+  }
+  input:focus-visible {
+    outline: 0px solid crimson;
+    border-radius: 3px;
+  }
+  button {
+    width: 150px;
+    height: 50px;
+    border: none;
+    padding: 5px 0;
+    background-color: var(--primary-blue_3);
+    border-radius: 50px;
+    svg {
+      width: 25px;
+      fill: var(--white);
+    }
+  }
 }
 /*--------------------------------*/
 ::-webkit-scrollbar {

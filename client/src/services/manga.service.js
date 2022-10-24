@@ -14,4 +14,7 @@ export const MangaServices = {
   getChapterById(id) {
     return RequestBase.get(`${this.url}/chapter/${id}`);
   },
+  search(params,name) {
+    return RequestBase.get(`${this.url}/search`,params);
+  },
 };
