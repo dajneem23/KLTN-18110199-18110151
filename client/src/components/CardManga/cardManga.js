@@ -1,5 +1,8 @@
 export default {
   props: {
-    data:Object
-  }
-}
+    data: Object,
+  },
+  mounted() {
+    console.log(this.data.chapter);
+  },
+};

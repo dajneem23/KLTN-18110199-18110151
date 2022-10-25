@@ -3,7 +3,7 @@
     <div class="card-manga">
       <div class="card-left">
         <img
-          :src="data.img || 'https://www.themoviedb.org/t/p/w220_and_h330_face/cOyU8ScRGKXChrRsxdrt6nYkzFh.jpg'"
+          :src="data.images || 'https://www.themoviedb.org/t/p/w220_and_h330_face/cOyU8ScRGKXChrRsxdrt6nYkzFh.jpg'"
           alt=""
         />
       </div>
