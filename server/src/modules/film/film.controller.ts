@@ -82,6 +82,16 @@ export class FilmController {
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
+  @Get('/', [])
+  async get(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.query({
+      _filter: filter,
+      _query: query,
+      _permission: 'public',
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
 
   @Get('/:id', [])
   async getByIdPrivate(
