@@ -10,6 +10,9 @@
       <div class="popular-news">
         <h3>Phổ biến nhất</h3>
         <div class="news-popular">
+          <div v-for="(item, key) of news_items">
+            <CardNews :key="item.id" style_x="card-news-x" :news="item"></CardNews>
+          </div>
           <!-- <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews>
           <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews>
           <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews>
@@ -19,6 +22,9 @@
       <div class="hot-news">
         <h3>Nổi bật nhất</h3>
         <div class="news-hot">
+          <div v-for="(item, key) of hot_items">
+            <CardNews :key="item.id" style_x="card-news-y" :news="item"></CardNews>
+          </div>
           <!-- <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews>
           <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews>
           <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews>

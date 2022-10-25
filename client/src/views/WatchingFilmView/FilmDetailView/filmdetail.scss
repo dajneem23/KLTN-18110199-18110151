@@ -28,9 +28,13 @@
     display: flex;
     justify-content: space-between;
     .film-des-item {
+      width: 250px;
       display: flex;
       align-items: center;
       height: 50px;
+      span {
+        margin-left: 5px;
+      }
     }
   }
 }
@@ -103,15 +107,14 @@
         }
       }
     }
-    .cmt-content{
+    .cmt-content {
       margin-top: 10px;
     }
-    .cmt-footer{
+    .cmt-footer {
       display: flex;
     }
-    
   }
-  .cmt-rep{
+  .cmt-rep {
     padding-left: 25px;
     margin-left: 25px;
     border-left: 1px var(--gray) solid;
