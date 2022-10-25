@@ -26,11 +26,7 @@
     </div>
     <div class="manga-info">
       <div class="manga-box-1">
-        <img
-          class="manga-img"
-          src="https://www.themoviedb.org/t/p/w220_and_h330_face/bxp5IUY05jLGeZ5bW85W2NF6Rgi.jpg"
-          alt=""
-        />
+        <img class="manga-img" :src="manga.images[0]" alt="" />
       </div>
       <div class="manga-box-2">
         <div class="manga-title">{{ manga.name }}</div>
@@ -40,29 +36,17 @@
               <!-- {{ mangaDETAIL_ITEM.category.title[lang] }}: -->
               <span class="text-black">Phim hài</span>
             </div>
-            <div class="text-dark-gray manga-des-item">
-              <!-- {{ mangaDETAIL_ITEM.directors.title[lang] }}: -->
-              <span class="text-black">Rambo</span>
-            </div>
           </div>
           <div>
             <div class="text-dark-gray manga-des-item">
               <!-- {{ mangaDETAIL_ITEM.nation.title[lang] }}: -->
               <span class="text-black">Việt Nam</span>
             </div>
-            <div class="text-dark-gray manga-des-item">
-              <!-- {{ mangaDETAIL_ITEM.time.title[lang] }}: -->
-              <span class="text-black"> 1 giờ 45 phút </span>
-            </div>
           </div>
           <div>
             <div class="text-dark-gray manga-des-item">
               <!-- {{ mangaDETAIL_ITEM.year.title[lang] }}: -->
               <span class="text-black"> 2022 </span>
-            </div>
-            <div class="text-dark-gray manga-des-item">
-              <!-- {{ mangaDETAIL_ITEM.rating.title[lang] }}: -->
-              <span class="text-black"> 95% </span>
             </div>
           </div>
           <div>
