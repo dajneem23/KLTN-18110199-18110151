@@ -18,9 +18,7 @@ export default {
       lang: 'vi',
       HOME_ITEM,
       reacts: [],
-      comments: [
-       
-      ],
+      comments: [],
       images: [],
       author: { name: 'Unknown' },
       created_at: new Date(),
