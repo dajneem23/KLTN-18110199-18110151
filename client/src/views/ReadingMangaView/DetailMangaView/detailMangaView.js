@@ -26,10 +26,9 @@ export default {
   },
   mounted() {},
   async created() {
-    const { id } = this.$route.params.mangaId;
+    const id = this.$route.params.mangaId;
     console.log(id);
-    console.log(this.$route.params.mangaId);
-    const [result, error] = await MangaServices.getById(this.$route.params.mangaId);
+    const [result, error] = await MangaServices.getById(id);
     console.log([result, error]);
     if (result) {
       this.manga = result;
@@ -39,6 +38,7 @@ export default {
         this[key] = result[key];
       });
     }
+    this.manga.chapters.sort(({ index: a }, { index: b }) => a - b)
   },
   methods: {
     sendCmt() {
@@ -53,5 +53,4 @@ export default {
       console.log(id);
     },
   },
-  props: ['id', 'data'],
 };
