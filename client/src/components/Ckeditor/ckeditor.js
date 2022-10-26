@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       editor: null,
-      editorData: 'Hello',
+      editorData: 'Long',
       news: {
         name: '',
         content: '',

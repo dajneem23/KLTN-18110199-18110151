@@ -54,8 +54,8 @@
   }
   .manga-info-des {
     width: 50%;
-    margin-left: 15px;
     display: flex;
+    margin-bottom: 20px;
     justify-content: space-between;
     .manga-des-item {
       display: flex;
@@ -97,7 +97,7 @@
       border: none;
       margin-right: 15px;
       padding: 15px;
-
+      background-color: var(--white) !important;
       resize: none;
     }
     textarea:focus-visible {

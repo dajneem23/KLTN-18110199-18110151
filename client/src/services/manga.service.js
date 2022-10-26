@@ -17,4 +17,7 @@ export const MangaServices = {
   search(params,name) {
     return RequestBase.get(`${this.url}/search`,params);
   },
+  react(id) {
+    return RequestBase.patch(`${this.url}/react/${id}`);
+  },
 };

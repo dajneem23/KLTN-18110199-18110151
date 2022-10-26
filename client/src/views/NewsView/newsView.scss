@@ -1,17 +1,17 @@
 .news-wrapper {
-  width: 100%;
+  // width: 100%;
   padding-top: 70px;
   .img-banner {
     max-width: 1912px;
-    min-height: 415px;
+    min-height: 220px;
     background: url('../../assets//Icon/perspectives_rebrand_banner.png');
     background-repeat: no-repeat;
     background-size: cover;
   }
   .button-create_news {
     width: 80%;
-    position: relative;
-    top: -300px;
+    position: absolute;
+    top: 140px;
     display: flex;
     justify-content: end;
     button {

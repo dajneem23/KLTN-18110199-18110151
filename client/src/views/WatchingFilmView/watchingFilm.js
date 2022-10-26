@@ -59,7 +59,7 @@ export default {
           items: [],
         },
         error,
-      ] = await MangaServices.search({
+      ] = await FilmServices.search({
         q: searchString,
       });
       this.items = items;
