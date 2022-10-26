@@ -25,7 +25,7 @@
             </div>
             <div class="text-dark-gray film-des-item">
               {{ FILMDETAIL_ITEM.directors.title[lang] }}:
-              <span class="text-black">Rambo</span>
+              <span class="text-black">{{ film.author.name }} </span>
             </div>
           </div>
           <div>
@@ -49,7 +49,7 @@
             </div>
           </div>
           <div>
-            <div class="text-dark-gray film-des-item">72N lượt xem</div>
+            <div class="text-dark-gray film-des-item">{{ film.views }} lượt xem</div>
             <button class="btn btn-like bgc-blue">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="fill-white">
                 <path
@@ -62,26 +62,21 @@
         </div>
       </div>
       <div class="film-box-2">
-        <div class="film-title">Anh khoa có cùng đồng bọn đi thanh toán băng đảng xã hội đen</div>
+        <div class="film-title">{{ film.name }}</div>
         <div>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem reprehenderit deleniti neque optio. Nobis
-          nulla dolores aliquam cupiditate voluptatibus reprehenderit, praesentium ut rerum quo vel, facere nihil
-          mollitia temporibus! Placeat? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem reprehenderit
-          deleniti neque optio. Nobis nulla dolores aliquam cupiditate voluptatibus reprehenderit, praesentium ut rerum
-          quo vel, facere nihil mollitia temporibus! Placeat? Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Dolorem reprehenderit deleniti neque optio. Nobis nulla dolores aliquam cupiditate voluptatibus reprehenderit,
-          praesentium ut rerum quo vel, facere nihil mollitia temporibus! Placeat? Lorem ipsum, dolor sit amet
-          consectetur adipisicing elit. Dolorem reprehenderit deleniti neque optio. Nobis nulla dolores aliquam
-          cupiditate voluptatibus reprehenderit, praesentium ut rerum quo vel, facere nihil mollitia temporibus!
-          Placeat? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem reprehenderit deleniti neque optio.
-          Nobis nulla dolores aliquam cupiditate voluptatibus reprehenderit, praesentium ut rerum quo vel, facere nihil
-          mollitia temporibus! Placeat?
+          {{ film.description }}
         </div>
       </div>
     </div>
     <div class="film-cmt">
       <div class="write-cmt-box">
-        <textarea class="input-cmt" type="text" placeholder="Hãy chia sẻ cảm nghĩ về bài viết" value="" v-model="cmt"></textarea>
+        <textarea
+          class="input-cmt"
+          type="text"
+          placeholder="Hãy chia sẻ cảm nghĩ về bài viết"
+          value=""
+          v-model="cmt"
+        ></textarea>
         <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
       <div class="cmt-box">

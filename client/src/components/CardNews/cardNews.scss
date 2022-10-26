@@ -23,6 +23,9 @@
       max-width: 303px;
     }
   }
+  .card-body-news {
+    min-width: 603px;
+  }
   .body-content__views {
     display: flex !important;
   }
@@ -53,6 +56,7 @@
 }
 
 .card-img-news {
+  min-width: 35%;
   margin-right: 10px;
   img {
     border-radius: 5px;
@@ -60,7 +64,7 @@
   }
 }
 .card-body-news {
-  min-width: 603px;
+  // min-width: 60%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

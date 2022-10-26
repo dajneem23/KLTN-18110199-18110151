@@ -1,6 +1,6 @@
 import { RequestBase } from './request';
 
-export const MangaServices = {
+export const FilmServices = {
   url: 'films',
   get(params) {
     return RequestBase.get(`${this.url}/`, params);
@@ -11,7 +11,7 @@ export const MangaServices = {
   create(body) {
     return RequestBase.post(`${this.url}/`, body);
   },
-  search(params,name) {
-    return RequestBase.get(`${this.url}/search`,params);
+  search(params, name) {
+    return RequestBase.get(`${this.url}/search`, params);
   },
 };

@@ -1,8 +1,8 @@
 <template>
   <div class="detailmanga-wrapper bgc-white">
-    <div class="bgc-black" v-if="!manga?.chapters">
+    <!-- <div class="bgc-black" v-if="!manga?.chapters">
       <div class="screen-reading">
-        <!-- <carousel perPage="2"> -->
+        <carousel perPage="2">
         <div class="img-manga_item">
           <img src="https://www.themoviedb.org/t/p/w220_and_h330_face/bxp5IUY05jLGeZ5bW85W2NF6Rgi.jpg" alt="" />
         </div>
@@ -22,8 +22,8 @@
           <img src="https://www.themoviedb.org/t/p/w220_and_h330_face/bxp5IUY05jLGeZ5bW85W2NF6Rgi.jpg" alt="" />
         </div>
       </div>
-      <!-- </carousel> -->
-    </div>
+      </carousel>
+    </div> -->
     <div class="manga-info">
       <div class="manga-box-1">
         <img class="manga-img" :src="manga.images[0]" alt="" />
@@ -68,7 +68,7 @@
       </div>
     </div>
     <div class="manga-chapter">
-      <div v-for="item in manga.chapters.sort(({ index: a }, { index: b }) => a - b)">
+      <div v-for="item in manga.chapters">
         <router-link :to="{ name: 'detailchapter', params: { id: item.id, chapterData: item } }">
           <button @click="goToChapter(item.id)">{{ item.index }}</button>
         </router-link>
