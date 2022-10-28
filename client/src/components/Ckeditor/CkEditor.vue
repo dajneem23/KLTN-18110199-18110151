@@ -1,23 +1,25 @@
 <template>
-  <div class="box-create">
-    <h1>Tạo bài viết</h1>
-    <div class="box-title">
-      <span class="name-title">Tiêu đề:</span>
-      <input type="text" placeholder="Tiêu đề bài viết....." v-model="news.name" />
+  <div class="bgc-white">
+    <div class="box-create">
+      <h1>Tạo bài viết</h1>
+      <div class="box-title">
+        <span class="name-title">Tiêu đề:</span>
+        <input type="text" placeholder="Tiêu đề bài viết....." v-model="news.name" />
+      </div>
+      <div class="box-title">
+        <span class="name-title">Mô tả:</span>
+        <input type="text" placeholder="Mô tả bài viết....." v-model="news.description" />
+      </div>
+      <div class="box-images">
+        <span>Hình ảnh: </span>
+        <DropzoneFileUpload multiple class="upload-file"></DropzoneFileUpload>
+      </div>
+      <div class="box-content">
+        <span>Nội dung :</span>
+        <div id="editor" class="ckeditor-cus">Nội dung bài viết......</div>
+      </div>
+      <button @click="submitText(editorData)" class="btn-filter">Lưu</button>
     </div>
-    <div class="box-title">
-      <span class="name-title">Mô tả:</span>
-      <input type="text" placeholder="Mô tả bài viết....." v-model="news.description"/>
-    </div>
-    <div class="box-images">
-      <span>Hình ảnh: </span>
-      <DropzoneFileUpload multiple class="upload-file"></DropzoneFileUpload>
-    </div>
-    <div class="box-content">
-      <span>Nội dung :</span>
-      <div id="editor" class="ckeditor-cus"></div>
-    </div>
-    <button @click="submitText(editorData)" class="btn-filter">Lưu</button>
   </div>
 </template>
 <!-- <script src="../"></script> -->

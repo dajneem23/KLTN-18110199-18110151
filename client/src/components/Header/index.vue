@@ -119,7 +119,7 @@
             <router-link to="/profile/">
               <div class="tooltip-user--item">Trang cá nhân</div>
             </router-link>
-            <div class="tooltip-user--item" @click="logOut">Đăng xuất</div>
+            <div class="tooltip-user--item text-dark" @click="logOut">Đăng xuất</div>
           </div>
         </div>
         <div v-else>

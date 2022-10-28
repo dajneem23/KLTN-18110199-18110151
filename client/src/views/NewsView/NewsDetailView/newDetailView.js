@@ -2,7 +2,7 @@ import CardNews from '../../../components/CardNews/index.vue';
 import Comment from '../../../components/Watching/CommentFilm';
 import { mapState } from 'vuex';
 import { NewsServices } from '@/services';
-import moment from 'moment'; 
+import moment from 'moment';
 export default {
   components: {
     CardNews,
@@ -20,23 +20,23 @@ export default {
       name: '',
       content: '',
       description: '',
+      reacts: [],
       author: {},
-
     };
   },
   computed: {
     ...mapState(['userInfo', 'isAuthenticated']),
   },
-  watch: {
-    data(newData) {
-      if (newData)
-        Object.keys(newData).map((key) => {
-          if (key == '_v') return;
-          this[key] = newData[key];
-        });
-      console.log(this);
-    },
-  },
+  // watch: {
+  //   data(newData) {
+  //     if (newData)
+  //       Object.keys(newData).map((key) => {
+  //         if (key == '_v') return;
+  //         this[key] = newData[key];
+  //       });
+  //     console.log(this);
+  //   },
+  // },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
 
@@ -49,12 +49,12 @@ export default {
     console.log([result, error]);
     if (result) {
       this.news = result;
-      console.log(this.news);
       Object.keys(result).map((key) => {
         if (key == '_v') return;
         this[key] = result[key];
       });
     }
+    this.totalVote = up_votes.length - down_votes.length;
   },
   methods: {
     moment,
@@ -85,8 +85,8 @@ export default {
       if (result) {
         const { up_votes } = result;
         this.up_votes = up_votes;
-        console.log(this.up_votes, up_votes);
       }
+      
     },
     async downVote(id) {
       console.log('Un Vote');
@@ -99,8 +99,15 @@ export default {
         console.log(this.down_votes, down_votes);
       }
     },
-    addWishList() {
-      console.log('Add wish');
+    async addWishList(id) {
+      console.log(id);
+      const [result, error] = await NewsServices.react(id);
+      console.log([result, error]);
+      if (result) {
+        const { reacts } = result;
+        this.reacts = reacts;
+        // console.log(this.reacts, reacts);
+      }
     },
   },
 };
