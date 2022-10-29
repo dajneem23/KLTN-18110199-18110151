@@ -2,7 +2,7 @@
   <router-link :to="{ name: 'details', params: { filmId: item.id, filmData: data } }">
     <div class="card-film">
       <div class="card-image-film">
-        <img src="" alt="" />
+        <img src="https://i.ytimg.com/vi/5OBSai9oiVc/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCaeEN4XNgCMlq_AAewRWREJpLptQ" alt="" />
       </div>
       <div class="card-body-film">
         <div class="card-title-film">
@@ -20,7 +20,7 @@
               />
             </svg>
           </div>
-          <!-- <div class="card-info--time">{{ data.time }}</div> -->
+          <div class="card-info--time">{{ moment(item.created_at).fromNow() }}</div>
         </div>
       </div>
     </div>

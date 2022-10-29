@@ -1,6 +1,7 @@
 import { FILMDETAIL_ITEM } from '../../../constants/filmdetail';
 import Commentfilm from '../../../components/Watching/CommentFilm/index.vue';
 import { FilmServices } from '@/services';
+import moment from 'moment'; 
 export default {
   components: {
     Commentfilm,
@@ -41,6 +42,7 @@ export default {
     }
   },
   methods: {
+    moment,
     sendCmt() {
       console.log(this.cmt);
     },

@@ -81,13 +81,13 @@
         </div>
       </div> -->
     </div>
-    <div class="manga-chapter">
-      <!-- <div v-for="item in manga.chapters.sort(({ index: a }, { index: b }) => a - b)">
+    <!-- <div class="manga-chapter">
+      <div v-for="item in manga.chapters.sort(({ index: a }, { index: b }) => a - b)">
         <router-link to="">
           <button @click="goToChapter(item.id)">{{ item.index }}</button>
         </router-link>
-      </div> -->
-    </div>
+      </div>
+    </div> -->
     <div class="manga-cmt">
       <div class="write-cmt-box">
         <textarea class="input-cmt" type="text" placeholder="Hãy chia sẻ cảm nghĩ về bài viết" value=""></textarea>

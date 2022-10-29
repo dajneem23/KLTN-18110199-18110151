@@ -8,8 +8,9 @@ export default {
       REGISTER_ITEM,
       account: {
         email: '',
-        password: '',
-        name: '',
+        passworld: '',
+        passWorldConfirm:''
+,        name: '',
         phone:'094100117  '
       },
     };
@@ -30,13 +31,26 @@ export default {
     passwordValiate() {
       REGISTER_ITEM.passWord.error = '';
       if (!this.account.password.trim()) {
-        REGISTER_ITEM.passWord.error = 'Password is required';
+        REGISTER_ITEM.passWord.error = 'Passworld is required';
       }
+    },
+    passWorldConfirmValidate() {
+      REGISTER_ITEM.passWorldConfirm.error = '';
+      if (!this.account.passWorldConfirm.trim()) {
+        REGISTER_ITEM.passWorldConfirm.error = 'Confirm passworld is required';
+        return
+      }
+      if (this.account.passWorld != this.account.passWorldConfirm)
+      {
+        REGISTER_ITEM.passWorldConfirm.error = 'Confirm passworld is not match';  
+      }
+      console.log(REGISTER_ITEM.passWorldConfirm.error)
     },
     validate() {
       this.fullnameValidate();
       this.usernameValidate();
       this.passwordValiate();
+      this.passWorldConfirmValidate();
     },
     async register() {
       this.validate();
