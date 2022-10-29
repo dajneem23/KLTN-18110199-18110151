@@ -57,7 +57,7 @@
           <div>
             <div class="text-dark-gray manga-des-item">
               <!-- {{ mangaDETAIL_ITEM.year.title[lang] }}: -->
-              <span class="text-black"> 2022 </span>
+              <span class="text-black"> {{moment(created_at).year()}} </span>
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@
         </router-link>
       </div>
     </div>
-    <div class="manga-cmt">
+    <div class="manga-cmt bgc-white">
       <div class="write-cmt-box">
         <textarea
           class="input-cmt"

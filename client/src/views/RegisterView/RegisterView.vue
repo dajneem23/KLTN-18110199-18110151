@@ -40,10 +40,10 @@
           @blur="usernameValidate()"
         />
       </div>
-      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.passWord.error }">
-        {{ REGISTER_ITEM.passWord.error }}
+      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.passWorld.error }">
+        {{ REGISTER_ITEM.passWorld.error }}
       </div>
-      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.passWord.error }">
+      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.passWorld.error }">
         <div class="input-icon fill-gray">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
             <path
@@ -53,10 +53,29 @@
         </div>
         <input
           type="password"
-          :placeholder="REGISTER_ITEM.passWord.title[lang]"
+          :placeholder="REGISTER_ITEM.passWorld.title[lang]"
           class="form-input"
-          v-model="account.password"
+          v-model="account.passworld"
           @blur="passwordValiate()"
+        />
+      </div>
+      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.passWorldConfirm.error }">
+        {{ REGISTER_ITEM.passWorldConfirm.error }}
+      </div>
+      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.passWorldConfirm.error }">
+        <div class="input-icon fill-gray">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path
+              d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"
+            />
+          </svg>
+        </div>
+        <input
+          type="password"
+          :placeholder="REGISTER_ITEM.passWorldConfirm.title[lang]"
+          class="form-input"
+          v-model="account.passWorldConfirm"
+          @blur="passWorldConfirmValidate()"
         />
       </div>
       <div class="form-button">
