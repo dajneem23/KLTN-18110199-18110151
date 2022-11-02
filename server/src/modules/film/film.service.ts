@@ -157,7 +157,7 @@ export class FilmService {
       return toPagingOutput({
         items,
         total_count,
-        keys: this.model._keys,
+        // keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('query_error', err.message);
@@ -262,7 +262,7 @@ export class FilmService {
         ])
         .toArray();
       this.logger.debug('query_success', { total_count, items });
-      return toPagingOutput({ items, total_count, keys: this.model._keys });
+      return toPagingOutput({ items, total_count });
     } catch (err) {
       this.logger.error('query_error', err.message);
       throw err;
