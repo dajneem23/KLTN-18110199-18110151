@@ -5,6 +5,8 @@ export interface Film extends BaseModel {
 
   contents: any[];
 
+  image?: string;
+
   images?: string[];
 
   comments: string[];
