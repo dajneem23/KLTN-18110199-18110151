@@ -2,6 +2,7 @@ import Comment from '../../../components/Watching/CommentFilm/index.vue';
 import { Carousel, Slide } from 'vue-carousel';
 import { MangaServices } from '@/services';
 import { mapState } from 'vuex';
+import moment from 'moment'; 
 export default {
   components: {
     Comment,
@@ -45,6 +46,7 @@ export default {
     this.manga.chapters.sort(({ index: a }, { index: b }) => a - b);
   },
   methods: {
+    moment,
     sendCmt() {
       console.log(this.cmt);
     },

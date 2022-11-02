@@ -33,16 +33,17 @@ ul li {
   }
 }
 .join {
-  text-align: right;
-  position: relative;
-  top: -36px;
-  right: 0;
+  width: 150px;
+  height: 150px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
 }
 .img-join {
   width: 100px;
   display: block;
-  position: absolute;
-  bottom: 0;
   left: 25%;
 }
 .button-join {
