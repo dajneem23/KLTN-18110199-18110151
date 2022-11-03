@@ -20,6 +20,6 @@ export default {
 <style lang="scss">
 .app {
   max-width: 1912px;
-  background-color: var(--white);
+  background: var(--white);
 }
 </style>
