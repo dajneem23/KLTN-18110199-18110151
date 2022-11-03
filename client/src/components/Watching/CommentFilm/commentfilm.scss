@@ -20,16 +20,37 @@
       }
     }
   }
-  .cmt-content{
+  .cmt-content {
     margin-top: 10px;
   }
-  .cmt-footer{
+  .cmt-footer {
     display: flex;
   }
-  
 }
-.cmt-rep{
+.cmt-rep {
   padding-left: 25px;
   margin-left: 25px;
   border-left: 1px var(--gray) solid;
+}
+.news-write-cmt {
+  height: 55px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px var(--gray) solid;
+  textarea {
+    min-width: 90%;
+    max-width: 90%;
+    max-height: 50px;
+    min-height: 50px;
+    border: none;
+    margin-right: 15px;
+    padding: 15px;
+    background-color: white !important;
+    resize: none !important;
+    overflow-y: hidden;
+  }
+  textarea:focus-visible {
+    outline: none;
+  }
 }

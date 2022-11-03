@@ -2,7 +2,7 @@
   <router-link :to="{ name: 'details', params: { filmId: item.id, filmData: data } }">
     <div class="card-film">
       <div class="card-image-film">
-        <img src="https://i.ytimg.com/vi/5OBSai9oiVc/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCaeEN4XNgCMlq_AAewRWREJpLptQ" alt="" />
+        <img :src="item?.image" alt="" />
       </div>
       <div class="card-body-film">
         <div class="card-title-film">

@@ -14,7 +14,7 @@ export default {
     return {
       customStyles,
       items: [],
-      news_items: [],
+      new_items: [],
       hot_items: [],
       pageOfItems: 1,
       page: 1,
@@ -33,7 +33,7 @@ export default {
       per_page: this.per_page,
     });
     this.items = items;
-    this.news_items = items.slice(0, 4);
+    this.new_items = items.slice(0, 4);
     this.hot_items = items.slice(1, 5);
     this.total_count = total_count;
     console.log(this.items);

@@ -10,7 +10,7 @@
       <div class="popular-news">
         <h3>Phổ biến nhất</h3>
         <div class="news-popular">
-          <div v-for="(item, key) of news_items">
+          <div v-for="(item, key) of new_items">
             <CardNews :key="item.id" style_x="card-news-x" :news="item"></CardNews>
           </div>
           <!-- <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews>

@@ -15,7 +15,7 @@
       <div class="list-new-box">
         <h3>Phim mới cập nhật</h3>
         <div class="list-new">
-          <div v-for="(item, key) of items" class="list-new-item">
+          <div v-for="(item, key) of new_items" class="list-new-item">
             <CardFilm :item="item"></CardFilm>
           </div>
         </div>
@@ -23,7 +23,7 @@
       <div class="list-new-box">
         <h3>Phim hot</h3>
         <div class="list-new">
-          <div v-for="(item, key) of items" class="list-new-item">
+          <div v-for="(item, key) of hot_items" class="list-new-item">
             <CardFilm :item="item"></CardFilm>
           </div>
         </div>

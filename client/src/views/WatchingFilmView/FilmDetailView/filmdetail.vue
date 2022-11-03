@@ -12,11 +12,7 @@
     </div>
     <div class="film-info">
       <div class="film-box-1">
-        <img
-          class="film-img"
-          src="https://i.ytimg.com/vi/5siNvZgGb7o/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBolyqAJltGtNb-2o-SOBAVlDAPIA"
-          alt=""
-        />
+        <img class="film-img" :src="film?.image" alt="" />
         <div class="film-info-des">
           <div>
             <!-- <div class="text-dark-gray film-des-item">
@@ -49,7 +45,7 @@
           <div>
             <div class="text-dark-gray film-des-item">
               {{ FILMDETAIL_ITEM.year.title[lang] }}:
-              <span class="text-black"> {{moment(film.created_at).year()}} </span>
+              <span class="text-black"> {{ moment(film.created_at).year() }} </span>
             </div>
             <!-- <div class="text-dark-gray film-des-item">
               {{ FILMDETAIL_ITEM.rating.title[lang] }}:
