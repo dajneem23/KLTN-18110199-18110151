@@ -9,7 +9,7 @@
         <span class="cmt-time text-gray">13 tháng 8</span>
       </div>
     </div>
-    <div class="cmt-content">Tuyệt vời. Quá hay quá bổ ích</div>
+    <div class="cmt-content">{{ data?.content }}</div>
     <div class="cmt-footer">
       <button class="btn btn-like-cmt" @click="likeCmt">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="fill-red">
