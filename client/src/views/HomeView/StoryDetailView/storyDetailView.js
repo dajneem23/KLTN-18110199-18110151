@@ -1,4 +1,4 @@
-import Comment from '../../../components/Watching/CommentFilm';
+import Comment from '../../../components/Watching/CommentFilm/index.vue';
 import { HOME_ITEM } from '../../../constants/homeview';
 import { Carousel, Slide } from 'vue-carousel';
 import { StoriesService } from '@/services';

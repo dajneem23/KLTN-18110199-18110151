@@ -76,15 +76,15 @@
   </div>
       <div class="news-cmt-box" >
         <div v-for="comment of comments">
-          <Comment></Comment>
+          <Comment :data="comment"></Comment>
           <div v-if="comment?.reply">
             <div class="cmt-rep" >
               <div v-for="reply in comment.reply">
-                <Comment></Comment>
+                <Comment :data="reply"></Comment>
                 <div v-if="reply?.reply_2">
                   <div class="cmt-rep" >
                     <div v-for="reply_2 in reply.reply_2">
-                      <Comment></Comment>
+                      <Comment :data="reply_2"></Comment>
                     </div>
                   </div>
                 </div>

@@ -1,8 +1,14 @@
 export default {
+  props: {
+    data: Array,
+  },
   data() {
     return {
       cmt: '',
     };
+  },
+  mounted() {
+    console.log(data);
   },
   methods: {
     likeCmt() {
@@ -11,7 +17,7 @@ export default {
     repCmt() {
       const repCmtBox = document.getElementById('cmtRep-write');
       console.log('rep');
-      if ((repCmtBox.style.display == 'none')) {
+      if (repCmtBox.style.display == 'none') {
         repCmtBox.style.display = 'flex';
       } else {
         repCmtBox.style.display = 'none';
