@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper wrapper_1" @submit.prevent="register">
     <form class="form-login bgc-white">
+      <!-- Input User Name -->
       <h3>{{ REGISTER_ITEM.headerTitle.title[lang] }}</h3>
       <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.name.error }">
         {{ REGISTER_ITEM.name.error }}
@@ -21,6 +22,7 @@
           @blur="fullnameValidate()"
         />
       </div>
+      <!-- Input User Email -->
       <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.email.error }">
         {{ REGISTER_ITEM.email.error }}
       </div>
@@ -41,10 +43,11 @@
           @blur="usernameValidate()"
         />
       </div>
-      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.passWorld.error }">
-        {{ REGISTER_ITEM.passWorld.error }}
+      <!-- Input User PassWorld -->
+      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.passWord.error }">
+        {{ REGISTER_ITEM.passWord.error }}
       </div>
-      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.passWorld.error }">
+      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.passWord.error }">
         <div class="input-icon fill-gray">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
             <path
@@ -54,16 +57,17 @@
         </div>
         <input
           type="password"
-          :placeholder="REGISTER_ITEM.passWorld.title[lang]"
+          :placeholder="REGISTER_ITEM.passWord.title[lang]"
           class="form-input"
-          v-model="account.passworld"
+          v-model="account.password"
           @blur="passwordValiate()"
         />
       </div>
-      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.passWorldConfirm.error }">
-        {{ REGISTER_ITEM.passWorldConfirm.error }}
+      <!-- Input User PassWorldConfirm -->
+      <div class="error-title" v-bind:class="{ 'show-error': REGISTER_ITEM.passWordConfirm.error }">
+        {{ REGISTER_ITEM.passWordConfirm.error }}
       </div>
-      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.passWorldConfirm.error }">
+      <div class="input-box bgc-white" v-bind:class="{ 'input-error': REGISTER_ITEM.passWordConfirm.error }">
         <div class="input-icon fill-gray">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
             <path
@@ -73,9 +77,9 @@
         </div>
         <input
           type="password"
-          :placeholder="REGISTER_ITEM.passWorldConfirm.title[lang]"
+          :placeholder="REGISTER_ITEM.passWordConfirm.title[lang]"
           class="form-input"
-          v-model="account.passWorldConfirm"
+          v-model="passWordConfirm"
           @blur="passWorldConfirmValidate()"
         />
       </div>
