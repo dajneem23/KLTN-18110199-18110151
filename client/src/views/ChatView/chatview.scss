@@ -20,12 +20,15 @@ $blue: #74b9ff;
 }
 
 .settings-tray {
-  background: #eee;
+  background: var(--white);
   padding: 10px 15px;
-  border-radius: 7px;
-
+  height: 80px;
+  // border: 1px solid var(--gray);
   .no-gutters {
     padding: 0;
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
   }
 
   &--right {
@@ -47,18 +50,26 @@ $blue: #74b9ff;
 }
 
 .search-box {
-  background: #fafafa;
+  background: var(--gray);
   padding: 10px 13px;
-
+  height: 80px;
+  display: flex;
+  justify-content: center;
   .input-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
     background: #fff;
     border-radius: 40px;
+    padding: 0 20px 0 10px;
 
     svg {
+      margin-left: 10px;
       width: 15px;
     }
     input {
-      height: 40px;
+      width: 90%;
+      height: 100%;
       margin-left: 10px;
       padding: 10px;
     }
@@ -83,13 +94,14 @@ input {
 .list-sms {
   max-height: 810px;
   overflow-y: scroll;
+  overflow-y: hidden;
 }
 .friend-drawer {
   width: 100%;
   padding: 10px 15px;
   display: flex;
   vertical-align: baseline;
-  background: #fff;
+  background: var(--white);
   transition: 0.3s ease;
 
   &--grey {
@@ -115,11 +127,11 @@ input {
   }
 
   &--onhover:hover {
-    background: $blue;
+    background: var(--primary-blue_3);
     cursor: pointer;
 
     p,
-    h6,
+    h3,
     .time {
       color: #fff !important;
     }
@@ -132,11 +144,17 @@ hr {
 }
 .chat-panel {
   width: 100%;
+  padding: 10px 15px 0px 15px;
   // min-height: 100%;
   max-height: 710px;
-  min-height: 700px;
+  min-height: 720px;
   overflow-y: scroll;
   overflow-y: hidden;
+  background-color: var(--gray);
+  .no-gutters {
+    display: flex;
+    align-items: center;
+  }
 }
 .chat-bubble {
   padding: 10px 14px;
@@ -197,12 +215,11 @@ hr {
 
 .chat-box-tray {
   // width: 100%;
-  background: #eee;
+  background: var(--white);
   display: flex;
   align-items: baseline;
   padding: 10px 0 10px 15px;
   align-items: center;
-  margin-top: 19px;
   bottom: 0;
 
   input {
@@ -220,4 +237,23 @@ hr {
       // margin-left: 25px;
     }
   }
+}
+.btn-send-sms {
+  width: 60px;
+  border: none;
+  padding: 10px 10px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--white);
+}
+
+.box-emoji {
+  visibility: hidden;
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  max-width: 445px;
+  // height: 200px;
+  border-radius: 5px;
+  background-color: #74b9ff;
 }
