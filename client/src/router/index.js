@@ -67,7 +67,7 @@ const routes = [
     components: {
       header: Header,
       default: Chatting,
-      footer: Footer,
+      // footer: Footer,
     },
   },
   {
