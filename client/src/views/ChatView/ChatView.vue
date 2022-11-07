@@ -15,7 +15,7 @@
               <i class="material-icons">menu</i>
             </span>
           </div> -->
-          <div class="search-box">
+          <div class="search-box-chat">
             <div class="input-wrapper">
               <input placeholder="Search here" type="text" />
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

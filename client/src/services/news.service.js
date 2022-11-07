@@ -11,6 +11,12 @@ export const NewsServices = {
   create(body) {
     return RequestBase.post(`${this.url}/`, body);
   },
+  getHot(params) {
+    return RequestBase.get(`${this.url}/hot/`, params);
+  },
+  getTop(params) {
+    return RequestBase.get(`${this.url}/top/`, params);
+  },
   react(id) {
     return RequestBase.patch(`${this.url}/react/${id}`);
   },
