@@ -109,5 +109,8 @@ export default {
         // console.log(this.reacts, reacts);
       }
     },
+    followUser(user) {
+      console.log("follow :" ,user.id)
+    }
   },
 };
