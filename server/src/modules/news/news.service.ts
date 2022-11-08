@@ -351,6 +351,7 @@ export class NewsService {
           {
             $limit: per_page,
           },
+          this.model.$lookups.author,
         ])
         .toArray();
       this.logger.debug('query_success', { items });
@@ -369,6 +370,7 @@ export class NewsService {
           {
             $limit: per_page,
           },
+          this.model.$lookups.author,
         ])
         .toArray();
       this.logger.debug('query_success', { items });
