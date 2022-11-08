@@ -8,11 +8,11 @@ export default {
       REGISTER_ITEM,
       account: {
         email: '',
-        passworld: '',
-        passWorldConfirm:''
-,        name: '',
-        phone:'094100117  '
+        password: '',
+        name: '',
+        phone: '094100117  ',
       },
+      passWordConfirm: '',
     };
   },
   methods: {
@@ -35,16 +35,15 @@ export default {
       }
     },
     passWorldConfirmValidate() {
-      REGISTER_ITEM.passWorldConfirm.error = '';
-      if (!this.account.passWorldConfirm.trim()) {
-        REGISTER_ITEM.passWorldConfirm.error = 'Confirm passworld is required';
-        return
+      REGISTER_ITEM.passWordConfirm.error = '';
+      if (!this.passWordConfirm.trim()) {
+        REGISTER_ITEM.passWordConfirm.error = 'Confirm password is required';
+        return;
       }
-      if (this.account.passWorld != this.account.passWorldConfirm)
-      {
-        REGISTER_ITEM.passWorldConfirm.error = 'Confirm passworld is not match';  
+      if (this.account.password != this.passWordConfirm) {
+        REGISTER_ITEM.passWordConfirm.error = 'Confirm password is not match';
       }
-      console.log(REGISTER_ITEM.passWorldConfirm.error)
+      console.log(REGISTER_ITEM.passWordConfirm.error);
     },
     validate() {
       this.fullnameValidate();
@@ -60,8 +59,7 @@ export default {
       if (result) {
         console.log('Đăng ký thành công !');
         const { user } = result;
-        console.log(user)
-
+        console.log(user);
       }
       console.log(this.account);
     },

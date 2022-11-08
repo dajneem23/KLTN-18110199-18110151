@@ -1,4 +1,4 @@
-import Comment from '../../../components/Watching/CommentFilm';
+import Comment from '../../../components/Watching/CommentFilm/index.vue';
 import { HOME_ITEM } from '../../../constants/homeview';
 import { Carousel, Slide } from 'vue-carousel';
 import { StoriesService } from '@/services';
@@ -22,6 +22,7 @@ export default {
       images: [],
       author: { name: 'Unknown' },
       created_at: new Date(),
+      cmt: '',
     };
   },
   methods: {
@@ -34,6 +35,9 @@ export default {
         const { reacts } = result;
         this.reacts = reacts;
       }
+    },
+    sendCmt() {
+      console.log(this.cmt);
     },
   },
   async created() {

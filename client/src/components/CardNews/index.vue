@@ -2,7 +2,7 @@
   <div :class="style_x" class="card-news">
     <router-link :to="{ name: 'detailnews', params: { id, news } }">
       <div class="card-img-news">
-        <img :src="image" alt="" />
+        <img :src="image " alt="" />
       </div>
     </router-link>
     <div class="card-body-news">
@@ -34,8 +34,8 @@
 
       <div class="card-body__content">
         <div class="body-content__imgAuth">
-          <img :src="author.picture" alt="" />
-          <span>{{ author.name }}</span>
+          <img :src="author?.picture || '	https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
+          <span>{{ author?.name || 'Unknown' }}</span>
         </div>
         <div class="body-content__views">
           <div @click="upVote(id)" class="vote-icon">

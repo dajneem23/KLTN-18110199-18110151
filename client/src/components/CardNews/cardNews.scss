@@ -3,8 +3,16 @@
   border-radius: 5px;
   display: flex;
   .card-img-news {
+    height: 100%;
+    display: flex;
+    // align-items: center;
+    background-image: url(/static/img/perspectives_rebrand_banner.e687888e.png);
+    object-fit: contain;
+    border-radius: 5px;
     img {
+      height: 170px;
       min-width: 300px;
+      max-width: 300px;
     }
   }
 }
@@ -17,8 +25,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url(/static/img/perspectives_rebrand_banner.e687888e.png);
+    object-fit: contain;
+    border-radius: 5px;
     height: 100%;
+    object-fit: contain;
     img {
+      height: 170px;
       min-width: 303px;
       max-width: 303px;
     }
@@ -31,15 +44,22 @@
   }
 }
 .card-news-y {
-  min-width: 297px;
-  max-width: 297px;
+  min-width: 300px;
+  max-width: 300px;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   .card-img-news {
-    margin: 0;
+    width: 300px;
+    height: 100%;
+    display: flex;
+    background-image: url(/static/img/perspectives_rebrand_banner.e687888e.png);
+    object-fit: contain;
+    border-radius: 5px;
     img {
-      min-width: 287px;
+      height: 170px;
+      min-width: 300px;
+      max-width: 300px;
     }
   }
   .card-body-news {
@@ -48,7 +68,7 @@
     flex-direction: column;
     justify-content: space-between;
     .body-title__des {
-      display: none;
+      display: none !important;
     }
     .body-title__name {
       max-height: 90px;
@@ -88,11 +108,28 @@
   }
   .card-body__title {
     .body-title__name {
+      height: 48px;
       font-weight: 600;
       margin-bottom: 5px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+      -webkit-line-clamp: 2;
+      line-height: 1.5rem;
     }
     .body-title__des {
+      width: 100%;
       font-size: 12px;
+      display: -webkit-box;
+      max-height: 3.2rem;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+      -webkit-line-clamp: 2;
+      line-height: 0.9rem;
     }
   }
   .card-body__content {

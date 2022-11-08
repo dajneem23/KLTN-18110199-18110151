@@ -15,7 +15,7 @@
       <div class="list-new-box">
         <h3>Truyện mới cập nhật</h3>
         <div class="list-new">
-          <div v-for="(item, key) of items" class="list-new-item">
+          <div v-for="(item, key) of new_items" class="list-new-item">
             <CardManga :data="item"></CardManga>
           </div>
         </div>
@@ -23,7 +23,7 @@
       <div class="list-new-box">
         <h3>Truyện hot</h3>
         <div class="list-new">
-          <div v-for="(item, key) of items" class="list-new-item">
+          <div v-for="(item, key) of hot_items" class="list-new-item">
             <CardManga :data="item"></CardManga>
           </div>
         </div>

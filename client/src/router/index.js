@@ -17,6 +17,7 @@ import ProfileView from '../views/ProfileView/profileView.vue';
 import EditProfileView from '../views/ProfileView/EditProfileView/index.vue';
 import StoryDetailView from '../views/HomeView/StoryDetailView/index.vue';
 import CreateNewsView from '../views/CreateNews/index.vue';
+import CreateStory from '../views/CreateStory/index.vue';
 import { UserService } from '@/services';
 import { store } from '../store/vuex';
 
@@ -66,7 +67,7 @@ const routes = [
     components: {
       header: Header,
       default: Chatting,
-      footer: Footer,
+      // footer: Footer,
     },
   },
   {
@@ -162,6 +163,19 @@ const routes = [
     components: {
       header: Header,
       default: CreateNewsView,
+      footer: Footer,
+    },
+    props: true,
+    beforeEnter: (to, from, next) => {
+      authenticate(to, from, next) ? next() : next('/not-found');
+    },
+  },
+  {
+    path: '/create-story',
+    name: 'createStory',
+    components: {
+      header: Header,
+      default: CreateStory,
       footer: Footer,
     },
     props: true,

@@ -42,22 +42,22 @@
               <span class="cl-white"> Like </span>
             </button>
           </div>
-          <div>
+          <!-- <div>
             <div class="text-dark-gray manga-des-item">
-              <!-- {{ mangaDETAIL_ITEM.category.title[lang] }}: -->
+              {{ mangaDETAIL_ITEM.category.title[lang] }}:
               <span class="text-black">Phim hài</span>
             </div>
           </div>
           <div>
             <div class="text-dark-gray manga-des-item">
-              <!-- {{ mangaDETAIL_ITEM.nation.title[lang] }}: -->
+              {{ mangaDETAIL_ITEM.nation.title[lang] }}:
               <span class="text-black">Việt Nam</span>
             </div>
-          </div>
+          </div> -->
           <div>
             <div class="text-dark-gray manga-des-item">
               <!-- {{ mangaDETAIL_ITEM.year.title[lang] }}: -->
-              <span class="text-black"> {{moment(created_at).year()}} </span>
+              <span class="text-black"> {{ moment(created_at).year() }} </span>
             </div>
           </div>
         </div>

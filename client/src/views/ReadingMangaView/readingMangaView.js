@@ -11,6 +11,8 @@ export default {
   data() {
     return {
       items: [],
+      new_items: [],
+      hot_items: [],
       pageOfItems: 1,
       page: 1,
       per_page: 12,
@@ -29,6 +31,8 @@ export default {
       per_page: this.per_page,
     });
     this.items = items;
+    this.new_items = items.slice(0, 5);
+    this.hot_items = items.slice(0, 5);
     this.total_count = total_count;
     console.log(this.items);
   },

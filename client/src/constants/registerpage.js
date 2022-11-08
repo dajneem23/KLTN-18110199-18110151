@@ -12,14 +12,14 @@ export const REGISTER_ITEM = {
     },
     error: '',
   },
-  passWorld: {
+  passWord: {
     title: {
       vi: 'Mật khẩu',
       en: 'Password',
     },
     error: '',
   },
-  passWorldConfirm: {
+  passWordConfirm: {
     title: {
       vi: 'Xác nhận mật khẩu',
       en: 'Confirm Password',

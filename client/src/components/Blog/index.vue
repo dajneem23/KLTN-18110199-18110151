@@ -80,17 +80,22 @@
           ></textarea>
           <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">{{ HOME_ITEM.send.title[lang] }}</button>
         </div>
-        <div class="news-cmt-box" v-for="cmt in comments">
-          <Comment></Comment>
-          <div class="cmt-rep">
-            <Comment></Comment>
-          </div>
-          <Comment></Comment>
-          <div class="cmt-rep">
-            <Comment></Comment>
-            <Comment></Comment>
-            <div class="cmt-rep">
-              <Comment></Comment>
+        <div class="news-cmt-box">
+          <div v-for="comment of comments">
+            <Comment :data="comment"></Comment>
+            <div v-if="comment?.reply">
+              <div class="cmt-rep">
+                <div v-for="reply in comment.reply">
+                  <Comment :data="reply"></Comment>
+                  <div v-if="reply?.reply_2">
+                    <div class="cmt-rep">
+                      <div v-for="reply_2 in reply.reply_2">
+                        <Comment :data="reply_2"></Comment>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
