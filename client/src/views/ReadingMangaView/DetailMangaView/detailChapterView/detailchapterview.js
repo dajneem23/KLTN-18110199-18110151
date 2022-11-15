@@ -29,6 +29,7 @@ export default {
         this[key] = result[key];
       });
     }
+    console.log(this.chapter)
   },
   methods: {
     goToPrev(index) {

@@ -4,6 +4,11 @@ export default {
   components: {
     DropzoneFileUpload,
   },
+  props: {
+    hiddenModel:{
+      type:Function
+  },
+  },
   data() {
     return {
       story: {
@@ -11,5 +16,12 @@ export default {
         images: [],
       },
     };
+  },
+  methods: {
+    hiddenmodel() {
+      if(this.hiddenModel){
+        this.hiddenModel();
+       }
+    }
   },
 };
