@@ -1,6 +1,7 @@
 import axios from 'axios';
 import InfiniteLoading from 'vue-infinite-loading';
 import Story from '../../components/Blog/index.vue';
+import CreateStory from '../CreateStory/index.vue';
 import { mapState } from 'vuex';
 import { store } from '../../store/vuex';
 import { StoriesService } from '@/services';
@@ -8,6 +9,7 @@ export default {
   components: {
     InfiniteLoading,
     Story,
+    CreateStory,
   },
   computed: {
     ...mapState(['userInfo', 'isAuthenticated']),
@@ -42,6 +44,14 @@ export default {
       this.posts.push(...items);
       this.page++;
       $state.loaded();
+    },
+    showModel() {
+      const model = document.getElementById('model-add-story');
+      model.style.visibility = 'visible';
+    },
+    hiddenModel() {
+      const model = document.getElementById('model-add-story');
+      model.style.visibility = 'hidden';
     },
   },
 };

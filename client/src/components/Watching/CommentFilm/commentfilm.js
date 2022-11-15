@@ -1,6 +1,6 @@
 export default {
   props: {
-    data: Array,
+    data: Object,
   },
   data() {
     return {
@@ -8,7 +8,7 @@ export default {
     };
   },
   mounted() {
-    console.log(data);
+    console.log(this.data);
   },
   methods: {
     likeCmt() {
