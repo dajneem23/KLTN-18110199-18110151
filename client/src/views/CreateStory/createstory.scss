@@ -1,5 +1,5 @@
 .create-wrapper {
-  width: 750px;
+  width: 900px;
   background-color: var(--white);
   border-radius: 5px;
   border: 1px solid var(--gray) !important;
@@ -41,9 +41,9 @@
   }
   .box-images {
     width: 100%;
-    display: flex;
-
+    // display: flex;
     .upload-file {
+      margin: 0 auto;
       width: 100%;
     }
   }

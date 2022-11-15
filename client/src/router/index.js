@@ -31,7 +31,7 @@ const routes = [
     components: {
       header: Header,
       default: HomeView,
-      footer: Footer,
+      // footer: Footer,
     },
   },
   {

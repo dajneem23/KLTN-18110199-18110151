@@ -22,6 +22,9 @@ export default {
       if(this.hiddenModel){
         this.hiddenModel();
        }
+    },
+    createStory() {
+      console.log(this.story)
     }
   },
 };
