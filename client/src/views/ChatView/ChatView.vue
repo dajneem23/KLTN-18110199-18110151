@@ -1,20 +1,8 @@
-<template lang="">
+<template>
   <div class="chat-wrapper">
     <div class="box-chatting">
       <div class="row no-gutters">
         <div class="col-md-3 border-right">
-          <!-- <div class="settings-tray">
-            <img
-              class="profile-image"
-              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/filip.jpg"
-              alt="Profile img"
-            />
-            <span class="settings-tray--right">
-              <i class="material-icons">cached</i>
-              <i class="material-icons">message</i>
-              <i class="material-icons">menu</i>
-            </span>
-          </div> -->
           <div class="search-box-chat">
             <div class="input-wrapper">
               <input placeholder="Search here" type="text" />

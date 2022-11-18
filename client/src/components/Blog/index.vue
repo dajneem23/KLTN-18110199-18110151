@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <router-link :to="{ name: 'detailStory', params: { id, data } }">
+    <router-link :to="{ name: 'detailStory', params: { id, data } }" v-if="!img">
       <div class="news-body">
         <carousel :perPage="1">
           <slide v-for="img in images" class="slide">

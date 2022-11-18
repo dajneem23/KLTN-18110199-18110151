@@ -152,3 +152,24 @@ b-list-group-item {
   // justify-content: center;
   // align-items: center;
 }
+/*-----------------------------------------*/
+::-webkit-scrollbar {
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px transparent;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue_2);
+}
