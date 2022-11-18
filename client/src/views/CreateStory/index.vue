@@ -11,7 +11,7 @@
       </div>
       <div class="button-box">
         <button @click="hiddenmodel" class="btn-cancel">Hủy</button>
-        <button @click="submitText(editorData)" class="btn-filter">Đăng</button>
+        <button @click="createStory()" class="btn-filter">Đăng</button>
       </div>
     </div>
   </div>

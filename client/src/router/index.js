@@ -31,7 +31,7 @@ const routes = [
     components: {
       header: Header,
       default: HomeView,
-      footer: Footer,
+      // footer: Footer,
     },
   },
   {
@@ -167,7 +167,7 @@ const routes = [
     },
     props: true,
     beforeEnter: (to, from, next) => {
-      authenticate(to, from, next) ? next() : next('/not-found');
+      authenticate(to, from, next) ? next() : next('/login');
     },
   },
   {

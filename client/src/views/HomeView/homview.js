@@ -24,7 +24,7 @@ export default {
     };
   },
   mounted() {
-    // console.log(store.state);
+    console.log(this.isAuthenticated);
   },
   methods: {
     async getPosts($state) {

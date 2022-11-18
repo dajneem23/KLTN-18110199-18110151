@@ -16,7 +16,7 @@
 html {
   font-family: 'Noto Sans', sans-serif !important;
 }
-body{
+body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -110,12 +110,18 @@ a:hover {
   .dz-preview-multiple .list-group-lg {
   }
 }
-b-list-group {
+.list-group {
   display: grid !important;
   grid-template-columns: repeat(5, 1fr) !important;
 }
 b-list-group-item {
-  min-width: 200px;
+  min-width: 170px;
+  max-width: 170px;
+}
+.list-group-flush > .list-group-item {
+  width: 170px !important;
+  height: 205px;
+  padding: 10px !important;
 }
 .dz-message {
   z-index: 1 !important;
@@ -126,4 +132,44 @@ b-list-group-item {
   border: none;
   border-radius: 5px;
   color: #5680e9;
+}
+.row {
+  display: block !important;
+}
+.image-preview-name {
+  max-width: 100%;
+  height: 50px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.list-peview--item {
+  height: 200px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-around;
+  // justify-content: center;
+  // align-items: center;
+}
+/*-----------------------------------------*/
+::-webkit-scrollbar {
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px transparent;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue_2);
 }
