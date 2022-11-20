@@ -1,10 +1,13 @@
 <template>
   <div class="create-wrapper">
     <div class="box-create">
-      <h1>Tạo bài viết</h1>
+      <!-- <h1>Tạo bài viết</h1> -->
+      <div class="user-info">
+        <img :src="userInfo.picture" alt="" />
+        <span>{{ userInfo.name }}</span>
+      </div>
       <div class="box-title">
-        <h3></h3>
-        <textarea placeholder="Hãy viết gì đó......" v-model="story.content" ></textarea>
+        <textarea placeholder="Hãy viết gì đó......" v-model="story.content"></textarea>
       </div>
       <div class="box-images">
         <DropzoneFileUpload multiple class="upload-file"></DropzoneFileUpload>

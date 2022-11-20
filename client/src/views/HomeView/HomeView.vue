@@ -220,6 +220,7 @@
       </div>
     </div>
     <div class="model-add-story" id="model-add-story">
+      <div class="backround-popup" @click="hiddenModel"></div>
       <div class="box-add-story">
         <CreateStory :hiddenModel="hiddenModel" />
       </div>

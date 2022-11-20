@@ -124,7 +124,8 @@ b-list-group-item {
   padding: 10px !important;
 }
 .dz-message {
-  z-index: 1 !important;
+  // z-index: 1 !important;
+  transition: none !important;
 }
 .dz-button {
   padding: 10px;

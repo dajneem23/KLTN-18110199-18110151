@@ -1,7 +1,7 @@
 import { RequestBase } from './request';
 
 export const StoriesService = {
-  url: 'stories',
+  url: 'story',
   get(params) {
     return RequestBase.get(`${this.url}/`, params);
   },
@@ -13,5 +13,5 @@ export const StoriesService = {
   },
   react(id) {
     return RequestBase.patch(`${this.url}/react/${id}`);
-  }
+  },
 };
