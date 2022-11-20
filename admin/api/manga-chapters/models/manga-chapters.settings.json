@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "manga-chapters",
+  "info": {
+    "name": "Manga-chapters"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

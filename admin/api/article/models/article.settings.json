@@ -12,29 +12,28 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
+    "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "pluginOptions": {}
     },
     "description": {
       "type": "text",
-      "required": true
+      "required": true,
+      "pluginOptions": {}
     },
     "content": {
       "type": "richtext",
-      "required": true
+      "required": true,
+      "pluginOptions": {}
     },
     "slug": {
       "type": "uid",
-      "targetField": "title",
+      "targetField": "name",
       "required": true
     },
-    "category": {
-      "model": "category",
-      "via": "articles"
-    },
-    "image": {
-      "model": "file",
+    "images": {
+      "collection": "file",
       "via": "related",
       "allowedTypes": [
         "files",
@@ -42,12 +41,33 @@
         "videos"
       ],
       "plugin": "upload",
-      "required": true,
+      "required": false,
       "pluginOptions": {}
     },
     "author": {
       "via": "articles",
-      "model": "writer"
+      "model": "user",
+      "plugin": "users-permissions"
+    },
+    "reacts": {
+      "plugin": "users-permissions",
+      "collection": "user"
+    },
+    "up_votes": {
+      "plugin": "users-permissions",
+      "collection": "user"
+    },
+    "down_votes": {
+      "plugin": "users-permissions",
+      "collection": "user"
+    },
+    "categories": {
+      "columnName": "slug",
+      "collection": "category"
+    },
+    "deleted": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
