@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "manga",
+  "collectionName": "films",
   "info": {
-    "name": "Mangas",
+    "name": "Films",
     "description": ""
   },
   "options": {
@@ -18,20 +18,21 @@
     "description": {
       "type": "text"
     },
-    "images": {
-      "collection": "file",
+    "image": {
+      "model": "file",
       "via": "related",
       "allowedTypes": [
-        "files",
         "images",
+        "files",
         "videos"
       ],
       "plugin": "upload",
       "required": false,
       "pluginOptions": {}
     },
-    "chapters": {
-      "collection": "manga-chapters"
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
     },
     "deleted": {
       "type": "boolean"
@@ -40,9 +41,12 @@
       "plugin": "users-permissions",
       "model": "user"
     },
-    "slug": {
-      "type": "uid",
-      "targetField": "name"
+    "reacts": {
+      "plugin": "users-permissions",
+      "collection": "user"
+    },
+    "views": {
+      "type": "biginteger"
     }
   }
 }
