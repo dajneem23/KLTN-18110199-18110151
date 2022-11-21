@@ -15,6 +15,8 @@ export type Gender = 'male' | 'female' | 'other';
 
 export type User = {
   // User ID
+  _id: string;
+
   id: string;
   // Full name
   name: string;
@@ -61,4 +63,4 @@ export type CreateUpdateUserInput = Pick<User, 'name' | 'email' | 'phone' | 'pas
 
 export type UserOutput = Omit<User, 'password'>;
 
-export type UserPublicResponse = Pick<User, 'id' | 'name' | 'picture'>;
+export type UserPublicResponse = Pick<User, '_id' | 'name' | 'picture'>;

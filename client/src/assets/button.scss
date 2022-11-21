@@ -63,10 +63,17 @@ button {
     padding-left: 10px;
   }
 }
+.btn-cancel {
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+}
 .btn-send-cmt {
   border: none;
   padding: 10px;
   border-radius: 5px;
+  
 }
 .btn-defaultt:hover,
 .btn-primary:hover,
@@ -106,7 +113,7 @@ button {
     margin: 5px;
   }
 }
-.btn-transparent{
+.btn-transparent {
   background-color: transparent;
   height: 40px;
   width: 100px;
@@ -123,7 +130,7 @@ button {
     margin: 5px;
   }
 }
-.btn-transparent:hover{
+.btn-transparent:hover {
   background-color: var(--gray);
 }
 .btn-like-cmt {

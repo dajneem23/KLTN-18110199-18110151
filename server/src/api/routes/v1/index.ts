@@ -4,7 +4,7 @@ import env from '@/config/env';
 import { UserController, AuthController } from '@/modules';
 import { StoryController } from '@/modules/story/story.controller';
 import { MangaController } from '@/modules/manga/manga.controller';
-import { NewsController } from '@/modules/news/news.controller';
+import { NewsController } from '@/modules/articles/articles.controller';
 import { FilmController } from '@/modules/film/film.controller';
 
 const route = Router();

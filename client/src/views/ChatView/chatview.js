@@ -8,7 +8,9 @@ export default {
       sms: '',
     };
   },
-  methods: {
-    
+  mounted() {
+    let panel = document.getElementById('chat-panel');
+    panel.scrollTop = panel.scrollHeight;
   },
+  methods: {},
 };

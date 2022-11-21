@@ -18,8 +18,16 @@
               </span> -->
       </div>
     </div>
-    <div class="chat-panel">
-      <Messenge mySms sms="fuck you" />
+    <div class="chat-panel" id="chat-panel">
+      <infinite-loading direction="top" @infinite="infiniteHandler"></infinite-loading>
+
+      <div v-for="(post, index) in posts" :key="index">
+        <Messenge friendSms sms="Hello motherfucker" />
+      </div>
+      <!-- <Messenge mySms sms="fuck you" />
+      <Messenge friendSms sms="Hello motherfucker" />
+      <Messenge friendSms sms="Hello motherfucker" />
+      <Messenge friendSms sms="Hello motherfucker" />
       <Messenge friendSms sms="Hello motherfucker" />
 
       <div class="row no-gutters">
@@ -72,6 +80,16 @@
           <div class="chat-bubble chat-bubble--right">Hello dude!</div>
         </div>
       </div>
+      <div class="row no-gutters">
+        <div class="col-md-3 offset-md-9">
+          <div class="chat-bubble chat-bubble--right">Hello dude!</div>
+        </div>
+      </div>
+      <div class="row no-gutters">
+        <div class="col-md-3 offset-md-9">
+          <div class="chat-bubble chat-bubble--right">Hello dude!</div>
+        </div>
+      </div> -->
     </div>
     <div class="">
       <div class="box-send">

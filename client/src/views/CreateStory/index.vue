@@ -3,12 +3,16 @@
     <div class="box-create">
       <h1>Tạo bài viết</h1>
       <div class="box-title">
+        <h3></h3>
         <textarea placeholder="Hãy viết gì đó......" v-model="story.content" ></textarea>
       </div>
       <div class="box-images">
         <DropzoneFileUpload multiple class="upload-file"></DropzoneFileUpload>
       </div>
-      <button @click="submitText(editorData)" class="btn-filter">Đăng</button>
+      <div class="button-box">
+        <button @click="hiddenmodel" class="btn-cancel">Hủy</button>
+        <button @click="createStory()" class="btn-filter">Đăng</button>
+      </div>
     </div>
   </div>
 </template>
