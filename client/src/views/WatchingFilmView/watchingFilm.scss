@@ -41,7 +41,7 @@
     max-width: 100%;
     padding: 10px 7px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     grid-gap: 20px;
     .card + .card {
       margin: 0;

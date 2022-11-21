@@ -13,5 +13,5 @@ export const StoriesService = {
   },
   react(id) {
     return RequestBase.patch(`${this.url}/react/${id}`);
-  }
+  },
 };
