@@ -9,7 +9,7 @@ import { CommentError, commentModelToken, commentErrors, _comment } from '.';
 import { BaseServiceInput, BaseServiceOutput, COLLECTION_NAMES, PRIVATE_KEYS } from '@/types/Common';
 import { isNil, omit } from 'lodash';
 import { DIMongoDB } from '@/loaders/mongoDBLoader';
-import { Db } from 'mongodb';
+import { Db, ObjectId } from 'mongodb';
 import { SystemError } from '@/core/errors';
 const TOKEN_NAME = '_commentService';
 /**
@@ -71,7 +71,7 @@ export class CommentService {
           ..._comment,
           ..._content,
           categories,
-          ...(_subject && { created_by: _subject }),
+          ...(_subject && { author: new ObjectId(_subject) }),
         },
       );
       await Container.get(DIMongoDB)
@@ -87,7 +87,7 @@ export class CommentService {
           },
         );
       this.logger.debug('create_success', { _content });
-      return toOutPut({ item: value, keys: this.model._keys });
+      return toOutPut({ item: value });
     } catch (err) {
       this.logger.error('create_error', err.message);
       throw err;
@@ -101,16 +101,16 @@ export class CommentService {
    * @param _subject
    * @returns {Promise<BaseServiceOutput>}
    */
-  async update({ _id, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async update({ _slug: slug, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      await this.model.update($toMongoFilter({ _id }), {
+      await this.model.update($toMongoFilter({ slug }), {
         $set: {
           ..._content,
-          ...(_subject && { updated_by: _subject }),
+          ...(_subject && { updated_by: new ObjectId(_subject) }),
         },
       });
       this.logger.debug('update_success', { _content });
-      return toOutPut({ item: _content, keys: this.model._keys });
+      return toOutPut({ item: _content });
     } catch (err) {
       this.logger.error('update_error', err.message);
       throw err;
@@ -123,12 +123,12 @@ export class CommentService {
    * @param {ObjectId} _subject
    * @returns {Promise<void>}
    */
-  async delete({ _id, _subject }: BaseServiceInput): Promise<void> {
+  async delete({ _slug: slug, _subject }: BaseServiceInput): Promise<void> {
     try {
-      await this.model.delete($toMongoFilter({ _id }), {
-        ...(_subject && { deleted_by: _subject }),
+      await this.model.delete($toMongoFilter({ slug }), {
+        ...(_subject && { deleted_by: new ObjectId(_subject) }),
       });
-      this.logger.debug('delete_success', { _id });
+      this.logger.debug('delete_success', { slug });
       return;
     } catch (err) {
       this.logger.error('delete_error', err.message);
@@ -189,14 +189,14 @@ export class CommentService {
    * @param id - Comment ID
    * @returns { Promise<BaseServiceOutput> } - Comment
    */
-  async getById({ _id, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async getById({ _slug: slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
       const [item] = await this.model
         .get([
           {
             $match: {
               ...$toMongoFilter({
-                _id,
+                slug,
               }),
             },
           },
@@ -282,22 +282,22 @@ export class CommentService {
         ])
         .toArray();
       this.logger.debug('query_success', { total_count, items });
-      return toPagingOutput({ items, total_count, keys: this.model._keys });
+      return toPagingOutput({ items, total_count });
     } catch (err) {
       this.logger.error('query_error', err.message);
       throw err;
     }
   }
-  async react({ _subject, _id }: BaseServiceInput) {
+  async react({ _subject, _slug: slug }: BaseServiceInput) {
     try {
       //todo: check if user already react
       const [item] = await this.model
         .get([
           {
             $match: {
-              _id,
+              slug,
               reacts: {
-                $in: [_subject],
+                $in: [new ObjectId(_subject)],
               },
             },
           },
@@ -305,15 +305,15 @@ export class CommentService {
         .toArray();
       const { reacts } = item
         ? await this.model.update(
-            { _id },
+            { slug },
             {
-              $pull: { reacts: _subject },
+              $pull: { reacts: new ObjectId(_subject) },
             },
           )
         : await this.model.update(
-            { _id },
+            { slug },
             {
-              $addToSet: { reacts: _subject },
+              $addToSet: { reacts: new ObjectId(_subject) },
             },
           );
       this.logger.debug('update_success', {});
@@ -326,9 +326,9 @@ export class CommentService {
       throw err;
     }
   }
-  async upVote({ _subject, _id }: BaseServiceInput) {
+  async upVote({ _subject, _slug: slug }: BaseServiceInput) {
     try {
-      const { up_votes, down_votes } = await this.model.update($toMongoFilter({ _id }), {
+      const { up_votes, down_votes } = await this.model.update($toMongoFilter({ slug }), {
         $addToSet: { up_votes: _subject },
         $pull: { down_votes: _subject },
       });
@@ -342,11 +342,11 @@ export class CommentService {
       throw err;
     }
   }
-  async downVote({ _subject, _id }: BaseServiceInput) {
+  async downVote({ _subject, _slug: slug }: BaseServiceInput) {
     try {
       //ToDO: check if user already up vote
 
-      const { down_votes, up_votes } = await this.model.update($toMongoFilter({ _id }), {
+      const { down_votes, up_votes } = await this.model.update($toMongoFilter({ slug }), {
         $addToSet: { down_votes: _subject },
         $pull: { up_votes: _subject },
       });

@@ -23,13 +23,13 @@ export class UserController {
 
   @Get('/users/me', [protect({})])
   async getMe(@Res() res: Response, @Auth() auth: JWTPayload) {
-    const user = await this.userService.getById(auth.id);
+    const user = await this.userService.getById(auth._id);
     res.status(httpStatusCode.OK).json(user);
   }
 
   @Put('/users/me', [userValidation.updateMe, protect()])
   async updateMe(@Res() res: Response, @Body() body: any, @Auth() auth: JWTPayload) {
-    const user = await this.userService.update(auth.id, body);
+    const user = await this.userService.update(auth._id, body);
     res.status(httpStatusCode.OK).json(user);
   }
 
@@ -46,13 +46,13 @@ export class UserController {
 
   @Get('/private/users/me', [protect()])
   async privateGetMe(@Res() res: Response, @Auth() auth: JWTPayload) {
-    const user = await this.userService.getById(auth.id);
+    const user = await this.userService.getById(auth._id);
     res.status(httpStatusCode.OK).json(user);
   }
 
   @Put('/private/users/me', [userValidation.updateMe, protect()])
   async privateUpdateMe(@Res() res: Response, @Body() body: any, @Auth() auth: JWTPayload) {
-    const user = await this.userService.update(auth.id, body);
+    const user = await this.userService.update(auth._id, body);
     res.status(httpStatusCode.OK).json(user);
   }
 

@@ -21,7 +21,7 @@ export interface AuthSession {
 
 export type RegisterInput = CreateUpdateUserInput;
 
-export type JWTPayload = Pick<User, 'id' | 'email' | 'email_verified' | 'name' | 'picture' | 'roles'>;
+export type JWTPayload = Pick<User, 'id' | '_id' | 'email' | 'email_verified' | 'name' | 'picture' | 'roles'>;
 
 export type BearerTokens = {
   // token_type: 'bearer';

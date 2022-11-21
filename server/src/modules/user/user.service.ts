@@ -98,7 +98,7 @@ export class UserService {
       if (isDuplicated) throwErr(new AuthError('EMAIL_ALREADY_EXISTS'));
       // Create user
       const now = new Date();
-      const user: User = {
+      const user = {
         ...userInput,
         // _full_name_alias: generateTextAlias(userInput.full_name),
         picture: userInput.picture || DEFAULT_USER_PICTURE, // Should set a default avatar picture
@@ -110,7 +110,7 @@ export class UserService {
         updated_at: now,
       };
       // Insert user to database
-      const { acknowledged } = await this.model._collection.insertOne(user);
+      const { acknowledged } = await this.model._collection.insertOne(user as any);
       if (!acknowledged) {
         throwErr(new SystemError(`MongoDB insertOne() failed! Payload: ${JSON.stringify(user)}`));
       }
@@ -246,7 +246,7 @@ export class UserService {
       if (!ok) throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ id, data })}`));
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[update:success]', { email: user.email });
-      return toOutPut({ item: user, keys: this.model._keys });
+      return toOutPut({ item: user });
     } catch (err) {
       this.logger.error('[update:error]', err.message);
       throw err;
@@ -274,7 +274,7 @@ export class UserService {
       if (!ok) throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ id, data })}`));
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[update:success]', { email: user.email });
-      return toOutPut({ item: user, keys: this.model._keys });
+      return toOutPut({ item: user });
     } catch (err) {
       this.logger.error('[update:error]', err.message);
       throw err;
