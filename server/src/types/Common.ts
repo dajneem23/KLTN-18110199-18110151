@@ -158,7 +158,7 @@ export const defaultFilter = {
 };
 export type BaseServiceInput = {
   _slug?: string;
-  _id?: string;
+  // _id?: string;
   _content: {
     [key: string]: any;
   };
@@ -214,11 +214,11 @@ export const PRIVATE_KEYS = [
 
 export enum COLLECTION_NAMES {
   stories = 'stories',
-  users = 'users',
+  'users-permissions_user' = 'users-permissions_user',
   verifications = 'verifications',
   'auth-sessions' = 'auth-sessions',
   coins = 'coins',
-  news = 'news',
+  articles = 'articles',
   manga = 'manga',
   films = 'films',
   settings = 'settings',

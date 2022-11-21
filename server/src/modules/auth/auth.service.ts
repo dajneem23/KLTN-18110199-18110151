@@ -57,7 +57,7 @@ export default class AuthService {
    * Generate Bearer tokens
    */
   static async generateBearerTokens(user: User | UserOutput) {
-    const payload: JWTPayload = pick(user, 'id', 'email', 'email_verified', 'name', 'picture', 'roles');
+    const payload: JWTPayload = pick(user, 'id', '_id', 'email', 'email_verified', 'name', 'picture', 'roles');
     const bearerTokens: BearerTokens = {
       // token_type: 'bearer',
       access_token: jwt.sign(payload, env.JWT_SECRET, { expiresIn: env.JWT_ACCESS_TOKEN_EXP }),
@@ -111,7 +111,7 @@ export default class AuthService {
   async loginByIdAndPassword(loginID: string, password: string, whiteListRoles: UserRole[] = ['user']) {
     try {
       // Get user
-      const user = (await this.userService.model._collection.findOne({ email: loginID })) as WithId<User>;
+      const user = (await this.userService.model._collection.findOne({ email: loginID })) as any;
       // Check password
       if (!user || !(await AuthService.verifyPassword(password, user.password))) {
         throwErr(new AuthError('INCORRECT_LOGIN_ID_OR_PASSWORD'));
@@ -202,7 +202,7 @@ export default class AuthService {
   async requestEmailVerification(userId: string, opts: { redirect_uri: string }) {
     try {
       // Check user exists
-      const user = (await this.userService.model._collection.findOne({ id: userId })) as WithId<User>;
+      const user = (await this.userService.model._collection.findOne({ id: userId })) as any;
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       if (user.email_verified) throwErr(new UserError('EMAIL_ALREADY_VERIFIED'));
       // Generate token and send email
@@ -232,7 +232,7 @@ export default class AuthService {
         { returnDocument: 'after' },
       );
       this.logger.debug('[verifyEmail:success]', { email, token });
-      return toUserOutput(user as WithId<User>);
+      return toUserOutput(user as any);
     } catch (err) {
       this.logger.error('[verifyEmail:error]', err);
       throw err;

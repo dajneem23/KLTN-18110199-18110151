@@ -36,7 +36,13 @@
   "views": 0,
   "reacts": [
     "Q0NOvjYIF9lO"
-  ]
+  ],
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "vi-sao-tam-ly-ngan-han-se-khien-ban-lien-tuc-mat-tien-va-vi-sao-tam-ly-dai-han-la-bai-hoc-quan-trong-nhat-trong-dau-tu",
   "_histories": [],
@@ -69,14 +75,21 @@
   "up_votes": [],
   "updated_at": {
     "$date": {
-      "$numberLong": "1667534699288"
+      "$numberLong": "1668753154501"
     }
   },
   "views": 0,
   "reacts": [
     "lHBGDe6b7Pch",
-    "4sguQtWzcQZ8"
-  ]
+    "4sguQtWzcQZ8",
+    "Q0NOvjYIF9lO"
+  ],
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "lam-sao-de-10-diem-lap-trinh",
   "_histories": [],
@@ -109,11 +122,19 @@
   "up_votes": [],
   "updated_at": {
     "$date": {
-      "$numberLong": "1666704515348"
+      "$numberLong": "1668753157621"
     }
   },
   "views": 0,
-  "reacts": []
+  "reacts": [
+    "Q0NOvjYIF9lO"
+  ],
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "cach-trinh-bay-bao-cao-tren-excel-sao-cho-ngau",
   "_histories": [],
@@ -161,7 +182,13 @@
     }
   },
   "views": 0,
-  "reacts": []
+  "reacts": [],
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "lam-gi-khi-mac-ket-voi-mot-ke-thao-tung-tam-ly",
   "_histories": [],
@@ -246,7 +273,13 @@
   "reacts": [
     "Q0NOvjYIF9lO",
     "4sguQtWzcQZ8"
-  ]
+  ],
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "gen-z-mot-the-he-yeu-duoi-hay-thuong-dang-the-he",
   "_histories": [],
@@ -283,7 +316,13 @@
     }
   },
   "views": 0,
-  "reacts": []
+  "reacts": [],
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "nhung-cai-chet-van-chua-du-de-thuc-tinh-ca-mot-the-he",
   "_histories": [],
@@ -322,7 +361,13 @@
   "views": 0,
   "reacts": [
     "Q0NOvjYIF9lO"
-  ]
+  ],
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "ve-van-hoa-ton-tho-su-tu-tin",
   "_histories": [],
@@ -361,7 +406,13 @@
   "views": 0,
   "reacts": [
     "Q0NOvjYIF9lO"
-  ]
+  ],
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "ap-luc-dong-trang-lua-va-loi-xui-dai-dung-peer-pressure-nua",
   "_histories": [],
@@ -400,7 +451,13 @@
   "views": 0,
   "reacts": [
     "Q0NOvjYIF9lO"
-  ]
+  ],
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "hen-ho-mot-co-gai-xinh-dep-va-tung-trai-la-cam-giac-the-nao",
   "_histories": [],
@@ -439,7 +496,13 @@
   "views": 0,
   "reacts": [
     "Q0NOvjYIF9lO"
-  ]
+  ],
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "song-cho-minh-vs-song-cho-nguoi",
   "_histories": [],
@@ -475,7 +538,13 @@
       "$numberLong": "1666086760392"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "review-sach-sapiens-toi-da-doc-cai-gi-the-nay",
   "_histories": [],
@@ -511,7 +580,13 @@
       "$numberLong": "1666086760392"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "world-war-i-da-bien-trang-suc-cua-phu-nu-thanh-cong-cu-khong-the-thieu-cua-cac-binh-si-tren-chien-truong-nhu-the-nao",
   "_histories": [],
@@ -550,7 +625,13 @@
       "$numberLong": "1666086760392"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "co-nen-hop-phap-hoa-poker",
   "_histories": [],
@@ -586,7 +667,13 @@
       "$numberLong": "1666086760392"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "bau-cu-tong-thong-my-minh-tha-xem-drama-han",
   "_histories": [],
@@ -622,7 +709,13 @@
       "$numberLong": "1666086760392"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "lam-sao-de-10-diem-lap-trinh-1666109092880",
   "_histories": [],
@@ -658,7 +751,13 @@
       "$numberLong": "1666109089193"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "lam-sao-dje-10-djiem-lap-trinh",
   "_histories": [],
@@ -694,7 +793,13 @@
       "$numberLong": "1666109144830"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "lam-sao-dje-10-djiem-lap-trinh-1666109152736",
   "_histories": [],
@@ -730,7 +835,13 @@
       "$numberLong": "1666109144830"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "lam-sao-de-10-diem-lap-trinh-1666109231073",
   "_histories": [],
@@ -766,7 +877,13 @@
       "$numberLong": "1666109221246"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "lam-sao-de-10-diem-lap-trinh-1666109255063",
   "_histories": [],
@@ -802,7 +919,13 @@
       "$numberLong": "1666109242981"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "lam-sao-de-10-diem-lap-trinh-1666109285543",
   "_histories": [],
@@ -838,7 +961,13 @@
       "$numberLong": "1666109242981"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 },{
   "_id": "lam-sao-de-10-diem-lap-trinh-1666109287661",
   "_histories": [],
@@ -874,5 +1003,11 @@
       "$numberLong": "1666109242981"
     }
   },
-  "views": 0
+  "views": 0,
+  "locale": "en",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1668279938144"
+    }
+  }
 }]
