@@ -15,7 +15,7 @@ COPY ./admin/ .
 #WORKDIR /server/src
 
 # Expose port
-EXPOSE 8080
+EXPOSE 1337
 
 
 # Start service

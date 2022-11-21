@@ -1,12 +1,26 @@
 steps:
-# Build the container image
-- name: gcr.io/cloud-builders/docker
-  args: ['build', '-t', 'gcr.io/zinc-union-365709/${_SERVICE_NAME}-strapi:${SHORT_SHA}','-f','./admin/Dockerfile', '.']
-  id: Building the container image
-# Push the container image to Container Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/zinc-union-365709/${_SERVICE_NAME}-strapi:${SHORT_SHA}']
-  id: Pushing the image to registry
-# Deploy container image to Cloud Run
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['run', 'deploy', '${_SERVICE_NAME}-strapi', '--image', 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}-strapi:${SHORT_SHA}', '--region', 'us-central1', '--platform', 'managed', "--allow-unauthenticated"]
+  # Build the container image
+  - name: gcr.io/cloud-builders/docker
+    args: ["build", "-t", "gcr.io/zinc-union-365709/${_SERVICE_NAME}-strapi:${SHORT_SHA}", "-f", "./admin/Dockerfile", "."]
+    id: Building the container image
+  # Push the container image to Container Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/zinc-union-365709/${_SERVICE_NAME}-strapi:${SHORT_SHA}"]
+    id: Pushing the image to registry
+  # Deploy container image to Cloud Run
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "run",
+        "deploy",
+        "${_SERVICE_NAME}-strapi",
+        "--image",
+        "gcr.io/$PROJECT_ID/${_SERVICE_NAME}-strapi:${SHORT_SHA}",
+        "--port",
+        "1337",
+        "--region",
+        "us-central1",
+        "--platform",
+        "managed",
+        "--allow-unauthenticated",
+      ]
