@@ -7,6 +7,8 @@
 
 <h1><a href="https://develop.kltn-18110199-18110151.pages.dev">⚙️ Develop</a></h1>
 
+<h1><a href="https://zinc-union-365709-strapi-63see6q63q-uc.a.run.app/"> Admin</a></h1>
+
 ## Specs:
 ```
 - Đọc truyện
