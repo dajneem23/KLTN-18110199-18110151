@@ -22,6 +22,9 @@ export default {
       },
     };
   },
+  mounted() {
+    this.changeSubmit();
+  },
   methods: {
     hiddenmodel() {
       if (this.hiddenModel) {
@@ -30,6 +33,15 @@ export default {
     },
     createStory() {
       console.log(this.story);
+    },
+    changeSubmit() {
+      let btnUpload = document.getElementById('btn-upload');
+      console.log(this.story.content);
+      if (this.story.content === '') {
+        btnUpload.style.cursor = 'not-allowed'; 
+      } else {
+        btnUpload.style.cursor = 'pointer';
+      }
     },
   },
 };

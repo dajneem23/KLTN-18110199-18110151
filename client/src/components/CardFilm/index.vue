@@ -2,15 +2,16 @@
   <router-link :to="{ name: 'details', params: { filmId: item.id, filmData: data } }">
     <div class="card-film">
       <div class="card-image-film">
-        <img :src="item?.image" :alt="item.id" />
+        <!-- <img :src="item?.image" :alt="item.id" /> -->
+        <img src="https://animehay.club/upload/poster/3252.jpg" :alt="item.id" />
       </div>
       <div class="card-body-film">
         <div class="card-title-film">
           {{ item.name }}
         </div>
-        <div class="card-auth text-dark-gray">
-          <!-- {{ item.author.name }} -->
-        </div>
+        <!-- <div class="card-auth text-dark-gray">
+          {{ item.author.name }}
+        </div> -->
         <div class="card-info text-dark-gray">
           <div class="card-info--view">
             {{ item.views }} luợt xem

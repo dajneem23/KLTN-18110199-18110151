@@ -13,7 +13,7 @@ export default {
       hot_items: [],
       pageOfItems: 1,
       page: 1,
-      per_page: 12,
+      per_page: 15,
       total_count: 0,
       searchString: '',
     };
