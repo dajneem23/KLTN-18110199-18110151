@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "manga-chapters",
   "info": {
-    "name": "Manga-chapters"
+    "name": "Manga-chapters",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -13,6 +14,25 @@
   "attributes": {
     "name": {
       "type": "string"
+    },
+    "images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "mangas": {
+      "model": "mangas"
     }
   }
 }
