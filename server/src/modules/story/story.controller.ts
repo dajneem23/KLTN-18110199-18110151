@@ -39,7 +39,7 @@ export class StoryController {
   ) {
     const result = await this.service.create({
       _content: _body,
-      _subject: _auth.id,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.CREATED).json(result);
   }
@@ -60,7 +60,7 @@ export class StoryController {
     const result = await this.service.update({
       _id: _params.id,
       _content: _body,
-      _subject: _auth.id,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.CREATED).json(result);
   }
@@ -81,7 +81,7 @@ export class StoryController {
     await this.service.delete({
       _id: _params.id,
       _content: _body,
-      _subject: _auth.id,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.NO_CONTENT).end();
   }
@@ -124,10 +124,10 @@ export class StoryController {
   ) {
     const { filter, query } = buildQueryFilter(_query);
     const result = await this.service.react({
-      _id: _params.id,
+      _slug: _params.id,
       _filter: filter,
       _query: query,
-      _subject: _auth.id,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
@@ -144,7 +144,7 @@ export class StoryController {
   ) {
     const { filter, query } = buildQueryFilter(_query);
     const result = await this.service.getById({
-      _id: _params.id,
+      _slug: _params.id,
       _filter: filter,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);

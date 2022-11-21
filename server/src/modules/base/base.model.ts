@@ -303,7 +303,7 @@ export class BaseModel {
       } = await this._collection.findOneAndUpdate(
         {
           ...filter,
-          _id: _content._id,
+          // _id: _content._id,
         },
         {
           $setOnInsert: {
@@ -454,7 +454,7 @@ export class BaseModel {
   }
   async _validate({ ..._content }: any): Promise<any> {
     try {
-      const { categories = [], sub_categories = [], name, _id } = _content;
+      const { categories = [], sub_categories = [], name, slug } = _content;
       categories.length &&
         (await $refValidation({ collection: 'categories', list: $toObjectId(categories) })) &&
         (_content.categories = $toObjectId(categories));
@@ -475,9 +475,9 @@ export class BaseModel {
           remove: RemoveSlugPattern,
         });
       name &&
-        !_id &&
-        (_content._id = (await this._collection.findOne({
-          _id: _name,
+        !slug &&
+        (_content.slug = (await this._collection.findOne({
+          slug: _name,
         }))
           ? _name + '-' + new Date().getTime()
           : _name);

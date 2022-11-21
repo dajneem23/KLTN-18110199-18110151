@@ -1,0 +1,151 @@
+[{
+  "_id": {
+    "$oid": "634d78524dcc418778fbd41b"
+  },
+  "email": "longhoang@gmail.com",
+  "password": "$2a$12$PFtwCymGydOakaCmrFIyreb/jY00GUygTgmsf6AQaykFxyRP6tFvK",
+  "name": "Tran Hoang Long ",
+  "phone": "094100117  ",
+  "picture": "https://www.gravatar.com/avatar/default?s=200&d=mp",
+  "id": "Q0NOvjYIF9lO",
+  "email_verified": false,
+  "roles": [
+    "user"
+  ],
+  "status": "active",
+  "created_at": {
+    "$date": {
+      "$numberLong": "1666021458330"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1666021458330"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "634d7d4cf477d23ef6c6e13e"
+  },
+  "email": "thanh123@gmail.com",
+  "password": "$2a$12$DDP53I/pddpaAcBj1ABv..1Pac/i.pnldaWppEemA7juVt4unN4Gy",
+  "name": "12312312",
+  "phone": "094100117  ",
+  "picture": "https://www.gravatar.com/avatar/default?s=200&d=mp",
+  "id": "lHBGDe6b7Pch",
+  "email_verified": false,
+  "roles": [
+    "user"
+  ],
+  "status": "active",
+  "created_at": {
+    "$date": {
+      "$numberLong": "1666022732719"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1666022732719"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "63555439723ea7a4256104a1"
+  },
+  "email": "vanxe@gmail.com",
+  "password": "$2a$12$xePPgLhqnykCytnhkjupdu2K/DGx2UHIiWuC1PiAWTbxWsEQWcyAC",
+  "name": "Nguyễn Văn Xê",
+  "phone": "094100117  ",
+  "picture": "https://www.gravatar.com/avatar/default?s=200&d=mp",
+  "id": "Gdd9fN9AZn9w",
+  "email_verified": false,
+  "roles": [
+    "user"
+  ],
+  "status": "active",
+  "created_at": {
+    "$date": {
+      "$numberLong": "1666536505345"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1666536505345"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "63648cbdd9aab96d53f36f3d"
+  },
+  "email": "alextruong@gmail.com",
+  "password": "$2a$12$6XoKPkOFJZLvhvEqM9btr.1jHgYEolzqGXfGGNfPAtgid3ovPCfnm",
+  "name": "Alex Trương",
+  "phone": "094100117  ",
+  "picture": "https://www.gravatar.com/avatar/default?s=200&d=mp",
+  "id": "4sguQtWzcQZ8",
+  "email_verified": false,
+  "roles": [
+    "user"
+  ],
+  "status": "active",
+  "created_at": {
+    "$date": {
+      "$numberLong": "1667534013017"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1667534013017"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6364a990d9aab96d53f36f40"
+  },
+  "email": "thuongnguyen@gmail.com",
+  "password": "$2a$12$mfICLB5iutqp46xVaReHGOThGU7qy867BvltMXQAarjtqIq32uWxS",
+  "name": "Nguyễn Xuân Thưởng",
+  "phone": "094100117  ",
+  "picture": "https://www.gravatar.com/avatar/default?s=200&d=mp",
+  "id": "o1szAMCoZbJE",
+  "email_verified": false,
+  "roles": [
+    "user"
+  ],
+  "status": "active",
+  "created_at": {
+    "$date": {
+      "$numberLong": "1667541392500"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1667541392500"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6364cc6ed9aab96d53f36f43"
+  },
+  "email": "baoluu@gmail.com",
+  "password": "$2a$12$qcm5tn6X1oIDioEkPjlL6OiX/eHL74I.76p3mYRtcX3hJR5dBYd5K",
+  "name": "Lưu Văn Bảo",
+  "phone": "094100117  ",
+  "picture": "https://www.gravatar.com/avatar/default?s=200&d=mp",
+  "id": "BJb0QrE8zJbO",
+  "email_verified": false,
+  "roles": [
+    "user"
+  ],
+  "status": "active",
+  "created_at": {
+    "$date": {
+      "$numberLong": "1667550318278"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1667550318278"
+    }
+  }
+}]

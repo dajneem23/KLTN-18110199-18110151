@@ -21,7 +21,7 @@ import { protect } from '@/api/middlewares/protect';
 import { JWTPayload } from '../auth/authSession.type';
 import { BaseQuery, BaseServiceInput } from '@/types/Common';
 import { RolesWeight } from '../user';
-@Controller('/news')
+@Controller('/articles')
 export class NewsController {
   private service = Container.get(NewsServiceToken);
 
@@ -39,7 +39,7 @@ export class NewsController {
   ) {
     const result = await this.service.create({
       _content: _body,
-      _subject: _auth.id,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.CREATED).json(result);
   }
@@ -60,7 +60,7 @@ export class NewsController {
     const result = await this.service.update({
       _id: _params.id,
       _content: _body,
-      _subject: _auth.id,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.CREATED).json(result);
   }
@@ -81,7 +81,7 @@ export class NewsController {
     await this.service.delete({
       _id: _params.id,
       _content: _body,
-      _subject: _auth.id,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.NO_CONTENT).end();
   }
@@ -114,8 +114,8 @@ export class NewsController {
     const result = await this.service.react({
       _filter: filter,
       _query: query,
-      _subject: _auth.id,
-      _id: _params.id,
+      _subject: _auth._id,
+      _slug: _params.id,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
@@ -138,8 +138,8 @@ export class NewsController {
     const result = await this.service.upVote({
       _filter: filter,
       _query: query,
-      _subject: _auth.id,
-      _id: _params.id,
+      _subject: _auth._id,
+      _slug: _params.id,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
@@ -162,8 +162,8 @@ export class NewsController {
     const result = await this.service.downVote({
       _filter: filter,
       _query: query,
-      _subject: _auth.id,
-      _id: _params.id,
+      _subject: _auth._id,
+      _slug: _params.id,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
@@ -207,7 +207,7 @@ export class NewsController {
   ) {
     const { filter, query } = buildQueryFilter(_query);
     const result = await this.service.getById({
-      _id: _params.id,
+      _slug: _params.id,
       _filter: filter,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);

@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/manga-chapters",
+      "handler": "manga-chapters.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/manga-chapters/count",
+      "handler": "manga-chapters.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/manga-chapters/:id",
+      "handler": "manga-chapters.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/manga-chapters",
+      "handler": "manga-chapters.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/manga-chapters/:id",
+      "handler": "manga-chapters.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/manga-chapters/:id",
+      "handler": "manga-chapters.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
