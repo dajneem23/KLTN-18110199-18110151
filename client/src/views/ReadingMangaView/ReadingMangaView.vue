@@ -13,7 +13,7 @@
     </div>
     <div class="listManga-wrapper">
       <div class="list-new-box">
-        <h3>Truyện mới cập nhật</h3>
+        <h2>Truyện mới cập nhật</h2>
         <div class="list-new">
           <div v-for="(item, key) of new_items" class="list-new-item">
             <CardManga :data="item"></CardManga>
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="list-new-box">
-        <h3>Truyện hot</h3>
+        <h2>Truyện hot</h2>
         <div class="list-new">
           <div v-for="(item, key) of hot_items" class="list-new-item">
             <CardManga :data="item"></CardManga>
@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="list-all-box">
-        <h3>Tất cả</h3>
+        <h2>Tất cả</h2>
         <div class="list-all">
           <div v-for="(item, key) of items">
             <CardManga :data="item"></CardManga>

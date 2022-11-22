@@ -1,5 +1,8 @@
 .detailFilm-wrapper {
   padding-top: 70px;
+  color: var(--black);
+  background-color: black;
+  padding-bottom: 30px;
 }
 .screen-watching {
   max-width: 1912px;
@@ -10,9 +13,10 @@
 .film-info {
   width: 70%;
   margin: 0 auto;
-  padding: 40px;
+  padding: 40px 40px 0px 40px;
   .film-img {
-    width: 300px;
+    width: 180px;
+    height: 260px;
     border-radius: 5px;
   }
 }
@@ -20,13 +24,35 @@
   height: 50vh;
 }
 .film-box-1 {
+  width: 100% !important;
   display: flex;
-  align-items: flex-end;
+  // align-items: flex-end;
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 5px;
+
   .film-info-des {
-    width: 50%;
+    width: 100%;
     margin-left: 15px;
     display: flex;
     justify-content: space-between;
+    color: var(--black);
+    table {
+      width: 95%;
+      tr,
+      td {
+        height: 50px;
+      }
+      tr + tr {
+        border-top: 1px solid;
+      }
+      .col-md-4 {
+        font-weight: 600;
+        button {
+          margin: 10px 0;
+        }
+      }
+    }
     .film-des-item {
       width: 250px;
       display: flex;
@@ -39,7 +65,10 @@
   }
 }
 .film-box-2 {
+  padding: 15px 50px;
   margin: 20px 0;
+  border-radius: 5px;
+  background-color: #f5f5f5;
   .film-title {
     font-size: 24px;
     font-weight: 600;
@@ -57,10 +86,11 @@
 .film-cmt {
   width: 50%;
   height: 100%;
-  margin: 0 auto 60px auto;
+  margin: 0 auto 0 auto;
   padding: 20px 40px;
   border: 1px solid var(--gray);
   border-radius: 5px;
+  background-color: #f5f5f5;
   .write-cmt-box {
     display: flex;
     justify-content: center;
