@@ -18,7 +18,7 @@
   }
 }
 .list-new-box + .list-new-box {
-  margin-top: 40px;
+  margin-top: 10px;
 }
 .list-new-box {
   width: 100%;
@@ -47,7 +47,7 @@
   }
   .list-all {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     grid-gap: 20px;
     .card + .card {
       margin: 0;
