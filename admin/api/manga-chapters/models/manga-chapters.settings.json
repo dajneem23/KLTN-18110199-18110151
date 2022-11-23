@@ -36,6 +36,12 @@
     },
     "deleted": {
       "type": "boolean"
+    },
+    "index": {
+      "type": "integer",
+      "required": true,
+      "unique": true,
+      "min": 1
     }
   }
 }

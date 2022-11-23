@@ -237,7 +237,7 @@ export class MangaService {
                 from: 'manga-chapters',
                 refFrom: '_id',
                 refTo: 'chapters',
-                select: 'name description images index',
+                select: 'name description images index slug',
                 reName: 'chapters',
                 operation: '$in',
                 pipeline: [
@@ -348,7 +348,7 @@ export class MangaService {
             from: 'manga-chapters',
             refFrom: '_id',
             refTo: 'chapters',
-            select: 'name description images index',
+            select: 'name description images index slug',
             reName: 'chapters',
             operation: '$in',
             pipeline: [

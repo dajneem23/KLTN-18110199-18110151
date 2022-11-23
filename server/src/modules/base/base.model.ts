@@ -56,7 +56,7 @@ export class BaseModel {
         from: 'categories',
         refFrom: '_id',
         refTo: 'categories',
-        select: 'title type',
+        select: 'title type slug',
         reName: 'categories',
         operation: '$in',
       }),
