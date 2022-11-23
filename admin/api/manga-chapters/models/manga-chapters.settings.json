@@ -33,6 +33,9 @@
     },
     "mangas": {
       "model": "mangas"
+    },
+    "deleted": {
+      "type": "boolean"
     }
   }
 }
