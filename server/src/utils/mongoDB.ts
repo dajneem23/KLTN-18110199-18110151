@@ -3,7 +3,7 @@ import { Container } from 'typedi';
 import mongoDBLoader, { DIMongoClient } from '@/loaders/mongoDBLoader';
 import { DILogger } from '@/loaders/loggerLoader';
 import { isNull, omitBy } from 'lodash';
-import { defaultFilter } from '@/types/Common';
+import { COLLECTION_NAMES, defaultFilter } from '@/types/Common';
 
 const transactionOptions: TransactionOptions = {
   readPreference: ReadPreference.primary,
@@ -57,14 +57,16 @@ export const $lookup = ({
   reName,
   condition,
   operation = '$eq',
+  pipeline = [],
 }: {
-  from: string;
+  from: keyof typeof COLLECTION_NAMES;
   refFrom: string;
   refTo: string;
   select: string;
   reName: string;
   operation?: string;
   condition?: object;
+  pipeline?: object[];
 }) => ({
   $lookup: {
     from,
@@ -92,6 +94,7 @@ export const $lookup = ({
           }, {}),
         },
       },
+      ...pipeline,
     ],
     as: reName,
   },

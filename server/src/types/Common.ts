@@ -154,7 +154,7 @@ export type Agenda = {
 };
 
 export const defaultFilter = {
-  deleted: false,
+  deleted: { $ne: true },
 };
 export type BaseServiceInput = {
   _slug?: string;
@@ -224,6 +224,9 @@ export enum COLLECTION_NAMES {
   settings = 'settings',
   'manga-chapters' = 'manga-chapters',
   'comments' = 'comments',
+  'chats' = 'chats',
+  'categories' = 'categories',
+  'upload_file' = 'upload_file',
 }
 /**
  *  @description - Remove all special characters from a string to make it a valid URL

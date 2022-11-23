@@ -147,8 +147,17 @@ export class NewsService {
                 ],
               }),
             },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories, this.model.$lookups.author],
+            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
+            $lookups: [
+              this.model.$lookups.categories,
+              this.model.$lookups.author,
+              this.model.$lookups.upload_files(),
+              this.model.$lookups.upload_files({
+                refTo: 'images',
+                reName: 'images',
+                operation: '$in',
+              }),
+            ],
             $sets: [this.model.$sets.author],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
@@ -183,11 +192,18 @@ export class NewsService {
             },
           },
           {
-            $addFields: this.model.$addFields.categories,
+            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
           },
           this.model.$lookups.categories,
           this.model.$lookups.author,
           this.model.$sets.author,
+          this.model.$lookups.upload_files(),
+          this.model.$lookups.upload_files({
+            refTo: 'images',
+            reName: 'images',
+            operation: '$in',
+          }),
+          this.model.$sets.image,
           {
             $limit: 1,
           },
@@ -216,11 +232,18 @@ export class NewsService {
             },
           },
           {
-            $addFields: this.model.$addFields.categories,
+            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
           },
           this.model.$lookups.categories,
           this.model.$lookups.author,
           this.model.$sets.author,
+          this.model.$lookups.upload_files(),
+          this.model.$lookups.upload_files({
+            refTo: 'images',
+            reName: 'images',
+            operation: '$in',
+          }),
+          this.model.$sets.image,
           {
             $limit: 1,
           },
@@ -257,8 +280,16 @@ export class NewsService {
                 ],
               }),
             },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories],
+            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
+            $lookups: [
+              this.model.$lookups.categories,
+              this.model.$lookups.author,
+              this.model.$lookups.upload_files({
+                refTo: 'images',
+                reName: 'images',
+                operation: '$in',
+              }),
+            ],
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
         ])

@@ -46,39 +46,12 @@ export class BaseModel {
   }
 
   get $lookups(): {
-    country: any;
-    products: any;
-    projects: any;
     categories: any;
     author: any;
-    team: any;
-    directors: any;
-    cryptocurrencies: any;
-    event_tags: any;
-    person_tags: any;
-    product_tags: any;
-    company_tags: any;
-    coin_tags: any;
-    speakers: any;
     sub_categories: any;
+    upload_files: any;
   } {
     return {
-      products: $lookup({
-        from: 'products',
-        refFrom: '_id',
-        refTo: 'products',
-        select: 'name',
-        reName: 'products',
-        operation: '$in',
-      }),
-      projects: $lookup({
-        from: 'projects',
-        refFrom: '_id',
-        refTo: 'projects',
-        select: 'name',
-        reName: 'projects',
-        operation: '$in',
-      }),
       categories: $lookup({
         from: 'categories',
         refFrom: '_id',
@@ -88,93 +61,37 @@ export class BaseModel {
         operation: '$in',
       }),
       author: $lookup({
-        from: 'users',
-        refFrom: 'id',
-        refTo: 'created_by',
-        select: 'name picture avatar',
+        from: 'users-permissions_user',
+        refFrom: '_id',
+        refTo: 'author',
+        select: 'username avatar',
         reName: 'author',
         operation: '$eq',
       }),
-      team: $lookup({
-        from: 'team',
-        refFrom: '_id',
-        refTo: 'team',
-        select: 'name avatar',
-        reName: 'team',
-        operation: '$in',
-      }),
-      directors: $lookup({
-        from: 'persons',
-        refFrom: '_id',
-        refTo: 'director',
-        select: 'name avatar',
-        reName: 'director',
-        operation: '$eq',
-      }),
-      cryptocurrencies: $lookup({
-        from: 'coins',
-        refFrom: '_id',
-        refTo: 'cryptocurrencies',
-        select: 'name token_id',
-        reName: 'cryptocurrencies',
-        operation: '$in',
-      }),
-      country: $lookup({
-        from: 'countries',
-        refFrom: 'code',
-        refTo: 'country',
-        select: 'name',
-        reName: 'country',
-        operation: '$eq',
-      }),
-      coin_tags: $lookup({
-        from: 'coins',
-        refFrom: '_id',
-        refTo: 'coin_tags',
-        select: 'name',
-        reName: 'coin_tags',
-        operation: '$in',
-      }),
-      company_tags: $lookup({
-        from: 'companies',
-        refFrom: '_id',
-        refTo: 'company_tags',
-        select: 'name',
-        reName: 'company_tags',
-        operation: '$in',
-      }),
-      product_tags: $lookup({
-        from: 'products',
-        refFrom: '_id',
-        refTo: 'product_tags',
-        select: 'name',
-        reName: 'product_tags',
-        operation: '$in',
-      }),
-      person_tags: $lookup({
-        from: 'persons',
-        refFrom: '_id',
-        refTo: 'person_tags',
-        select: 'name',
-        reName: 'person_tags',
-        operation: '$in',
-      }),
-      event_tags: $lookup({
-        from: 'events',
-        refFrom: '_id',
-        refTo: 'event_tags',
-        select: 'name avatar',
-        reName: 'event_tags',
-        operation: '$in',
-      }),
-      speakers: $lookup({
-        from: 'persons',
-        refFrom: '_id',
-        refTo: 'speakers',
-        select: 'name avatar',
-        reName: 'speakers',
-        operation: '$in',
-      }),
+      upload_files: ({
+        from = COLLECTION_NAMES.upload_file,
+        refFrom = '_id',
+        refTo = 'image',
+        select = 'name url',
+        reName = 'image',
+        operation = '$eq',
+      }: {
+        from?: COLLECTION_NAMES;
+        refFrom?: string;
+        refTo?: string;
+        select?: string;
+        reName?: string;
+        operation?: '$eq' | '$in';
+      } = {}) =>
+        $lookup({
+          from,
+          refFrom,
+          refTo,
+          select,
+          reName,
+          operation,
+        }),
+
       sub_categories: $lookup({
         from: 'categories',
         refFrom: '_id',
@@ -186,9 +103,9 @@ export class BaseModel {
     };
   }
   get $sets(): {
-    country: {
+    image: {
       $set: {
-        country: { $first: '$country' };
+        image: { $first: '$image' };
       };
     };
     author: {
@@ -196,32 +113,23 @@ export class BaseModel {
         author: { $first: '$author' };
       };
     };
-    trans: {
-      $set: {
-        trans: { $first: '$trans' };
-      };
-    };
   } {
     return {
-      country: {
-        $set: {
-          country: { $first: '$country' },
-        },
-      },
       author: {
         $set: {
           author: { $first: '$author' },
         },
       },
-      trans: {
+      image: {
         $set: {
-          trans: { $first: '$trans' },
+          image: { $first: '$image' },
         },
       },
     };
   }
   get $addFields(): {
     categories: any;
+    images: any;
   } {
     return {
       categories: {
@@ -232,6 +140,17 @@ export class BaseModel {
             },
             then: [],
             else: '$categories',
+          },
+        },
+      },
+      images: {
+        images: {
+          $cond: {
+            if: {
+              $ne: [{ $type: '$images' }, 'array'],
+            },
+            then: [],
+            else: '$images',
           },
         },
       },
