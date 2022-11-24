@@ -1,7 +1,8 @@
 import { FILMDETAIL_ITEM } from '../../../constants/filmdetail';
 import Commentfilm from '../../../components/Watching/CommentFilm/index.vue';
 import { FilmServices } from '@/services';
-import moment from 'moment'; 
+import { mapActions, mapState } from 'vuex';
+import moment from 'moment';
 export default {
   components: {
     Commentfilm,
@@ -14,6 +15,9 @@ export default {
       FILMDETAIL_ITEM,
       cmt: '',
     };
+  },
+  computed: {
+    ...mapState(['urlStrapiServe']),
   },
   props: ['id', 'data'],
   watch: {
@@ -40,6 +44,9 @@ export default {
         this[key] = result[key];
       });
     }
+    const takeDate = new Date(this.film.createdAt);
+    this.film.createdAt = takeDate.getFullYear();
+    this.film.image.url = this.urlStrapiServe + this.film.image.url;
   },
   methods: {
     moment,

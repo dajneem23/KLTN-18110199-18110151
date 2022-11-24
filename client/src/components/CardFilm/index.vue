@@ -1,9 +1,9 @@
 <template>
-  <router-link :to="{ name: 'details', params: { filmId: item.id, filmData: data } }">
+  <router-link :to="{ name: 'details', params: { filmId: item.slug, filmData: data } }">
     <div class="card-film">
       <div class="card-image-film">
         <!-- <img :src="item?.image" :alt="item.id" /> -->
-        <img src="https://animehay.club/upload/poster/3252.jpg" :alt="item.id" />
+        <img :src="item.image.url" :alt="item.image.name" />
       </div>
       <div class="card-body-film">
         <div class="card-title-film">
@@ -21,7 +21,7 @@
               />
             </svg>
           </div>
-          <div class="card-info--time">{{ moment(item.created_at).fromNow() }}</div>
+          <div class="card-info--time">{{ moment(item.createdAt).fromNow() }}</div>
         </div>
       </div>
     </div>

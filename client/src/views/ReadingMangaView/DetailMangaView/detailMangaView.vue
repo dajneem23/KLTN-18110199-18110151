@@ -26,7 +26,7 @@
     </div> -->
     <div class="manga-info">
       <div class="manga-box-1">
-        <img class="manga-img" :src="manga.images[0]" alt="" />
+        <!-- <img class="manga-img" :src="manga.images[0]" alt="" /> -->
       </div>
       <div class="manga-box-2">
         <div class="manga-title">{{ manga.name }}</div>
@@ -68,9 +68,9 @@
       </div>
     </div>
     <div class="manga-chapter">
-      <div v-for="item in manga.chapters">
-        <router-link :to="{ name: 'detailchapter', params: { id: item.id, chapterData: item } }">
-          <button @click="goToChapter(item.id)">{{ item.index }}</button>
+      <div v-for="(item,index) in manga.chapters">
+        <router-link :to="{ name: 'detailchapter', params: { id: item.slug, chapterData: item } }">
+          <button @click="goToChapter(item.slug)">{{ index+1 }}</button>
         </router-link>
       </div>
     </div>

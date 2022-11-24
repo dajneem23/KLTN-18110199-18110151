@@ -1,8 +1,8 @@
 <template>
-  <router-link :to="{ name: 'detailmanga', params: { mangaId: data.id, manaData: data } }">
+  <router-link :to="{ name: 'detailmanga', params: { mangaId: data.slug, manaData: data } }">
     <div class="card-manga">
       <div class="card-left">
-        <img src="https://animehay.club/upload/poster/2691.jpg" alt="" />
+        <img :src="data?.images[0]?.url" alt="" />
         <div class="card-numchap">
           <span>{{ data?.chapters?.length }}</span>
         </div>
