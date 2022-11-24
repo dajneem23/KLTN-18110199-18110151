@@ -33,7 +33,9 @@ export class BaseModel {
   readonly _keys: (string | number | symbol)[];
 
   readonly _defaultFilter = {
-    deleted: false,
+    deleted: {
+      $ne: true,
+    },
   };
   readonly _defaultKeys = ['author', 'id'];
   // Get Db instance from DI

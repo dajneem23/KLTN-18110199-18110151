@@ -151,7 +151,9 @@ export class CommentService {
         .get(
           $pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 name: { $regex: q, $options: 'i' },
               }),
@@ -265,7 +267,9 @@ export class CommentService {
         .get([
           ...$pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 $or: [
                   { $text: { $search: q } },

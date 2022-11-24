@@ -198,7 +198,9 @@ export class MangaService {
         .get(
           $pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 name: { $regex: q, $options: 'i' },
               }),
@@ -280,7 +282,9 @@ export class MangaService {
         .get(
           $pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 name: { $regex: q, $options: 'i' },
               }),
@@ -432,7 +436,9 @@ export class MangaService {
         .get([
           ...$pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 $or: [
                   { $text: { $search: q } },
@@ -539,7 +545,9 @@ export class MangaService {
                 name,
                 updated_at: new Date(),
                 ...content,
-                deleted: false,
+                deleted: {
+                  $ne: true,
+                },
                 updated_by: _subject,
               }) ||
                 {}),
@@ -562,7 +570,9 @@ export class MangaService {
                 ...content,
                 updated_at: new Date(),
                 created_at: new Date(),
-                deleted: false,
+                deleted: {
+                  $ne: true,
+                },
                 created_by: _subject,
               },
             },
