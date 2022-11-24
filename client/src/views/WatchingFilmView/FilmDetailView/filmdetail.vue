@@ -13,24 +13,24 @@
     <div class="film-info">
       <div class="film-box-1">
         <!-- <img class="film-img" :src="film?.image" alt="" /> -->
-        <img class="film-img" src="https://animehay.club/upload/poster/2691.jpg" alt="" />
+        <img class="film-img" :src="film?.image?.url || 'https://animehay.club/upload/poster/2691.jpg'" :alt="film.name" />
         <div class="film-info-des row">
           <table>
             <tr>
               <td class="col-md-4">Thể loại</td>
-              <td class="col-md-8">Anime Hành động Giả tưởng Trò chơi Siêu năng lực</td>
+              <td class="col-md-8">{{ film.categories.join(' ') }}</td>
             </tr>
             <tr>
               <td class="col-md-4">Năm phát hành</td>
-              <td class="col-md-8">2022</td>
+              <td class="col-md-8">{{ film.createdAt }}</td>
             </tr>
             <tr>
               <td class="col-md-4">Thời lượng</td>
               <td class="col-md-8">112 phút</td>
             </tr>
             <tr>
-              <td class="col-md-4">Đánh giá</td>
-              <td class="col-md-8">9.8</td>
+              <td class="col-md-4">Luot xem</td>
+              <td class="col-md-8">{{ film.views }}</td>
             </tr>
             <tr>
               <div class="col-md-4">
@@ -49,15 +49,9 @@
       </div>
       <div class="film-box-2">
         <!-- <div class="film-title">{{ film.name }}</div> -->
-        <div class="film-title">Doraemon Movie 39: Nobita no Getsumen Tansaki</div>
+        <div class="film-title">{{ film.name }}</div>
         <div>
-          Bộ phim xoay quanh cuộc hành trình phiêu lưu thám hiểm Mặt Trăng của Doraemon, Nobita và những người bạn khi
-          Nobita quyết định dùng bảo bối để tạo nên một Vương quốc loài thỏ trên cung trăng. Cùng với Luka – học sinh
-          mới của lớp học, nhóm bạn đã lên Mặt Trăng để tận mắt nhìn thấy vương quốc do chính mình tạo ra. Tại đây,
-          Nobita và Doraemon đã gặp gỡ những đứa trẻ có năng lực bí ẩn “ESPALS” và họ trở thành những người bạn tốt của
-          nhau. Tuy vậy, tất cả đều không hề mảy may nhận ra nguy hiểm rình rập từ một chiến hạm trước mặt. Vì giúp đỡ
-          Doraemon nên ESPALS và Luka đều đã bị bắt. Chiến hạm bí ẩn đó là của ai? Nguy hiểm nào sẽ rình rập nhóm bạn?
-          Họ sẽ phải làm gì để thoát ra khỏi hiểm nguy tại một nơi xa xôi với Trái Đất như vậy?
+          {{ film.description }}
         </div>
         <!-- <div>
           {{ film.description }}

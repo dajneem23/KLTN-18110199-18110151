@@ -25,6 +25,7 @@ export default {
   },
   mounted() {
     console.log(this.isAuthenticated);
+    console.log(this.userInfo);
   },
   methods: {
     async getPosts($state) {

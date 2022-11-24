@@ -6,9 +6,9 @@
     <div class="box-profile">
       <div class="box-info--user bgc-white">
         <div class="user-avt">
-          <img :src="userInfo?.picture" alt="" />
+          <img :src="userInfo?.avatar" alt="" />
         </div>
-        <div class="user-name">{{ userInfo?.name }}</div>
+        <div class="user-name">{{ userInfo?.username }}</div>
         <div class="user-email text-dark-gray">{{ userInfo?.email }}</div>
         <router-link to="/profile/edit">
           <button class="btn-defaultt bgc-blue_3 cl-white">Chỉnh sửa</button>
