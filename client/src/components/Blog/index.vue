@@ -6,13 +6,13 @@
           <img src="../../assets/Icon/avt-cattoon.png" alt="" />
         </div>
         <div class="news-info">
-          <span class="news-user-name">{{ author.name }}</span>
-          <span class="news-time text-dark-gray">{{ moment(created_at).fromNow() }}</span>
+          <span class="news-user-name">{{ author.username }}</span>
+          <span class="news-time text-dark-gray">{{ moment(createdAt).fromNow() }}</span>
         </div>
       </div>
       <div class="news-header-bottom">
         <div class="news-caption">
-          {{ description }}
+          {{ content }}
         </div>
       </div>
     </div>
@@ -20,7 +20,8 @@
       <div class="news-body">
         <carousel :perPage="1">
           <slide v-for="img in images" class="slide">
-            <img :src="img" alt="" />
+            <img :src="img.url" alt="" />
+            {{ img.url }}
           </slide>
         </carousel>
       </div>
