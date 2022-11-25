@@ -212,7 +212,15 @@ export class BaseModel {
    */
   async create(
     { ...filter }: any,
-    { updated_at = new Date(), created_at = new Date(), deleted = false, created_by, ..._content }: any,
+    {
+      updated_at = new Date(),
+      created_at = new Date(),
+      updatedAt = new Date(),
+      createdAt = new Date(),
+      deleted = false,
+      created_by,
+      ..._content
+    }: any,
     { upsert = true, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
@@ -270,7 +278,7 @@ export class BaseModel {
    */
   async update(
     { ...filter }: any,
-    { $set: { updated_at = new Date(), ..._content } = {}, ..._updateFilter }: any,
+    { $set: { updated_at = new Date(), updatedAt = new Date(), ..._content } = {}, ..._updateFilter }: any,
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
