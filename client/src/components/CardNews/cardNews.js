@@ -40,24 +40,32 @@ export default {
   },
   methods: {
     async addWishList(id) {
-      console.log(id);
-      const [result, error] = await NewsServices.react(id);
-      console.log([result, error]);
-      if (result) {
-        const { reacts } = result;
-        this.reacts = reacts;
-        // console.log(this.reacts, reacts);
+      if (this.isAuthenticated) {
+        console.log(id);
+        const [result, error] = await NewsServices.react(id);
+        console.log([result, error]);
+        if (result) {
+          const { reacts } = result;
+          this.reacts = reacts;
+          // console.log(this.reacts, reacts);
+        }
+      }
+      else {
+        window.location.href = '/login/';
       }
     },
     async upVote(id) {
-      console.log(id);
-      const [result, error] = await NewsServices.upvote(id);
-      console.log([result, error]);
-      if (result) {
-        const { up_votes } = result;
-        this.up_votes = up_votes;
-        console.log(this.up_votes, up_votes);
+      if (this.isAuthenticated) {
+        const [result, error] = await NewsServices.upvote(id);
+        console.log([result, error]);
+        if (result) {
+          const { up_votes } = result;
+          this.up_votes = up_votes;
+          console.log(this.up_votes, up_votes);
+        }
+      } else {
+        window.location.href = '/login/';
       }
-    },
+    }
   },
 };
