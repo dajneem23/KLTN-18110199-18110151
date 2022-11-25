@@ -89,9 +89,13 @@ export type BaseModel = {
 
   updated_at?: Date;
 
+  updatedAt?: Date;
+
   created_by?: string;
 
   created_at?: Date;
+
+  createdAt?: Date;
 
   deleted_by?: string;
 
@@ -121,7 +125,9 @@ export const _defaultBaseModel: BaseModel = {
   reporters: [],
   _histories: [],
   created_at: new Date(),
+  createdAt: new Date(),
   updated_at: new Date(),
+  updatedAt: new Date(),
 };
 
 export type ContractAddress = {
