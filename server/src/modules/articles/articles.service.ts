@@ -170,7 +170,7 @@ export class NewsService {
       return toPagingOutput({
         items,
         total_count,
-        keys: this.model._keys,
+        //  keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('query_error', err.message);
@@ -336,7 +336,7 @@ export class NewsService {
       this.logger.debug('update_success', {});
       return toOutPut({
         item: { reacts },
-        keys: this.model._keys,
+        //  keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('react_error', err.message);
@@ -352,7 +352,7 @@ export class NewsService {
       this.logger.debug('update_success', {});
       return toOutPut({
         item: { up_votes, down_votes },
-        keys: this.model._keys,
+        //  keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('react_error', err.message);
@@ -370,7 +370,7 @@ export class NewsService {
       this.logger.debug('update_success', {});
       return toOutPut({
         item: { down_votes, up_votes },
-        keys: this.model._keys,
+        //  keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('react_error', err.message);
