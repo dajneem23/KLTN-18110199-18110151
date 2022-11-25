@@ -21,7 +21,6 @@
         <carousel :perPage="1">
           <slide v-for="img in images" class="slide">
             <img :src="img.url" alt="" />
-            {{ img.url }}
           </slide>
         </carousel>
       </div>
@@ -71,7 +70,7 @@
         </button>
       </div>
       <div class="news-footer-bottom disable" :id="id + 'cmt'">
-        <div class="news-write-cmt" id="cmt-write">
+        <div class="news-write-cmt" id="cmt-write" v-if="isAuthenticated">
           <textarea
             class="input-cmt"
             type="text"

@@ -13,10 +13,7 @@
           <div v-for="(item, key) of new_items">
             <CardNews :key="item.id" style_x="card-news-x" :news="item"></CardNews>
           </div>
-          <!-- <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews>
-          <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews>
-          <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews>
-          <CardNews style_x="card-news-x" :data="LIST_FILM.newFilm[0]"></CardNews> -->
+        
         </div>
       </div>
       <div class="hot-news">
@@ -25,10 +22,7 @@
           <div v-for="(item, key) of hot_items">
             <CardNews :key="item.id" style_x="card-news-y" :news="item"></CardNews>
           </div>
-          <!-- <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews>
-          <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews>
-          <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews>
-          <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews> -->
+      
         </div>
       </div>
       <div class="main-news">
