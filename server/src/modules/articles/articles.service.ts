@@ -388,6 +388,11 @@ export class NewsService {
             $limit: per_page,
           },
           this.model.$lookups.author,
+          this.model.$lookups.upload_files({
+            refTo: 'images',
+            reName: 'images',
+            operation: '$in',
+          }),
         ])
         .toArray();
       this.logger.debug('query_success', { items });
@@ -407,6 +412,11 @@ export class NewsService {
             $limit: per_page,
           },
           this.model.$lookups.author,
+          this.model.$lookups.upload_files({
+            refTo: 'images',
+            reName: 'images',
+            operation: '$in',
+          }),
         ])
         .toArray();
       this.logger.debug('query_success', { items });
