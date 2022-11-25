@@ -25,7 +25,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['userInfo', 'isAuthenticated']),
+    ...mapState(['userInfo', 'isAuthenticated','urlStrapiServe']),
   },
   watch: {
     data(newData) {
@@ -45,7 +45,10 @@ export default {
         this[key] = this.data[key];
       });
   },
-  mounted() {},
+  mounted() {
+    this.data.images[0].url = this.urlStrapiServe + this.data.images[0].url;
+    console.log(this.data.images);
+  },
   methods: {
     moment,
     async likePost(id) {

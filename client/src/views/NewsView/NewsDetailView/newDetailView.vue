@@ -74,7 +74,7 @@
       <div class="news-auth">
         <img :src="author.picture" alt="" />
         <div>
-          <div class="news-auth_name">{{ author.name }}</div>
+          <div class="news-auth_name">{{ author.username }}</div>
           <div class="news-date">{{ moment(created_at).fromNow() }}</div>
         </div>
       </div>

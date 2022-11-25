@@ -15,7 +15,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['userInfo', 'isAuthenticated']),
+    ...mapState(['userInfo', 'isAuthenticated', 'urlStrapiServe']),
   },
   watch: {
     data(newData) {
@@ -27,7 +27,9 @@ export default {
     },
   },
   mounted() {
-    console.log('dhdhdh');
+    this.news.images.forEach((image) => {
+      image.url = this.urlStrapiServe + image.url;
+    });
   },
   created() {
     if (this.news)
