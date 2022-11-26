@@ -11,10 +11,11 @@ export default {
     Slide,
   },
   computed: {
-    ...mapState(['userInfo', 'isAuthenticated']),
+    ...mapState(['userInfo', 'isAuthenticated', 'urlStrapiServe']),
   },
   data() {
     return {
+      story: [],
       lang: 'vi',
       HOME_ITEM,
       reacts: [],
@@ -25,10 +26,12 @@ export default {
       cmt: '',
     };
   },
+  mounted() {
+    console.log(this.story);
+  },
   methods: {
     moment,
     async likePost(id) {
-      console.log(id);
       const [result, error] = await StoriesService.react(id);
       console.log([result, error]);
       if (result) {
@@ -36,17 +39,17 @@ export default {
         this.reacts = reacts;
       }
     },
-    sendCmt() {
-      console.log(this.cmt);
-    },
+    sendCmt() {},
   },
   async created() {
     const { id } = this.$route.params;
-    console.log(id);
     const [result, error] = await StoriesService.getById(id);
-    console.log([result, error]);
     if (result) {
       this.story = result;
+      this.story.images.forEach((image) => {
+        image.url = this.urlStrapiServe + image.url;
+      });
+      console.log(this.story.images);
       Object.keys(result).map((key) => {
         if (key == '_v') return;
         this[key] = result[key];

@@ -4,7 +4,7 @@
       <div class="image">
       <carousel :perPage="1">
           <slide v-for="img in images" class="slide">
-            <img :src="img" :alt="img">
+            <img :src="img.url" :alt="img.name">
           </slide>
         </carousel>
       </div>
@@ -15,13 +15,15 @@
           <img src="../../../assets/Icon/avt-cattoon.png" alt="">
         </div>
         <div class="auth-info">
-          <div class="auth_name">{{author.name || 'UnKnown'}}</div>
-          <span class="news-time text-dark-gray">{{moment(created_at).fromNow() }}</span>
+          <div class="auth_name">{{author.username || 'UnKnown'}}</div>
+          <span class="news-time text-dark-gray">{{moment(createdAt).fromNow() }}</span>
         </div>
       </div>
       <div class="content-story">
-        <div class="content_body">
-          <!-- {{this.$route.params.storyData.content}} -->
+        <div class="content_body cl-black">
+          {{
+            content
+          }}
         </div>
       </div>
       <div class="news-footer">
@@ -65,7 +67,7 @@
         </button>
       </div>
       </div>
-      <div class="news-write-cmt" id="cmt-write">
+      <div class="news-write-cmt" id="cmt-write" v-if="isAuthenticated">
     <textarea
       class="input-cmt"
       type="text"

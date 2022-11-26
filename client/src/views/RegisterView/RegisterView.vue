@@ -18,7 +18,7 @@
           type="text"
           :placeholder="REGISTER_ITEM.name.title[lang]"
           class="form-input"
-          v-model="account.name"
+          v-model="account.username"
           @blur="fullnameValidate()"
         />
       </div>
