@@ -49,8 +49,8 @@ export default {
     // this.data.images[0].url = this.urlStrapiServe + this.data.images.url;
     this.data.images.forEach((image) => {
       image.url = this.urlStrapiServe + image.url;
-      console.log(image);
     });
+    console.log(this.data.slug);
   },
   methods: {
     moment,

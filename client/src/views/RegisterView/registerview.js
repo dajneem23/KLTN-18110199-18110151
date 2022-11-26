@@ -9,7 +9,7 @@ export default {
       account: {
         email: '',
         password: '',
-        name: '',
+        username: '',
         phone: '094100117  ',
       },
       passWordConfirm: '',
@@ -18,7 +18,7 @@ export default {
   methods: {
     fullnameValidate() {
       REGISTER_ITEM.name.error = '';
-      if (!this.account.name.trim()) {
+      if (!this.account.username.trim()) {
         REGISTER_ITEM.name.error = 'Name is required';
       }
     },
