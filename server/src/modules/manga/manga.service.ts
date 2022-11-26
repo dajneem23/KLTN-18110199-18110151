@@ -309,7 +309,7 @@ export class MangaService {
       return toPagingOutput({
         items,
         total_count,
-        keys: this.model._keys,
+        //  keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('query_error', err.message);
@@ -502,7 +502,7 @@ export class MangaService {
       this.logger.debug('update_success', {});
       return toOutPut({
         item: { reacts },
-        keys: this.model._keys,
+        //  keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('react_error', err.message);

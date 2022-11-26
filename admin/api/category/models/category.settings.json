@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "categories",
   "info": {
-    "name": "category"
+    "name": "category",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -17,6 +19,9 @@
       "type": "uid",
       "targetField": "name",
       "required": true
+    },
+    "weight": {
+      "type": "integer"
     }
   }
 }
