@@ -240,6 +240,8 @@ export class BaseModel {
             created_by,
             created_at,
             updated_at,
+            updatedAt,
+            createdAt,
             deleted,
           },
         },
@@ -293,6 +295,7 @@ export class BaseModel {
           $set: {
             ..._content,
             updated_at,
+            updatedAt,
           },
           ..._updateFilter,
         },

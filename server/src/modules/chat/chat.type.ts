@@ -2,6 +2,7 @@ import { BaseModel, _defaultBaseModel } from '@/types';
 
 export interface Chat extends BaseModel {
   users?: string[];
+  type?: 'private' | 'group';
   messages: string[];
 }
 export const _chat: Chat = {

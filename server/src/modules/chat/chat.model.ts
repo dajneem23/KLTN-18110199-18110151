@@ -16,46 +16,7 @@ export class ChatModel extends BaseModel {
     super({
       collectionName: COLLECTION_NAME,
       _keys: keys<Chat>(),
-      indexes: [
-        {
-          field: {
-            name: 1,
-          },
-        },
-        {
-          field: {
-            name: 'text',
-          },
-        },
-      ],
-    });
-  }
-}
-
-export const mangaChapterModelToken = new Token<MangaModel>('_mangaChapterModel');
-/**
- * @class CoinModel
- * @extends BaseModel
- * @description Coin model: Coin model for all manga related operations
- */
-@Service(mangaChapterModelToken)
-export class MangaChapterModel extends BaseModel {
-  constructor() {
-    super({
-      collectionName: 'manga-chapters',
-      _keys: keys<MangaChapter>(),
-      indexes: [
-        {
-          field: {
-            name: 1,
-          },
-        },
-        {
-          field: {
-            name: 'text',
-          },
-        },
-      ],
+      indexes: [],
     });
   }
 }
