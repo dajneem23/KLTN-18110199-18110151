@@ -125,11 +125,11 @@ export class UserService {
   /**
    * Get user by ID
    */
-  async getById(id: User['id']) {
+  async getById(_id: User['id']) {
     try {
-      const user = await this.model._collection.findOne({ id });
+      const user = await this.model._collection.findOne({ _id });
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
-      this.logger.debug('[getById:success]', { id, email: user.email });
+      this.logger.debug('[getById:success]', { _id, email: user.email });
       return toUserOutput(user as any);
     } catch (err) {
       this.logger.error('[getById:error]', err.message);
@@ -140,10 +140,10 @@ export class UserService {
   /**
    * Update user
    */
-  async update(id: User['id'], data: Partial<User>) {
+  async update(_id: User['id'], data: Partial<User>) {
     try {
       const { value: user } = await this.model._collection.findOneAndUpdate(
-        { id },
+        { _id },
         {
           $set: {
             ...data,
@@ -224,14 +224,14 @@ export class UserService {
     }
   }
 
-  async push(id: any, ...data: any) {
+  async push(_id: any, ...data: any) {
     try {
       const {
         value: user,
         ok,
         lastErrorObject: { updatedExisting },
       } = await this.model._collection.findOneAndUpdate(
-        { id },
+        { _id },
         {
           $set: {
             updated_at: new Date(),
@@ -243,7 +243,8 @@ export class UserService {
         { returnDocument: 'after' },
       );
       if (!updatedExisting) throwErr(new UserError('USER_NOT_FOUND'));
-      if (!ok) throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ id, data })}`));
+      if (!ok)
+        throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ _id, data })}`));
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[update:success]', { email: user.email });
       return toOutPut({ item: user });
@@ -252,14 +253,14 @@ export class UserService {
       throw err;
     }
   }
-  async pull(id: any, ...data: any) {
+  async pull(_id: any, ...data: any) {
     try {
       const {
         value: user,
         ok,
         lastErrorObject: { updatedExisting },
       } = await this.model._collection.findOneAndUpdate(
-        { id },
+        { _id },
         {
           $set: {
             updated_at: new Date(),
@@ -271,7 +272,8 @@ export class UserService {
         { returnDocument: 'after' },
       );
       if (!updatedExisting) throwErr(new UserError('USER_NOT_FOUND'));
-      if (!ok) throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ id, data })}`));
+      if (!ok)
+        throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ _id, data })}`));
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[update:success]', { email: user.email });
       return toOutPut({ item: user });
