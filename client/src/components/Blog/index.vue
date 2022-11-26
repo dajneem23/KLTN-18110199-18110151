@@ -6,21 +6,21 @@
           <img src="../../assets/Icon/avt-cattoon.png" alt="" />
         </div>
         <div class="news-info">
-          <span class="news-user-name">{{ author.name }}</span>
-          <span class="news-time text-dark-gray">{{ moment(created_at).fromNow() }}</span>
+          <span class="news-user-name">{{ author.username }}</span>
+          <span class="news-time text-dark-gray">{{ moment(createdAt).fromNow() }}</span>
         </div>
       </div>
       <div class="news-header-bottom">
         <div class="news-caption">
-          {{ description }}
+          {{ content }}
         </div>
       </div>
     </div>
-    <router-link :to="{ name: 'detailStory', params: { id, data } }" v-if="!img">
+    <router-link :to="{ name: 'detailStory', params: { id: slug } }" v-if="!img ">
       <div class="news-body">
         <carousel :perPage="1">
           <slide v-for="img in images" class="slide">
-            <img :src="img" alt="" />
+            <img :src="img.url" alt="" />
           </slide>
         </carousel>
       </div>
@@ -70,7 +70,7 @@
         </button>
       </div>
       <div class="news-footer-bottom disable" :id="id + 'cmt'">
-        <div class="news-write-cmt" id="cmt-write">
+        <div class="news-write-cmt" id="cmt-write" v-if="isAuthenticated">
           <textarea
             class="input-cmt"
             type="text"

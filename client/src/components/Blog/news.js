@@ -4,7 +4,7 @@ import { onMounted } from 'vue';
 import { Carousel, Slide } from 'vue-carousel';
 import { StoriesService } from '@/services';
 import { mapState } from 'vuex';
-import moment from 'moment'; 
+import moment from 'moment';
 export default {
   components: {
     Comment,
@@ -25,7 +25,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['userInfo', 'isAuthenticated']),
+    ...mapState(['userInfo', 'isAuthenticated', 'urlStrapiServe']),
   },
   watch: {
     data(newData) {
@@ -45,17 +45,26 @@ export default {
         this[key] = this.data[key];
       });
   },
-  mounted() {},
+  mounted() {
+    // this.data.images[0].url = this.urlStrapiServe + this.data.images.url;
+    this.data.images.forEach((image) => {
+      image.url = this.urlStrapiServe + image.url;
+    });
+    console.log(this.data.slug);
+  },
   methods: {
     moment,
     async likePost(id) {
-      console.log(id);
-      const [result, error] = await StoriesService.react(id);
-      console.log([result, error]);
-      if (result) {
-        const { reacts } = result;
-        this.reacts = reacts;
-        // console.log(this.reacts, reacts);
+      if (this.isAuthenticated) {
+        const [result, error] = await StoriesService.react(id);
+        console.log([result, error]);
+        if (result) {
+          const { reacts } = result;
+          this.reacts = reacts;
+          // console.log(this.reacts, reacts);
+        }
+      } else {
+        window.location.href = '/login/';
       }
     },
     showCmtBox(string) {

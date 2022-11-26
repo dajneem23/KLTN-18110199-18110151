@@ -40,9 +40,9 @@ export default {
     const [topItem, error_2] = await NewsServices.getTop({
       page: this.page,
     });
-    console.log(newItem);
     this.new_items = newItem.items.slice(0, 4);
     this.hot_items = topItem.items.slice(0, 4);
+    console.log(this.hot_items);
     this.total_count = total_count;
   },
   methods: {
@@ -60,6 +60,5 @@ export default {
       this.items = items;
       this.total_count = total_count;
     },
-    async getHot() {},
   },
 };

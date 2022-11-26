@@ -80,33 +80,43 @@ export default {
       element.scrollIntoView();
     },
     async upVote(id) {
-      const [result, error] = await NewsServices.upvote(id);
-      console.log([result, error]);
-      if (result) {
-        const { up_votes } = result;
-        this.up_votes = up_votes;
+      if (this.isAuthenticated) {
+        const [result, error] = await NewsServices.upvote(id);
+        console.log([result, error]);
+        if (result) {
+          const { up_votes } = result;
+          this.up_votes = up_votes;
+        }
+      } else {
+        window.location.href = '/login/'
       }
       
     },
     async downVote(id) {
-      console.log('Un Vote');
-      console.log(id);
-      const [result, error] = await NewsServices.downvote(id);
-      console.log([result, error]);
-      if (result) {
-        const { down_votes } = result;
-        this.down_votes = down_votes;
-        console.log(this.down_votes, down_votes);
+      if (this.isAuthenticated) {
+        
+        const [result, error] = await NewsServices.downvote(id);
+        console.log([result, error]);
+        if (result) {
+          const { down_votes } = result;
+          this.down_votes = down_votes;
+          console.log(this.down_votes, down_votes);
+        }
+      } else {
+        window.location.href = '/login/'
       }
     },
     async addWishList(id) {
-      console.log(id);
-      const [result, error] = await NewsServices.react(id);
-      console.log([result, error]);
-      if (result) {
-        const { reacts } = result;
-        this.reacts = reacts;
-        // console.log(this.reacts, reacts);
+      if (this.isAuthenticated) {
+        const [result, error] = await NewsServices.react(id);
+        console.log([result, error]);
+        if (result) {
+          const { reacts } = result;
+          this.reacts = reacts;
+          // console.log(this.reacts, reacts);  
+        }
+      } else {
+        window.location.href = '/login/'
       }
     },
     followUser(user) {

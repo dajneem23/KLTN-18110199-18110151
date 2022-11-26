@@ -1,13 +1,13 @@
 <template>
   <div :class="style_x" class="card-news">
-    <router-link :to="{ name: 'detailnews', params: { id, news } }">
+    <router-link :to="{ name: 'detailnews', params: { id: slug, news: news } }">
       <div class="card-img-news">
-        <img :src="image " alt="" />
+        <img :src="images[0]?.url" alt="" />
       </div>
     </router-link>
     <div class="card-body-news">
       <div class="card-body__category">
-        <div class="body__category">{{ tags.join(' - ') }}</div>
+        <!-- <div class="body__category">{{ tags }}</div> -->
         <div class="body__tym" @click="addWishList(id)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@
       <div class="card-body__content">
         <div class="body-content__imgAuth">
           <img :src="author?.picture || '	https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
-          <span>{{ author?.name || 'Unknown' }}</span>
+          <span>{{ author[0]?.username || author?.username }}</span>
         </div>
         <div class="body-content__views">
           <div @click="upVote(id)" class="vote-icon">
@@ -56,7 +56,7 @@
             {{ (up_votes?.length || 0) - (down_votes?.length || 0) }}
           </div>
           <img src="../../assets/Icon/comment.svg" alt="" class="" />
-          {{ comments?.length || 0 }}
+          <!-- {{ comments?.length || 0 }} -->
         </div>
       </div>
     </div>
