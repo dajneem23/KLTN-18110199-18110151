@@ -6,6 +6,7 @@ import { StoryController } from '@/modules/story/story.controller';
 import { MangaController } from '@/modules/manga/manga.controller';
 import { NewsController } from '@/modules/articles/articles.controller';
 import { FilmController } from '@/modules/film/film.controller';
+import { CommentController } from '@/modules/comment/comment.controller';
 
 const route = Router();
 
@@ -18,5 +19,5 @@ export default (app: Application) => {
 
   attachControllers(route, [UserController, AuthController]);
 
-  attachControllers(route, [FilmController, NewsController, MangaController, StoryController]);
+  attachControllers(route, [FilmController, NewsController, MangaController, StoryController, CommentController]);
 };

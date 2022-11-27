@@ -52,6 +52,7 @@ export class BaseModel {
     author: any;
     sub_categories: any;
     upload_files: any;
+    comments: any;
   } {
     return {
       categories: $lookup({
@@ -102,6 +103,73 @@ export class BaseModel {
         reName: 'sub_categories',
         operation: '$in',
       }),
+
+      comments: $lookup({
+        from: 'comments',
+        refFrom: '_id',
+        refTo: 'comments',
+        select: 'content images type replies author',
+        reName: 'comments',
+        operation: '$in',
+        pipeline: [
+          $lookup({
+            from: 'users-permissions_user',
+            refFrom: '_id',
+            refTo: 'author',
+            select: 'username avatar',
+            reName: 'author',
+            operation: '$eq',
+            pipeline: [
+              $lookup({
+                from: COLLECTION_NAMES.upload_file,
+                refFrom: '_id',
+                refTo: 'avatar',
+                select: 'name url',
+                reName: 'avatar',
+                operation: '$eq',
+              }),
+            ],
+          }),
+          {
+            $set: {
+              author: { $first: '$author' },
+            },
+          },
+          $lookup({
+            from: 'comments',
+            refFrom: '_id',
+            refTo: 'replies',
+            select: 'content images type replies author',
+            reName: 'replies',
+            operation: '$in',
+            pipeline: [
+              $lookup({
+                from: 'users-permissions_user',
+                refFrom: '_id',
+                refTo: 'author',
+                select: 'username avatar',
+                reName: 'author',
+                operation: '$eq',
+                pipeline: [
+                  $lookup({
+                    from: COLLECTION_NAMES.upload_file,
+                    refFrom: '_id',
+                    refTo: 'avatar',
+                    select: 'name url',
+                    reName: 'avatar',
+                    operation: '$eq',
+                  }),
+                ],
+              }),
+              {
+                $set: {
+                  author: { $first: '$author' },
+                },
+              },
+            ],
+          }),
+        ],
+      }),
     };
   }
   get $sets(): {
@@ -132,6 +200,7 @@ export class BaseModel {
   get $addFields(): {
     categories: any;
     images: any;
+    comments: any;
   } {
     return {
       categories: {
@@ -153,6 +222,17 @@ export class BaseModel {
             },
             then: [],
             else: '$images',
+          },
+        },
+      },
+      comments: {
+        comments: {
+          $cond: {
+            if: {
+              $ne: [{ $type: '$comments' }, 'array'],
+            },
+            then: [],
+            else: '$comments',
           },
         },
       },

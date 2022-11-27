@@ -14,16 +14,16 @@ import {
   Patch,
 } from '@/utils/expressDecorators';
 import { Request, Response } from 'express';
-import { Comment, CommentServiceToken } from '.';
+import { Chat, ChatServiceToken } from '.';
 import { buildQueryFilter } from '@/utils/common';
 import httpStatus from 'http-status';
 import { protect } from '@/api/middlewares/protect';
 import { JWTPayload } from '../auth/authSession.type';
 import { BaseQuery, BaseServiceInput } from '@/types/Common';
 import { RolesWeight } from '../user';
-@Controller('/comments')
-export class CommentController {
-  private service = Container.get(CommentServiceToken);
+@Controller('/chat')
+export class ChatController {
+  private service = Container.get(ChatServiceToken);
 
   @Post('/', [
     protect({
@@ -35,7 +35,7 @@ export class CommentController {
     @Auth() _auth: JWTPayload,
     @Req() _req: Request,
     @Body()
-    _body: Comment,
+    _body: Chat,
   ) {
     const result = await this.service.create({
       _content: _body,
@@ -44,6 +44,21 @@ export class CommentController {
     _res.status(httpStatus.CREATED).json(result);
   }
 
+  @Get('/', [])
+  async get(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.query({
+      _filter: filter,
+      _query: query,
+      _permission: 'public',
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+  @Post('/chapter', [
+    protect({
+      weight: RolesWeight.user,
+    }),
+  ])
   @Put('/:id', [
     protect({
       weight: RolesWeight.user,
@@ -55,7 +70,7 @@ export class CommentController {
     @Req() _req: Request,
     @Params() _params: { id: string },
     @Body()
-    _body: Comment,
+    _body: Chat,
   ) {
     const result = await this.service.update({
       _id: _params.id,
@@ -76,7 +91,7 @@ export class CommentController {
     @Req() _req: Request,
     @Params() _params: { id: string },
     @Body()
-    _body: Comment,
+    _body: Chat,
   ) {
     await this.service.delete({
       _id: _params.id,
@@ -86,75 +101,46 @@ export class CommentController {
     _res.status(httpStatus.NO_CONTENT).end();
   }
 
+  @Get('/search', [])
+  async search(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.search({
+      _filter: filter,
+      _query: query,
+      _permission: 'public',
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+
+  @Get('/:id', [])
+  async getByIdPrivate(
+    @Res() _res: Response,
+    @Req() _req: Request,
+    @Query() _query: BaseQuery,
+    @Params()
+    _params: {
+      id: string;
+    },
+  ) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.getById({
+      _slug: _params.id,
+      _filter: filter,
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+
   @Patch('/react/:id', [
     protect({
       weight: RolesWeight.user,
     }),
   ])
-  async react(
-    @Res() _res: Response,
-    @Req() _req: Request,
-    @Query() _query: BaseQuery,
-    @Auth() _auth: JWTPayload,
-    @Params()
-    _params: {
-      id: string;
-    },
-  ) {
+  async react(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery, @Auth() _auth: JWTPayload) {
     const { filter, query } = buildQueryFilter(_query);
     const result = await this.service.react({
-      _slug: _params.id,
       _filter: filter,
       _query: query,
       _subject: _auth._id,
-    } as BaseServiceInput);
-    _res.status(httpStatus.OK).json(result);
-  }
-  @Patch('/upvote/:id', [
-    protect({
-      weight: RolesWeight.user,
-    }),
-  ])
-  async upVote(
-    @Res() _res: Response,
-    @Req() _req: Request,
-    @Query() _query: BaseQuery,
-    @Auth() _auth: JWTPayload,
-    @Params()
-    _params: {
-      id: string;
-    },
-  ) {
-    const { filter, query } = buildQueryFilter(_query);
-    const result = await this.service.upVote({
-      _filter: filter,
-      _query: query,
-      _subject: _auth._id,
-      _slug: _params.id,
-    } as BaseServiceInput);
-    _res.status(httpStatus.OK).json(result);
-  }
-  @Patch('/downvote/:id', [
-    protect({
-      weight: RolesWeight.user,
-    }),
-  ])
-  async downVote(
-    @Res() _res: Response,
-    @Req() _req: Request,
-    @Query() _query: BaseQuery,
-    @Auth() _auth: JWTPayload,
-    @Params()
-    _params: {
-      id: string;
-    },
-  ) {
-    const { filter, query } = buildQueryFilter(_query);
-    const result = await this.service.downVote({
-      _filter: filter,
-      _query: query,
-      _subject: _auth._id,
-      _slug: _params.id,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }

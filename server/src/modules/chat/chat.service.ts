@@ -4,29 +4,30 @@ import { throwErr, toOutPut, toPagingOutput } from '@/utils/common';
 import { alphabetSize12 } from '@/utils/randomString';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import AuthService from '../auth/auth.service';
-import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject } from '@/utils/mongoDB';
-import { NewsError, newsModelToken, newsErrors, _news } from '.';
-import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS } from '@/types/Common';
+import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject, $lookup } from '@/utils/mongoDB';
+import { ChatError, chatModelToken, chatErrors, _chat } from '.';
+import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS, RemoveSlugPattern } from '@/types/Common';
 import { isNil, omit } from 'lodash';
+import slugify from 'slugify';
 import { ObjectId } from 'mongodb';
-const TOKEN_NAME = '_newsService';
+const TOKEN_NAME = '_chatService';
 /**
  * A bridge allows another service access to the Model layer
- * @export NewsService
- * @class NewsService
+ * @export ChatService
+ * @class ChatService
  * @extends {BaseService}
  */
-export const NewsServiceToken = new Token<NewsService>(TOKEN_NAME);
+export const ChatServiceToken = new Token<ChatService>(TOKEN_NAME);
 /**
- * @class NewsService
+ * @class ChatService
  * @extends BaseService
- * @description News Service for all news related operations
+ * @description Chat Service for all chat related operations
  */
-@Service(NewsServiceToken)
-export class NewsService {
-  private logger = new Logger('NewsService');
+@Service(ChatServiceToken)
+export class ChatService {
+  private logger = new Logger('ChatService');
 
-  private model = Container.get(newsModelToken);
+  private model = Container.get(chatModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;
@@ -34,8 +35,8 @@ export class NewsService {
   @Inject()
   private authService: AuthService;
 
-  private error(msg: keyof typeof newsErrors) {
-    return new NewsError(msg);
+  private error(msg: keyof typeof chatErrors) {
+    return new ChatError(msg);
   }
 
   get outputKeys() {
@@ -43,26 +44,20 @@ export class NewsService {
   }
 
   /**
-   * Generate ID
-   */
-  static async generateID() {
-    return alphabetSize12();
-  }
-  /**
-   * Create a new News
+   * Create a new Chat
    * @param _content
    * @param _subject
    * @returns {Promise<BaseServiceOutput>}
    */
   async create({ _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      const { name, categories = [] } = _content;
+      const { name, categories = [], chapters = [] } = _content;
       const value = await this.model.create(
         {
           name,
         },
         {
-          ..._news,
+          ..._chat,
           ..._content,
           categories,
           ...(_subject && { author: new ObjectId(_subject) }),
@@ -100,7 +95,7 @@ export class NewsService {
   }
 
   /**
-   * Delete news
+   * Delete chat
    * @param _id
    * @param {ObjectId} _subject
    * @returns {Promise<void>}
@@ -119,7 +114,7 @@ export class NewsService {
   }
 
   /**
-   *  Query news
+   *  Query chat
    * @param {any} _filter
    * @param {BaseQuery} _query
    * @returns {Promise<BaseServiceOutput>}
@@ -149,23 +144,19 @@ export class NewsService {
                 ],
               }),
             },
+            $sets: [this.model.$sets.author],
             $addFields: {
               ...this.model.$addFields.categories,
-              ...this.model.$addFields.images,
-              ...this.model.$addFields.comments,
             },
             $lookups: [
               this.model.$lookups.categories,
               this.model.$lookups.author,
-              this.model.$lookups.comments,
-              this.model.$lookups.upload_files(),
               this.model.$lookups.upload_files({
                 refTo: 'images',
                 reName: 'images',
                 operation: '$in',
               }),
             ],
-            $sets: [this.model.$sets.author],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
@@ -175,17 +166,18 @@ export class NewsService {
       return toPagingOutput({
         items,
         total_count,
-        //  keys: this.model._keys,
+        // keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('query_error', err.message);
       throw err;
     }
   }
+
   /**
-   * Get News by ID
-   * @param id - News ID
-   * @returns { Promise<BaseServiceOutput> } - News
+   * Get Chat by ID
+   * @param id - Chat ID
+   * @returns { Promise<BaseServiceOutput> } - Chat
    */
   async getById({ _slug: slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
@@ -202,19 +194,12 @@ export class NewsService {
             $addFields: {
               ...this.model.$addFields.categories,
               ...this.model.$addFields.images,
-              ...this.model.$addFields.comments,
             },
           },
           this.model.$lookups.categories,
           this.model.$lookups.author,
           this.model.$sets.author,
-          this.model.$lookups.comments,
           this.model.$lookups.upload_files(),
-          this.model.$lookups.upload_files({
-            refTo: 'images',
-            reName: 'images',
-            operation: '$in',
-          }),
           this.model.$sets.image,
           {
             $limit: 1,
@@ -229,51 +214,7 @@ export class NewsService {
       throw err;
     }
   }
-  /**
-   * Get News by slug
-   * @param id - News ID
-   * @returns { Promise<BaseServiceOutput> } - News
-   */
-  async getBySlug({ _slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
-    try {
-      const [item] = await this.model
-        .get([
-          {
-            $match: {
-              ...$toMongoFilter({ slug: _slug }),
-            },
-          },
-          {
-            $addFields: {
-              ...this.model.$addFields.categories,
-              ...this.model.$addFields.images,
-              ...this.model.$addFields.comments,
-            },
-          },
-          this.model.$lookups.categories,
-          this.model.$lookups.author,
-          this.model.$sets.author,
-          this.model.$lookups.comments,
-          this.model.$lookups.upload_files(),
-          this.model.$lookups.upload_files({
-            refTo: 'images',
-            reName: 'images',
-            operation: '$in',
-          }),
-          this.model.$sets.image,
-          {
-            $limit: 1,
-          },
-        ])
-        .toArray();
-      if (isNil(item)) throwErr(this.error('NOT_FOUND'));
-      this.logger.debug('get_success', { item });
-      return toOutPut({ item });
-    } catch (err) {
-      this.logger.error('get_error', err.message);
-      throw err;
-    }
-  }
+
   /**
    * Search by text index
    * @param {BaseServiceInput} _filter _query
@@ -299,15 +240,11 @@ export class NewsService {
                 ],
               }),
             },
-            $addFields: {
-              ...this.model.$addFields.categories,
-              ...this.model.$addFields.images,
-              ...this.model.$addFields.comments,
-            },
+            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
             $lookups: [
               this.model.$lookups.categories,
+              this.model.$lookups.upload_files(),
               this.model.$lookups.author,
-              this.model.$lookups.comments,
               this.model.$lookups.upload_files({
                 refTo: 'images',
                 reName: 'images',
@@ -325,6 +262,7 @@ export class NewsService {
       throw err;
     }
   }
+
   async react({ _subject, _slug: slug }: BaseServiceInput) {
     try {
       //todo: check if user already react
@@ -358,95 +296,6 @@ export class NewsService {
         item: { reacts },
         //  keys: this.model._keys,
       });
-    } catch (err) {
-      this.logger.error('react_error', err.message);
-      throw err;
-    }
-  }
-  async upVote({ _subject, _slug: slug }: BaseServiceInput) {
-    try {
-      const { up_votes, down_votes } = await this.model.update($toMongoFilter({ slug }), {
-        $addToSet: { up_votes: _subject },
-        $pull: { down_votes: _subject },
-      });
-      this.logger.debug('update_success', {});
-      return toOutPut({
-        item: { up_votes, down_votes },
-        //  keys: this.model._keys,
-      });
-    } catch (err) {
-      this.logger.error('react_error', err.message);
-      throw err;
-    }
-  }
-  async downVote({ _subject, _slug: slug }: BaseServiceInput) {
-    try {
-      //ToDO: check if user already up vote
-
-      const { down_votes, up_votes } = await this.model.update($toMongoFilter({ slug }), {
-        $addToSet: { down_votes: _subject },
-        $pull: { up_votes: _subject },
-      });
-      this.logger.debug('update_success', {});
-      return toOutPut({
-        item: { down_votes, up_votes },
-        //  keys: this.model._keys,
-      });
-    } catch (err) {
-      this.logger.error('react_error', err.message);
-      throw err;
-    }
-  }
-  async top({ _query }: BaseServiceInput): Promise<BaseServiceOutput> {
-    try {
-      const { per_page = 10 } = _query;
-      const items = await this.model
-        .get([
-          {
-            $addFields: { votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] } },
-            ...this.model.$addFields.comments,
-          },
-          { $sort: { votes: -1 } },
-          {
-            $limit: per_page,
-          },
-          this.model.$lookups.author,
-          this.model.$lookups.comments,
-          this.model.$lookups.upload_files({
-            refTo: 'images',
-            reName: 'images',
-            operation: '$in',
-          }),
-        ])
-        .toArray();
-      this.logger.debug('query_success', { items });
-      return toPagingOutput({ items, total_count: per_page });
-    } catch (err) {
-      this.logger.error('react_error', err.message);
-      throw err;
-    }
-  }
-  async hot({ _query }: BaseServiceInput): Promise<BaseServiceOutput> {
-    try {
-      const { per_page = 10 } = _query;
-      const items = await this.model
-        .get([
-          { $sort: { views: -1 } },
-          {
-            $limit: per_page,
-          },
-          this.model.$lookups.author,
-          this.model.$lookups.comments,
-          this.model.$addFields.comments,
-          this.model.$lookups.upload_files({
-            refTo: 'images',
-            reName: 'images',
-            operation: '$in',
-          }),
-        ])
-        .toArray();
-      this.logger.debug('query_success', { items });
-      return toPagingOutput({ items, total_count: 10 });
     } catch (err) {
       this.logger.error('react_error', err.message);
       throw err;

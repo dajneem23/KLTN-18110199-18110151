@@ -58,11 +58,11 @@ export class CommentService {
    */
   async create({ _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      const { categories = [], type, source_id } = _content;
+      const { type, source_id, reply_to } = _content;
       if (!Object.keys(COLLECTION_NAMES).includes(type)) {
         throw new SystemError('common.collection_not_found');
       }
-      const _id = await CommentService.generateID();
+      const _id = new ObjectId();
       const value = await this.model.create(
         {
           _id,
@@ -70,15 +70,22 @@ export class CommentService {
         {
           ..._comment,
           ..._content,
-          categories,
           ...(_subject && { author: new ObjectId(_subject) }),
+        },
+      );
+      await this.model.update(
+        {
+          _id: new ObjectId(reply_to),
+        },
+        {
+          $addToSet: { replies: _id },
         },
       );
       await Container.get(DIMongoDB)
         .collection(type)
         .updateOne(
           {
-            _id: source_id,
+            _id: new ObjectId(source_id),
           },
           {
             $addToSet: {
@@ -136,162 +143,6 @@ export class CommentService {
     }
   }
 
-  /**
-   *  Query comment
-   * @param {any} _filter
-   * @param {BaseQuery} _query
-   * @returns {Promise<BaseServiceOutput>}
-   *
-   **/
-  async query({ _filter, _query, _permission }: BaseServiceInput): Promise<BaseServiceOutput> {
-    try {
-      const { q, categories = [] } = _filter;
-      const { page = 1, per_page = 10, sort_by, sort_order } = _query;
-      const [{ total_count } = { total_count: 0 }, ...items] = await this.model
-        .get(
-          $pagination({
-            $match: {
-              deleted: {
-                $ne: true,
-              },
-              ...(q && {
-                name: { $regex: q, $options: 'i' },
-              }),
-              ...(categories.length && {
-                $or: [
-                  {
-                    categories: {
-                      $in: $toObjectId(categories),
-                    },
-                  },
-                ],
-              }),
-            },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories, this.model.$lookups.author],
-            $sets: [this.model.$sets.author],
-            ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
-            ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
-          }),
-        )
-        .toArray();
-      this.logger.debug('query_success', { total_count, items });
-      return toPagingOutput({
-        items,
-        total_count,
-        //  keys: this.model._keys,
-      });
-    } catch (err) {
-      this.logger.error('query_error', err.message);
-      throw err;
-    }
-  }
-  /**
-   * Get Comment by ID
-   * @param id - Comment ID
-   * @returns { Promise<BaseServiceOutput> } - Comment
-   */
-  async getById({ _slug: slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
-    try {
-      const [item] = await this.model
-        .get([
-          {
-            $match: {
-              ...$toMongoFilter({
-                slug,
-              }),
-            },
-          },
-          {
-            $addFields: this.model.$addFields.categories,
-          },
-          this.model.$lookups.categories,
-          this.model.$lookups.author,
-          this.model.$sets.author,
-          {
-            $limit: 1,
-          },
-        ])
-        .toArray();
-      if (isNil(item)) throwErr(this.error('NOT_FOUND'));
-      this.logger.debug('get_success', { item });
-      return toOutPut({ item });
-    } catch (err) {
-      this.logger.error('get_error', err.message);
-      throw err;
-    }
-  }
-  /**
-   * Get Comment by slug
-   * @param id - Comment ID
-   * @returns { Promise<BaseServiceOutput> } - Comment
-   */
-  async getBySlug({ _slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
-    try {
-      const [item] = await this.model
-        .get([
-          {
-            $match: {
-              ...$toMongoFilter({ slug: _slug }),
-            },
-          },
-          {
-            $addFields: this.model.$addFields.categories,
-          },
-          this.model.$lookups.categories,
-          this.model.$lookups.author,
-          this.model.$sets.author,
-          {
-            $limit: 1,
-          },
-        ])
-        .toArray();
-      if (isNil(item)) throwErr(this.error('NOT_FOUND'));
-      this.logger.debug('get_success', { item });
-      return toOutPut({ item });
-    } catch (err) {
-      this.logger.error('get_error', err.message);
-      throw err;
-    }
-  }
-  /**
-   * Search by text index
-   * @param {BaseServiceInput} _filter _query
-   * @returns
-   */
-  async search({ _filter, _query }: BaseServiceInput): Promise<BaseServiceOutput> {
-    try {
-      const { q, lang } = _filter;
-      const { page = 1, per_page = 10, sort_by, sort_order } = _query;
-      const [{ total_count } = { total_count: 0 }, ...items] = await this.model
-        .get([
-          ...$pagination({
-            $match: {
-              deleted: {
-                $ne: true,
-              },
-              ...(q && {
-                $or: [
-                  { $text: { $search: q } },
-                  {
-                    name: { $regex: q, $options: 'i' },
-                  },
-                ],
-              }),
-            },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories],
-            ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
-          }),
-        ])
-        .toArray();
-      this.logger.debug('query_success', { total_count, items });
-      return toPagingOutput({ items, total_count });
-    } catch (err) {
-      this.logger.error('query_error', err.message);
-      throw err;
-    }
-  }
   async react({ _subject, _slug: slug }: BaseServiceInput) {
     try {
       //todo: check if user already react
@@ -359,43 +210,6 @@ export class CommentService {
         item: { down_votes, up_votes },
         //  keys: this.model._keys,
       });
-    } catch (err) {
-      this.logger.error('react_error', err.message);
-      throw err;
-    }
-  }
-  async top({ _query }: BaseServiceInput): Promise<BaseServiceOutput> {
-    try {
-      const { per_page = 10 } = _query;
-      const items = await this.model
-        .get([
-          { $addFields: { votes: { $add: [{ $size: '$up_votes' }, { $size: '$down_votes' }] } } },
-          { $sort: { votes: -1 } },
-          {
-            $limit: per_page,
-          },
-        ])
-        .toArray();
-      this.logger.debug('query_success', { items });
-      return toPagingOutput({ items, total_count: 10 });
-    } catch (err) {
-      this.logger.error('react_error', err.message);
-      throw err;
-    }
-  }
-  async hot({ _query }: BaseServiceInput): Promise<BaseServiceOutput> {
-    try {
-      const { per_page = 10 } = _query;
-      const items = await this.model
-        .get([
-          { $sort: { views: -1 } },
-          {
-            $limit: per_page,
-          },
-        ])
-        .toArray();
-      this.logger.debug('query_success', { items });
-      return toPagingOutput({ items, total_count: 10 });
     } catch (err) {
       this.logger.error('react_error', err.message);
       throw err;

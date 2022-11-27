@@ -6,6 +6,7 @@ export interface Chat extends BaseModel {
   messages: string[];
 }
 export const _chat: Chat = {
+  type: 'private',
   users: [],
   messages: [],
   ..._defaultBaseModel,

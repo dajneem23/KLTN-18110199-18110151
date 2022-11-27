@@ -17,18 +17,7 @@ export class CommentModel extends BaseModel {
     super({
       collectionName: COLLECTION_NAME,
       _keys: keys<Comment>(),
-      indexes: [
-        {
-          field: {
-            name: 1,
-          },
-        },
-        {
-          field: {
-            name: 'text',
-          },
-        },
-      ],
+      indexes: [],
     });
   }
 }
