@@ -21,6 +21,7 @@ export default {
       cmt: '',
       reacts: [],
       comments: [],
+      img: [],
       author: { name: 'Unknown' },
     };
   },
@@ -34,23 +35,19 @@ export default {
           if (key == '_v') return;
           this[key] = newData[key];
         });
-      // console.log(this);
     },
   },
   created() {
     if (this.data)
       Object.keys(this.data).map((key) => {
-        // console.log(key);
         if (key == '_v') return;
         this[key] = this.data[key];
       });
   },
   mounted() {
-    // this.data.images[0].url = this.urlStrapiServe + this.data.images.url;
     this.data.images.forEach((image) => {
       image.url = this.urlStrapiServe + image.url;
     });
-    console.log(this.data.slug);
   },
   methods: {
     moment,
@@ -61,7 +58,6 @@ export default {
         if (result) {
           const { reacts } = result;
           this.reacts = reacts;
-          // console.log(this.reacts, reacts);
         }
       } else {
         window.location.href = '/login/';

@@ -4,7 +4,7 @@
       <!-- <h1>Tạo bài viết</h1> -->
       <div class="user-info">
         <img :src="userInfo?.picture" alt="" />
-        <span>{{ userInfo.name }}</span>
+        <span>{{ userInfo.username }}</span>
       </div>
       <div class="box-title">
         <textarea placeholder="Hãy viết gì đó......" v-model="story.content" @input="changeSubmit"></textarea>
