@@ -81,18 +81,20 @@ export class CommentService {
           $addToSet: { replies: _id },
         },
       );
-      await Container.get(DIMongoDB)
-        .collection(type)
-        .updateOne(
-          {
-            _id: new ObjectId(source_id),
-          },
-          {
-            $addToSet: {
-              comments: _id,
+      if (!reply_to) {
+        await Container.get(DIMongoDB)
+          .collection(type)
+          .updateOne(
+            {
+              _id: new ObjectId(source_id),
             },
-          },
-        );
+            {
+              $addToSet: {
+                comments: _id,
+              },
+            },
+          );
+      }
       this.logger.debug('create_success', { _content });
       return toOutPut({ item: value });
     } catch (err) {
