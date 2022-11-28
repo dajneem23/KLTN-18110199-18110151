@@ -90,17 +90,17 @@
           type="text"
           placeholder="Hãy chia sẻ cảm nghĩ về bài viết"
           value=""
-          v-model="cmt"
+          v-model="cmt.content"
         ></textarea>
         <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
       <div class="news-cmt-box">
         <div v-for="comment in comments">
-          <Comment></Comment>
-          <div v-if="comment?.reply">
+          <Comment :data="comment"></Comment>
+          <div v-if="comment?.replies">
             <div class="cmt-rep">
-              <div v-for="reply in comment.reply">
-                <Comment></Comment>
+              <div v-for="reply in comment.replies">
+                <Comment :data="reply"></Comment>
                 <div v-if="reply?.reply_2">
                   <div class="cmt-rep">
                     <div v-for="reply_2 in reply.reply_2">
