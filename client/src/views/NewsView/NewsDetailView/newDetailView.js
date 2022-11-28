@@ -2,6 +2,7 @@ import CardNews from '../../../components/CardNews/index.vue';
 import Comment from '../../../components/Watching/CommentFilm';
 import { mapState } from 'vuex';
 import { NewsServices } from '@/services';
+import { CommentServices } from '@/services';
 import moment from 'moment';
 export default {
   components: {
@@ -12,7 +13,13 @@ export default {
     return {
       scTimer: 0,
       scY: 0,
-      cmt: '',
+      cmt: {
+        source_id: '',
+        type: 'articles',
+        content: '',
+        images: [],
+        reply_to: null,
+      },
       tags: [],
       up_votes: [],
       down_votes: [],
@@ -44,7 +51,6 @@ export default {
   },
   async created() {
     const { id } = this.$route.params;
-    console.log(id);
     const [result, error] = await NewsServices.getById(id);
     console.log([result, error]);
     if (result) {
@@ -72,8 +78,13 @@ export default {
         behavior: 'smooth',
       });
     },
-    sendCmt() {
+    async sendCmt() {
+      this.cmt.source_id = this.news.id;
+      const result = await CommentServices.comment({
+        ...this.cmt,
+      });
       console.log(this.cmt);
+      console.log(result);
     },
     goToCmtBox() {
       const element = document.getElementById('cmt');
@@ -88,13 +99,11 @@ export default {
           this.up_votes = up_votes;
         }
       } else {
-        window.location.href = '/login/'
+        window.location.href = '/login/';
       }
-      
     },
     async downVote(id) {
       if (this.isAuthenticated) {
-        
         const [result, error] = await NewsServices.downvote(id);
         console.log([result, error]);
         if (result) {
@@ -103,7 +112,7 @@ export default {
           console.log(this.down_votes, down_votes);
         }
       } else {
-        window.location.href = '/login/'
+        window.location.href = '/login/';
       }
     },
     async addWishList(id) {
@@ -113,14 +122,14 @@ export default {
         if (result) {
           const { reacts } = result;
           this.reacts = reacts;
-          // console.log(this.reacts, reacts);  
+          // console.log(this.reacts, reacts);
         }
       } else {
-        window.location.href = '/login/'
+        window.location.href = '/login/';
       }
     },
     followUser(user) {
-      console.log("follow :" ,user.id)
-    }
+      console.log('follow :', user.id);
+    },
   },
 };
