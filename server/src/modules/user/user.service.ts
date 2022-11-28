@@ -127,7 +127,7 @@ export class UserService {
    */
   async getById(_id: User['id']) {
     try {
-      const user = await this.model._collection.findOne({ _id });
+      const user = await this.model._collection.findOne({ _id: new ObjectId(_id) });
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[getById:success]', { _id, email: user.email });
       return toUserOutput(user as any);
@@ -143,7 +143,7 @@ export class UserService {
   async update(_id: User['id'], data: Partial<User>) {
     try {
       const { value: user } = await this.model._collection.findOneAndUpdate(
-        { _id },
+        { _id: new ObjectId(_id) },
         {
           $set: {
             ...data,
@@ -231,7 +231,7 @@ export class UserService {
         ok,
         lastErrorObject: { updatedExisting },
       } = await this.model._collection.findOneAndUpdate(
-        { _id },
+        { _id: new ObjectId(_id) },
         {
           $set: {
             updated_at: new Date(),
@@ -260,7 +260,7 @@ export class UserService {
         ok,
         lastErrorObject: { updatedExisting },
       } = await this.model._collection.findOneAndUpdate(
-        { _id },
+        { _id: new ObjectId(_id) },
         {
           $set: {
             updated_at: new Date(),

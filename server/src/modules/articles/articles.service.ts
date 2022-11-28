@@ -403,8 +403,10 @@ export class NewsService {
       const items = await this.model
         .get([
           {
-            $addFields: { votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] } },
-            ...this.model.$addFields.comments,
+            $addFields: {
+              votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] },
+              ...this.model.$addFields.comments,
+            },
           },
           { $sort: { votes: -1 } },
           {
