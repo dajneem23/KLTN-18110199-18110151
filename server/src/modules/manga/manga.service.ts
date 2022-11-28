@@ -217,6 +217,7 @@ export class MangaService {
             $sets: [this.model.$sets.author],
             $addFields: {
               ...this.model.$addFields.categories,
+              ...this.model.$addFields.comments,
               chapters: {
                 $cond: {
                   if: {
@@ -230,6 +231,7 @@ export class MangaService {
             $lookups: [
               this.model.$lookups.categories,
               this.model.$lookups.author,
+              this.model.$lookups.comments,
               this.model.$lookups.upload_files({
                 refTo: 'images',
                 reName: 'images',
@@ -298,8 +300,11 @@ export class MangaService {
                 ],
               }),
             },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories],
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.comments,
+            },
+            $lookups: [this.model.$lookups.categories, this.model.$lookups.comments],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
@@ -336,6 +341,7 @@ export class MangaService {
             $addFields: {
               ...this.model.$addFields.categories,
               ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
               chapters: {
                 $cond: {
                   if: {
@@ -348,6 +354,8 @@ export class MangaService {
             },
           },
           this.model.$lookups.categories,
+          this.model.$lookups.comments,
+
           $lookup({
             from: 'manga-chapters',
             refFrom: '_id',
@@ -397,11 +405,16 @@ export class MangaService {
             },
           },
           {
-            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
           },
           this.model.$lookups.categories,
           this.model.$lookups.author,
           this.model.$sets.author,
+          this.model.$lookups.comments,
           this.model.$lookups.upload_files(),
           this.model.$lookups.upload_files({
             refTo: 'images',
@@ -448,8 +461,13 @@ export class MangaService {
                 ],
               }),
             },
-            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
             $lookups: [
+              this.model.$lookups.comments,
               this.model.$lookups.categories,
               this.model.$lookups.upload_files(),
               this.model.$lookups.author,
