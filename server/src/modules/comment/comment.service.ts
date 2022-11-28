@@ -73,14 +73,7 @@ export class CommentService {
           ...(_subject && { author: new ObjectId(_subject) }),
         },
       );
-      await this.model.update(
-        {
-          _id: new ObjectId(reply_to),
-        },
-        {
-          $addToSet: { replies: _id },
-        },
-      );
+
       if (!reply_to) {
         await Container.get(DIMongoDB)
           .collection(type)
@@ -94,6 +87,15 @@ export class CommentService {
               },
             },
           );
+      } else {
+        await this.model.update(
+          {
+            _id: new ObjectId(reply_to),
+          },
+          {
+            $addToSet: { replies: _id },
+          },
+        );
       }
       this.logger.debug('create_success', { _content });
       return toOutPut({ item: value });
