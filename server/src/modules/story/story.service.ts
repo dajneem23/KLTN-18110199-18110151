@@ -149,10 +149,15 @@ export class StoryService {
                 ],
               }),
             },
-            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
             $lookups: [
               this.model.$lookups.categories,
               this.model.$lookups.author,
+              this.model.$lookups.comments,
               this.model.$lookups.upload_files({
                 refTo: 'images',
                 reName: 'images',
@@ -193,11 +198,16 @@ export class StoryService {
             },
           },
           {
-            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
           },
           this.model.$lookups.categories,
           this.model.$lookups.author,
           this.model.$sets.author,
+          this.model.$lookups.comments,
           this.model.$lookups.upload_files(),
           this.model.$sets.image,
           this.model.$lookups.upload_files({
@@ -233,9 +243,15 @@ export class StoryService {
             },
           },
           {
-            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
           },
           this.model.$lookups.categories,
+          this.model.$lookups.comments,
+
           this.model.$lookups.author,
           this.model.$sets.author,
           this.model.$lookups.upload_files(),
@@ -283,8 +299,12 @@ export class StoryService {
                 ],
               }),
             },
-            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
-            $lookups: [this.model.$lookups.categories],
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
+            $lookups: [this.model.$lookups.categories, this.model.$lookups.comments],
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
         ])
