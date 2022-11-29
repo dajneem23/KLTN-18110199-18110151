@@ -13,13 +13,18 @@
     <div class="film-info">
       <div class="film-box-1">
         <!-- <img class="film-img" :src="film?.image" alt="" /> -->
-        <img class="film-img" :src="film?.image?.url || 'https://animehay.club/upload/poster/2691.jpg'" :alt="film.name" />
+        <img
+          class="film-img"
+          :src="film?.image?.url || 'https://animehay.club/upload/poster/2691.jpg'"
+          :alt="film.name"
+        />
         <div class="film-info-des row">
           <table>
             <tr>
               <td class="col-md-4">Thể loại</td>
               <td class="col-md-8">{{ film.categories.join(' ') }}</td>
             </tr>
+            {{}}
             <tr>
               <td class="col-md-4">Năm phát hành</td>
               <td class="col-md-8">{{ film.createdAt }}</td>
@@ -65,17 +70,17 @@
           type="text"
           placeholder="Hãy chia sẻ cảm nghĩ về bài viết"
           value=""
-          v-model="cmt"
+          v-model="cmt.content"
         ></textarea>
         <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
-      <div class="cmt-box">
-        <div v-for="comment in film.comments">
-          <Comment></Comment>
-          <div v-if="comment?.reply">
+      <div class="cmt-film-box">
+        <div v-for="comment in film?.comments">
+          <Commentfilm :data="comment"></Commentfilm>
+          <div v-if="comment?.replies">
             <div class="cmt-rep">
-              <div v-for="reply in comment.reply">
-                <Comment></Comment>
+              <div v-for="reply in comment.replies">
+                <Commentfilm :data="reply"></Commentfilm>
               </div>
             </div>
           </div>

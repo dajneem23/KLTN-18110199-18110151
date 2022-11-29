@@ -46,6 +46,7 @@ export default {
   // },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
+    // this.voteCount = this.up_votes.length - this.down_votes.length;
 
     // const news
   },
@@ -60,7 +61,7 @@ export default {
         this[key] = result[key];
       });
     }
-    this.totalVote = up_votes.length - down_votes.length;
+    this.totalVote = this.up_votes.length - this.down_votes.length;
   },
   methods: {
     moment,
@@ -101,6 +102,15 @@ export default {
       } else {
         window.location.href = '/login/';
       }
+
+      if (this.down_votes.includes(this.userInfo._id)) {
+        let down_vote = document.getElementById('triangle-down');
+        down_vote.classList.remove('down-vote');
+        let up_vote = document.getElementById('triangle-up');
+        up_vote.classList.add('up-vote');
+      }
+      let vote_count = document.getElementById('voteCount');
+      vote_count.innerText = this.up_votes.length - this.down_votes.length;
     },
     async downVote(id) {
       if (this.isAuthenticated) {
@@ -114,6 +124,14 @@ export default {
       } else {
         window.location.href = '/login/';
       }
+
+      if (this.up_votes.includes(this.userInfo._id)) {
+        let down_vote = document.getElementById('triangle-down');
+        down_vote.classList.add('down-vote');
+        let up_vote = document.getElementById('triangle-up');
+        up_vote.classList.remove('up-vote');
+      }
+      vote_count.innerText = this.up_votes.length - this.down_votes.length;
     },
     async addWishList(id) {
       if (this.isAuthenticated) {
