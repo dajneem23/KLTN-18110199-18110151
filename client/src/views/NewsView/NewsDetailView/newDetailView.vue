@@ -3,24 +3,25 @@
     <transition name="fade">
       <div class="sticky-box" id="sticky-box" v-show="scY">
         <div
+          id="triangle-up"
           class="triangle"
           :class="{
-            'up-vote': up_votes?.includes(userInfo?.id),
+            'up-vote': up_votes?.includes(userInfo?._id),
           }"
-          @click="upVote(id)"
+          @click="upVote(slug)"
         ></div>
-        <span>{{ (up_votes.length || 0) - (down_votes.length || 0) }}</span>
-
+        <span id="voteCount">{{ (up_votes.length || 0) - (down_votes.length || 0) }}</span>
         <div
+          id="triangle-down"
           class="triangle-down"
           :class="{
-            'down-vote': down_votes?.includes(userInfo?.id),
+            'down-vote': down_votes?.includes(userInfo?._id),
           }"
-          @click="downVote(id)"
+          @click="downVote(slug)"
         ></div>
 
         <div class="avt-user">
-          <img :src="author.picture" alt="" />
+          <img :src="author?.avatar" alt="" />
         </div>
         <div class="follow-user" @click="followUser(author)">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -34,13 +35,13 @@
             />
           </svg> -->
         </div>
-        <div class="add-wish-list" @click="addWishList(id)">
+        <div class="add-wish-list" @click="addWishList(slug)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
             :class="{
-              'fill-red': reacts.includes(userInfo?.id),
-              'fill-gray': !reacts.includes(userInfo?.id),
+              'fill-red': reacts?.includes(userInfo?._id),
+              'fill-gray': !reacts?.includes(userInfo?._id),
             }"
           >
             <path
@@ -54,7 +55,7 @@
               d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z"
             />
           </svg>
-          <span>{{ comments.length || 0 }}</span>
+          <span>{{ comments?.length || 0 }}</span>
         </div>
         <button class="button-to-top" id="sticky-box" @click="toTop">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="fill-blue_2">
@@ -66,16 +67,16 @@
       </div>
     </transition>
     <div class="news-content__box">
-      <div class="news-category text-dark-gray">{{ tags.join('-') }}</div>
+      <div class="news-category text-dark-gray">{{ tags }}</div>
       <div class="news-name">
         <h1>{{ name }}</h1>
       </div>
       <div class="news-short-des text-dark-gray">{{ description }}</div>
       <div class="news-auth">
-        <img :src="author.picture" alt="" />
+        <img :src="author?.avatar" alt="" />
         <div>
-          <div class="news-auth_name">{{ author.username }}</div>
-          <div class="news-date">{{ moment(created_at).fromNow() }}</div>
+          <div class="news-auth_name">{{ author?.username }}</div>
+          <div class="news-date">{{ moment(createdAt).fromNow() }}</div>
         </div>
       </div>
       <div class="news-content">
