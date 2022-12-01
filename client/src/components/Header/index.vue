@@ -102,7 +102,7 @@
         <div v-if="isAuthenticated" class="category-item-user">
           <div class="name-user" @click="showtoolTip">
             <span>
-              {{ userInfo?.username }}
+              {{ userInfo?.name }}
             </span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" id="caret-down">
               <path

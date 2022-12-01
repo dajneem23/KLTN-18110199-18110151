@@ -28,7 +28,7 @@
       img {
         height: 50px;
         width: 50px;
-        border-radius: 50%;
+        border-radius: 50% ;
       }
     }
     .add-wish-list {
@@ -190,11 +190,11 @@
       display: flex;
     }
   }
-  .cmt-rep {
-    padding-left: 25px;
-    margin-left: 25px;
-    border-left: 1px var(--gray) solid;
-  }
+}
+.cmt-rep {
+  padding-left: 25px;
+  margin-left: 25px;
+  border-left: 1px var(--gray) solid;
 }
 /*--------------------------------------------------------------------*/
 // .gg-shape-triangle {

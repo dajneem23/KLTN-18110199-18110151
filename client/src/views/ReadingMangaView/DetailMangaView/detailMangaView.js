@@ -3,6 +3,7 @@ import { Carousel, Slide } from 'vue-carousel';
 import { MangaServices } from '@/services';
 import { mapState } from 'vuex';
 import moment from 'moment';
+import { CommentServices } from '@/services';
 export default {
   components: {
     Comment,
@@ -13,7 +14,13 @@ export default {
     return {
       manga: [],
       lang: 'vi',
-      cmt: '',
+      cmt: {
+        source_id: '',
+        type: 'manga',
+        content: '',
+        images: [],
+        reply_to: null,
+      },
     };
   },
   computed: {
@@ -48,8 +55,13 @@ export default {
   },
   methods: {
     moment,
-    sendCmt() {
+    async sendCmt() {
+      this.cmt.source_id = this.manga.id;
+      const result = await CommentServices.comment({
+        ...this.cmt,
+      });
       console.log(this.cmt);
+      console.log(result);
     },
     // function like manga
     async likeManga(id) {

@@ -1,6 +1,7 @@
 import { FILMDETAIL_ITEM } from '../../../constants/filmdetail';
 import Commentfilm from '../../../components/Watching/CommentFilm/index.vue';
 import { FilmServices } from '@/services';
+import { CommentServices } from '@/services';
 import { mapActions, mapState } from 'vuex';
 import moment from 'moment';
 export default {
@@ -13,11 +14,17 @@ export default {
       filmData: [],
       lang: 'vi',
       FILMDETAIL_ITEM,
-      cmt: '',
+      cmt: {
+        source_id: '',
+        type: 'films',
+        content: '',
+        images: [],
+        reply_to: null,
+      },
     };
   },
   computed: {
-    ...mapState(['urlStrapiServe']),
+    ...mapState(['userInfo', 'isAuthenticated', 'urlStrapiServe']),
   },
   props: ['id', 'data'],
   watch: {
@@ -50,8 +57,25 @@ export default {
   },
   methods: {
     moment,
-    sendCmt() {
+    async sendCmt() {
+      this.cmt.source_id = this.film.id;
+      const result = await CommentServices.comment({
+        ...this.cmt,
+      });
       console.log(this.cmt);
+      console.log(result);
     },
+    async likeFilms(slug) {
+      if (this.isAuthenticated) {
+        const [result, error] = await FilmServices.react(slug);
+        console.log([result, error]);
+        if (result) {
+          const { reacts } = result;
+          this.reacts = reacts;
+        }
+      } else {
+        window.location.href = '/login/';
+      }
+    }
   },
 };

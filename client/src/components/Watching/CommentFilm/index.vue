@@ -5,7 +5,7 @@
         <img src="../../../assets/Icon/avt-cattoon.png" alt="" />
       </div>
       <div class="cmt-info">
-        <span class="cmt-user-name">Trần Hoàng Long</span>
+        <span class="cmt-user-name">{{ data?.author?.username || 'Unknown' }}</span>
         <span class="cmt-time text-gray">13 tháng 8</span>
       </div>
     </div>
