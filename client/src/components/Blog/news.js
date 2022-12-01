@@ -3,6 +3,7 @@ import { HOME_ITEM } from '../../constants/homeview';
 import { onMounted } from 'vue';
 import { Carousel, Slide } from 'vue-carousel';
 import { StoriesService } from '@/services';
+import { CommentServices } from '@/services';
 import { mapState } from 'vuex';
 import moment from 'moment';
 export default {
@@ -18,7 +19,13 @@ export default {
     return {
       lang: 'vi',
       HOME_ITEM,
-      cmt: '',
+      cmt: {
+        source_id: '',
+        type: 'stories',
+        content: '',
+        images: [],
+        reply_to: null,
+      },
       reacts: [],
       comments: [],
       img: [],
@@ -77,8 +84,13 @@ export default {
         return;
       }
     },
-    sendCmt() {
+    async sendCmt() {
+      this.cmt.source_id = this.data.id;
+      const result = await CommentServices.comment({
+        ...this.cmt,
+      });
       console.log(this.cmt);
+      console.log(result);
     },
     getTime() {
       data.created_at = data.created_at.toLocaleDateString('en-US');

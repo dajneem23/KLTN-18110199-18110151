@@ -24,7 +24,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['urlStrapiServe']),
+    ...mapState(['userInfo', 'isAuthenticated', 'urlStrapiServe']),
   },
   props: ['id', 'data'],
   watch: {
@@ -65,5 +65,17 @@ export default {
       console.log(this.cmt);
       console.log(result);
     },
+    async likeFilms(slug) {
+      if (this.isAuthenticated) {
+        const [result, error] = await FilmServices.react(slug);
+        console.log([result, error]);
+        if (result) {
+          const { reacts } = result;
+          this.reacts = reacts;
+        }
+      } else {
+        window.location.href = '/login/';
+      }
+    }
   },
 };

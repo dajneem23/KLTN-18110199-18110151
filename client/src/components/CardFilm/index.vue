@@ -3,7 +3,7 @@
     <div class="card-film">
       <div class="card-image-film">
         <!-- <img :src="item?.image" :alt="item.id" /> -->
-        <img :src="item.image.url" :alt="item.image.name" />
+        <img :src="`https://zinc-union-365709-strapi-63see6q63q-uc.a.run.app/${this.item.image.url}`" :alt="item.image.name" />
       </div>
       <div class="card-body-film">
         <div class="card-title-film">
