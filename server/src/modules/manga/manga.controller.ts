@@ -206,11 +206,21 @@ export class MangaController {
       weight: RolesWeight.user,
     }),
   ])
-  async react(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery, @Auth() _auth: JWTPayload) {
+  async react(
+    @Res() _res: Response,
+    @Req() _req: Request,
+    @Query() _query: BaseQuery,
+    @Auth() _auth: JWTPayload,
+    @Params()
+    _params: {
+      id: string;
+    },
+  ) {
     const { filter, query } = buildQueryFilter(_query);
     const result = await this.service.react({
       _filter: filter,
       _query: query,
+      _slug: _params.id,
       _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);

@@ -325,4 +325,42 @@ export class FilmService {
       throw err;
     }
   }
+  async react({ _subject, _slug: slug }: BaseServiceInput) {
+    try {
+      // TODO: check if user already react
+      const [item] = await this.model
+        .get([
+          {
+            $match: {
+              slug,
+              reacts: {
+                $in: [new ObjectId(_subject)],
+              },
+            },
+          },
+        ])
+        .toArray();
+      const { reacts } = item
+        ? await this.model.update(
+            { slug },
+            {
+              $pull: { reacts: new ObjectId(_subject) },
+            },
+          )
+        : await this.model.update(
+            { slug },
+            {
+              $addToSet: { reacts: new ObjectId(_subject) },
+            },
+          );
+      this.logger.debug('update_success', {});
+      return toOutPut({
+        item: { reacts },
+        //  keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('react_error', err.message);
+      throw err;
+    }
+  }
 }

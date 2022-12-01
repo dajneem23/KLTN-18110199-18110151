@@ -1,5 +1,18 @@
 import Container from 'typedi';
-import { Controller, Res, Post, Body, Get, Query, Put, Params, Delete, Req, Auth } from '@/utils/expressDecorators';
+import {
+  Controller,
+  Res,
+  Post,
+  Body,
+  Get,
+  Query,
+  Put,
+  Params,
+  Delete,
+  Req,
+  Auth,
+  Patch,
+} from '@/utils/expressDecorators';
 import { Request, Response } from 'express';
 import { Film, FilmServiceToken } from '.';
 import { buildQueryFilter } from '@/utils/common';
@@ -107,6 +120,30 @@ export class FilmController {
     const result = await this.service.getById({
       _slug: _params.id,
       _filter: filter,
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+  @Patch('/react/:id', [
+    protect({
+      weight: RolesWeight.user,
+    }),
+  ])
+  async react(
+    @Res() _res: Response,
+    @Req() _req: Request,
+    @Query() _query: BaseQuery,
+    @Auth() _auth: JWTPayload,
+    @Params()
+    _params: {
+      id: string;
+    },
+  ) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.react({
+      _slug: _params.id,
+      _filter: filter,
+      _query: query,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
