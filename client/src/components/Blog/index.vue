@@ -11,12 +11,14 @@
         </div>
       </div>
       <div class="news-header-bottom">
-        <div class="news-caption">
-          {{ content }}
-        </div>
+        <router-link :to="{ name: 'detailStory', params: { id: slug } }">
+          <div class="news-caption">
+            {{ content }}
+          </div>
+        </router-link>
       </div>
     </div>
-    <router-link :to="{ name: 'detailStory', params: { id: slug } }" v-if="!img ">
+    <router-link :to="{ name: 'detailStory', params: { id: slug } }" v-if="images">
       <div class="news-body">
         <carousel :perPage="1">
           <slide v-for="img in images" class="slide">
@@ -47,10 +49,10 @@
       <div class="news-footer-body">
         <button
           :class="{
-            'fill-blue text-blue': reacts.includes(userInfo?.id),
+            'fill-blue text-blue': reacts.includes(userInfo?._id),
           }"
           class="btn-dev btn-transparent like-news"
-          @click="likePost(id)"
+          @click="likePost(slug)"
         >
           <!-- /*Truyền vào id post*/ -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="" :id="id">
@@ -76,7 +78,7 @@
             type="text"
             placeholder="Hãy chia sẻ cảm nghĩ về bài viết"
             value=""
-            v-model="cmt"
+            v-model="cmt.content"
           ></textarea>
           <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">{{ HOME_ITEM.send.title[lang] }}</button>
         </div>

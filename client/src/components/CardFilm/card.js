@@ -9,8 +9,8 @@ export default {
     item: Object,
   },
   mounted() {
-    this.item.image.url = this.urlStrapiServe + this.item.image.url;
-    console.log(this.item.image.url);
+    // this.item.image.url = 'https://zinc-union-365709-strapi-63see6q63q-uc.a.run.app/' + this.item.image.url;
+    console.log(this.urlStrapiServe);
   },
   methods: {
     moment,

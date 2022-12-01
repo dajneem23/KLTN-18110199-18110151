@@ -8,13 +8,13 @@
     <div class="card-body-news">
       <div class="card-body__category">
         <!-- <div class="body__category">{{ tags }}</div> -->
-        <div class="body__tym" @click="addWishList(id)">
+        <div class="body__tym" @click="addWishList(slug)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
             :class="{
-              'fill-red': reacts.includes(userInfo?.id),
-              'fill-gray': !reacts.includes(userInfo?.id),
+              'fill-red': reacts.includes(userInfo?._id),
+              'fill-gray': !reacts.includes(userInfo?._id),
             }"
           >
             <path
