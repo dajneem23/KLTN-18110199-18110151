@@ -108,7 +108,7 @@ const routes = [
     component: Register,
   },
   {
-    path: '/movie/:filmId/',
+    path: '/movie/:id/',
     name: 'details',
     components: {
       header: Header,
@@ -118,7 +118,7 @@ const routes = [
     props: true,
   },
   {
-    path: '/manga/:mangaId/',
+    path: '/manga/:id/',
     name: 'detailmanga',
     components: {
       header: Header,

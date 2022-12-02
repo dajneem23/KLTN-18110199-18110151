@@ -41,16 +41,12 @@ export default {
   methods: {
     async addWishList(id) {
       if (this.isAuthenticated) {
-        console.log(id);
         const [result, error] = await NewsServices.react(id);
-        console.log([result, error]);
         if (result) {
           const { reacts } = result;
           this.reacts = reacts;
-          // console.log(this.reacts, reacts);
         }
-      }
-      else {
+      } else {
         window.location.href = '/login/';
       }
     },
@@ -66,6 +62,6 @@ export default {
       } else {
         window.location.href = '/login/';
       }
-    }
+    },
   },
 };

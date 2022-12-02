@@ -12,8 +12,13 @@ export default {
   },
   data() {
     return {
-      manga: [],
       lang: 'vi',
+      reacts: [],
+      comments: [],
+      name: '',
+      content: '',
+      description: '',
+      views: 0,
       cmt: {
         source_id: '',
         type: 'manga',
@@ -26,32 +31,28 @@ export default {
   computed: {
     ...mapState(['userInfo', 'isAuthenticated', 'urlStrapiServe']),
   },
-  watch: {
-    data(newData) {
-      if (newData)
-        Object.keys(newData).map((key) => {
-          if (key == '_v') return;
-          this[key] = newData[key];
-        });
-      console.log(this);
-    },
-  },
+  // watch: {
+  //   data(newData) {
+  //     if (newData)
+  //       Object.keys(newData).map((key) => {
+  //         if (key == '_v') return;
+  //         this[key] = newData[key];
+  //       });
+  //     console.log(this);
+  //   },
+  // },
   mounted() {},
+
   async created() {
-    const id = this.$route.params.mangaId;
-    console.log(id);
+    const { id } = this.$route.params;
     const [result, error] = await MangaServices.getById(id);
-    console.log([result, error]);
     if (result) {
       this.manga = result;
-      console.log(this.manga);
       Object.keys(result).map((key) => {
         if (key == '_v') return;
         this[key] = result[key];
       });
     }
-    console.log(this.manga.images);
-    // this.manga.chapters.sort(({ index: a }, { index: b }) => a - b);
   },
   methods: {
     moment,
@@ -60,18 +61,15 @@ export default {
       const result = await CommentServices.comment({
         ...this.cmt,
       });
-      console.log(this.cmt);
       console.log(result);
+      this.comments.push(result[0]);
     },
     // function like manga
     async likeManga(id) {
-      console.log(id);
-      const [result, error] = await NewsServices.react(id);
-      console.log([result, error]);
+      const [result, error] = await MangaServices.react(id);
       if (result) {
         const { reacts } = result;
         this.reacts = reacts;
-        // console.log(this.reacts, reacts);
       }
     },
     // function change chapter
