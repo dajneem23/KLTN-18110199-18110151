@@ -53,7 +53,6 @@ export default {
   async created() {
     const { id } = this.$route.params;
     const [result, error] = await NewsServices.getById(id);
-    console.log([result, error]);
     if (result) {
       this.news = result;
       Object.keys(result).map((key) => {
@@ -136,11 +135,9 @@ export default {
     async addWishList(id) {
       if (this.isAuthenticated) {
         const [result, error] = await NewsServices.react(id);
-        console.log([result, error]);
         if (result) {
           const { reacts } = result;
           this.reacts = reacts;
-          // console.log(this.reacts, reacts);
         }
       } else {
         window.location.href = '/login/';
