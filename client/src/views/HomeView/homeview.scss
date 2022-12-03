@@ -1,5 +1,5 @@
 .homePage {
-  width: 100%;
+  width: 1912px;
   min-height: 92.5vh;
   margin-top: 70px;
   display: flex;
@@ -86,7 +86,7 @@
   }
 }
 .wrapper-home-right {
-  right: 0px;
+  right: 0%;
 }
 .button-to-top {
   width: 50px;
@@ -95,7 +95,7 @@
   position: fixed;
   bottom: 100px;
   right: 100px;
-  z-index: 99;
+  z-index: 2;
   background-color: var(--white);
   border: 2px solid var(--primary-blue_3);
   svg {
@@ -111,7 +111,7 @@
   height: 100%;
   background-color: hsla(0, 0%, 100%, 0.8);
   backdrop-filter: blur(0px);
-  z-index: 999;
+  // z-index: 999;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -125,7 +125,7 @@
     z-index: 1;
   }
   .box-add-story {
-    z-index: 999;
+    // z-index: 999;
   }
   .edit-user-name {
     .input-edit-uname {

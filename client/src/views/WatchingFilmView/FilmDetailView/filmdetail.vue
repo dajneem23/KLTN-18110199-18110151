@@ -82,7 +82,7 @@
         ></textarea>
         <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
-      <div class="cmt-film-box">
+      <div class="cmt-films-box">
         <div v-for="(comment, key) in film?.comments">
           <Commentfilm :data="comment"></Commentfilm>
           <div v-if="comment?.replies">
