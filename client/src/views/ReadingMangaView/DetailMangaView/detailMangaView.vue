@@ -68,7 +68,7 @@
         ></textarea>
         <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
-      <div class="news-cmt-box">
+      <div class="mangas-cmt-box">
         <div v-for="comment in comments">
           <Comment :data="comment"></Comment>
           <div v-if="comment?.replies">

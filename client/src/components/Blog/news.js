@@ -1,4 +1,5 @@
 import Comment from '../Watching/CommentFilm/index.vue';
+import DetailStory from '../../views/HomeView/StoryDetailView/index.vue';
 import { HOME_ITEM } from '../../constants/homeview';
 import { onMounted } from 'vue';
 import { Carousel, Slide } from 'vue-carousel';
@@ -9,6 +10,7 @@ import moment from 'moment';
 export default {
   components: {
     Comment,
+    DetailStory,
     Carousel,
     Slide,
   },
@@ -30,6 +32,7 @@ export default {
       comments: [],
       img: [],
       author: { name: 'Unknown' },
+      isShowDetail: false,
     };
   },
   computed: {
@@ -94,6 +97,12 @@ export default {
     },
     getTime() {
       data.created_at = data.created_at.toLocaleDateString('en-US');
+    },
+    showModel(slug) {
+      this.isShowDetail = true;
+    },
+    hiddenModel() {
+      this.isShowDetail = false;
     },
   },
 };
