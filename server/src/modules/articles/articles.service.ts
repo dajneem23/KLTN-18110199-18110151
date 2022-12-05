@@ -406,6 +406,7 @@ export class NewsService {
             $addFields: {
               votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] },
               ...this.model.$addFields.comments,
+              ...this.model.$addFields.images,
             },
           },
           { $sort: { votes: -1 } },
@@ -437,9 +438,14 @@ export class NewsService {
           {
             $limit: per_page,
           },
+          {
+            $addFields: {
+              ...this.model.$addFields.comments,
+              ...this.model.$addFields.images,
+            },
+          },
           this.model.$lookups.author,
           this.model.$lookups.comments,
-          this.model.$addFields.comments,
           this.model.$lookups.upload_files({
             refTo: 'images',
             reName: 'images',
