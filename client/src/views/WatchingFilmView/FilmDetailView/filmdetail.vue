@@ -84,7 +84,7 @@
       </div>
       <div class="cmt-films-box">
         <div v-for="(comment, key) in film?.comments">
-          <Commentfilm :data="comment"></Commentfilm>
+          <Commentfilm :data="comment" :sourceId="id" flag="film"></Commentfilm>
           <div v-if="comment?.replies">
             <div class="cmt-rep">
               <div v-for="reply in comment.replies">

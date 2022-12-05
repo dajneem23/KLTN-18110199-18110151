@@ -9,7 +9,10 @@
       <div class="header-nav_left">
         <div class="category">
           <router-link :to="HEADER_ITEM.home.path">
-            <div class="category-item" :ref="HEADER_ITEM.home.ref" @click="onHomeBtnClick">
+            <div class="category-item" 
+            :class="{
+                active: isPage == 'home',
+              }" :ref="HEADER_ITEM.home.ref" @click="onHomeBtnClick">
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                   <path
@@ -24,7 +27,10 @@
             <!-- {{ HEADER_ITEM.home.title[lang] }} -->
           </router-link>
           <router-link :to="HEADER_ITEM.news.path">
-            <div class="category-item" :ref="HEADER_ITEM.news.ref" @click="onNewsBtnClick">
+            <div class="category-item" 
+            :class="{
+                active: isPage == 'articles',
+              }" :ref="HEADER_ITEM.news.ref" @click="onNewsBtnClick">
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <path
@@ -39,7 +45,10 @@
             <!-- {{ HEADER_ITEM.home.title[lang] }} -->
           </router-link>
           <router-link :to="HEADER_ITEM.manga.path">
-            <div class="category-item" :ref="HEADER_ITEM.manga.ref" @click="onMangaBtnClick">
+            <div class="category-item" 
+            :class="{
+                active: isPage == 'manga',
+              }" :ref="HEADER_ITEM.manga.ref" @click="onMangaBtnClick">
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                   <path
@@ -56,7 +65,10 @@
           }} -->
           </router-link>
           <router-link :to="HEADER_ITEM.movie.path">
-            <div class="category-item" :ref="HEADER_ITEM.movie.ref" @click="onMovieBtnClick">
+            <div class="category-item" 
+            :class="{
+                active: isPage == 'movie',
+              }" :ref="HEADER_ITEM.movie.ref" @click="onMovieBtnClick">
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
@@ -74,7 +86,14 @@
           }} -->
           </router-link>
           <router-link :to="HEADER_ITEM.chat.path">
-            <div class="category-item" :ref="HEADER_ITEM.chat.ref" @click="onChatBtnClick">
+            <div
+              class="category-item"
+              :class="{
+                active: isPage == 'chat',
+              }"
+              :ref="HEADER_ITEM.chat.ref"
+              @click="onChatBtnClick"
+            >
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
                   <path
@@ -86,6 +105,7 @@
                 {{ HEADER_ITEM.chat.title[lang] }}
               </div>
             </div>
+
             <!-- {{
             HEADER_ITEM.chat.title[lang]
           }} -->
