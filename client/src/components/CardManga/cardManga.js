@@ -6,7 +6,7 @@ export default {
   data() {
     return {
       reacts: [],
-    }
+    };
   },
   computed: {
     ...mapState(['urlStrapiServe']),
@@ -21,7 +21,7 @@ export default {
     },
   },
   mounted() {
-    this.data.images[0].url = this.urlStrapiServe + this.data.images[0].url;
+    // this.data.images[0].url = this.urlStrapiServe + this.data.images[0].url;
   },
   created() {
     if (this.data)

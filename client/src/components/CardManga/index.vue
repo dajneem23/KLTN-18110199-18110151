@@ -3,14 +3,11 @@
     <div class="card-manga">
       <div class="card-left">
         <img
-          :src="
-            // data?.images[0]?.url ||
-            'https://s199.imacdn.com/tt24/2021/10/30/47ff33182df2f70c_8daec582137d9d4f_26698163558364829674.jpg'
-          "
+        :src="`https://zinc-union-365709-strapi-63see6q63q-uc.a.run.app/${images[0].url}`"
           alt=""
         />
         <div class="card-numchap">
-          <span>{{ data?.chapters?.length }}</span>
+          <span>{{ chapters?.length }}</span>
         </div>
       </div>
       <div class="card-right">

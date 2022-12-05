@@ -3,10 +3,7 @@
     <div class="bgc-black">
       <div class="screen-reading">
         <div class="img-manga_item" v-for="image of images">
-          <img
-            :src="'https://s199.imacdn.com/tt24/2020/08/03/fcc63590e507b7d6_fa50906c3ec31a8f_387351596433343245957.jpg'"
-            alt=""
-          />
+          <img :src="`https://zinc-union-365709-strapi-63see6q63q-uc.a.run.app/${image.url}`" alt="" />
         </div>
       </div>
       <!-- <div class="button-change-chapter">

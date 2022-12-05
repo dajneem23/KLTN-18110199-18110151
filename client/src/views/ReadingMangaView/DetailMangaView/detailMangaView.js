@@ -12,6 +12,7 @@ export default {
   },
   data() {
     return {
+      manga: [],
       lang: 'vi',
       reacts: [],
       comments: [],
@@ -41,7 +42,9 @@ export default {
   //     console.log(this);
   //   },
   // },
-  mounted() {},
+  mounted() {
+    console.log(this.manga);
+  },
 
   async created() {
     const { id } = this.$route.params;
