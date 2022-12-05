@@ -97,7 +97,7 @@
       </div>
       <div class="news-cmt-box">
         <div v-for="comment in comments">
-          <Comment :data="comment"></Comment>
+          <Comment :data="comment" :sourceId="id" flag="detail_articles"></Comment>
           <div v-if="comment?.replies">
             <div class="cmt-rep">
               <div v-for="reply in comment.replies">

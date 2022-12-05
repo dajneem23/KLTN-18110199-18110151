@@ -99,10 +99,10 @@
   </div>
       <div class="news-cmt-box" >
         <div v-for="comment of comments">
-          <Comment :data="comment"></Comment>
-          <div v-if="comment?.reply">
+          <Comment :data="comment" :sourceId="id" flag="detail_story"></Comment>
+          <div v-if="comment?.replies">
             <div class="cmt-rep" >
-              <div v-for="reply in comment.reply">
+              <div v-for="reply in comment.replies">
                 <Comment :data="reply"></Comment>
                 <div v-if="reply?.reply_2">
                   <div class="cmt-rep" >

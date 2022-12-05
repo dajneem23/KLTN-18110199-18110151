@@ -92,8 +92,7 @@ export default {
       const result = await CommentServices.comment({
         ...this.cmt,
       });
-      console.log(this.cmt);
-      console.log(result);
+      this.comments.push(result[0]);
     },
     getTime() {
       data.created_at = data.created_at.toLocaleDateString('en-US');

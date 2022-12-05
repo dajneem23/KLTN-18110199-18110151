@@ -97,18 +97,11 @@
           </div>
           <div class="news-cmt-box">
             <div v-for="comment of comments">
-              <Comment :data="comment"></Comment>
-              <div v-if="comment?.reply">
+              <Comment :data="comment" :sourceId="id" flag="card_stories"></Comment>
+              <div v-if="comment?.replies">
                 <div class="cmt-rep">
-                  <div v-for="reply in comment.reply">
-                    <Comment :data="reply"></Comment>
-                    <div v-if="reply?.reply_2">
-                      <div class="cmt-rep">
-                        <div v-for="reply_2 in reply.reply_2">
-                          <Comment :data="reply_2"></Comment>
-                        </div>
-                      </div>
-                    </div>
+                  <div v-for="reply of comment.replies">
+                    <Comment :data="reply" :sourceId="id"></Comment>
                   </div>
                 </div>
               </div>
