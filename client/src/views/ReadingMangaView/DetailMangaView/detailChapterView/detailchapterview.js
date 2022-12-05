@@ -1,9 +1,24 @@
 import { MangaServices } from '@/services';
+import { CommentServices } from '@/services';
+import Comment from '../../../../components/Watching/CommentFilm/index.vue';
 export default {
   data() {
     return {
       chapter: [],
+      comments: [],
+      name: '',
+      images: [],
+      cmt: {
+        source_id: '',
+        type: 'manga-chapters',
+        content: '',
+        images: [],
+        reply_to: null,
+      },
     };
+  },
+  components: {
+    Comment,
   },
   watch: {
     data(newData) {
@@ -12,8 +27,10 @@ export default {
           if (key == '_v') return;
           this[key] = newData[key];
         });
-      console.log(this);
     },
+  },
+  mounted() {
+    console.log(this.chapter);
   },
   async created() {
     const id = this.$route.params.id;
@@ -29,14 +46,21 @@ export default {
         this[key] = result[key];
       });
     }
-    console.log(this.chapter)
   },
   methods: {
+    async sendCmt() {
+      this.cmt.source_id = this.chapter.id;
+      const result = await CommentServices.comment({
+        ...this.cmt,
+      });
+      console.log(result);
+      this.comments.push(result[0]);
+    },
     goToPrev(index) {
       console.log(index);
     },
     goToNext(index) {
       console.log(index);
-    }
+    },
   },
 };

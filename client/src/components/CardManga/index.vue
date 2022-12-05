@@ -1,14 +1,17 @@
 <template>
-  <router-link :to="{ name: 'detailmanga', params: { mangaId: data.slug, manaData: data } }">
+  <router-link :to="{ name: 'detailmanga', params: { id: slug, manga: data } }">
     <div class="card-manga">
       <div class="card-left">
-        <img :src="data?.images[0]?.url" alt="" />
+        <img
+        :src="`https://zinc-union-365709-strapi-63see6q63q-uc.a.run.app/${images[0].url}`"
+          alt=""
+        />
         <div class="card-numchap">
-          <span>{{ data?.chapters?.length }}</span>
+          <span>{{ chapters?.length }}</span>
         </div>
       </div>
       <div class="card-right">
-        <div class="card-title-manga">{{ data.name }}</div>
+        <div class="card-title-manga">{{ name }}</div>
         <div class="card-manga-info text-dark-gray"></div>
       </div>
     </div>

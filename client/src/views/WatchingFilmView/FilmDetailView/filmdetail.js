@@ -14,6 +14,12 @@ export default {
       filmData: [],
       lang: 'vi',
       FILMDETAIL_ITEM,
+      reacts: [],
+      comments: [],
+      name: '',
+      content: '',
+      description: '',
+      views: 0,
       cmt: {
         source_id: '',
         type: 'films',
@@ -34,12 +40,11 @@ export default {
           if (key == '_v') return;
           this[key] = newData[key];
         });
-      console.log(this);
     },
   },
 
   async created() {
-    const id = this.$route.params.filmId;
+    const { id } = this.$route.params;
     console.log(id);
     const [result, error] = await FilmServices.getById(id);
     console.log([result, error]);
@@ -62,8 +67,8 @@ export default {
       const result = await CommentServices.comment({
         ...this.cmt,
       });
-      console.log(this.cmt);
-      console.log(result);
+      this.comments.push(result[0]);
+      this.cmt.content = '';
     },
     async likeFilms(slug) {
       if (this.isAuthenticated) {
@@ -76,6 +81,6 @@ export default {
       } else {
         window.location.href = '/login/';
       }
-    }
+    },
   },
 };

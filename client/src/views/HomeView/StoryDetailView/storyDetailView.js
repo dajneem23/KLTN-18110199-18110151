@@ -2,9 +2,20 @@ import Comment from '../../../components/Watching/CommentFilm/index.vue';
 import { HOME_ITEM } from '../../../constants/homeview';
 import { Carousel, Slide } from 'vue-carousel';
 import { StoriesService } from '@/services';
+import { CommentServices } from '@/services';
 import { mapState } from 'vuex';
 import moment from 'moment';
 export default {
+  props: {
+    Slug_story: String,
+    isShowDetail: Boolean,
+    hiddenModel: {
+      type: Function,
+    },
+    functionComment: {
+      type: Function,
+    },
+  },
   components: {
     Comment,
     Carousel,
@@ -23,11 +34,17 @@ export default {
       images: [],
       author: { name: 'Unknown' },
       created_at: new Date(),
-      cmt: '',
+      cmt: {
+        source_id: '',
+        type: 'stories',
+        content: '',
+        images: [],
+        reply_to: null,
+      },
     };
   },
   mounted() {
-    console.log(this.story);
+    console.log(this.Slug_story);
   },
   methods: {
     moment,
@@ -39,10 +56,17 @@ export default {
         this.reacts = reacts;
       }
     },
-    sendCmt() {},
+    async sendCmt() {
+      this.cmt.source_id = this.id;
+      const result = await CommentServices.comment({
+        ...this.cmt,
+      });
+      console.log(this.cmt);
+      console.log(result);
+    },
   },
   async created() {
-    const { id } = this.$route.params;
+    const id = this.Slug_story;
     const [result, error] = await StoriesService.getById(id);
     if (result) {
       this.story = result;
@@ -55,5 +79,13 @@ export default {
         this[key] = result[key];
       });
     }
+
+    let that = this;
+
+    document.addEventListener('keyup', function (evt) {
+      if (evt.keyCode === 27) {
+        that.hiddenModel();
+      }
+    });
   },
 };

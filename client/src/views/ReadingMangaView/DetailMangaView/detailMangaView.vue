@@ -1,76 +1,61 @@
 <template>
   <div class="detailmanga-wrapper bgc-white">
-    <!-- <div class="bgc-black" v-if="!manga?.chapters">
-      <div class="screen-reading">
-        <carousel perPage="2">
-        <div class="img-manga_item">
-          <img src="https://www.themoviedb.org/t/p/w220_and_h330_face/bxp5IUY05jLGeZ5bW85W2NF6Rgi.jpg" alt="" />
-        </div>
-        <div class="img-manga_item">
-          <img src="https://www.themoviedb.org/t/p/w220_and_h330_face/bxp5IUY05jLGeZ5bW85W2NF6Rgi.jpg" alt="" />
-        </div>
-        <div class="img-manga_item">
-          <img src="https://www.themoviedb.org/t/p/w220_and_h330_face/bxp5IUY05jLGeZ5bW85W2NF6Rgi.jpg" alt="" />
-        </div>
-        <div class="img-manga_item">
-          <img src="https://www.themoviedb.org/t/p/w220_and_h330_face/bxp5IUY05jLGeZ5bW85W2NF6Rgi.jpg" alt="" />
-        </div>
-        <div class="img-manga_item">
-          <img src="https://www.themoviedb.org/t/p/w220_and_h330_face/bxp5IUY05jLGeZ5bW85W2NF6Rgi.jpg" alt="" />
-        </div>
-        <div class="img-manga_item">
-          <img src="https://www.themoviedb.org/t/p/w220_and_h330_face/bxp5IUY05jLGeZ5bW85W2NF6Rgi.jpg" alt="" />
-        </div>
-      </div>
-      </carousel>
-    </div> -->
     <div class="manga-info">
       <div class="manga-box-1">
-        <!-- <img class="manga-img" :src="manga.images[0]" alt="" /> -->
+        <img class="manga-img" src="" alt="" />
       </div>
       <div class="manga-box-2">
-        <div class="manga-title">{{ manga.name }}</div>
-        <div class="manga-info-des">
-          <div>
-            <div class="text-dark-gray manga-des-item">{{ manga.views }} lượt xem</div>
-            <button class="btn-like bgc-blue" @click="likeManga(manga.id)">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="fill-white">
-                <path
-                  d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"
-                />
-              </svg>
-              <span class="cl-white"> Like </span>
-            </button>
-          </div>
-          <!-- <div>
-            <div class="text-dark-gray manga-des-item">
-              {{ mangaDETAIL_ITEM.category.title[lang] }}:
-              <span class="text-black">Phim hài</span>
-            </div>
-          </div>
-          <div>
-            <div class="text-dark-gray manga-des-item">
-              {{ mangaDETAIL_ITEM.nation.title[lang] }}:
-              <span class="text-black">Việt Nam</span>
-            </div>
-          </div> -->
-          <div>
-            <div class="text-dark-gray manga-des-item">
-              <!-- {{ mangaDETAIL_ITEM.year.title[lang] }}: -->
-              <span class="text-black"> {{ moment(created_at).year() }} </span>
-            </div>
-          </div>
+        <div class="manga-title">{{ name }}</div>
+        <div class="film-info-des row">
+          <table>
+            <tr>
+              <td class="col-md-4">Thể loại</td>
+              <td class="col-md-8">{{ categories.join(' ') }}</td>
+            </tr>
+            <tr>
+              <td class="col-md-4">Năm phát hành</td>
+              <td class="col-md-8">{{ createdAt }}</td>
+            </tr>
+            <tr>
+              <td class="col-md-4">Thời lượng</td>
+              <td class="col-md-8">112 phút</td>
+            </tr>
+            <tr>
+              <td class="col-md-4">Luot xem</td>
+              <td class="col-md-8">{{ views }}</td>
+            </tr>
+            <tr>
+              <div class="col-md-4">
+                <button class="btn-like bgc-blue" @click="likeManga(slug)">
+                  <svg
+                    id="heart-Like"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                    :class="{
+                      'fill-red': reacts.includes(userInfo?._id),
+                      'fill-white': !reacts.includes(userInfo?._id),
+                    }"
+                  >
+                    <path
+                      d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"
+                    />
+                  </svg>
+                  <span class="cl-white"> Like </span>
+                </button>
+              </div>
+            </tr>
+          </table>
         </div>
 
         <div>
-          {{ manga.description }}
+          {{ description }}
         </div>
       </div>
     </div>
     <div class="manga-chapter">
-      <div v-for="(item,index) in manga.chapters">
+      <div v-for="(item, index) in chapters">
         <router-link :to="{ name: 'detailchapter', params: { id: item.slug, chapterData: item } }">
-          <button @click="goToChapter(item.slug)">{{ index+1 }}</button>
+          <button @click="goToChapter(item.slug)">{{ index + 1 }}</button>
         </router-link>
       </div>
     </div>
@@ -85,9 +70,9 @@
         ></textarea>
         <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
-      <div class="news-cmt-box">
-        <div v-for="comment in manga.comments">
-          <Comment :data="comment"></Comment>
+      <div class="mangas-cmt-box">
+        <div v-for="comment in comments">
+          <Comment :data="comment" :sourceId="id" flag="detail_manga"></Comment>
           <div v-if="comment?.replies">
             <div class="cmt-rep">
               <div v-for="reply in comment.replies">

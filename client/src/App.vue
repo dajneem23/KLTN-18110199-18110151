@@ -19,7 +19,7 @@ export default {
 </script>
 <style lang="scss">
 .app {
-  max-width: 1912px;
+  max-width: 1917px;
   background: var(--white);
 }
 </style>
