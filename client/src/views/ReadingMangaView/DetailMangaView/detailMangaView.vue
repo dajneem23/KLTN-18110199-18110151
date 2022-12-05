@@ -2,12 +2,7 @@
   <div class="detailmanga-wrapper bgc-white">
     <div class="manga-info">
       <div class="manga-box-1">
-        <img
-          class="manga-img"
-          :src="// manga.images[0]
-          'https://s199.imacdn.com/tt24/2021/10/30/47ff33182df2f70c_8daec582137d9d4f_26698163558364829674.jpg'"
-          alt=""
-        />
+        <img class="manga-img" src="" alt="" />
       </div>
       <div class="manga-box-2">
         <div class="manga-title">{{ name }}</div>
