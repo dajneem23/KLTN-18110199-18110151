@@ -206,6 +206,7 @@ type Category {
   updatedAt: DateTime!
   name: String!
   slug: String!
+  weight: Int
 }
 
 type CategoryConnection {
@@ -217,6 +218,26 @@ type CategoryConnection {
 type CategoryAggregator {
   count: Int
   totalCount: Int
+  sum: CategoryAggregatorSum
+  avg: CategoryAggregatorAvg
+  min: CategoryAggregatorMin
+  max: CategoryAggregatorMax
+}
+
+type CategoryAggregatorSum {
+  weight: Float
+}
+
+type CategoryAggregatorAvg {
+  weight: Float
+}
+
+type CategoryAggregatorMin {
+  weight: Float
+}
+
+type CategoryAggregatorMax {
+  weight: Float
 }
 
 type CategoryGroupBy {
@@ -226,6 +247,7 @@ type CategoryGroupBy {
   updatedAt: [CategoryConnectionUpdatedAt]
   name: [CategoryConnectionName]
   slug: [CategoryConnectionSlug]
+  weight: [CategoryConnectionWeight]
 }
 
 type CategoryConnectionId {
@@ -258,9 +280,15 @@ type CategoryConnectionSlug {
   connection: CategoryConnection
 }
 
+type CategoryConnectionWeight {
+  key: Int
+  connection: CategoryConnection
+}
+
 input CategoryInput {
   name: String!
   slug: String!
+  weight: Int
   created_by: ID
   updated_by: ID
 }
@@ -268,6 +296,7 @@ input CategoryInput {
 input editCategoryInput {
   name: String
   slug: String
+  weight: Int
   created_by: ID
   updated_by: ID
 }
@@ -829,10 +858,10 @@ type Stories {
   updatedAt: DateTime!
   title: String
   content: String
-  image: UploadFile
   slug: String!
   author: UsersPermissionsUser
   published_at: DateTime
+  images(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
   reacts(sort: String, limit: Int, start: Int, where: JSON): [Article]
   categories(sort: String, limit: Int, start: Int, where: JSON): [Category]
 }
@@ -855,7 +884,6 @@ type StoriesGroupBy {
   updatedAt: [StoriesConnectionUpdatedAt]
   title: [StoriesConnectionTitle]
   content: [StoriesConnectionContent]
-  image: [StoriesConnectionImage]
   slug: [StoriesConnectionSlug]
   author: [StoriesConnectionAuthor]
   published_at: [StoriesConnectionPublished_at]
@@ -891,11 +919,6 @@ type StoriesConnectionContent {
   connection: StoriesConnection
 }
 
-type StoriesConnectionImage {
-  key: ID
-  connection: StoriesConnection
-}
-
 type StoriesConnectionSlug {
   key: String
   connection: StoriesConnection
@@ -914,7 +937,7 @@ type StoriesConnectionPublished_at {
 input StoryInput {
   title: String
   content: String
-  image: ID
+  images: [ID]
   reacts: [ID]
   slug: String!
   author: ID
@@ -927,7 +950,7 @@ input StoryInput {
 input editStoryInput {
   title: String
   content: String
-  image: ID
+  images: [ID]
   reacts: [ID]
   slug: String
   author: ID
@@ -1509,7 +1532,7 @@ input editComponentSharedSeoInput {
   shareImage: ID
 }
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Article | ArticleConnection | ArticleAggregator | ArticleGroupBy | ArticleConnectionId | ArticleConnection_id | ArticleConnectionCreatedAt | ArticleConnectionUpdatedAt | ArticleConnectionName | ArticleConnectionDescription | ArticleConnectionContent | ArticleConnectionSlug | ArticleConnectionAuthor | ArticleConnectionDeleted | ArticleConnectionPublished_at | createArticlePayload | updateArticlePayload | deleteArticlePayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnection_id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CategoryConnectionSlug | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Films | FilmsConnection | FilmsAggregator | FilmsGroupBy | FilmsConnectionId | FilmsConnection_id | FilmsConnectionCreatedAt | FilmsConnectionUpdatedAt | FilmsConnectionName | FilmsConnectionDescription | FilmsConnectionImage | FilmsConnectionSlug | FilmsConnectionDeleted | FilmsConnectionAuthor | FilmsConnectionViews | FilmsConnectionPublished_at | createFilmPayload | updateFilmPayload | deleteFilmPayload | Global | updateGlobalPayload | deleteGlobalPayload | Homepage | updateHomepagePayload | deleteHomepagePayload | MangaChapters | MangaChaptersConnection | MangaChaptersAggregator | MangaChaptersAggregatorSum | MangaChaptersAggregatorAvg | MangaChaptersAggregatorMin | MangaChaptersAggregatorMax | MangaChaptersGroupBy | MangaChaptersConnectionId | MangaChaptersConnection_id | MangaChaptersConnectionCreatedAt | MangaChaptersConnectionUpdatedAt | MangaChaptersConnectionName | MangaChaptersConnectionSlug | MangaChaptersConnectionMangas | MangaChaptersConnectionDeleted | MangaChaptersConnectionIndex | MangaChaptersConnectionPublished_at | createMangaChapterPayload | updateMangaChapterPayload | deleteMangaChapterPayload | Mangas | MangasConnection | MangasAggregator | MangasGroupBy | MangasConnectionId | MangasConnection_id | MangasConnectionCreatedAt | MangasConnectionUpdatedAt | MangasConnectionName | MangasConnectionDescription | MangasConnectionDeleted | MangasConnectionAuthor | MangasConnectionSlug | MangasConnectionPublished_at | createMangasPayload | updateMangasPayload | deleteMangasPayload | Stories | StoriesConnection | StoriesAggregator | StoriesGroupBy | StoriesConnectionId | StoriesConnection_id | StoriesConnectionCreatedAt | StoriesConnectionUpdatedAt | StoriesConnectionTitle | StoriesConnectionContent | StoriesConnectionImage | StoriesConnectionSlug | StoriesConnectionAuthor | StoriesConnectionPublished_at | createStoryPayload | updateStoryPayload | deleteStoryPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | deleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | createUserPayload | updateUserPayload | deleteUserPayload | ComponentSectionsHero | ComponentSharedSeo
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Article | ArticleConnection | ArticleAggregator | ArticleGroupBy | ArticleConnectionId | ArticleConnection_id | ArticleConnectionCreatedAt | ArticleConnectionUpdatedAt | ArticleConnectionName | ArticleConnectionDescription | ArticleConnectionContent | ArticleConnectionSlug | ArticleConnectionAuthor | ArticleConnectionDeleted | ArticleConnectionPublished_at | createArticlePayload | updateArticlePayload | deleteArticlePayload | Category | CategoryConnection | CategoryAggregator | CategoryAggregatorSum | CategoryAggregatorAvg | CategoryAggregatorMin | CategoryAggregatorMax | CategoryGroupBy | CategoryConnectionId | CategoryConnection_id | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | CategoryConnectionSlug | CategoryConnectionWeight | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Films | FilmsConnection | FilmsAggregator | FilmsGroupBy | FilmsConnectionId | FilmsConnection_id | FilmsConnectionCreatedAt | FilmsConnectionUpdatedAt | FilmsConnectionName | FilmsConnectionDescription | FilmsConnectionImage | FilmsConnectionSlug | FilmsConnectionDeleted | FilmsConnectionAuthor | FilmsConnectionViews | FilmsConnectionPublished_at | createFilmPayload | updateFilmPayload | deleteFilmPayload | Global | updateGlobalPayload | deleteGlobalPayload | Homepage | updateHomepagePayload | deleteHomepagePayload | MangaChapters | MangaChaptersConnection | MangaChaptersAggregator | MangaChaptersAggregatorSum | MangaChaptersAggregatorAvg | MangaChaptersAggregatorMin | MangaChaptersAggregatorMax | MangaChaptersGroupBy | MangaChaptersConnectionId | MangaChaptersConnection_id | MangaChaptersConnectionCreatedAt | MangaChaptersConnectionUpdatedAt | MangaChaptersConnectionName | MangaChaptersConnectionSlug | MangaChaptersConnectionMangas | MangaChaptersConnectionDeleted | MangaChaptersConnectionIndex | MangaChaptersConnectionPublished_at | createMangaChapterPayload | updateMangaChapterPayload | deleteMangaChapterPayload | Mangas | MangasConnection | MangasAggregator | MangasGroupBy | MangasConnectionId | MangasConnection_id | MangasConnectionCreatedAt | MangasConnectionUpdatedAt | MangasConnectionName | MangasConnectionDescription | MangasConnectionDeleted | MangasConnectionAuthor | MangasConnectionSlug | MangasConnectionPublished_at | createMangasPayload | updateMangasPayload | deleteMangasPayload | Stories | StoriesConnection | StoriesAggregator | StoriesGroupBy | StoriesConnectionId | StoriesConnection_id | StoriesConnectionCreatedAt | StoriesConnectionUpdatedAt | StoriesConnectionTitle | StoriesConnectionContent | StoriesConnectionSlug | StoriesConnectionAuthor | StoriesConnectionPublished_at | createStoryPayload | updateStoryPayload | deleteStoryPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | deleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionCreatedAt | UsersPermissionsUserConnectionUpdatedAt | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionAvatar | createUserPayload | updateUserPayload | deleteUserPayload | ComponentSectionsHero | ComponentSharedSeo
 
 input InputID {
   id: ID!
