@@ -61,8 +61,13 @@ export default {
       const result = await CommentServices.comment({
         ...this.cmt,
       });
-      console.log(this.cmt);
-      console.log(result);
+      const [result_2, error] = await StoriesService.getById(this.slug);
+      console.log([result_2, error]);
+      if (result) {
+        this.comments.push(result_2.comments[result_2.comments.length - 1]);
+        // this.comments = result_2.comments;
+      }
+      this.cmt.content = '';
     },
   },
   async created() {

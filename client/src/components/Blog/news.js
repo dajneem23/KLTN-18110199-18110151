@@ -7,6 +7,7 @@ import { StoriesService } from '@/services';
 import { CommentServices } from '@/services';
 import { mapState } from 'vuex';
 import moment from 'moment';
+
 export default {
   components: {
     Comment,
@@ -92,7 +93,12 @@ export default {
       const result = await CommentServices.comment({
         ...this.cmt,
       });
-      this.comments.push(result[0]);
+      const [result_2, error] = await StoriesService.getById(this.data.slug);
+      console.log([result_2, error]);
+      if (result) {
+        this.comments.push(result_2.comments[result_2.comments.length - 1]);
+      }
+      this.cmt.content = '';
     },
     getTime() {
       data.created_at = data.created_at.toLocaleDateString('en-US');

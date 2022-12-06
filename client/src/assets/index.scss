@@ -153,6 +153,13 @@ b-list-group-item {
   // justify-content: center;
   // align-items: center;
 }
+.toastify-wrapper {
+  position: absolute;
+  width: 400px;
+  height: 100px;
+  right: 20px;
+  bottom: 20px;
+}
 /*-----------------------------------------*/
 ::-webkit-scrollbar {
   height: 7px;
