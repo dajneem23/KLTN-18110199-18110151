@@ -64,8 +64,12 @@ export default {
       const result = await CommentServices.comment({
         ...this.cmt,
       });
-      console.log(result);
-      this.comments.push(result[0]);
+      const [result_2, error] = await MangaServices.getById(this.manga.slug);
+      console.log([result_2, error]);
+      if (result) {
+        this.comments.push(result_2.comments[result_2.comments.length-1]);
+        // this.comments = result_2.comments;
+      }
     },
     // function like manga
     async likeManga(id) {

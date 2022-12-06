@@ -1,7 +1,11 @@
+import Toastify from '../../components/ToastifyCustom/index.vue';
 import { REGISTER_ITEM } from '../../constants/registerpage';
 import { AuthService } from '@/services';
 export default {
   name: 'LoginView',
+  components: {
+    Toastify,
+  },
   data() {
     return {
       lang: 'vi',
@@ -10,9 +14,11 @@ export default {
         email: '',
         password: '',
         username: '',
-        phone: '094100117  ',
+        phone: '094100117',
       },
       passWordConfirm: '',
+      isSuccess: false,
+      isWarnning: false,
     };
   },
   methods: {
@@ -57,11 +63,20 @@ export default {
       const [result, error] = await AuthService.register(this.account);
       console.log([result, error]);
       if (result) {
-        console.log('Đăng ký thành công !');
-        const { user } = result;
-        console.log(user);
+        this.isSuccess = true;
+        this.account.username = '';
+        this.account.email = '';
+        this.account.password = '';
+        this.passWordConfirm = '';
+        setTimeout(() => {
+          this.isSuccess = false;
+        }, 2000);
+      } else {
+        this.isWarnning = true;
+        setTimeout(() => {
+          this.isWarnning = false;
+        }, 2000);
       }
-      console.log(this.account);
     },
   },
 };

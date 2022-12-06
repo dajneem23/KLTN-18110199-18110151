@@ -1,4 +1,5 @@
 import { LOGIN_ITEM } from '../../constants/loginpage';
+import Toastify from '../../components/ToastifyCustom/index.vue';
 import { AuthService } from '@/services';
 import { mapState } from 'vuex';
 export default {
@@ -11,7 +12,12 @@ export default {
         username: '',
         password: '',
       },
+      isSuccess: false,
+      isWarnning: false,
     };
+  },
+  components: {
+    Toastify,
   },
   computed: {
     ...mapState(['userInfo']),
@@ -42,14 +48,22 @@ export default {
       });
       console.log([result, error]);
       if (result) {
-        console.log('Đăng nhập thành công !');
+        this.isSuccess = true;
         const { user } = result;
         this.$store.commit('setUserInfo', user);
         this.$store.commit('setIsAuthenticated', true);
         console.log(this.$store.state.isAuthenticated);
-        this.$router.push('/');
+        setTimeout(() => {
+          this.isSuccess = false;
+          this.$router.push('/');
+        }, 2000);
+      } else {
+        this.isWarnning = true;
+        setTimeout(() => {
+          this.isWarnning = false;
+        }, 2000);
       }
-      console.log(this.account);
+      
     },
   },
 };

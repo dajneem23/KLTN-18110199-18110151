@@ -166,9 +166,9 @@ const routes = [
       footer: Footer,
     },
     props: true,
-    // beforeEnter: (to, from, next) => {
-    //   authenticate(to, from, next) ? next() : next('/login');
-    // },
+    beforeEnter: (to, from, next) => {
+      authenticate(to, from, next) ? next() : next('/login');
+    },
   },
   {
     path: '/create-story',

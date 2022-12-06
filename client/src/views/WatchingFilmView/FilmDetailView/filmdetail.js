@@ -63,12 +63,19 @@ export default {
   methods: {
     moment,
     async sendCmt() {
+      if (this.cmt.content !== '') { 
       this.cmt.source_id = this.film.id;
       const result = await CommentServices.comment({
         ...this.cmt,
       });
-      this.comments.push(result[0]);
-      this.cmt.content = '';
+      const [result_2, error] = await FilmServices.getById(this.film.slug);
+      console.log([result_2, error]);
+      if (result) {
+        this.comments.push(result_2.comments[result_2.comments.length-1]);
+        // this.comments = result_2.comments;
+      }
+        this.cmt.content = '';
+      }
     },
     async likeFilms(slug) {
       if (this.isAuthenticated) {

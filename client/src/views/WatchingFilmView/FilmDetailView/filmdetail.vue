@@ -22,9 +22,8 @@
           <table>
             <tr>
               <td class="col-md-4">Thể loại</td>
-              <td class="col-md-8">{{ film.categories.join(' ') }}</td>
+              <td class="col-md-8">{{ film?.categories?.join(' ') }}</td>
             </tr>
-            {{}}
             <tr>
               <td class="col-md-4">Năm phát hành</td>
               <td class="col-md-8">{{ film.createdAt }}</td>
