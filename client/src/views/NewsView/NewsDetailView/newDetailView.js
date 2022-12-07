@@ -29,6 +29,7 @@ export default {
       description: '',
       reacts: [],
       author: {},
+      createdAt:'',
     };
   },
   computed: {
@@ -85,7 +86,7 @@ export default {
       });
       const [result_2, error] = await NewsServices.getById(this.news.slug);
       console.log([result_2, error]);
-      if (result) {
+      if (result_2) {
         this.comments.push(result_2.comments[result_2.comments.length - 1]);
         // this.comments = result_2.comments;
       }
@@ -100,33 +101,41 @@ export default {
         const [result, error] = await NewsServices.upvote(id);
         console.log([result, error]);
         if (result) {
-          const { up_votes } = result;
-          this.up_votes = up_votes;
+          // const { up_votes } = result;
+          // this.up_votes = up_votes;
         }
       } else {
         window.location.href = '/login/';
       }
-
+      
+      const [result_2, error] = await NewsServices.getById(id); 
+      console.log([result_2, error]);
+      if (result_2) {
+        this.up_votes = result_2.up_votes;
+        this.down_votes = result_2.down_votes;
+      }
       if (this.down_votes.includes(this.userInfo._id)) {
         let down_vote = document.getElementById('triangle-down');
         down_vote.classList.remove('down-vote');
         let up_vote = document.getElementById('triangle-up');
         up_vote.classList.add('up-vote');
       }
-      let vote_count = document.getElementById('voteCount');
-      vote_count.innerText = this.up_votes.length - this.down_votes.length;
     },
     async downVote(id) {
       if (this.isAuthenticated) {
         const [result, error] = await NewsServices.downvote(id);
-        console.log([result, error]);
         if (result) {
-          const { down_votes } = result;
-          this.down_votes = down_votes;
-          console.log(this.down_votes, down_votes);
+          // const { down_votes } = result;
+          // this.down_votes = down_votes;
         }
       } else {
         window.location.href = '/login/';
+      }
+      const [result_2, error] = await NewsServices.getById(id);
+      console.log([result_2, error]);
+      if (result_2) {
+        this.up_votes = result_2.up_votes;
+        this.down_votes = result_2.down_votes;
       }
 
       if (this.up_votes.includes(this.userInfo._id)) {
@@ -135,7 +144,6 @@ export default {
         let up_vote = document.getElementById('triangle-up');
         up_vote.classList.remove('up-vote');
       }
-      vote_count.innerText = this.up_votes.length - this.down_votes.length;
     },
     async addWishList(id) {
       if (this.isAuthenticated) {

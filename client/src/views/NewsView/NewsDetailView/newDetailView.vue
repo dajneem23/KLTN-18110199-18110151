@@ -67,7 +67,7 @@
       </div>
     </transition>
     <div class="news-content__box">
-      <div class="news-category text-dark-gray">{{ tags }}</div>
+      <div class="news-category text-dark-gray" v-for="category in categories">{{ category.slug }}</div>
       <div class="news-name">
         <h1>{{ name }}</h1>
       </div>

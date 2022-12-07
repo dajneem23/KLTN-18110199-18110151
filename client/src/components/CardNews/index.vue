@@ -8,7 +8,7 @@
     <div class="card-body-news">
       <div class="card-body__category">
         <!-- <div class="body__category">{{ tags }}</div> -->
-        <div class="body__tym" @click="addWishList(slug)">
+        <div class="body__tym">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
@@ -56,7 +56,7 @@
             {{ (up_votes?.length || 0) - (down_votes?.length || 0) }}
           </div>
           <img src="../../assets/Icon/comment.svg" alt="" class="" />
-          <!-- {{ comments?.length || 0 }} -->
+          {{ comments?.length || 0 }}
         </div>
       </div>
     </div>
