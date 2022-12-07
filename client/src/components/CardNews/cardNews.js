@@ -12,6 +12,7 @@ export default {
     return {
       up_votes: [],
       reacts: [],
+      author:[]
     };
   },
   computed: {

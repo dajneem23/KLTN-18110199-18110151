@@ -28,7 +28,7 @@
         Trả lời
       </button>
     </div>
-    <div class="news-write-cmt hidden-cmt" :id="(flag)">
+    <div class="news-write-cmt hidden-cmt" :id="(flag+id)">
       <textarea
         class="input-cmt"
         type="text"

@@ -70,6 +70,7 @@ export default {
         this.comments.push(result_2.comments[result_2.comments.length-1]);
         // this.comments = result_2.comments;
       }
+      this.cmt.content = '';
     },
     // function like manga
     async likeManga(id) {

@@ -41,7 +41,7 @@ export default {
       console.log('Like like');
     },
     repCmt() {
-      const repCmtBox = document.getElementById(this.flag);
+      const repCmtBox = document.getElementById(this.flag+ this.data.id);
       if (repCmtBox.style.display == 'none') {
         repCmtBox.style.display = 'flex';
       } else {
@@ -54,7 +54,7 @@ export default {
         ...this.cmt,
       });
       this.replies.push(result[0]);
-      const repCmtBox = document.getElementById(this.flag);
+      const repCmtBox = document.getElementById(this.flag+this.data.id);
       if (repCmtBox.style.display == 'none') {
         repCmtBox.style.display = 'flex';
       } else {
