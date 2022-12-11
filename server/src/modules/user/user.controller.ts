@@ -33,6 +33,34 @@ export class UserController {
     res.status(httpStatusCode.OK).json(user);
   }
 
+  @Patch('/users/follow_user/:id', [protect()])
+  async followUser(
+    @Res() res: Response,
+    @Body() body: any,
+    @Auth() auth: JWTPayload,
+    @Params() params: { id: string },
+  ) {
+    const user = await this.userService.followUser({
+      _id: params.id,
+      _subject: auth._id,
+      _content: {},
+    });
+    res.status(httpStatusCode.OK).json(user);
+  }
+  @Patch('/users/follow_category/:id', [protect()])
+  async followCategory(
+    @Res() res: Response,
+    @Body() body: any,
+    @Auth() auth: JWTPayload,
+    @Params() params: { id: string },
+  ) {
+    const user = await this.userService.followCategory({
+      _id: params.id,
+      _subject: auth._id,
+      _content: {},
+    });
+    res.status(httpStatusCode.OK).json(user);
+  }
   // ----------------------------------------------------------------
   // PRIVATE ROUTES
   // ----------------------------------------------------------------

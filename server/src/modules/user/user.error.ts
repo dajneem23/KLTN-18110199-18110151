@@ -29,6 +29,15 @@ const errors = Object.freeze({
       vi: 'Không thể xóa tài khoản Admin',
     },
   },
+  CATEGORY_NOT_FOUND: {
+    message: 'Category does not exist',
+    code: null,
+    status: httpStatusCode.NOT_FOUND,
+    isPublic: true,
+    locales: {
+      vi: ' Danh mục không tồn tại',
+    },
+  },
 });
 
 export class UserError extends AppError {
