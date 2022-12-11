@@ -1355,10 +1355,8 @@ type UsersPermissionsUser {
   avatar: UploadFile
   stories(sort: String, limit: Int, start: Int, where: JSON): [Stories]
   articles(sort: String, limit: Int, start: Int, where: JSON): [Article]
+  followers(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
   following(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
-  users_following(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
-  follower(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
-  users_follower(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
 }
 
 type UsersPermissionsUserConnection {
@@ -1454,10 +1452,8 @@ input UserInput {
   stories: [ID]
   articles: [ID]
   avatar: ID
+  followers: [ID]
   following: [ID]
-  users_following: [ID]
-  follower: [ID]
-  users_follower: [ID]
   created_by: ID
   updated_by: ID
 }
@@ -1475,10 +1471,8 @@ input editUserInput {
   stories: [ID]
   articles: [ID]
   avatar: ID
+  followers: [ID]
   following: [ID]
-  users_following: [ID]
-  follower: [ID]
-  users_follower: [ID]
   created_by: ID
   updated_by: ID
 }

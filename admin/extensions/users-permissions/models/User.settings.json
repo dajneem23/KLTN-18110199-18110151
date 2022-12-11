@@ -79,27 +79,16 @@
       "required": false,
       "pluginOptions": {}
     },
+    "followers": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "following",
+      "dominant": true
+    },
     "following": {
       "plugin": "users-permissions",
       "collection": "user",
-      "via": "users_following",
-      "dominant": true
-    },
-    "users_following": {
-      "plugin": "users-permissions",
-      "collection": "user",
-      "via": "following"
-    },
-    "follower": {
-      "plugin": "users-permissions",
-      "collection": "user",
-      "via": "users_follower",
-      "dominant": true
-    },
-    "users_follower": {
-      "plugin": "users-permissions",
-      "collection": "user",
-      "via": "follower"
+      "via": "followers"
     }
   }
 }
