@@ -9,6 +9,7 @@ import { StoryError, storyModelToken, storyErrors, _story } from '.';
 import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS } from '@/types/Common';
 import { isNil, omit } from 'lodash';
 import { ObjectId } from 'mongodb';
+import { userModelToken } from '../user';
 const TOKEN_NAME = '_storyService';
 /**
  * A bridge allows another service access to the Model layer
@@ -27,6 +28,8 @@ export class StoryService {
   private logger = new Logger('StoryService');
 
   private model = Container.get(storyModelToken);
+
+  private userModel = Container.get(userModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;
@@ -158,6 +161,83 @@ export class StoryService {
               this.model.$lookups.categories,
               this.model.$lookups.author,
               this.model.$lookups.comments,
+              this.model.$lookups.upload_files({
+                refTo: 'images',
+                reName: 'images',
+                operation: '$in',
+              }),
+            ],
+            $sets: [this.model.$sets.author],
+            ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
+            ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
+          }),
+        )
+        .toArray();
+      this.logger.debug('query_success', { total_count, items });
+      return toPagingOutput({
+        items,
+        total_count,
+        //  keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('query_error', err.message);
+      throw err;
+    }
+  }
+
+  /**
+   *  Query news
+   * @param {any} _filter
+   * @param {BaseQuery} _query
+   * @returns {Promise<BaseServiceOutput>}
+   *
+   **/
+  async queryFollowing({ _filter, _query, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
+    try {
+      const { q, categories = [] } = _filter;
+      const { page = 1, per_page = 10, sort_by, sort_order } = _query;
+      let following = [];
+      if (_subject) {
+        const { following: _following = [] } = await this.userModel._collection.findOne({
+          _id: new ObjectId(_subject),
+        });
+        following = _following;
+      }
+      const [{ total_count } = { total_count: 0 }, ...items] = await this.model
+        .get(
+          $pagination({
+            $match: {
+              deleted: {
+                $ne: true,
+              },
+              ...(q && {
+                name: { $regex: q, $options: 'i' },
+              }),
+              ...(categories.length && {
+                $or: [
+                  {
+                    categories: {
+                      $in: $toObjectId(categories),
+                    },
+                  },
+                ],
+              }),
+              ...(following.length && {
+                author: {
+                  $in: $toObjectId(following),
+                },
+              }),
+            },
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
+            $lookups: [
+              this.model.$lookups.categories,
+              this.model.$lookups.author,
+              this.model.$lookups.comments,
+              this.model.$lookups.upload_files(),
               this.model.$lookups.upload_files({
                 refTo: 'images',
                 reName: 'images',

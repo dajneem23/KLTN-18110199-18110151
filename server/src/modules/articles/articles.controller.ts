@@ -195,6 +195,27 @@ export class NewsController {
     _res.status(httpStatus.OK).json(result);
   }
 
+  @Get('/following', [
+    protect({
+      ignoreException: true,
+    }),
+  ])
+  async getFollowing(
+    @Res() _res: Response,
+    @Req() _req: Request,
+    @Query() _query: BaseQuery,
+    @Auth() auth: JWTPayload,
+  ) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.queryFollowing({
+      _filter: filter,
+      _query: query,
+      _permission: 'public',
+      _subject: auth._id,
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+
   @Get('/:id', [])
   async getByIdPrivate(
     @Res() _res: Response,
