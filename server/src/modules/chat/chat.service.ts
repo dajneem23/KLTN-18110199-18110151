@@ -145,14 +145,7 @@ export class ChatService {
               users: new ObjectId(_subject),
             },
             $addFields: { ...this.model.$addFields.images },
-            $lookups: [
-              this.model.$lookups.upload_files({
-                refTo: 'images',
-                reName: 'images',
-                operation: '$in',
-              }),
-              this.model.$lookups.chat_users,
-            ],
+            $lookups: [this.model.$lookups.chat_users, this.model.$lookups.messages],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
@@ -186,13 +179,8 @@ export class ChatService {
               }),
             },
           },
-          {
-            $addFields: {
-              ...this.model.$addFields.images,
-            },
-          },
-          this.model.$lookups.upload_files(),
-          this.model.$sets.image,
+          this.model.$lookups.chat_users,
+          this.model.$lookups.messages,
           {
             $limit: 1,
           },
@@ -292,13 +280,12 @@ export class ChatService {
     }
   }
 
-  async createMessage({ _subject, _content }: BaseServiceInput) {
+  async createMessage({ _subject, _content, _id }: BaseServiceInput) {
     try {
-      const { chat_id } = _content;
-      if (!chat_id) {
+      if (!_id) {
         throwErr(this.error('NOT_FOUND'));
       }
-      const { _id } = await this.messageModel.create(
+      const { _id: messageId } = await this.messageModel.create(
         {},
         {
           ..._content,
@@ -306,10 +293,10 @@ export class ChatService {
         },
       );
       await this.model.update(
-        { _id: new ObjectId(chat_id) },
+        { _id: new ObjectId(_id) },
         {
           $addToSet: {
-            messages: new ObjectId(_id),
+            messages: new ObjectId(messageId),
           },
         },
       );

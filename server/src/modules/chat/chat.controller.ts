@@ -131,17 +131,19 @@ export class ChatController {
     _res.status(httpStatus.OK).json(result);
   }
 
-  @Post('/message', [protect()])
+  @Post('/message/:id', [protect()])
   async createMessage(
     @Res() _res: Response,
     @Auth() _auth: JWTPayload,
     @Req() _req: Request,
+    @Params() _params: { id: string },
     @Body()
     _body: Chat,
   ) {
     const result = await this.service.createMessage({
       _content: _body,
       _subject: _auth._id,
+      _id: _params.id,
     } as BaseServiceInput);
     _res.status(httpStatus.CREATED).json(result);
   }
