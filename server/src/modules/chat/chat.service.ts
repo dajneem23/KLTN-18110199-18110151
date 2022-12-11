@@ -5,9 +5,9 @@ import { alphabetSize12 } from '@/utils/randomString';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import AuthService from '../auth/auth.service';
 import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject, $lookup } from '@/utils/mongoDB';
-import { ChatError, chatModelToken, chatErrors, _chat } from '.';
+import { ChatError, chatModelToken, chatErrors, _chat, messageModelToken } from '.';
 import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS, RemoveSlugPattern } from '@/types/Common';
-import { isNil, omit } from 'lodash';
+import { isNil, omit, uniq } from 'lodash';
 import slugify from 'slugify';
 import { ObjectId } from 'mongodb';
 const TOKEN_NAME = '_chatService';
@@ -28,6 +28,8 @@ export class ChatService {
   private logger = new Logger('ChatService');
 
   private model = Container.get(chatModelToken);
+
+  private messageModel = Container.get(messageModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;
@@ -51,22 +53,25 @@ export class ChatService {
    */
   async create({ _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      const { name, categories = [], chapters = [] } = _content;
+      const { messages = [], users: _users = [] } = _content;
+      const users = uniq([_subject, ..._users]).map($toObjectId);
       const value = await this.model.create(
         {
-          name,
+          _id: new ObjectId(),
         },
         {
           ..._chat,
           ..._content,
-          categories,
+          messages,
+          type: users.length > 2 ? 'group' : 'private',
+          users,
           ...(_subject && { author: new ObjectId(_subject) }),
         },
       );
       this.logger.debug('create_success', { _content });
       return toOutPut({ item: value });
     } catch (err) {
-      this.logger.error('create_error', err.message);
+      this.logger.error('create_error', err);
       throw err;
     }
   }
@@ -120,9 +125,9 @@ export class ChatService {
    * @returns {Promise<BaseServiceOutput>}
    *
    **/
-  async query({ _filter, _query, _permission }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async query({ _filter, _query, _permission, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      const { q, categories = [] } = _filter;
+      const { q, type } = _filter;
       const { page = 1, per_page = 10, sort_by, sort_order } = _query;
       const [{ total_count } = { total_count: 0 }, ...items] = await this.model
         .get(
@@ -134,28 +139,19 @@ export class ChatService {
               ...(q && {
                 name: { $regex: q, $options: 'i' },
               }),
-              ...(categories.length && {
-                $or: [
-                  {
-                    categories: {
-                      $in: $toObjectId(categories),
-                    },
-                  },
-                ],
+              ...(type && {
+                type,
               }),
+              users: new ObjectId(_subject),
             },
-            $sets: [this.model.$sets.author],
-            $addFields: {
-              ...this.model.$addFields.categories,
-            },
+            $addFields: { ...this.model.$addFields.images },
             $lookups: [
-              this.model.$lookups.categories,
-              this.model.$lookups.author,
               this.model.$lookups.upload_files({
                 refTo: 'images',
                 reName: 'images',
                 operation: '$in',
               }),
+              this.model.$lookups.chat_users,
             ],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
@@ -179,26 +175,22 @@ export class ChatService {
    * @param id - Chat ID
    * @returns { Promise<BaseServiceOutput> } - Chat
    */
-  async getById({ _slug: slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async getById({ _id, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
       const [item] = await this.model
         .get([
           {
             $match: {
               ...$toMongoFilter({
-                slug,
+                _id,
               }),
             },
           },
           {
             $addFields: {
-              ...this.model.$addFields.categories,
               ...this.model.$addFields.images,
             },
           },
-          this.model.$lookups.categories,
-          this.model.$lookups.author,
-          this.model.$sets.author,
           this.model.$lookups.upload_files(),
           this.model.$sets.image,
           {
@@ -240,11 +232,9 @@ export class ChatService {
                 ],
               }),
             },
-            $addFields: { ...this.model.$addFields.categories, ...this.model.$addFields.images },
+            $addFields: { ...this.model.$addFields.images },
             $lookups: [
-              this.model.$lookups.categories,
               this.model.$lookups.upload_files(),
-              this.model.$lookups.author,
               this.model.$lookups.upload_files({
                 refTo: 'images',
                 reName: 'images',
@@ -298,6 +288,33 @@ export class ChatService {
       });
     } catch (err) {
       this.logger.error('react_error', err.message);
+      throw err;
+    }
+  }
+
+  async createMessage({ _subject, _content }: BaseServiceInput) {
+    try {
+      const { chat_id } = _content;
+      if (!chat_id) {
+        throwErr(this.error('NOT_FOUND'));
+      }
+      const { _id } = await this.messageModel.create(
+        {},
+        {
+          ..._content,
+          ...(_subject && { author: new ObjectId(_subject) }),
+        },
+      );
+      await this.model.update(
+        { _id: new ObjectId(chat_id) },
+        {
+          $addToSet: {
+            messages: new ObjectId(_id),
+          },
+        },
+      );
+    } catch (err) {
+      this.logger.error('create_error', err.message);
       throw err;
     }
   }

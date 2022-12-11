@@ -53,6 +53,7 @@ export class BaseModel {
     sub_categories: any;
     upload_files: any;
     comments: any;
+    chat_users: any;
   } {
     return {
       categories: $lookup({
@@ -70,6 +71,16 @@ export class BaseModel {
         select: 'username avatar',
         reName: 'author',
         operation: '$eq',
+        pipeline: [
+          $lookup({
+            from: COLLECTION_NAMES.upload_file,
+            refFrom: '_id',
+            refTo: 'avatar',
+            select: 'name url',
+            reName: 'avatar',
+            operation: '$eq',
+          }),
+        ],
       }),
       upload_files: ({
         from = COLLECTION_NAMES.upload_file,
@@ -103,7 +114,24 @@ export class BaseModel {
         reName: 'sub_categories',
         operation: '$in',
       }),
-
+      chat_users: $lookup({
+        from: 'users-permissions_user',
+        refFrom: '_id',
+        refTo: 'users',
+        select: 'username avatar',
+        reName: 'users',
+        operation: '$in',
+        pipeline: [
+          $lookup({
+            from: COLLECTION_NAMES.upload_file,
+            refFrom: '_id',
+            refTo: 'avatar',
+            select: 'name url',
+            reName: 'avatar',
+            operation: '$eq',
+          }),
+        ],
+      }),
       comments: $lookup({
         from: 'comments',
         refFrom: '_id',

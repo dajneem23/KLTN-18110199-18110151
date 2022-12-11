@@ -164,7 +164,7 @@ export const defaultFilter = {
 };
 export type BaseServiceInput = {
   _slug?: string;
-  // _id?: string;
+  _id?: string;
   _content: {
     [key: string]: any;
   };
@@ -233,6 +233,7 @@ export enum COLLECTION_NAMES {
   'chats' = 'chats',
   'categories' = 'categories',
   'upload_file' = 'upload_file',
+  'messages' = 'messages',
 }
 /**
  *  @description - Remove all special characters from a string to make it a valid URL

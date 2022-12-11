@@ -212,9 +212,9 @@ export const $toObjectId = (ids: any): any =>
  * @returns {Object} - {_id: ObjectId ,..filter,...defaultFilter}
  */
 export const $toMongoFilter = ({ _id, nullable = false, ...filter }: any): Filter<any> => {
-  // if (_id && !ObjectId.isValid(_id)) {
-  //   throw new Error('Invalid ObjectId');
-  // }
+  if (_id && !ObjectId.isValid(_id)) {
+    throw new Error('Invalid ObjectId');
+  }
   const _idFilter = _id ? { _id } : {};
   return nullable
     ? { ..._idFilter, ...filter, ...defaultFilter }
