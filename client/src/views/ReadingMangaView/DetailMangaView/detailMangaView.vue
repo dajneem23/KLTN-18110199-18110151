@@ -2,7 +2,7 @@
   <div class="detailmanga-wrapper bgc-white">
     <div class="manga-info">
       <div class="manga-box-1">
-        <img class="manga-img" src="" alt="" />
+        <img class="manga-img" src="https://zinc-union-365709-strapi-63see6q63q-uc.a.run.app//uploads/fdbec2066011be5f_bdc77cf49229a760_3950716692669398118684_44866f5a9a.jpg" alt="" />
       </div>
       <div class="manga-box-2">
         <div class="manga-title">{{ name }}</div>
@@ -46,8 +46,7 @@
             </tr>
           </table>
         </div>
-
-        <div>
+        <div class="manga-description">
           {{ description }}
         </div>
       </div>

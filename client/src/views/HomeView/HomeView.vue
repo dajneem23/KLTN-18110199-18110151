@@ -18,7 +18,7 @@
         <infinite-loading @infinite="getPosts"></infinite-loading>
       </div>
       <div class="wrapper-home-right">
-        <h3>Bạn bè</h3>
+        <h3>Đang theo dõi</h3>
         <div class="list-user">
           <div class="user-item">
             <img src="../../assets/Icon/avt-cattoon.png" alt="" />
