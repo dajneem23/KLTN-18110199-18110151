@@ -19,6 +19,8 @@ export default {
       name: '',
       content: '',
       description: '',
+      categories: [],
+      chapters: [],
       views: 0,
       cmt: {
         source_id: '',
@@ -60,17 +62,19 @@ export default {
   methods: {
     moment,
     async sendCmt() {
-      this.cmt.source_id = this.manga.id;
-      const result = await CommentServices.comment({
-        ...this.cmt,
-      });
-      const [result_2, error] = await MangaServices.getById(this.manga.slug);
-      console.log([result_2, error]);
-      if (result) {
-        this.comments.push(result_2.comments[result_2.comments.length-1]);
-        // this.comments = result_2.comments;
+      if (this.cmt.content !== '') {
+        this.cmt.source_id = this.manga.id;
+        const result = await CommentServices.comment({
+          ...this.cmt,
+        });
+        const [result_2, error] = await MangaServices.getById(this.manga.slug);
+        console.log([result_2, error]);
+        if (result) {
+          this.comments.push(result_2.comments[result_2.comments.length - 1]);
+          // this.comments = result_2.comments;
+        }
+        this.cmt.content = '';
       }
-      this.cmt.content = '';
     },
     // function like manga
     async likeManga(id) {

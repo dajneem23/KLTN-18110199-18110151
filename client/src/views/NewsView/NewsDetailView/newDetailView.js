@@ -29,7 +29,7 @@ export default {
       description: '',
       reacts: [],
       author: {},
-      createdAt:'',
+      createdAt: '',
     };
   },
   computed: {
@@ -80,17 +80,19 @@ export default {
       });
     },
     async sendCmt() {
-      this.cmt.source_id = this.news.id;
-      const result = await CommentServices.comment({
-        ...this.cmt,
-      });
-      const [result_2, error] = await NewsServices.getById(this.news.slug);
-      console.log([result_2, error]);
-      if (result_2) {
-        this.comments.push(result_2.comments[result_2.comments.length - 1]);
-        // this.comments = result_2.comments;
+      if (this.cmt.content !== '') {
+        this.cmt.source_id = this.news.id;
+        const result = await CommentServices.comment({
+          ...this.cmt,
+        });
+        const [result_2, error] = await NewsServices.getById(this.news.slug);
+        console.log([result_2, error]);
+        if (result_2) {
+          this.comments.push(result_2.comments[result_2.comments.length - 1]);
+          // this.comments = result_2.comments;
+        }
+        this.cmt.content = '';
       }
-      this.cmt.content = '';
     },
     goToCmtBox() {
       const element = document.getElementById('cmt');
@@ -98,6 +100,12 @@ export default {
     },
     async upVote(id) {
       if (this.isAuthenticated) {
+        this.up_votes.length += 1;
+        this.down_votes.length -= 1;
+        let down_vote = document.getElementById('triangle-down');
+        down_vote.classList.remove('down-vote');
+        let up_vote = document.getElementById('triangle-up');
+        up_vote.classList.add('up-vote');
         const [result, error] = await NewsServices.upvote(id);
         console.log([result, error]);
         if (result) {
@@ -107,22 +115,22 @@ export default {
       } else {
         window.location.href = '/login/';
       }
-      
-      const [result_2, error] = await NewsServices.getById(id); 
+
+      const [result_2, error] = await NewsServices.getById(id);
       console.log([result_2, error]);
       if (result_2) {
         this.up_votes = result_2.up_votes;
         this.down_votes = result_2.down_votes;
       }
-      if (this.down_votes.includes(this.userInfo._id)) {
-        let down_vote = document.getElementById('triangle-down');
-        down_vote.classList.remove('down-vote');
-        let up_vote = document.getElementById('triangle-up');
-        up_vote.classList.add('up-vote');
-      }
     },
     async downVote(id) {
       if (this.isAuthenticated) {
+        this.up_votes.length -= 1;
+        this.down_votes.length += 1;
+        let down_vote = document.getElementById('triangle-down');
+        down_vote.classList.add('down-vote');
+        let up_vote = document.getElementById('triangle-up');
+        up_vote.classList.remove('up-vote');
         const [result, error] = await NewsServices.downvote(id);
         if (result) {
           // const { down_votes } = result;
@@ -138,12 +146,12 @@ export default {
         this.down_votes = result_2.down_votes;
       }
 
-      if (this.up_votes.includes(this.userInfo._id)) {
-        let down_vote = document.getElementById('triangle-down');
-        down_vote.classList.add('down-vote');
-        let up_vote = document.getElementById('triangle-up');
-        up_vote.classList.remove('up-vote');
-      }
+      // if (this.up_votes.includes(this.userInfo._id)) {
+      //   let down_vote = document.getElementById('triangle-down');
+      //   down_vote.classList.add('down-vote');
+      //   let up_vote = document.getElementById('triangle-up');
+      //   up_vote.classList.remove('up-vote');
+      // }
     },
     async addWishList(id) {
       if (this.isAuthenticated) {

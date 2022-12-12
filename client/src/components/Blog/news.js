@@ -89,6 +89,7 @@ export default {
       }
     },
     async sendCmt() {
+      if(this.cmt.content !== ''){
       this.cmt.source_id = this.data.id;
       const result = await CommentServices.comment({
         ...this.cmt,
@@ -98,7 +99,8 @@ export default {
       if (result) {
         this.comments.push(result_2.comments[result_2.comments.length - 1]);
       }
-      this.cmt.content = '';
+        this.cmt.content = '';
+      }
     },
     getTime() {
       data.created_at = data.created_at.toLocaleDateString('en-US');

@@ -57,6 +57,7 @@ export default {
       }
     },
     async sendCmt() {
+      if(this.cmt.content !== ''){
       this.cmt.source_id = this.id;
       const result = await CommentServices.comment({
         ...this.cmt,
@@ -67,7 +68,8 @@ export default {
         this.comments.push(result_2.comments[result_2.comments.length - 1]);
         // this.comments = result_2.comments;
       }
-      this.cmt.content = '';
+        this.cmt.content = '';
+      }
     },
   },
   async created() {

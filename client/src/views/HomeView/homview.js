@@ -21,6 +21,7 @@ export default {
       posts: [],
       page: 1,
       per_page: 10,
+      isTabHomeData: true
     };
   },
   mounted() {
@@ -53,5 +54,11 @@ export default {
       const model = document.getElementById('model-add-story');
       model.style.visibility = 'hidden';
     },
+    handleChageTabHomeData() {
+      this.isTabHomeData = true;
+    },
+    handleChageTabFollowData() {
+      this.isTabHomeData = false;
+    }
   },
 };

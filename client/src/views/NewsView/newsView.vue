@@ -13,7 +13,6 @@
           <div v-for="(item, key) of new_items">
             <CardNews :key="item.id" style_x="card-news-x" :news="item"></CardNews>
           </div>
-        
         </div>
       </div>
       <div class="hot-news">
@@ -22,19 +21,18 @@
           <div v-for="(item, key) of hot_items">
             <CardNews :key="item.id" style_x="card-news-y" :news="item"></CardNews>
           </div>
-      
         </div>
       </div>
       <div class="main-news">
         <div class="main-news-button">
-          <!-- <SwitchButton
-            contentL="Dành cho bạn"
+          <SwitchButton
+            contentL="Tat ca"
             contentR="Đánh giá cao nhất"
             buttonRef="buttonRef"
             btnRefL="onTvRef"
             btnRefR="onTTRef"
-          ></SwitchButton> -->
-          <h2>Tất cả</h2>
+          ></SwitchButton>
+          <!-- <h2>Tất cả</h2> -->
         </div>
         <div class="news-box">
           <div v-for="(item, key) of items">
