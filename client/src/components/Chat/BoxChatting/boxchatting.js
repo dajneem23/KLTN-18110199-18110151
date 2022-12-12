@@ -5,10 +5,15 @@ import { StoriesService } from '@/services';
 export default {
   data() {
     return {
-      sms: '',
+      sms: {
+        source_id: '',
+        content:'',
+        reply_to:null,
+      },
       posts: [],
       page: 1,
       per_page: 10,
+      icon: '&#128512;',
     };
   },
   components: {
@@ -44,6 +49,10 @@ export default {
       this.posts.push(...items);
       this.page++;
       $state.loaded();
+    },
+    hiddenReply() {
+      let replyBox = document.getElementById('reply-mess');
+      replyBox.style.visibility = 'hidden';
     },
   },
 };

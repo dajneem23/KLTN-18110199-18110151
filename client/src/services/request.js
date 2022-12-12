@@ -45,8 +45,8 @@ export const RequestBase = {
   delete(route) {
     return axios.delete(`${route}`).then(responseCallback).catch(catchError);
   },
-  patch(route) {
-    return axios.patch(`${route}`).then(responseCallback).catch(catchError);
+  patch(route,body) {
+    return axios.patch(`${route}`,body).then(responseCallback).catch(catchError);
   },
 };
 

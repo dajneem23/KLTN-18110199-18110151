@@ -1,7 +1,7 @@
 .homePage {
-  width: 1912px;
+  width: 80%;
   min-height: 92.5vh;
-  margin-top: 70px;
+  margin: 70px auto 0px auto;
   display: flex;
   justify-content: space-between;
 }
@@ -9,13 +9,13 @@
   padding: 20px 100px 0 100px;
   min-height: 76vh;
   margin: 0px auto;
-  width: 45%;
+  width: 55%;
 }
 .wrapper-home-left,
 .wrapper-home-right {
   position: fixed;
 }
-.wrapper-home-left {
+.wrapper-home-right {
   padding: 20px;
   .btn-add--story {
     width: 200px;
@@ -38,15 +38,45 @@
     }
   }
 }
-.wrapper-home-right {
+.wrapper-home-left {
   width: 17%;
+  height: 92.7vh;
+  overflow-y: auto;
   .list-user {
     padding: 10px;
     max-height: 87vh;
-    overflow-y: auto;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--gray);
   }
   h3 {
     padding: 20px 20px 0px 20px;
+  }
+  .tab-story {
+    border-bottom: 1px solid var(--gray);
+    padding: 10px 0;
+    .tab-item {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: black;
+      margin-top: 10px;
+      padding: 0 10px;
+      cursor: pointer;
+      transition: all ease-in 0.1s;
+      &:hover {
+        // color: var(--primary-blue_3);
+        background-color: var(--gray);
+        // svg {
+        //   fill: var(--primary-blue_3);
+        // }
+      }
+      svg {
+        width: 22px;
+        margin-right: 10px;
+      }
+    }
   }
   .user-item {
     padding: 5px;
@@ -101,6 +131,12 @@
   svg {
     width: 25px;
   }
+}
+.isActive {
+  span {
+    color: var(--primary-blue_3);
+  }
+  fill: var(--primary-blue_3);
 }
 /*--------------------Model add story-------------------*/
 .model-add-story {

@@ -1,9 +1,10 @@
 import { CommentServices } from '@/services';
+import { mapState } from 'vuex';
 export default {
   props: {
     data: Object,
     sourceId: String,
-    flag:String,
+    flag: String,
   },
   data() {
     return {
@@ -16,6 +17,9 @@ export default {
       },
       replies: [],
     };
+  },
+  computed: {
+    ...mapState(['userInfo', 'isAuthenticated', 'isPage']),
   },
   watch: {
     data(newData) {
@@ -41,7 +45,7 @@ export default {
       console.log('Like like');
     },
     repCmt() {
-      const repCmtBox = document.getElementById(this.flag+ this.data.id);
+      const repCmtBox = document.getElementById(this.flag + this.data.id);
       if (repCmtBox.style.display == 'none') {
         repCmtBox.style.display = 'flex';
       } else {
@@ -53,8 +57,14 @@ export default {
       const result = await CommentServices.comment({
         ...this.cmt,
       });
-      this.replies.push(result[0]);
-      const repCmtBox = document.getElementById(this.flag+this.data.id);
+      this.replies.push({
+        ...result[0],
+        author: {
+          ...this.userInfo,
+        },
+      });
+      console.log(result[0]);
+      const repCmtBox = document.getElementById(this.flag + this.data.id);
       if (repCmtBox.style.display == 'none') {
         repCmtBox.style.display = 'flex';
       } else {

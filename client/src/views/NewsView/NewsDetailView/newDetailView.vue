@@ -21,7 +21,7 @@
         ></div>
 
         <div class="avt-user">
-          <img :src="author?.avatar" alt="" />
+          <img :src="author?.picture" alt="" />
         </div>
         <div class="follow-user" @click="followUser(author)">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
