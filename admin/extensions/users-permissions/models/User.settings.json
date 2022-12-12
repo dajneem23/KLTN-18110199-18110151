@@ -78,6 +78,17 @@
       "plugin": "upload",
       "required": false,
       "pluginOptions": {}
+    },
+    "followers": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "following",
+      "dominant": true
+    },
+    "following": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "followers"
     }
   }
 }

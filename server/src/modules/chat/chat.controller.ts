@@ -21,7 +21,7 @@ import { protect } from '@/api/middlewares/protect';
 import { JWTPayload } from '../auth/authSession.type';
 import { BaseQuery, BaseServiceInput } from '@/types/Common';
 import { RolesWeight } from '../user';
-@Controller('/chat')
+@Controller('/chats')
 export class ChatController {
   private service = Container.get(ChatServiceToken);
 
@@ -44,12 +44,13 @@ export class ChatController {
     _res.status(httpStatus.CREATED).json(result);
   }
 
-  @Get('/', [])
-  async get(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery) {
+  @Get('/', [protect({})])
+  async get(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery, @Auth() _auth: JWTPayload) {
     const { filter, query } = buildQueryFilter(_query);
     const result = await this.service.query({
       _filter: filter,
       _query: query,
+      _subject: _auth._id,
       _permission: 'public',
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
@@ -112,7 +113,7 @@ export class ChatController {
     _res.status(httpStatus.OK).json(result);
   }
 
-  @Get('/:id', [])
+  @Get('/:id', [protect()])
   async getByIdPrivate(
     @Res() _res: Response,
     @Req() _req: Request,
@@ -124,24 +125,26 @@ export class ChatController {
   ) {
     const { filter, query } = buildQueryFilter(_query);
     const result = await this.service.getById({
-      _slug: _params.id,
+      _id: _params.id,
       _filter: filter,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
 
-  @Patch('/react/:id', [
-    protect({
-      weight: RolesWeight.user,
-    }),
-  ])
-  async react(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery, @Auth() _auth: JWTPayload) {
-    const { filter, query } = buildQueryFilter(_query);
-    const result = await this.service.react({
-      _filter: filter,
-      _query: query,
+  @Post('/message/:id', [protect()])
+  async createMessage(
+    @Res() _res: Response,
+    @Auth() _auth: JWTPayload,
+    @Req() _req: Request,
+    @Params() _params: { id: string },
+    @Body()
+    _body: Chat,
+  ) {
+    const result = await this.service.createMessage({
+      _content: _body,
       _subject: _auth._id,
+      _id: _params.id,
     } as BaseServiceInput);
-    _res.status(httpStatus.OK).json(result);
+    _res.status(httpStatus.CREATED).json(result);
   }
 }

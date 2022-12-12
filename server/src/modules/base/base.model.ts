@@ -53,13 +53,15 @@ export class BaseModel {
     sub_categories: any;
     upload_files: any;
     comments: any;
+    chat_users: any;
+    messages: any;
   } {
     return {
       categories: $lookup({
         from: 'categories',
         refFrom: '_id',
         refTo: 'categories',
-        select: 'title type slug',
+        select: 'name type slug',
         reName: 'categories',
         operation: '$in',
       }),
@@ -70,6 +72,16 @@ export class BaseModel {
         select: 'username avatar',
         reName: 'author',
         operation: '$eq',
+        pipeline: [
+          $lookup({
+            from: COLLECTION_NAMES.upload_file,
+            refFrom: '_id',
+            refTo: 'avatar',
+            select: 'name url',
+            reName: 'avatar',
+            operation: '$eq',
+          }),
+        ],
       }),
       upload_files: ({
         from = COLLECTION_NAMES.upload_file,
@@ -103,7 +115,57 @@ export class BaseModel {
         reName: 'sub_categories',
         operation: '$in',
       }),
-
+      chat_users: $lookup({
+        from: 'users-permissions_user',
+        refFrom: '_id',
+        refTo: 'users',
+        select: 'username avatar',
+        reName: 'users',
+        operation: '$in',
+        pipeline: [
+          $lookup({
+            from: COLLECTION_NAMES.upload_file,
+            refFrom: '_id',
+            refTo: 'avatar',
+            select: 'name url',
+            reName: 'avatar',
+            operation: '$eq',
+          }),
+        ],
+      }),
+      messages: $lookup({
+        from: 'messages',
+        refFrom: '_id',
+        refTo: 'messages',
+        select: 'content images type author',
+        reName: 'messages',
+        operation: '$in',
+        pipeline: [
+          $lookup({
+            from: 'users-permissions_user',
+            refFrom: '_id',
+            refTo: 'author',
+            select: 'username avatar',
+            reName: 'author',
+            operation: '$eq',
+            pipeline: [
+              $lookup({
+                from: COLLECTION_NAMES.upload_file,
+                refFrom: '_id',
+                refTo: 'avatar',
+                select: 'name url',
+                reName: 'avatar',
+                operation: '$eq',
+              }),
+            ],
+          }),
+          {
+            $set: {
+              author: { $first: '$author' },
+            },
+          },
+        ],
+      }),
       comments: $lookup({
         from: 'comments',
         refFrom: '_id',

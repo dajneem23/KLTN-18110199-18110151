@@ -46,8 +46,8 @@
     },
     "author": {
       "via": "articles",
-      "model": "user",
-      "plugin": "users-permissions"
+      "plugin": "users-permissions",
+      "model": "user"
     },
     "reacts": {
       "plugin": "users-permissions",
