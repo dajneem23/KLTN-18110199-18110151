@@ -14,13 +14,15 @@ export default {
     return {
       customStyles,
       items: [],
+      cate_items: [],
       new_items: [],
       hot_items: [],
       pageOfItems: 1,
       page: 1,
-      per_page: 10,
+      per_page: 5,
       total_count: 0,
       total_count_new: 0,
+      isTab: true,
     };
   },
   async mounted() {
@@ -42,7 +44,6 @@ export default {
     });
     this.new_items = newItem.items.slice(0, 4);
     this.hot_items = topItem.items.slice(0, 4);
-    console.log(this.hot_items);
     this.total_count = total_count;
   },
   methods: {
@@ -59,6 +60,18 @@ export default {
       });
       this.items = items;
       this.total_count = total_count;
+    },
+    async onChangePageFollow(page) {},
+    filterArticlesByCategory() {
+      let cat_item = document.getElementById('cat-item');
+      console.log(cat_item);
+      this.items = this.cate_items;
+    },
+    handleChangeTabAll() {
+      this.isTab = true;
+    },
+    async handleChangeTabFollow() {
+      this.isTab = false;
     },
   },
 };

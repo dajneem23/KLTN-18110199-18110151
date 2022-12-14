@@ -67,7 +67,7 @@
       transition: all ease-in 0.1s;
       &:hover {
         // color: var(--primary-blue_3);
-        background-color: var(--gray);
+        background-color: rgb(240, 240, 240, 0.8);
         // svg {
         //   fill: var(--primary-blue_3);
         // }
@@ -83,12 +83,27 @@
     cursor: pointer;
     display: flex;
     border: 1px solid transparent;
+    justify-content: space-between;
     &:hover {
-      border: 1px solid var(--gray);
+      // border: 1px solid var(--gray);
+      background-color: rgb(240, 240, 240, 0.8);
+    }
+    .item-left {
+      display: flex;
     }
     img {
       width: 40px;
       border-radius: 50%;
+    }
+    .info-more {
+      width: 10%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      svg {
+        width: 25px;
+        height: 25px;
+      }
     }
     .user-item--info {
       .info-name {
@@ -137,6 +152,16 @@
     color: var(--primary-blue_3);
   }
   fill: var(--primary-blue_3);
+}
+.model-profile-user {
+  z-index: 999 !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: hsla(0, 0%, 100%, 0.8);
+  backdrop-filter: blur(0px);
 }
 /*--------------------Model add story-------------------*/
 .model-add-story {

@@ -31,6 +31,7 @@
     }
   }
   .news-body {
+    z-index: 3 !important;
     .slide {
       display: flex;
       justify-content: center;
