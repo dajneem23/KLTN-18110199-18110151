@@ -22,72 +22,18 @@
         </div>
         <h3>Đang theo dõi</h3>
         <div class="list-user">
-          <div class="user-item">
-            <img src="../../assets/Icon/avt-cattoon.png" alt="" />
-            <div class="user-item--info">
-              <div class="info-name">Tran Hoang Long</div>
-              <div class="info-state">
-                <div class="state-active">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
-                  </svg>
-                  <div>Đang hoạt động</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="user-item">
-            <img src="../../assets/Icon/avt-cattoon.png" alt="" />
-            <div class="user-item--info">
-              <div class="info-name">Tran Hoang Long</div>
-              <div class="info-state">
-                <div class="state-active">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
-                  </svg>
-                  <div>Đang hoạt động</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="user-item">
-            <img src="../../assets/Icon/avt-cattoon.png" alt="" />
-            <div class="user-item--info">
-              <div class="info-name">Tran Hoang Long</div>
-              <div class="info-state">
-                <div class="state-active">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
-                  </svg>
-                  <div>Đang hoạt động</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="user-item">
-            <img src="../../assets/Icon/avt-cattoon.png" alt="" />
-            <div class="user-item--info">
-              <div class="info-name">Tran Hoang Long</div>
-              <div class="info-state">
-                <div class="state-active">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
-                  </svg>
-                  <div>Đang hoạt động</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="user-item">
-            <img src="../../assets/Icon/avt-cattoon.png" alt="" />
-            <div class="user-item--info">
-              <div class="info-name">Tran Hoang Long</div>
-              <div class="info-state">
-                <div class="state-active">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
-                  </svg>
-                  <div>Đang hoạt động</div>
+          <div class="user-item" @click="createChat" v-for="user of userInfo.following">
+            <div class="item-left">
+              <img src="../../assets/Icon/avt-cattoon.png" alt="" />
+              <div class="user-item--info">
+                <div class="info-name">{{ user }}</div>
+                <div class="info-state">
+                  <div class="state-active">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
+                    </svg>
+                    <div>Đang hoạt động</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -96,85 +42,153 @@
         <h3>Noi bat</h3>
         <div class="list-user">
           <div class="user-item">
-            <img src="../../assets/Icon/avt-cattoon.png" alt="" />
-            <div class="user-item--info">
-              <div class="info-name">Tran Hoang Long</div>
-              <div class="info-state">
-                <div class="state-active">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
-                  </svg>
-                  <div>Đang hoạt động</div>
+            <div class="item-left">
+              <img src="../../assets/Icon/avt-cattoon.png" alt="" />
+              <div class="user-item--info">
+                <div class="info-name">Tran Hoang Long</div>
+                <div class="info-state">
+                  <div class="state-active">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
+                    </svg>
+                    <div>Đang hoạt động</div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="user-item">
-            <img src="../../assets/Icon/avt-cattoon.png" alt="" />
-            <div class="user-item--info">
-              <div class="info-name">Tran Hoang Long</div>
-              <div class="info-state">
-                <div class="state-active">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
-                  </svg>
-                  <div>Đang hoạt động</div>
-                </div>
-              </div>
+            <div class="info-more">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512">
+                <path
+                  d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"
+                />
+              </svg>
             </div>
           </div>
           <div class="user-item">
-            <img src="../../assets/Icon/avt-cattoon.png" alt="" />
-            <div class="user-item--info">
-              <div class="info-name">Tran Hoang Long</div>
-              <div class="info-state">
-                <div class="state-active">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
-                  </svg>
-                  <div>Đang hoạt động</div>
+            <div class="item-left">
+              <img src="../../assets/Icon/avt-cattoon.png" alt="" />
+              <div class="user-item--info">
+                <div class="info-name">Tran Hoang Long</div>
+                <div class="info-state">
+                  <div class="state-active">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
+                    </svg>
+                    <div>Đang hoạt động</div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="user-item">
-            <img src="../../assets/Icon/avt-cattoon.png" alt="" />
-            <div class="user-item--info">
-              <div class="info-name">Tran Hoang Long</div>
-              <div class="info-state">
-                <div class="state-active">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
-                  </svg>
-                  <div>Đang hoạt động</div>
-                </div>
-              </div>
+            <div class="info-more">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512">
+                <path
+                  d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"
+                />
+              </svg>
             </div>
           </div>
           <div class="user-item">
-            <img src="../../assets/Icon/avt-cattoon.png" alt="" />
-            <div class="user-item--info">
-              <div class="info-name">Tran Hoang Long</div>
-              <div class="info-state">
-                <div class="state-active">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
-                  </svg>
-                  <div>Đang hoạt động</div>
+            <div class="item-left">
+              <img src="../../assets/Icon/avt-cattoon.png" alt="" />
+              <div class="user-item--info">
+                <div class="info-name">Tran Hoang Long</div>
+                <div class="info-state">
+                  <div class="state-active">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
+                    </svg>
+                    <div>Đang hoạt động</div>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div class="info-more">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512">
+                <path
+                  d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="user-item">
+            <div class="item-left">
+              <img src="../../assets/Icon/avt-cattoon.png" alt="" />
+              <div class="user-item--info">
+                <div class="info-name">Tran Hoang Long</div>
+                <div class="info-state">
+                  <div class="state-active">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
+                    </svg>
+                    <div>Đang hoạt động</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="info-more">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512">
+                <path
+                  d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="user-item">
+            <div class="item-left">
+              <img src="../../assets/Icon/avt-cattoon.png" alt="" />
+              <div class="user-item--info">
+                <div class="info-name">Tran Hoang Long</div>
+                <div class="info-state">
+                  <div class="state-active">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
+                    </svg>
+                    <div>Đang hoạt động</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="info-more">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512">
+                <path
+                  d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="user-item">
+            <div class="item-left">
+              <img src="../../assets/Icon/avt-cattoon.png" alt="" />
+              <div class="user-item--info">
+                <div class="info-name">Tran Hoang Long</div>
+                <div class="info-state">
+                  <div class="state-active">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512z" />
+                    </svg>
+                    <div>Đang hoạt động</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="info-more">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512">
+                <path
+                  d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"
+                />
+              </svg>
             </div>
           </div>
         </div>
       </div>
       <div class="wrapper-home-center">
-        <div class="item-home" v-for="(post, index) in posts" :key="index" v-if="isTabHomeData">
+        <div class="item-home" v-for="(post, index) in posts" :key="index">
           <Story :data="post"></Story>
         </div>
-        <div class="item-home" v-for="(post, index) in posts" :key="index" v-if="!isTabHomeData">
+        <!-- <div class="item-home" v-for="(post_follow, index) in posts_follow" :key="index" v-if="!isTabHomeData">
           <h1>Hahahahahha</h1>
-          <Story :data="post"></Story>
-        </div>
+          <Story :data="post_follow"></Story>
+        </div> -->
         <infinite-loading @infinite="getPosts"></infinite-loading>
       </div>
       <div class="wrapper-home-right">
@@ -194,6 +208,7 @@
         <CreateStory :hiddenModel="hiddenModel" />
       </div>
     </div>
+    <!-- <div class="model-profile-user" v-if="isShowUserProfile">HAhahah</div> -->
   </div>
 </template>
 
