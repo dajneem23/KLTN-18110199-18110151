@@ -49,6 +49,41 @@ export default {
   methods: {
     async onChangePage(page) {
       this.page = page;
+      if (this.isTab) {
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await NewsServices.get({
+          page: this.page,
+          per_page: this.per_page,
+        });
+        this.items = items;
+        this.total_count = total_count;
+      }
+      else {
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await NewsServices.getFollowing({
+          page: this.page,
+          per_page: this.per_page,
+        });
+        this.items = items;
+        this.total_count = total_count;
+      }
+    },
+    async onChangePageFollow(page) {},
+    filterArticlesByCategory() {
+      let cat_item = document.getElementById('cat-item');
+      console.log(cat_item);
+      this.items = this.cate_items;
+    },
+    async handleChangeTabAll() {
+      this.isTab = true;
       const [
         { items = [], total_count } = {
           items: [],
@@ -61,17 +96,20 @@ export default {
       this.items = items;
       this.total_count = total_count;
     },
-    async onChangePageFollow(page) {},
-    filterArticlesByCategory() {
-      let cat_item = document.getElementById('cat-item');
-      console.log(cat_item);
-      this.items = this.cate_items;
-    },
-    handleChangeTabAll() {
-      this.isTab = true;
-    },
     async handleChangeTabFollow() {
       this.isTab = false;
+      const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await NewsServices.getFollowing({
+        page: this.page,
+        per_page: this.per_page,
+      });
+      this.items = items;
+      console.log(this.items);
+      this.total_count = total_count;
     },
   },
 };

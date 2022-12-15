@@ -8,8 +8,8 @@
           alt=""
         />
         <div class="text">
-          <h3>Robo Cop</h3>
-          <p class="text-muted">Layin' down the law since like before Christ... &#128512;</p>
+          <h3></h3>
+          <p class="text-muted">{{ chat.users[1].username }}</p>
         </div>
         <!-- <span class="settings-tray--right">
                 <i class="material-icons">cached</i>
@@ -22,7 +22,7 @@
       <infinite-loading direction="top" @infinite="infiniteHandler"></infinite-loading>
 
       <div v-for="(post, index) in posts" :key="index">
-        <Messenge friendSms :sms="`hello ${icon} `" v-if="index % 2 === 0" />
+        <Messenge friendSms :sms="post.content" v-if="index % 2 === 0" />
         <Messenge mySms sms="Hello motherfucker" v-if="index % 2 !== 0" />
       </div>
       <!-- <Messenge mySms sms="fuck you" />

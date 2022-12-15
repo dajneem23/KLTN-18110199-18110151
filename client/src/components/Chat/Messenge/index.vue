@@ -20,7 +20,7 @@
           'chat-bubble--left': friendSms,
         }"
       >
-        😌😌
+        {{ sms }}
       </div>
     </div>
     <div v-if="friendSms" class="btn-utility-mess">
