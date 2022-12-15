@@ -3,6 +3,7 @@ import Comment from '../../../components/Watching/CommentFilm';
 import { mapState } from 'vuex';
 import { NewsServices } from '@/services';
 import { CommentServices } from '@/services';
+import { UserService } from '@/services';
 import moment from 'moment';
 export default {
   components: {
@@ -164,8 +165,11 @@ export default {
         window.location.href = '/login/';
       }
     },
-    followUser(user) {
-      console.log('follow :', user.id);
+    async followUser(user) {
+      const [result, error] = await UserService.followUser(this.author.id);
+      if (result) {
+        this.userInfo.following.push(this.author.id)
+      }
     },
   },
 };

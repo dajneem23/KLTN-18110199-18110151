@@ -1,6 +1,12 @@
 import { RequestBase } from './request';
-export const AuthService = {
+export const ChatsServices = {
   url: 'chats',
+  get(body) {
+    return RequestBase.get(`${this.url}/`, body);
+  },
+  getChatById(id) {
+    return RequestBase.get(`${this.url}/${id}`);
+  },
   createChat(body) {
     return RequestBase.post(`${this.url}/`, body);
   },

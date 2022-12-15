@@ -5,3 +5,4 @@ export * from './news.service';
 export * from './manga.service';
 export * from './film.service';
 export * from './comment.service';
+export * from './chat.service';

@@ -1,14 +1,15 @@
 import InfiniteLoading from 'vue-infinite-loading';
 import Messenge from '../Messenge/index.vue';
-import { StoriesService } from '@/services';
+import { ChatsServices } from '@/services';
 
 export default {
   data() {
     return {
+      chat: {},
       sms: {
         source_id: '',
-        content:'',
-        reply_to:null,
+        content: '',
+        reply_to: null,
       },
       posts: [],
       page: 1,
@@ -16,9 +17,30 @@ export default {
       icon: '&#128512;',
     };
   },
+  props: {
+    dataChat: String,
+  },
   components: {
     Messenge,
     InfiniteLoading,
+  },
+  watch: {
+    async dataChat() {
+      this.$emit('update:dataChat', this.dataChat);
+      const [result, error] = await ChatsServices.getChatById(this.dataChat);
+      if (result) {
+        this.posts = result.messages;
+        this.chat = result;
+      }
+      console.log(result, 'result');
+    },
+  },
+  async mounted() {
+    const [result, error] = await ChatsServices.getChatById(this.dataChat);
+    if (result) {
+      this.posts = result.messages;
+    }
+    console.log(this.posts);
   },
   methods: {
     showEmojiBox() {
@@ -33,22 +55,13 @@ export default {
       console.log(this.sms);
     },
     async infiniteHandler($state) {
-      const [
-        { items = [], total_count } = {
-          items: [],
-        },
-        error,
-      ] = await StoriesService.get({
-        page: this.page,
-        per_page: this.per_page,
-      });
-      // console.log([items, error]);
-      if (!items.length) {
+      if (!this.chat.messages.length) {
         $state.complete();
       }
-      this.posts.push(...items);
+      this.posts.push(...this.chat.messages);
       this.page++;
       $state.loaded();
+      console.log(this.posts);
     },
     hiddenReply() {
       let replyBox = document.getElementById('reply-mess');

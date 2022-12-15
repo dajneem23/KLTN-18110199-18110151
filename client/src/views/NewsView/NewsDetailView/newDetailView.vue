@@ -23,17 +23,17 @@
         <div class="avt-user">
           <img :src="author?.picture" alt="" />
         </div>
-        <div class="follow-user" @click="followUser(author)">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <div class="follow-user" >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" v-if="!userInfo.following.includes(author.id)" @click="followUser(author)">
             <path
               d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
             />
           </svg>
-          <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" v-if="userInfo.following.includes(author.id)">
             <path
               d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"
             />
-          </svg> -->
+          </svg>
         </div>
         <div class="add-wish-list" @click="addWishList(slug)">
           <svg
