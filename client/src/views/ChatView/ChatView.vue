@@ -13,8 +13,13 @@
               </svg>
             </div>
           </div>
+          <div class="type-message">
+            <div class="type-item" @click="changeTypeAll">Đoạn chat</div>
+            <div class="type-item" @click="changeTypeWait">Tin nhắn chờ</div>
+          </div>
+          <hr />
           <div class="list-sms">
-            <div class="friend-drawer friend-drawer--onhover" v-for="chat of listChat" @click="getChat(chat.id)">
+            <div class="friend-drawer friend-drawer--onhover" v-for="chat of listChat" @click="getChat(chat.id)" :id="chat.id">
               <img
                 class="profile-image"
                 src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
@@ -32,7 +37,10 @@
             <hr />
           </div>
         </div>
-        <BoxChatting :dataChat.sync="idChat" />
+        <div class="welcom-chat col-md-9" v-if="!isChangeMessage">
+          <div>Chào mừng bạn đến với V-chat</div>
+        </div>
+        <BoxChatting :dataChat.sync="idChat" v-if="isChangeMessage" />
       </div>
     </div>
   </div>

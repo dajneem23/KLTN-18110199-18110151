@@ -8,8 +8,12 @@
           alt=""
         />
         <div class="text">
-          <h3></h3>
-          <p class="text-muted">{{ chat.users[1].username }}</p>
+          <div class="chat-name">
+            <h3 v-for="user of users">{{ user.username }},</h3>
+          </div>
+          <p class="text-muted e">
+            <!-- <span> </span> -->
+          </p>
         </div>
         <!-- <span class="settings-tray--right">
                 <i class="material-icons">cached</i>
