@@ -2,7 +2,7 @@
   <div>
     <div class="edit-profile-wrapper">
       <div class="edit-box">
-        <div class="edit-img-cover">
+        <!-- <div class="edit-img-cover">
           <div class="uploader-wrapper">
             <div class="np-image-upload-picker" v-if="imageFileBanner == null || imageFileBanner.length == 0">
               <input type="file" @change="showImageBannerPreview($event)" accept="image/*" id="upload-banner" hidden />
@@ -25,7 +25,7 @@
               <button @click="clearImageBanner" class="np-upload-btn np-upload-btn-cancel">Hủy</button>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="edit-user-info-top">
           <div class="edit-user-avt">
             <div class="uploader-wrapper">

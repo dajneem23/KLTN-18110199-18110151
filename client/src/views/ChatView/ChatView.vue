@@ -13,87 +13,34 @@
               </svg>
             </div>
           </div>
+          <div class="type-message">
+            <div class="type-item" @click="changeTypeAll">Đoạn chat</div>
+            <div class="type-item" @click="changeTypeWait">Tin nhắn chờ</div>
+          </div>
+          <hr />
           <div class="list-sms">
-            <div class="friend-drawer friend-drawer--onhover">
+            <div class="friend-drawer friend-drawer--onhover" v-for="chat of listChat" @click="getChat(chat.id)" :id="chat.id">
               <img
                 class="profile-image"
                 src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
                 alt=""
               />
               <div class="text">
-                <h3>Robo Cop</h3>
-                <p class="text-muted">Hey, you're arrested!</p>
+                <div class="list-name-chat">
+                  <h3 v-if="chat.type === 'group'" v-for="user of chat.users">{{ user.username }},</h3>
+                </div>
+                <h3 v-if="chat.type === 'private'">{{ chat.users[1].username }}</h3>
+                <p class="text-muted">{{ chat.id }}</p>
               </div>
               <span class="time text-muted small">13:21</span>
             </div>
             <hr />
-            <div class="friend-drawer friend-drawer--onhover">
-              <img
-                class="profile-image"
-                src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg"
-                alt=""
-              />
-              <div class="text">
-                <h3>Optimus</h3>
-                <p class="text-muted">Wanna grab a beer?</p>
-              </div>
-              <span class="time text-muted small">00:32</span>
-            </div>
-            <hr />
-            <div class="friend-drawer friend-drawer--onhover">
-              <img
-                class="profile-image"
-                src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png"
-                alt=""
-              />
-              <div class="text">
-                <h3>Skynet</h3>
-                <p class="text-muted">Seen that canned piece of s?</p>
-              </div>
-              <span class="time text-muted small">13:21</span>
-            </div>
-            <hr />
-            <div class="friend-drawer friend-drawer--onhover">
-              <img
-                class="profile-image"
-                src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/termy.jpg"
-                alt=""
-              />
-              <div class="text">
-                <h3>Termy</h3>
-                <p class="text-muted">Im studying spanish...</p>
-              </div>
-              <span class="time text-muted small">13:21</span>
-            </div>
-            <hr />
-            <div class="friend-drawer friend-drawer--onhover">
-              <img
-                class="profile-image"
-                src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/rick.jpg"
-                alt=""
-              />
-              <div class="text">
-                <h3>Richard</h3>
-                <p class="text-muted">I'm not sure...</p>
-              </div>
-              <span class="time text-muted small">13:21</span>
-            </div>
-            <hr />
-            <div class="friend-drawer friend-drawer--onhover">
-              <img
-                class="profile-image"
-                src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/rachel.jpeg"
-                alt=""
-              />
-              <div class="text">
-                <h3>XXXXX</h3>
-                <p class="text-muted">Hi, wanna see something?</p>
-              </div>
-              <span class="time text-muted small">13:21</span>
-            </div>
           </div>
         </div>
-        <BoxChatting />
+        <div class="welcom-chat col-md-9" v-if="!isChangeMessage">
+          <div>Chào mừng bạn đến với V-chat</div>
+        </div>
+        <BoxChatting :dataChat.sync="idChat" v-if="isChangeMessage" />
       </div>
     </div>
   </div>

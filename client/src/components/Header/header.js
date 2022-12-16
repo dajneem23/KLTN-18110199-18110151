@@ -31,6 +31,12 @@ export default {
         toolTip.classList.remove('showToolTip');
       }
     },
+    showBoxNotification() {
+      
+    },
+    hiddenBoxNotification() {
+      
+    },
     onHomeBtnClick: function () {
       // this.$refs.home.classList.add('active');
       // this.$refs.news.classList.remove('active');
@@ -86,6 +92,7 @@ export default {
     return {
       lang: 'vi',
       HEADER_ITEM,
+      isShowNotifi: false,
     };
   },
 };

@@ -6,7 +6,7 @@
     <div class="box-profile">
       <div class="box-info--user bgc-white">
         <div class="user-avt">
-          <img :src="userInfo?.avatar" alt="" />
+          <img :src="userInfo?.picture" alt="" />
         </div>
         <div class="user-name">{{ userInfo?.username }}</div>
         <div class="user-email text-dark-gray">{{ userInfo?.email }}</div>
@@ -15,12 +15,8 @@
         </router-link>
         <div class="box-info--footer">
           <div class="box-footer-item text-dark-gray">
-            <div>FOLLOWERS</div>
-            <span>0</span>
-          </div>
-          <div class="box-footer-item text-dark-gray">
             <div>FOLLOWING</div>
-            <span>0</span>
+            <span>{{ userInfo?.following?.length }}</span>
           </div>
           <div class="box-footer-item text-dark-gray">
             <div>SPIDERS</div>
@@ -30,8 +26,10 @@
       </div>
       <div class="user-news">
         <div class="menu-bar">
-          <button class="menu-bar--item" id="myNews" @click="openCity('myNewsList', 'myNews')">Bài viết của tôi</button>
-          <button class="menu_bar-item" id="myWish" @click="openCity('myWishList', 'myWish')">
+          <button class="menu-bar--item bgc-white" id="myNews" @click="openCity('myNewsList', 'myNews')">
+            Bài viết của tôi
+          </button>
+          <button class="menu_bar-item bgc-white" id="myWish" @click="openCity('myWishList', 'myWish')">
             Bài viết yêu thích
           </button>
         </div>

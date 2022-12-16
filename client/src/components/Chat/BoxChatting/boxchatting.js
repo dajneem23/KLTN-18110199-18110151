@@ -1,19 +1,48 @@
 import InfiniteLoading from 'vue-infinite-loading';
 import Messenge from '../Messenge/index.vue';
-import { StoriesService } from '@/services';
+import { ChatsServices } from '@/services';
 
 export default {
   data() {
     return {
-      sms: '',
+      chat: {},
+      sms: {
+        source_id: '',
+        content: '',
+        reply_to: null,
+      },
       posts: [],
       page: 1,
       per_page: 10,
+      messages: [],
+      users:[],
     };
+  },
+  props: {
+    dataChat: String,
   },
   components: {
     Messenge,
     InfiniteLoading,
+  },
+  watch: {
+    async dataChat() {
+      this.$emit('update:dataChat', this.dataChat);
+      const [result, error] = await ChatsServices.getChatById(this.dataChat);
+      if (result) {
+        this.posts = result.messages;
+        this.users = result.users;
+        this.chat = result;
+      }
+      // console.log(result, 'result');
+    },
+  },
+  async mounted() {
+    const [result, error] = await ChatsServices.getChatById(this.dataChat);
+    if (result) {
+      this.posts = result.messages;
+    }
+    this.users = result.users;
   },
   methods: {
     showEmojiBox() {
@@ -24,26 +53,28 @@ export default {
         boxEmoji.style.visibility = 'hidden';
       }
     },
-    sendSms() {
-      console.log(this.sms);
+    async sendSms() {
+      const [result, error] = await ChatsServices.createMessage(this.chat.id, {
+        content: this.sms.content,
+      });
+      console.log(result);
+      console.log(this.sms.content);
+      console.log(this.chat.id);
     },
     async infiniteHandler($state) {
-      const [
-        { items = [], total_count } = {
-          items: [],
-        },
-        error,
-      ] = await StoriesService.get({
-        page: this.page,
-        per_page: this.per_page,
-      });
-      // console.log([items, error]);
-      if (!items.length) {
+      const [result, error] = await ChatsServices.getChatById(this.dataChat);
+      if (!result.messages.length) {
         $state.complete();
       }
-      this.posts.push(...items);
+      // this.messages = result.messages
+      this.posts.push(...this.messages);
       this.page++;
       $state.loaded();
+      $state.complete();
+    },
+    hiddenReply() {
+      let replyBox = document.getElementById('reply-mess');
+      replyBox.style.visibility = 'hidden';
     },
   },
 };

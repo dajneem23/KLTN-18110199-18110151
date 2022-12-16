@@ -1,16 +1,77 @@
 import BoxChatting from '../../components/Chat/BoxChatting/index.vue';
+import { ChatsServices } from '@/services';
 export default {
   components: {
     BoxChatting,
   },
   data() {
     return {
+      listChat: [],
+      idChat: '',
       sms: '',
+      isChangeMessage: false,
     };
   },
-  mounted() {
-    let panel = document.getElementById('chat-panel');
-    panel.scrollTop = panel.scrollHeight;
+  // async created() {
+  //   const [
+  //     { items = [], total_count } = {
+  //       items: [],
+  //     },
+  //     error,
+  //   ] = await ChatsServices.get();
+  //   this.listChat = items;
+  //   console.log(this.listChat);
+  //   this.total_count = total_count;
+  //   console.log('created');
+  // },
+  async mounted() {
+    const [
+      { items = [], total_count } = {
+        items: [],
+      },
+      error,
+    ] = await ChatsServices.get();
+    this.listChat = items;
+    // console.log(this.listChat);
+    this.total_count = total_count;
+    this.idChat = this.listChat[0].id;
+    // console.log(this.idChat, 'mouted');
   },
-  methods: {},
+  methods: {
+    async getChat(id) {
+      this.idChat = id;
+      // console.log(this.idChat);
+      this.isChangeMessage = true;
+      console.log(this.isChangeMessage);
+      let chat_active = document.getElementsByClassName('friend-drawer').forEach((item) => {
+        if (item.id === id) {
+          item.classList.add('active-chat');
+        } else {
+          item.classList.remove('active-chat');
+        }
+      });
+      // chat_active.array.forEach((item) => {
+      //   if (item.id === id) {
+      //     item.classList.add('active-chat');
+      //   } else {
+      //     item.classList.remove('active-chat');
+      //   }
+      // });
+    },
+    async changeTypeAll() {
+      const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await ChatsServices.get();
+      this.listChat = items;
+      // console.log(this.listChat);
+      this.total_count = total_count;
+      this.idChat = this.listChat[0].id;
+    },
+    changeTypeWait() {
+      this.listChat = [];
+    },
+  },
 };

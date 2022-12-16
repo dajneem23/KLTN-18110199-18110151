@@ -5,6 +5,9 @@ export const NewsServices = {
   get(params) {
     return RequestBase.get(`${this.url}/`, params);
   },
+  getFollowing(params) {
+    return RequestBase.get(`${this.url}/following`, params);
+  },
   getById(id) {
     return RequestBase.get(`${this.url}/${id}`);
   },

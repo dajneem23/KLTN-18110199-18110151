@@ -14,4 +14,7 @@ export const StoriesService = {
   react(id) {
     return RequestBase.patch(`${this.url}/react/${id}`);
   },
+  getPostsFollow(params) {
+    return RequestBase.get(`${this.url}/following/`, params);
+  },
 };

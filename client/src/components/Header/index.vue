@@ -9,10 +9,14 @@
       <div class="header-nav_left">
         <div class="category">
           <router-link :to="HEADER_ITEM.home.path">
-            <div class="category-item" 
-            :class="{
+            <div
+              class="category-item"
+              :class="{
                 active: isPage == 'home',
-              }" :ref="HEADER_ITEM.home.ref" @click="onHomeBtnClick">
+              }"
+              :ref="HEADER_ITEM.home.ref"
+              @click="onHomeBtnClick"
+            >
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                   <path
@@ -27,10 +31,14 @@
             <!-- {{ HEADER_ITEM.home.title[lang] }} -->
           </router-link>
           <router-link :to="HEADER_ITEM.news.path">
-            <div class="category-item" 
-            :class="{
+            <div
+              class="category-item"
+              :class="{
                 active: isPage == 'articles',
-              }" :ref="HEADER_ITEM.news.ref" @click="onNewsBtnClick">
+              }"
+              :ref="HEADER_ITEM.news.ref"
+              @click="onNewsBtnClick"
+            >
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <path
@@ -45,10 +53,14 @@
             <!-- {{ HEADER_ITEM.home.title[lang] }} -->
           </router-link>
           <router-link :to="HEADER_ITEM.manga.path">
-            <div class="category-item" 
-            :class="{
+            <div
+              class="category-item"
+              :class="{
                 active: isPage == 'manga',
-              }" :ref="HEADER_ITEM.manga.ref" @click="onMangaBtnClick">
+              }"
+              :ref="HEADER_ITEM.manga.ref"
+              @click="onMangaBtnClick"
+            >
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                   <path
@@ -65,10 +77,14 @@
           }} -->
           </router-link>
           <router-link :to="HEADER_ITEM.movie.path">
-            <div class="category-item" 
-            :class="{
+            <div
+              class="category-item"
+              :class="{
                 active: isPage == 'movie',
-              }" :ref="HEADER_ITEM.movie.ref" @click="onMovieBtnClick">
+              }"
+              :ref="HEADER_ITEM.movie.ref"
+              @click="onMovieBtnClick"
+            >
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
@@ -117,7 +133,7 @@
           <button type="button" class="btn-none">Về Vrum</button>
         </router-link> -->
         <div class="picture-user">
-          <img :src="userInfo?.avatar" alt="" />
+          <img :src="userInfo?.picture" alt="" />
         </div>
         <div v-if="isAuthenticated" class="category-item-user">
           <div class="name-user" @click="showtoolTip">
@@ -139,6 +155,25 @@
             <router-link to="/profile/">
               <div class="tooltip-user--item">Trang cá nhân</div>
             </router-link>
+
+            <div class="tooltip-user--item text-dark" @click="showBoxNotification" id="label_notifi">
+              Thông báo
+              <span>3</span>
+              <div class="title_tooltip-user bgc-white" id="toolTip_notification">
+                <div class="tooltip-user--item">
+                  <div class="content_notifi">Tran Hoang Long đã theo dõi bạn</div>
+                  <div class="btn_follow">Theo dõi lại</div>
+                </div>
+                <div class="tooltip-user--item text-dark">
+                  <div class="content_notifi">Tran Hoang Long đã theo dõi bạn</div>
+                  <div class="btn_follow">Theo dõi lại</div>
+                </div>
+                <div class="tooltip-user--item text-dark">
+                  <div class="content_notifi">Tran Hoang Long đã theo dõi bạn</div>
+                  <div class="btn_follow">Theo dõi lại</div>
+                </div>
+              </div>
+            </div>
             <div class="tooltip-user--item text-dark" @click="logOut">Đăng xuất</div>
           </div>
         </div>

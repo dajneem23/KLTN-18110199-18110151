@@ -5,6 +5,7 @@ import { onMounted } from 'vue';
 import { Carousel, Slide } from 'vue-carousel';
 import { StoriesService } from '@/services';
 import { CommentServices } from '@/services';
+import { UserService } from '../../services';
 import { mapState } from 'vuex';
 import moment from 'moment';
 
@@ -56,9 +57,9 @@ export default {
       });
   },
   mounted() {
-    this.data.images.forEach((image) => {
-      image.url = this.urlStrapiServe + image.url;
-    });
+    // this.data.images.forEach((image) => {
+    //   image.url = this.urlStrapiServe + image.url;
+    // });
   },
   methods: {
     moment,
@@ -89,16 +90,24 @@ export default {
       }
     },
     async sendCmt() {
-      this.cmt.source_id = this.data.id;
-      const result = await CommentServices.comment({
-        ...this.cmt,
-      });
-      const [result_2, error] = await StoriesService.getById(this.data.slug);
-      console.log([result_2, error]);
-      if (result) {
-        this.comments.push(result_2.comments[result_2.comments.length - 1]);
+      if (this.cmt.content !== '') {
+        this.cmt.source_id = this.data.id;
+        const result = await CommentServices.comment({
+          ...this.cmt,
+        });
+        const [result_2, error] = await StoriesService.getById(this.data.slug);
+        console.log([result_2, error]);
+        if (result) {
+          this.comments.push(result_2.comments[result_2.comments.length - 1]);
+        }
+        this.cmt.content = '';
       }
-      this.cmt.content = '';
+    },
+    async followUser() {
+      const [result, error] = await UserService.followUser(this.author.id);
+      if (result) {
+        this.userInfo.following.push(this.author.id)
+      }
     },
     getTime() {
       data.created_at = data.created_at.toLocaleDateString('en-US');

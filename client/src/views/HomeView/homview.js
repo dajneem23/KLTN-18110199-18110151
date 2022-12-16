@@ -19,13 +19,12 @@ export default {
       scTimer: 0,
       scY: 0,
       posts: [],
+      // posts_follow: [],
       page: 1,
       per_page: 10,
+      isTabHomeData: true,
+      isShowUserProfile: false,
     };
-  },
-  mounted() {
-    console.log(this.isAuthenticated);
-    console.log(this.userInfo);
   },
   methods: {
     async getPosts($state) {
@@ -45,6 +44,16 @@ export default {
       this.page++;
       $state.loaded();
     },
+
+    createChat() {
+      alert('chatchat');
+    },
+    showProfileUser() {
+      this.isShowUserProfile = true;
+    },
+    hiddenProfileUser() {
+      this.isShowUserProfile = false;
+    },
     showModel() {
       const model = document.getElementById('model-add-story');
       model.style.visibility = 'visible';
@@ -52,6 +61,30 @@ export default {
     hiddenModel() {
       const model = document.getElementById('model-add-story');
       model.style.visibility = 'hidden';
+    },
+    async handleChageTabHomeData($state) {
+      this.isTabHomeData = true;
+      const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await StoriesService.get({
+      });
+      this.posts = items;
+      console.log(items, total_count);
+    },
+    async handleChageTabFollowData() {
+      this.isTabHomeData = false;
+      const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await StoriesService.getPostsFollow({
+      });
+      this.posts = items;
+      console.log(items, total_count);
     },
   },
 };

@@ -8,37 +8,51 @@
     </div>
     <div class="content-banner">
       <div class="popular-news">
-        <h3>Phổ biến nhất</h3>
+        <h2>Phổ biến nhất</h2>
         <div class="news-popular">
           <div v-for="(item, key) of new_items">
             <CardNews :key="item.id" style_x="card-news-x" :news="item"></CardNews>
           </div>
-        
         </div>
       </div>
       <div class="hot-news">
-        <h3>Nổi bật nhất</h3>
+        <h2>Nổi bật nhất</h2>
         <div class="news-hot">
           <div v-for="(item, key) of hot_items">
             <CardNews :key="item.id" style_x="card-news-y" :news="item"></CardNews>
           </div>
-      
         </div>
       </div>
       <div class="main-news">
         <div class="main-news-button">
-          <!-- <SwitchButton
-            contentL="Dành cho bạn"
-            contentR="Đánh giá cao nhất"
+          <SwitchButton
+            contentL="Tất cả"
+            contentR="Dành cho bạn"
             buttonRef="buttonRef"
             btnRefL="onTvRef"
             btnRefR="onTTRef"
-          ></SwitchButton> -->
-          <h2>Tất cả</h2>
+            :function1="handleChangeTabAll"
+            :function2="handleChangeTabFollow"
+          ></SwitchButton>
+          <!-- <h2>Tất cả</h2> -->
         </div>
         <div class="news-box">
-          <div v-for="(item, key) of items">
-            <CardNews :key="item.id" style_x="card-news-z" font_title="f20" :news="item"></CardNews>
+          <div class="list-news-all">
+            <div v-for="(item, key) of items" class="news-item">
+              <CardNews :key="item.id" style_x="card-news-z" font_title="f20" :news="item"></CardNews>
+            </div>
+          </div>
+          <div class="list-category">
+            <h2>Chủ đề</h2>
+            <div class="list-categories">
+              <span class="categories-item" @click="filterArticlesByCategory" id="cat-item"
+                >Quan điểm - Tranh luận</span
+              >
+              <span class="categories-item">Hai huoc</span>
+              <span class="categories-item">Quan diem</span>
+              <span class="categories-item">Quan diem</span>
+              <span class="categories-item">Quan diem</span>
+            </div>
           </div>
         </div>
         <div class="paganition-box">

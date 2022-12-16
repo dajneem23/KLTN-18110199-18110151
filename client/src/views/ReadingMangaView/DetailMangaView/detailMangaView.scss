@@ -1,5 +1,7 @@
 .detailmanga-wrapper {
   padding-top: 70px;
+  background-color: var(--black);
+  padding-bottom: 50px;
 }
 .screen-reading {
   margin: 0 auto;
@@ -37,6 +39,10 @@
 .manga-box-1 {
   display: flex;
   align-items: center;
+  // margin-top: 5px;
+  img {
+    margin-top: 15px;
+  }
 }
 .manga-box-2 {
   // margin: 20px 0;
@@ -46,6 +52,8 @@
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 20px;
+    margin-left: 15px;
+    color: var(--white);
   }
   .manga-info-des {
     width: 50%;
@@ -75,7 +83,7 @@
 .manga-cmt {
   width: 50%;
   height: 100%;
-  margin: 0 auto 60px auto;
+  margin: 0 auto 0px auto;
   padding: 20px 40px;
   border: 1px solid var(--gray);
   border-radius: 5px;
@@ -182,9 +190,12 @@
 .film-info-des {
   width: 100%;
   margin-left: 15px;
+  padding: 15px;
   display: flex;
   justify-content: space-between;
   color: var(--black);
+  background-color: var(--white);
+  border-radius: 5px;
   table {
     width: 100%;
     tr,
@@ -210,4 +221,13 @@
       margin-left: 5px;
     }
   }
+}
+.manga-description {
+  width: 100%;
+  color: var(--black);
+  background-color: var(--white);
+  margin-left: 15px;
+  margin-top: 15px;
+  padding: 20px 15px;
+  border-radius: 5px;
 }
