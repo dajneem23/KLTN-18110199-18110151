@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="homePage">
-      <div class="wrapper-home-left" v-if="!isAuthenicated">
+    <div class="homePage row">
+      <div class="wrapper-home-left col-md-2" v-if="!isAuthenicated">
         <div class="tab-story">
           <div class="tab-item" :class="{ isActive: isTabHomeData }" @click="handleChageTabHomeData">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -181,7 +181,7 @@
           </div>
         </div>
       </div>
-      <div class="wrapper-home-center">
+      <div class="wrapper-home-center col-md-7">
         <div class="item-home" v-for="(post, index) in posts" :key="index">
           <Story :data="post"></Story>
         </div>
@@ -191,7 +191,7 @@
         </div> -->
         <infinite-loading @infinite="getPosts"></infinite-loading>
       </div>
-      <div class="wrapper-home-right">
+      <div class="wrapper-home-right col-md-3">
         <button class="btn-add--story" @click="showModel" v-if="isAuthenticated">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
             <path

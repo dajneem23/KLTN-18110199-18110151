@@ -14,7 +14,8 @@ export default {
       posts: [],
       page: 1,
       per_page: 10,
-      icon: '&#128512;',
+      messages: [],
+      users:[],
     };
   },
   props: {
@@ -30,9 +31,10 @@ export default {
       const [result, error] = await ChatsServices.getChatById(this.dataChat);
       if (result) {
         this.posts = result.messages;
+        this.users = result.users;
         this.chat = result;
       }
-      console.log(result, 'result');
+      // console.log(result, 'result');
     },
   },
   async mounted() {
@@ -40,7 +42,7 @@ export default {
     if (result) {
       this.posts = result.messages;
     }
-    console.log(this.posts);
+    this.users = result.users;
   },
   methods: {
     showEmojiBox() {
@@ -51,17 +53,24 @@ export default {
         boxEmoji.style.visibility = 'hidden';
       }
     },
-    sendSms() {
-      console.log(this.sms);
+    async sendSms() {
+      const [result, error] = await ChatsServices.createMessage(this.chat.id, {
+        content: this.sms.content,
+      });
+      console.log(result);
+      console.log(this.sms.content);
+      console.log(this.chat.id);
     },
     async infiniteHandler($state) {
-      if (!this.chat.messages.length) {
+      const [result, error] = await ChatsServices.getChatById(this.dataChat);
+      if (!result.messages.length) {
         $state.complete();
       }
-      this.posts.push(...this.chat.messages);
+      // this.messages = result.messages
+      this.posts.push(...this.messages);
       this.page++;
       $state.loaded();
-      console.log(this.posts);
+      $state.complete();
     },
     hiddenReply() {
       let replyBox = document.getElementById('reply-mess');

@@ -9,7 +9,7 @@
   padding: 20px 100px 0 100px;
   min-height: 76vh;
   margin: 0px auto;
-  width: 55%;
+  // width: 55%;
 }
 .wrapper-home-left,
 .wrapper-home-right {
@@ -17,12 +17,10 @@
 }
 .wrapper-home-right {
   padding: 20px;
+  top: 80px;
   .btn-add--story {
     width: 200px;
     height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     background-color: var(--white);
     border: 3px solid var(--primary-blue_3);
@@ -39,7 +37,7 @@
   }
 }
 .wrapper-home-left {
-  width: 17%;
+  // width: 17%;
   height: 92.7vh;
   overflow-y: auto;
   .list-user {
@@ -186,7 +184,7 @@
     z-index: 1;
   }
   .box-add-story {
-    // z-index: 999;
+    z-index: 999;
   }
   .edit-user-name {
     .input-edit-uname {
