@@ -132,7 +132,7 @@ export class UserService {
    */
   async getById(_id: User['id']) {
     try {
-      const user = await this.model._collection.findOne({ _id: new ObjectId(_id) });
+      const [user] = await this.model._collection.aggregate([{ $match: { _id: new ObjectId(_id) } }]).toArray();
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[getById:success]', { _id, email: user.email });
       return toUserOutput(user as any);

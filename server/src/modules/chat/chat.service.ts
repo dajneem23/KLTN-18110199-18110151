@@ -1,14 +1,12 @@
 import Container, { Inject, Service, Token } from 'typedi';
 import Logger from '@/core/logger';
 import { throwErr, toOutPut, toPagingOutput } from '@/utils/common';
-import { alphabetSize12 } from '@/utils/randomString';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import AuthService from '../auth/auth.service';
-import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject, $lookup } from '@/utils/mongoDB';
+import { $toObjectId, $pagination, $toMongoFilter } from '@/utils/mongoDB';
 import { ChatError, chatModelToken, chatErrors, _chat, messageModelToken } from '.';
-import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS, RemoveSlugPattern } from '@/types/Common';
-import { isNil, omit, uniq } from 'lodash';
-import slugify from 'slugify';
+import { BaseServiceInput, BaseServiceOutput } from '@/types/Common';
+import { isNil, uniq } from 'lodash';
 import { ObjectId } from 'mongodb';
 const TOKEN_NAME = '_chatService';
 /**
@@ -286,7 +284,9 @@ export class ChatService {
         throwErr(this.error('NOT_FOUND'));
       }
       const { _id: messageId } = await this.messageModel.create(
-        {},
+        {
+          _id: new ObjectId(),
+        },
         {
           ..._content,
           ...(_subject && { author: new ObjectId(_subject) }),
