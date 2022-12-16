@@ -146,7 +146,7 @@ export class NewsService {
                 $or: [
                   {
                     categories: {
-                      $in: $toObjectId(categories),
+                      $in: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
                     },
                   },
                 ],

@@ -143,7 +143,7 @@ export class FilmService {
                 $or: [
                   {
                     categories: {
-                      $in: $toObjectId(categories),
+                      $in: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
                     },
                   },
                 ],

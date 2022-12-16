@@ -146,7 +146,7 @@ export class StoryService {
                 $or: [
                   {
                     categories: {
-                      $in: $toObjectId(categories),
+                      $in: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
                     },
                   },
                 ],
@@ -217,7 +217,7 @@ export class StoryService {
                 $or: [
                   {
                     categories: {
-                      $in: $toObjectId(categories),
+                      $in: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
                     },
                   },
                 ],
