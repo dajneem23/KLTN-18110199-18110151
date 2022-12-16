@@ -55,6 +55,7 @@ export class BaseModel {
     comments: any;
     chat_users: any;
     messages: any;
+    following: any;
   } {
     return {
       categories: $lookup({
@@ -121,6 +122,24 @@ export class BaseModel {
         refTo: 'users',
         select: 'username avatar',
         reName: 'users',
+        operation: '$in',
+        pipeline: [
+          $lookup({
+            from: COLLECTION_NAMES.upload_file,
+            refFrom: '_id',
+            refTo: 'avatar',
+            select: 'name url',
+            reName: 'avatar',
+            operation: '$eq',
+          }),
+        ],
+      }),
+      following: $lookup({
+        from: 'users-permissions_user',
+        refFrom: '_id',
+        refTo: 'following',
+        select: 'username avatar',
+        reName: 'following',
         operation: '$in',
         pipeline: [
           $lookup({
@@ -263,6 +282,7 @@ export class BaseModel {
     categories: any;
     images: any;
     comments: any;
+    following: any;
   } {
     return {
       categories: {
@@ -295,6 +315,17 @@ export class BaseModel {
             },
             then: [],
             else: '$comments',
+          },
+        },
+      },
+      following: {
+        following: {
+          $cond: {
+            if: {
+              $ne: [{ $type: '$following' }, 'array'],
+            },
+            then: [],
+            else: '$following',
           },
         },
       },
