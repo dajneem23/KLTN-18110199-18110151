@@ -3,7 +3,10 @@
     <div class="bgc-black">
       <div class="screen-reading">
         <div class="img-manga_item" v-for="image of images">
-          <img :src="`https://zinc-union-365709-strapi-63see6q63q-uc.a.run.app/${image.url}`" alt="" />
+          <img
+            src="https://s199.imacdn.com/tt24/2022/12/15/697b6ba2005fc74f_958be4739260b749_586897167109379969674.jpg"
+            alt=""
+          />
         </div>
       </div>
       <!-- <div class="button-change-chapter">
@@ -25,11 +28,11 @@
         </button>
       </div> -->
     </div>
-    <div class="manga-info">
+    <div class="manga-info-detail">
       <h1>{{ name }}</h1>
     </div>
 
-    <div class="manga-cmt">
+    <div class="manga-cmt bgc-white">
       <div class="write-cmt-box">
         <textarea
           class="input-cmt"

@@ -26,8 +26,8 @@
       <infinite-loading direction="top" @infinite="infiniteHandler"></infinite-loading>
 
       <div v-for="(post, index) in posts" :key="index">
-        <Messenge friendSms :sms="post.content" v-if="index % 2 === 0" />
-        <Messenge mySms sms="Hello motherfucker" v-if="index % 2 !== 0" />
+        <Messenge friendSms :sms="post.content" v-if="post.author.id === userInfo.id" />
+        <Messenge mySms :sms="post.content" v-if="post.author.id !== userInfo.id" />
       </div>
       <!-- <Messenge mySms sms="fuck you" />
       <Messenge friendSms sms="Hello motherfucker" />
@@ -96,7 +96,7 @@
         </div>
       </div> -->
     </div>
-    <div class="reply-mess" id="reply-mess">
+    <!-- <div class="reply-mess" id="reply-mess">
       <div>Dang tra loi: Hhahaha</div>
       <div @click="hiddenReply">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -105,7 +105,7 @@
           />
         </svg>
       </div>
-    </div>
+    </div> -->
     <div class="">
       <div class="box-send">
         <div class="chat-box-tray">

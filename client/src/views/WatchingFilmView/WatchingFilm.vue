@@ -12,7 +12,7 @@
     </div>
     <!-- <ListFilm></ListFilm> -->
     <div class="wrapper-list">
-      <div class="list-new-box">
+      <!-- <div class="list-new-box">
         <h3>Phim mới cập nhật</h3>
         <div class="list-new">
           <div v-for="(item, key) of new_items" class="list-new-item">
@@ -27,7 +27,7 @@
             <CardFilm :item="item"></CardFilm>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="list-all-box">
         <h3>Tất cả</h3>
         <div class="list-all">

@@ -31,6 +31,7 @@ export default {
       reacts: [],
       author: {},
       createdAt: '',
+      isIncludeUser: false,
     };
   },
   computed: {
@@ -48,7 +49,13 @@ export default {
   // },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
-    // this.voteCount = this.up_votes.length - this.down_votes.length;
+    this.userInfo.following.forEach((user) => {
+      if (user.id == this.author.id) {
+        this.isIncludeUser = true;
+        return
+      }
+
+    });
 
     // const news
   },

@@ -156,7 +156,7 @@
               <div class="tooltip-user--item">Trang cá nhân</div>
             </router-link>
 
-            <div class="tooltip-user--item text-dark" @click="showBoxNotification" id="label_notifi">
+            <!-- <div class="tooltip-user--item text-dark" @click="showBoxNotification" id="label_notifi">
               Thông báo
               <span>3</span>
               <div class="title_tooltip-user bgc-white" id="toolTip_notification">
@@ -173,7 +173,7 @@
                   <div class="btn_follow">Theo dõi lại</div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="tooltip-user--item text-dark" @click="logOut">Đăng xuất</div>
           </div>
         </div>
