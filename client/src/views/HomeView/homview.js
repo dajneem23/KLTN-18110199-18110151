@@ -5,6 +5,7 @@ import CreateStory from '../CreateStory/index.vue';
 import { mapState } from 'vuex';
 import { store } from '../../store/vuex';
 import { StoriesService } from '@/services';
+import { ChatsServices } from '@/services';
 export default {
   components: {
     InfiniteLoading,
@@ -45,8 +46,26 @@ export default {
       $state.loaded();
     },
 
-    createChat() {
-      alert('chatchat');
+    async createChat(id) {
+      // alert(id);
+      let isInclude = false;
+      const [allChat, errorChat] = await ChatsServices.get();
+      allChat.items.forEach((item) => {
+        if (item.type === 'private') {
+          item.users.forEach((user) => {
+            if (user.id === id) {
+              isInclude = true;
+            }
+          });
+        }
+      });
+      if (!isInclude) {
+        const [result, error] = await ChatsServices.createChat({
+          users: [id],
+        });
+        console.log(result);
+        window.location.href = '/chat/';
+      }
     },
     showProfileUser() {
       this.isShowUserProfile = true;
@@ -69,22 +88,24 @@ export default {
           items: [],
         },
         error,
-      ] = await StoriesService.get({
-      });
+      ] = await StoriesService.get({});
       this.posts = items;
       console.log(items, total_count);
     },
     async handleChageTabFollowData() {
-      this.isTabHomeData = false;
-      const [
-        { items = [], total_count } = {
-          items: [],
-        },
-        error,
-      ] = await StoriesService.getPostsFollow({
-      });
-      this.posts = items;
-      console.log(items, total_count);
+      if (this.userInfo.following.length == 0) {
+        // this.post = [];
+      } else {
+        this.isTabHomeData = false;
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await StoriesService.getPostsFollow({});
+        this.posts = items;
+        console.log(items, total_count);
+      }
     },
   },
 };

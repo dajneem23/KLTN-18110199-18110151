@@ -24,7 +24,7 @@
           </div>
         </div>
       </div>
-      <div class="user-news">
+      <!-- <div class="user-news">
         <div class="menu-bar">
           <button class="menu-bar--item bgc-white" id="myNews" @click="openCity('myNewsList', 'myNews')">
             Bài viết của tôi
@@ -40,7 +40,7 @@
         <div id="myWishList" class="news" style="display: none">
           <p>Đây là box bài viết mà tôi đã yêu thích</p>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

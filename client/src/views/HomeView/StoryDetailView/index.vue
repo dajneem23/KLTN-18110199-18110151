@@ -17,7 +17,7 @@
     <div class="boxDetail-right bgc-white">
       <div class="auth">
         <div class="auth_avt">
-          <img src="../../../assets/Icon/avt-cattoon.png" alt="">
+          <img :src="author?.avatar[0].url || '	https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="">
         </div>
         <div class="auth-info">
           <div class="auth_name">{{author.username || 'UnKnown'}}</div>
@@ -95,7 +95,7 @@
       placeholder="Hãy chia sẻ cảm nghĩ về bài viết"
       v-model="cmt.content"
     ></textarea>
-    <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Send</button>
+    <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
   </div>
       <div class="news-cmt-box" >
         <div v-for="comment of comments">

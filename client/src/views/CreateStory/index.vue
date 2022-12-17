@@ -3,7 +3,7 @@
     <div class="box-create">
       <!-- <h1>Tạo bài viết</h1> -->
       <div class="user-info">
-        <img :src="userInfo?.picture" alt="" />
+        <img :src="userInfo?.avatar[0].url" alt="" />
         <span>{{ userInfo.username }}</span>
       </div>
       <div class="box-title">

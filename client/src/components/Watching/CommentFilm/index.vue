@@ -2,7 +2,7 @@
   <div class="user-cmt">
     <div class="cmt-header">
       <div class="cmt-avt">
-        <img src="../../../assets/Icon/avt-cattoon.png" alt="" />
+        <img :src="author?.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
       </div>
       <div class="cmt-info">
         <span class="cmt-user-name">{{ author?.username || 'Unknown' }}</span>
@@ -28,7 +28,7 @@
         Trả lời
       </button>
     </div>
-    <div class="news-write-cmt hidden-cmt" :id="(flag+id)">
+    <div class="news-write-cmt hidden-cmt" :id="flag + id">
       <textarea
         class="input-cmt"
         type="text"

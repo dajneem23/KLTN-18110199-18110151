@@ -48,10 +48,10 @@
               <span class="categories-item" @click="filterArticlesByCategory" id="cat-item"
                 >Quan điểm - Tranh luận</span
               >
-              <span class="categories-item">Hai huoc</span>
-              <span class="categories-item">Quan diem</span>
-              <span class="categories-item">Quan diem</span>
-              <span class="categories-item">Quan diem</span>
+              <span class="categories-item">Hài hước</span>
+              <span class="categories-item">Anime</span>
+              <span class="categories-item">Thiên nhiên</span>
+              <span class="categories-item">Kinh dị</span>
             </div>
           </div>
         </div>

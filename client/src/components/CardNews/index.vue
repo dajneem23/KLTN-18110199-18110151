@@ -31,11 +31,10 @@
           </div>
         </router-link>
       </div>
-
       <div class="card-body__content">
         <div class="body-content__imgAuth">
-          <img :src="author?.picture || '	https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
-          <span>{{ author[0]?.username || author?.username }}</span>
+          <img :src="author[0]?.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
+          <span>{{ author[0]?.username }}</span>
         </div>
         <div class="body-content__views">
           <div @click="upVote(id)" class="vote-icon">

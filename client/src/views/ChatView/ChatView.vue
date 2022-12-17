@@ -15,21 +15,22 @@
           </div>
           <div class="type-message">
             <div class="type-item" @click="changeTypeAll">Đoạn chat</div>
-            <div class="type-item" @click="changeTypeWait">Tin nhắn chờ</div>
+            <!-- <div class="type-item" @click="changeTypeWait">Tin nhắn chờ</div> -->
           </div>
           <hr />
           <div class="list-sms">
-            <div class="friend-drawer friend-drawer--onhover" v-for="chat of listChat" @click="getChat(chat.id)" :id="chat.id">
-              <img
-                class="profile-image"
-                src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
-                alt=""
-              />
+            <div
+              class="friend-drawer friend-drawer--onhover"
+              v-for="chat of listChat"
+              @click="getChat(chat.id)"
+              :id="chat.id"
+            >
+              <img class="profile-image" :src="chat.users[0].avatar[0].url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
               <div class="text">
                 <div class="list-name-chat">
                   <h3 v-if="chat.type === 'group'" v-for="user of chat.users">{{ user.username }},</h3>
                 </div>
-                <h3 v-if="chat.type === 'private'">{{ chat.users[1].username }}</h3>
+                <h3 v-if="chat.type === 'private'">{{ chat.users[0].username }}</h3>
                 <p class="text-muted">{{ chat.id }}</p>
               </div>
               <span class="time text-muted small">13:21</span>

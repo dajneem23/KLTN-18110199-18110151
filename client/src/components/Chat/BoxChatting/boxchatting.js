@@ -1,6 +1,8 @@
 import InfiniteLoading from 'vue-infinite-loading';
 import Messenge from '../Messenge/index.vue';
 import { ChatsServices } from '@/services';
+import { mapState } from 'vuex';
+import { store } from '../../../store/vuex';
 
 export default {
   data() {
@@ -17,6 +19,9 @@ export default {
       messages: [],
       users:[],
     };
+  },
+  computed: {
+    ...mapState(['userInfo', 'isAuthenticated']),
   },
   props: {
     dataChat: String,

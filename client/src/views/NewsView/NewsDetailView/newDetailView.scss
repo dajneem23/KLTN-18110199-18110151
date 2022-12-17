@@ -28,7 +28,7 @@
       img {
         height: 50px;
         width: 50px;
-        border-radius: 50% ;
+        border-radius: 50%;
       }
     }
     .add-wish-list {
@@ -60,6 +60,7 @@
       bottom: 71px;
       left: 34.5%;
       width: 15px;
+      border-radius: 50%;
       fill: var(--primary-blue_3);
       z-index: 5 !important;
     }
@@ -100,6 +101,7 @@
         margin-right: 10px;
         border-radius: 50%;
         width: 60px;
+        height: 60px;
       }
       .news-date {
         font-size: 12px;

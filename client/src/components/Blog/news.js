@@ -35,6 +35,7 @@ export default {
       img: [],
       author: { name: 'Unknown' },
       isShowDetail: false,
+      isIncludeUser: false,
     };
   },
   computed: {
@@ -57,9 +58,13 @@ export default {
       });
   },
   mounted() {
-    // this.data.images.forEach((image) => {
-    //   image.url = this.urlStrapiServe + image.url;
-    // });
+    // console.log(this.author.id);
+    this.userInfo.following.forEach((user) => {
+      if (user.id == this.author.id) {
+        this.isIncludeUser = true;
+        return
+      }
+    });
   },
   methods: {
     moment,
@@ -106,7 +111,7 @@ export default {
     async followUser() {
       const [result, error] = await UserService.followUser(this.author.id);
       if (result) {
-        this.userInfo.following.push(this.author.id)
+        this.userInfo.following.push(this.author.id);
       }
     },
     getTime() {
