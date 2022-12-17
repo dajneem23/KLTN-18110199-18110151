@@ -19,7 +19,13 @@
       </div>
       <div class="box-images">
         <div class="cl-black">Hình ảnh</div>
-        <DropzoneFileUpload multiple class="upload-file"></DropzoneFileUpload>
+        <!-- <DropzoneFileUpload
+          @change="onDropZoneChange"
+          multiple
+          class="upload-file"
+          :url="`https://zinc-union-365709-63see6q63q-uc.a.run.app/api/v1/upload/`"
+        ></DropzoneFileUpload> -->
+        <DropZone @upload-success="onDropZoneUploadSuccess"></DropZone>
       </div>
       <div class="box-content">
         <div class="cl-black">Nội dung :</div>
@@ -29,7 +35,6 @@
     </div>
   </div>
 </template>
-<!-- <script src="../"></script> -->
 
 <script type="module" src="./ckeditor.js"></script>
 <style lang="scss">

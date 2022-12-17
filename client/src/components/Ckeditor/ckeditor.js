@@ -1,12 +1,14 @@
 import { onMounted, ref } from 'vue';
 import DropzoneFileUpload from '../../template/Inputs/DropzoneFileUpload';
 import BaseInput from '../../template/Inputs/BaseInput.vue';
+import DropZone from './dropzone.vue';
 import { NewsServices, UploadServices } from '@/services';
 export default {
   name: 'CkEditor',
   components: {
     DropzoneFileUpload,
     BaseInput,
+    DropZone,
   },
   data() {
     return {
@@ -289,6 +291,33 @@ export default {
     handleError(editor) {
       console.log('%c Editor Error!', 'color:red', { editor });
     },
+    onDropZoneUploadSuccess(file) {
+      console.log('onDropZoneUploadSuccess', file);
+      // const reader = new FileReader();
+      // reader.readAsBinaryString(file);
+
+      // reader.onload = function (event) {
+      //   // handle reader success
+
+      //   resolve();
+      // };
+      // files.forEach((file) => {
+      //   const data = new FormData();
+
+      //   data.append('file', file);
+      //   UploadServices.upload(data)
+      //     .then((res) => {
+      //       editor.model.change((writer) => {
+      //         writer.setSelection(editor.model.document.getRoot(), 'end');
+      //       });
+      //       console.log('%c Upload Success', 'color:green', res);
+      //       const [data] = res;
+      //     })
+      //     .catch((err) => {
+      //       console.log('%c Upload Error', 'color:red', err);
+      //     });
+      // });
+    },
   },
   mounted() {
     this.initEditor();
@@ -310,7 +339,7 @@ function uploadAdapter(loader, editor) {
                 writer.setSelection(editor.model.document.getRoot(), 'end');
               });
               console.log('%c Upload Success', 'color:green', res);
-              const [data]=res
+              const [data] = res;
               resolve({
                 default: data.url,
               });
