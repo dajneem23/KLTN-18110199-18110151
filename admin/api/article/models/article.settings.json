@@ -15,7 +15,8 @@
     "name": {
       "type": "string",
       "required": true,
-      "pluginOptions": {}
+      "pluginOptions": {},
+      "unique": false
     },
     "description": {
       "type": "text",
