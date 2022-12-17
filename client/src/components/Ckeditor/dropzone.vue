@@ -6,7 +6,8 @@
       :options="dropzoneOptions"
       @vdropzone-file-added="vfileAdded"
       @vdropzone-success="vsuccess"
-    ></vue-dropzone>
+    >
+    </vue-dropzone>
   </div>
 </template>
 
@@ -29,6 +30,9 @@ export default {
         maxFilesize: 0.5,
         withCredentials: true,
         addRemoveLinks: true,
+        acceptedFiles: 'image/*',
+        dictRemoveFile:
+          '<i class="fa-solid fa-trash " data-dz-remove style="color:red;cursor:pointer;font-size: 1.5rem;"> </i>',
       },
     };
   },
@@ -89,5 +93,13 @@ td:nth-child(2) {
   color: #78cb5b;
   text-transform: uppercase;
   letter-spacing: 1.2px;
+}
+</style>
+<style>
+.vue-dropzone > .dz-preview .dz-remove {
+  border: none;
+}
+.vue-dropzone>.dz-preview .dz-details{
+  background-color: rgb(76 175 255 / 80%);
 }
 </style>

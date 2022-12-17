@@ -18,7 +18,7 @@ export default {
         name: '',
         content: '',
         description: '',
-        image: [],
+        image: '',
       },
     };
   },
@@ -293,6 +293,7 @@ export default {
     },
     onDropZoneUploadSuccess(file) {
       console.log('onDropZoneUploadSuccess', file);
+      this.news.image = file.uploadUrl;
       // const reader = new FileReader();
       // reader.readAsBinaryString(file);
 
