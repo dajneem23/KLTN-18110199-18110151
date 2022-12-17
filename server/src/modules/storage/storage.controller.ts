@@ -72,8 +72,7 @@ export default class StorageController {
         stream.on('finish', async () => {
           this.logger.info('uploadFile', 'finish', filename);
           const url = `https://storage.googleapis.com/${env.GOOGLE_CLOUD_BUCKET}/${filename}`;
-          const image = new Image();
-          image.src = url;
+
           const uploadedFile = {
             _id: new ObjectId(),
             name: filename,
@@ -85,8 +84,8 @@ export default class StorageController {
             size: file.size,
             url,
             provider: 'google-cloud-storage',
-            width: image.width,
-            height: image.height,
+            width: 200,
+            height: 200,
             related: [] as any,
             createdAt: new Date(),
             updatedAt: new Date(),

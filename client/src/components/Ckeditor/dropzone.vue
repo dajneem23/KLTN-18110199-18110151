@@ -25,12 +25,13 @@ export default {
   data: function () {
     return {
       dropzoneOptions: {
-        url: 'https://zinc-union-365709-63see6q63q-uc.a.run.app/api/v1/upload/',
+        url: `${process.env.VUE_APP_BASE_URL}/${process.env.VUE_APP_BASE_API_PREFIX}/${process.env.VUE_APP_BASE_API_VERSION}/upload/`,
         thumbnailWidth: 150,
         maxFilesize: 0.5,
         withCredentials: true,
         addRemoveLinks: true,
         acceptedFiles: 'image/*',
+        multiple: false,
         dictRemoveFile:
           '<i class="fa-solid fa-trash " data-dz-remove style="color:red;cursor:pointer;font-size: 1.5rem;"> </i>',
       },
