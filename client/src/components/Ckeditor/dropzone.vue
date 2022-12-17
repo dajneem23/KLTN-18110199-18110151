@@ -51,6 +51,7 @@ export default {
         response,
       });
       file.uploadUrl = response.url;
+      file._id = response._id;
       this.$emit('upload-success', file);
       // window.toastr.success('', 'Event : vdropzone-success')
     },
@@ -99,7 +100,7 @@ td:nth-child(2) {
 .vue-dropzone > .dz-preview .dz-remove {
   border: none;
 }
-.vue-dropzone>.dz-preview .dz-details{
+.vue-dropzone > .dz-preview .dz-details {
   background-color: rgb(76 175 255 / 80%);
 }
 </style>
