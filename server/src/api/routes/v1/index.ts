@@ -8,6 +8,7 @@ import { NewsController } from '@/modules/articles/articles.controller';
 import { FilmController } from '@/modules/film/film.controller';
 import { CommentController } from '@/modules/comment/comment.controller';
 import { ChatController } from '@/modules/chat/chat.controller';
+import StorageController from '@/modules/storage/storage.controller';
 
 const route = Router();
 
@@ -27,5 +28,6 @@ export default (app: Application) => {
     StoryController,
     CommentController,
     ChatController,
+    StorageController,
   ]);
 };
