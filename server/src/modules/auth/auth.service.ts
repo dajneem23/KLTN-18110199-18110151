@@ -57,7 +57,7 @@ export default class AuthService {
    * Generate Bearer tokens
    */
   static async generateBearerTokens(user: User | UserOutput) {
-    const payload: JWTPayload = pick(user, 'id', '_id', 'email', 'email_verified', 'name', 'picture', 'roles');
+    const payload: JWTPayload = pick(user, 'id', '_id', 'email', 'email_verified', 'name', 'avatar', 'roles');
     const bearerTokens: BearerTokens = {
       // token_type: 'bearer',
       access_token: jwt.sign(payload, env.JWT_SECRET, { expiresIn: env.JWT_ACCESS_TOKEN_EXP }),

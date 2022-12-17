@@ -106,7 +106,7 @@ export class UserService {
       const user = {
         ...userInput,
         // _full_name_alias: generateTextAlias(userInput.full_name),
-        picture: userInput.picture || DEFAULT_USER_PICTURE, // Should set a default avatar picture
+        avatar: userInput.avatar || DEFAULT_USER_PICTURE, // Should set a default avatar picture
         id: await UserService.generateID(),
         email_verified: false,
         roles: ['user'],

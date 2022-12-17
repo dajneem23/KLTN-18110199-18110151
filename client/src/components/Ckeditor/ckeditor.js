@@ -1,7 +1,7 @@
 import { onMounted, ref } from 'vue';
 import DropzoneFileUpload from '../../template/Inputs/DropzoneFileUpload';
 import BaseInput from '../../template/Inputs/BaseInput.vue';
-import { NewsServices } from '@/services';
+import { NewsServices, UploadServices } from '@/services';
 export default {
   name: 'CkEditor',
   components: {
@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       editor: null,
-      editorData: 'Long',
+      editorData: '',
       news: {
         name: '',
         content: '',
@@ -115,7 +115,7 @@ export default {
         ],
       },
       // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-      placeholder = 'Welcome to CKEditor 5!',
+      placeholder = 'Nội dung bài viết......',
       // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
       fontFamily = {
         options: [
@@ -241,12 +241,8 @@ export default {
         // from a local file system (file://) - load this site via HTTP server if you enable MathType
         'MathType',
       ],
-      onChange = () => {
-        console.log('onChange');
-        // const data = editor.getData();
-        // console.log({ event, editor, data });
-      },
-      extraPlugins = [],
+
+      extraPlugins = [uploadPlugin],
       data = this.editorData,
     } = {}) {
       CKEDITOR.ClassicEditor.create(document.getElementById('editor'), {
@@ -261,7 +257,6 @@ export default {
         link,
         mention,
         removePlugins,
-        onChange,
         extraPlugins,
         data,
       })
@@ -284,18 +279,53 @@ export default {
     },
 
     handleBlur(editor) {
-      console.log('Editor Blur.', { event, editor });
+      console.log('Editor Blur.', { editor });
     },
 
     handleFocus(editor) {
-      console.log('Editor Focus.', { event, editor });
+      console.log('Editor Focus.', { editor });
     },
 
     handleError(editor) {
-      console.log('%c Editor Error!', 'color:red', { event, editor });
+      console.log('%c Editor Error!', 'color:red', { editor });
     },
   },
   mounted() {
     this.initEditor();
   },
 };
+
+function uploadAdapter(loader, editor) {
+  return {
+    upload: () => {
+      return new Promise((resolve, reject) => {
+        console.log('upload');
+        loader.file.then((file) => {
+          const data = new FormData();
+
+          data.append('file', file);
+          UploadServices.upload(data)
+            .then((res) => {
+              editor.model.change((writer) => {
+                writer.setSelection(editor.model.document.getRoot(), 'end');
+              });
+              console.log('%c Upload Success', 'color:green', res);
+              const [data]=res
+              resolve({
+                default: data.url,
+              });
+            })
+            .catch((err) => {
+              console.log('%c Upload Error', 'color:red', err);
+              reject(err);
+            });
+        });
+      });
+    },
+  };
+}
+function uploadPlugin(editor) {
+  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+    return uploadAdapter(loader, editor);
+  };
+}

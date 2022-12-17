@@ -31,7 +31,7 @@ export type User = {
   // User roles (e.g. ["user", "admin"])
   roles: Array<UserRole>;
   // User avatar
-  picture?: string;
+  avatar?: string;
   // Gender
   gender?: Gender;
   // Date of birth (E.g. 1990-01-31)
@@ -59,8 +59,8 @@ export type User = {
   followings?: ObjectId[];
 };
 
-export type CreateUpdateUserInput = Pick<User, 'name' | 'email' | 'phone' | 'password' | 'picture'>;
+export type CreateUpdateUserInput = Pick<User, 'name' | 'email' | 'phone' | 'password' | 'avatar'>;
 
 export type UserOutput = Omit<User, 'password'>;
 
-export type UserPublicResponse = Pick<User, '_id' | 'name' | 'picture'>;
+export type UserPublicResponse = Pick<User, '_id' | 'name' | 'avatar'>;

@@ -19,7 +19,6 @@ import { $refValidation } from '@/utils/validation';
 import { COLLECTION_NAMES, PRIVATE_KEYS, RemoveSlugPattern, T } from '@/types';
 import slugify from 'slugify';
 import { omit } from 'lodash';
-import { locale } from 'dayjs';
 
 /**
  * @class BaseModel

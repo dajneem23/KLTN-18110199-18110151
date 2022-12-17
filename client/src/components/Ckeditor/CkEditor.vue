@@ -23,7 +23,7 @@
       </div>
       <div class="box-content">
         <div class="cl-black">Nội dung :</div>
-        <div id="editor" class="ckeditor-cus">Nội dung bài viết......</div>
+        <div id="editor" class="ckeditor-cus"></div>
       </div>
       <button @click="submitText(editorData)" class="btn-filter">Lưu</button>
     </div>
@@ -32,4 +32,9 @@
 <!-- <script src="../"></script> -->
 
 <script type="module" src="./ckeditor.js"></script>
+<style lang="scss">
+.ck-editor__editable_inline {
+  min-height: 200px;
+}
+</style>
 <style lang="scss" src="./ckeditor.scss" scoped></style>

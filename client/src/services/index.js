@@ -6,3 +6,4 @@ export * from './manga.service';
 export * from './film.service';
 export * from './comment.service';
 export * from './chat.service';
+export * from './upload.service';

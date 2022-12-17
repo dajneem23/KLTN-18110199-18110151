@@ -371,6 +371,11 @@ export class MangaService {
               }),
             ],
           }),
+          this.model.$lookups.upload_files({
+            refTo: 'images',
+            reName: 'images',
+            operation: '$in',
+          }),
           this.model.$lookups.author,
           this.model.$sets.author,
           this.model.$lookups.upload_files(),
