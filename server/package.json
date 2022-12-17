@@ -55,6 +55,7 @@
     "redis": "^4.0.6",
     "reflect-metadata": "^0.1.13",
     "slugify": "^1.6.5",
+    "socket.io": "^4.5.4",
     "ts-transformer-keys": "^0.4.3",
     "typedi": "^0.10.0"
   },
