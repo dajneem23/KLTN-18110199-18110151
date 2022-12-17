@@ -293,7 +293,7 @@ export default {
     },
     onDropZoneUploadSuccess(file) {
       console.log('onDropZoneUploadSuccess', file);
-      this.news.images.push(file._id);
+      this.news.images = [file._id];
       // const reader = new FileReader();
       // reader.readAsBinaryString(file);
 
