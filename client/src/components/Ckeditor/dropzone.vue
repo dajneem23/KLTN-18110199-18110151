@@ -60,7 +60,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .active {
   color: #78cb5b;
 }
@@ -97,11 +97,37 @@ td:nth-child(2) {
   letter-spacing: 1.2px;
 }
 </style>
-<style>
+<style scoped>
 .vue-dropzone > .dz-preview .dz-remove {
   border: none;
 }
 .vue-dropzone > .dz-preview .dz-details {
   background-color: rgb(76 175 255 / 80%);
+}
+.vue-dropzone > .dz-preview .dz-image {
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.vue-dropzone > .dz-preview .dz-image {
+  width: 100%;
+  /* background-color: aqua; */
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+}
+.vue-dropzone > .dz-preview .dz-image img {
+  width: 400px;
+  height: 200px;
+  background-size: contain;
+}
+.vue-dropzone {
+  padding: 0px;
+  border-radius: 5px;
+}
+.dropzone .dz-message {
+  margin: 0px;
 }
 </style>

@@ -6,11 +6,18 @@
         <button>Đăng bài viết</button>
       </router-link>
     </div>
+
     <div class="content-banner">
       <div class="popular-news">
-        <h2>Phổ biến nhất</h2>
+        <h2>Mới nhất</h2>
         <div class="news-popular">
-          <div v-for="(item, key) of new_items">
+          <!-- <div> -->
+          <Skeleton v-if="isLoading" />
+          <Skeleton v-if="isLoading" />
+          <Skeleton v-if="isLoading" />
+          <Skeleton v-if="isLoading" />
+          <!-- </div> -->
+          <div v-for="(item, key) of new_items" v-if="!isLoading">
             <CardNews :key="item.id" style_x="card-news-x" :news="item"></CardNews>
           </div>
         </div>
@@ -18,7 +25,11 @@
       <div class="hot-news">
         <h2>Nổi bật nhất</h2>
         <div class="news-hot">
-          <div v-for="(item, key) of hot_items">
+          <Skeleton v-if="isLoading" />
+          <Skeleton v-if="isLoading" />
+          <Skeleton v-if="isLoading" />
+          <Skeleton v-if="isLoading" />
+          <div v-for="(item, key) of hot_items" v-if="!isLoading">
             <CardNews :key="item.id" style_x="card-news-y" :news="item"></CardNews>
           </div>
         </div>
@@ -38,7 +49,12 @@
         </div>
         <div class="news-box">
           <div class="list-news-all">
-            <div v-for="(item, key) of items" class="news-item">
+            <Skeleton v-if="isLoading" />
+            <Skeleton v-if="isLoading" />
+            <Skeleton v-if="isLoading" />
+            <Skeleton v-if="isLoading" />
+            <Skeleton v-if="isLoading" />
+            <div v-for="(item, key) of items" class="news-item" v-if="!isLoading">
               <CardNews :key="item.id" style_x="card-news-z" font_title="f20" :news="item"></CardNews>
             </div>
           </div>

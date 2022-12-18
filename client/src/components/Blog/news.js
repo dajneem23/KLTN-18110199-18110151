@@ -58,9 +58,13 @@ export default {
       });
   },
   mounted() {
+    if (this.author.id == this.userInfo._id) {
+      this.isIncludeUser = true;
+      return
+    }
     // console.log(this.author.id);
     this.userInfo.following.forEach((user) => {
-      if (user.id == this.author.id) {
+      if (user.id == this.author.id ) {
         this.isIncludeUser = true;
         return
       }

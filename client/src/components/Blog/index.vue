@@ -23,14 +23,14 @@
         </div>
         <div class="news-header-bottom">
           <div class="news-caption">
-            {{ content }}
+            {{title}}
           </div>
         </div>
       </div>
       <div class="news-body" @click="showModel(slug)">
         <carousel :perPage="1">
           <slide v-for="img in images" class="slide">
-            <img :src="`https://zinc-union-365709-strapi-63see6q63q-uc.a.run.app/${img.url}`" alt="" />
+            <img :src="img.url" alt="" />
           </slide>
         </carousel>
       </div>

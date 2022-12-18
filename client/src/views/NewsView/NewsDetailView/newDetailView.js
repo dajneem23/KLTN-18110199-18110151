@@ -70,6 +70,7 @@ export default {
       });
     }
     this.totalVote = this.up_votes.length - this.down_votes.length;
+    console.log(this.news)
   },
   methods: {
     moment,

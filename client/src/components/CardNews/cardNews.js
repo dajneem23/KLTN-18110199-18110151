@@ -12,7 +12,7 @@ export default {
     return {
       up_votes: [],
       reacts: [],
-      author:[]
+      author: [],
     };
   },
   computed: {
@@ -28,9 +28,9 @@ export default {
     },
   },
   mounted() {
-    this.news.images.forEach((image) => {
-      image.url = this.urlStrapiServe + image.url;
-    });
+    // this.news.images.forEach((image) => {
+    //   image.url = this.urlStrapiServe + image.url;
+    // });
   },
   created() {
     if (this.news)

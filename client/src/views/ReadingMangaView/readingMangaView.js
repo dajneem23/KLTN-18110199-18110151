@@ -1,5 +1,7 @@
 import FilterManga from '../../components/Reading/FilterManga/index.vue';
 import CardManga from '../../components/CardManga/index.vue';
+import Loader from '../../components/Loader/index.vue';
+import Skeleton from '../../components/Loader/skeleton.vue';
 import { MangaServices } from '@/services';
 import basePagination from '@/template/BasePagination.vue';
 export default {
@@ -7,6 +9,8 @@ export default {
     FilterManga,
     basePagination,
     CardManga,
+    Loader,
+    Skeleton,
   },
   data() {
     return {
@@ -18,6 +22,7 @@ export default {
       per_page: 15,
       total_count: 0,
       searchString: '',
+      isLoading: true,
     };
   },
   async mounted() {
@@ -34,7 +39,8 @@ export default {
     this.new_items = items.slice(0, 5);
     this.hot_items = items.slice(0, 5);
     this.total_count = total_count;
-    console.log(this.items);
+    // console.log(this.items);
+    this.isLoading = false;
   },
   methods: {
     async onChangePage(page) {

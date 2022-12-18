@@ -35,7 +35,8 @@ export default {
       const result = await NewsServices.create({
         ...this.news,
       });
-      console.log(result);
+      console.log(this.news);
+      console.log(result)
       alert('Tạo bài viết thành công');
     },
     initEditor({
@@ -294,6 +295,7 @@ export default {
     onDropZoneUploadSuccess(file) {
       console.log('onDropZoneUploadSuccess', file);
       this.news.images = [file._id];
+      // this.news.images.push(file._id);
       // const reader = new FileReader();
       // reader.readAsBinaryString(file);
 

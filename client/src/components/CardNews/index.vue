@@ -33,7 +33,7 @@
       </div>
       <div class="card-body__content">
         <div class="body-content__imgAuth">
-          <img :src="author[0]?.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
+          <img :src="author[0]?.avatar[0]?.url || author?.avatar[0]?.url" alt="" />
           <span>{{ author[0]?.username }}</span>
         </div>
         <div class="body-content__views">

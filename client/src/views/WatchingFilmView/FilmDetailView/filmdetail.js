@@ -57,6 +57,7 @@ export default {
       });
     }
     const takeDate = new Date(this.film.createdAt);
+    this.film.views++;
     this.film.createdAt = takeDate.getFullYear();
     this.film.image.url = this.urlStrapiServe + this.film.image.url;
   },
