@@ -221,40 +221,5 @@ module.exports = {
 	],
 	// This value must be kept in sync with the language defined in webpack.config.js.
 	language: "en",
-	extraPlugins: [uploadPlugin],
+	// extraPlugins: [uploadPlugin],
 };
-function uploadAdapter(loader, editor) {
-	return {
-		upload: () => {
-			return new Promise((resolve, reject) => {
-				console.log("upload");
-				loader.file.then((file) => {
-					const data = new FormData();
-
-					data.append("file", file);
-					axios
-						.post(process.env.BACKEND_URL + "/api/v1/upload")
-						.then((res) => {
-							editor.model.change((writer) => {
-								writer.setSelection(editor.model.document.getRoot(), "end");
-							});
-							console.log("%c Upload Success", "color:green", res);
-							const [data] = res;
-							resolve({
-								default: data.url,
-							});
-						})
-						.catch((err) => {
-							console.log("%c Upload Error", "color:red", err);
-							reject(err);
-						});
-				});
-			});
-		},
-	};
-}
-function uploadPlugin(editor) {
-	editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-		return uploadAdapter(loader, editor);
-	};
-}
