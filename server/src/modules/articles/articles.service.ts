@@ -59,7 +59,7 @@ export class NewsService {
    */
   async create({ _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      const { name, categories = [] } = _content;
+      const { name, categories = [], images = [] } = _content;
       const value = await this.model.create(
         {
           name,
@@ -68,6 +68,7 @@ export class NewsService {
           ..._news,
           ..._content,
           categories,
+          ...((Array.isArray(images) && { images: $toObjectId(images) }) || { images: [$toObjectId(images)] }),
           ...(_subject && { author: new ObjectId(_subject) }),
         },
       );

@@ -59,14 +59,15 @@ export class StoryService {
    */
   async create({ _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      const { name, categories = [] } = _content;
+      const { name, categories = [], images = [] } = _content;
       const value = await this.model.create(
         {
-          // name,
+          name,
         },
         {
           ..._story,
           ..._content,
+          ...((Array.isArray(images) && { images: $toObjectId(images) }) || { images: [$toObjectId(images)] }),
           categories,
           ...(_subject && { author: new ObjectId(_subject) }),
         },
