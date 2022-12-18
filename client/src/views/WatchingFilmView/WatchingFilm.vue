@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper bgc-white">
+  <div class="wrapper-film bgc-white">
     <div class="search-box">
       <input type="text" placeholder="Tìm kiếm...." v-model="searchString" />
       <button @click="searchManga(searchString)">
@@ -31,7 +31,22 @@
       <div class="list-all-box">
         <h3>Tất cả</h3>
         <div class="list-all">
-          <div v-for="(item, key) of items">
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <div v-for="(item, key) of items" v-if="!isLoading">
             <CardFilm :item="item"></CardFilm>
           </div>
         </div>

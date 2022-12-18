@@ -77,9 +77,6 @@ export default {
     const [result, error] = await StoriesService.getById(id);
     if (result) {
       this.story = result;
-      this.story.images.forEach((image) => {
-        image.url = this.urlStrapiServe + image.url;
-      });
       console.log(this.story.images);
       Object.keys(result).map((key) => {
         if (key == '_v') return;

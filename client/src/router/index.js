@@ -163,7 +163,7 @@ const routes = [
     components: {
       header: Header,
       default: CreateNewsView,
-      footer: Footer,
+      // footer: Footer,
     },
     props: true,
     beforeEnter: (to, from, next) => {

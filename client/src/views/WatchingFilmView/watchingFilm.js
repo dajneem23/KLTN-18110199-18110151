@@ -1,10 +1,14 @@
 import FilterFilm from '../../components/Watching/FilterFilm/index.vue';
 import CardFilm from '../../components/CardFilm/index.vue';
+import Loader from '../../components/Loader/index.vue';
+import Skeleton from '../../components/Loader/skeleton.vue'
 import { FilmServices } from '@/services';
 export default {
   components: {
     FilterFilm,
     CardFilm,
+    Loader,
+    Skeleton
   },
   data() {
     return {
@@ -16,6 +20,7 @@ export default {
       per_page: 15,
       total_count: 0,
       searchString: '',
+      isLoading:true,
     };
   },
   async mounted() {
@@ -33,6 +38,7 @@ export default {
     this.hot_items = items.slice(0, 5);
     this.total_count = total_count;
     console.log(this.items);
+    this.isLoading = false;
   },
   methods: {
     async onChangePage(page) {

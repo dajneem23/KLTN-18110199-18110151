@@ -1,11 +1,28 @@
+.title-create {
+  padding: 25px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.wrapper-createNews {
+  padding-top: 0px;
+}
 .box-create {
-  height: 100%;
-  width: 50%;
+  // height: 100%;
+  width: 70%;
   padding: 30px;
-  margin: 70px auto auto 20px;
+  margin: 60px auto auto 20px;
   margin: auto;
+  display: flex;
+  .box-left {
+    width: 35%;
+    margin-right: 30px;
+  }
+  .box-right {
+    width: 65%;
+  }
   .box-title {
-    margin: 10px auto 20px auto;
+    margin: 0px auto 20px auto;
     align-items: center;
     input {
       margin-top: 10px;
@@ -28,7 +45,7 @@
   }
 
   .box-images {
-    margin: 20px auto 0 auto;
+    margin: 0px auto 0 auto;
     // display: flex;
     span {
       width: 10%;
@@ -66,3 +83,4 @@ span {
 .ck-editor__editable_inline {
   min-height: 200px;
 }
+/*-------------------------------------*/

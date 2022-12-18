@@ -23,7 +23,7 @@
         <h3>Đang theo dõi</h3>
         <div class="list-user">
           <div class="user-item" v-for="user of userInfo.following">
-            <div class="item-left" @click="createChat(user)">
+            <div class="item-left" @click="createChat(user.id)">
               <img :src="user?.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
               <div class="user-item--info">
                 <div class="info-name">{{ user.username }}</div>
