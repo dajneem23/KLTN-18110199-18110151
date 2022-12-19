@@ -3,7 +3,7 @@ import Messenge from '../Messenge/index.vue';
 import { ChatsServices } from '@/services';
 import { mapState } from 'vuex';
 import { store } from '../../../store/vuex';
-
+import socketClient from '@/socket';
 export default {
   data() {
     return {
@@ -28,7 +28,7 @@ export default {
   },
   components: {
     Messenge,
-    InfiniteLoading,
+    // InfiniteLoading,
   },
   watch: {
     async dataChat() {
@@ -43,13 +43,14 @@ export default {
     },
   },
   async mounted() {
-    const [result, error] = await ChatsServices.getChatById(this.dataChat);
-    if (result) {
-      this.posts = result.messages;
-      this.chat = result;
-      console.log(this.posts);
-    }
-    this.users = result.users;
+    await this.loadChat();
+    console.log({
+      socketClient,
+    });
+    socketClient.listen('new_message', (data) => {
+      console.log('new_message');
+      this.loadChat();
+    });
   },
   methods: {
     showEmojiBox() {
@@ -61,9 +62,11 @@ export default {
       }
     },
     async sendSms() {
+      if (!this.sms.content || !this.sms.content.length) return;
       const [result, error] = await ChatsServices.createMessage(this.chat.id, {
         content: this.sms.content,
       });
+      this.sms.content = '';
       console.log(result);
       console.log(this.sms.content);
       console.log(this.chat.id);
@@ -74,7 +77,7 @@ export default {
         $state.complete();
       }
       // this.messages = result.messages
-      this.posts.push(...this.messages);
+      // this.posts.push(...this.messages);
       this.page++;
       $state.loaded();
       $state.complete();
@@ -82,6 +85,18 @@ export default {
     hiddenReply() {
       let replyBox = document.getElementById('reply-mess');
       replyBox.style.visibility = 'hidden';
+    },
+    async loadChat() {
+      const [result, error] = await ChatsServices.getChatById(this.dataChat);
+      if (result) {
+        this.posts = result.messages;
+        this.chat = result;
+        console.log(this.posts);
+        socketClient.send('join', {
+          room: this.chat.id,
+        });
+        this.users = result.users;
+      }
     },
   },
 };

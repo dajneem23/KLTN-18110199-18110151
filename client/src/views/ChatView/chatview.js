@@ -30,16 +30,9 @@ export default {
   //   console.log('created');
   // },
   async mounted() {
-    const [
-      { items = [], total_count } = {
-        items: [],
-      },
-      error,
-    ] = await ChatsServices.get();
-    this.listChat = items;
+    await this.loadChat();
     console.log(items);
     // this.total_count = total_count;
-    this.idChat = this.listChat[0].id;
     // console.log(this.idChat, 'mouted');
   },
   methods: {
@@ -64,14 +57,20 @@ export default {
       // });
     },
     async changeTypeAll() {
+      // console.log(this.listChat);
+      await this.loadChat();
+    },
+    async loadChat() {
       const [
         { items = [], total_count } = {
           items: [],
         },
         error,
-      ] = await ChatsServices.get();
+      ] = await ChatsServices.get({
+        page: 1,
+        per_page: 9999,
+      });
       this.listChat = items;
-      // console.log(this.listChat);
       this.total_count = total_count;
       this.idChat = this.listChat[0].id;
     },

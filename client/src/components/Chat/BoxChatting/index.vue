@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="chat-panel" id="chat-panel">
-      <infinite-loading direction="top" @infinite="infiniteHandler"></infinite-loading>
+      <infinite-loading direction="top" @infinite="infiniteHandler"> </infinite-loading>
 
       <div v-for="(post, index) in posts" :key="index">
         <Messenge friendSms :sms="post" v-if="post.author.id !== userInfo._id" />
