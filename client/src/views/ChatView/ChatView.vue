@@ -25,15 +25,31 @@
               @click="getChat(chat.id)"
               :id="chat.id"
             >
-              <img class="profile-image" :src="chat.users[0].avatar[0].url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
+              <img
+                class="profile-image"
+                :src="chat.users[0].avatar[0].url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'"
+                alt=""
+                v-if="chat.users[1].id === userInfo._id"
+              />
+              <img
+                class="profile-image"
+                :src="chat.users[1].avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'"
+                alt=""
+                v-if="chat.users[1].id !== userInfo._id"
+              />
               <div class="text">
                 <div class="list-name-chat">
                   <h3 v-if="chat.type === 'group'" v-for="user of chat.users">{{ user.username }},</h3>
                 </div>
-                <h3 v-if="chat.type === 'private'">{{ chat.users[0].username }}</h3>
-                <p class="text-muted">{{ chat.id }}</p>
+                <h3 v-if="chat.type === 'private' && chat.users[1].id === userInfo._id">
+                  {{ chat.users[0].username }}
+                </h3>
+                <h3 v-if="chat.type === 'private' && chat.users[1].id !== userInfo._id">
+                  {{ chat.users[1].username }}
+                </h3>
+                <p class="text-muted">{{ chat.messages[chat.messages.length - 1]?.content || '' }}</p>
               </div>
-              <span class="time text-muted small">13:21</span>
+              <!-- <span class="time text-muted small">13:21</span> -->
             </div>
             <hr />
           </div>

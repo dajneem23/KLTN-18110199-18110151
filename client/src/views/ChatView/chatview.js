@@ -1,5 +1,7 @@
 import BoxChatting from '../../components/Chat/BoxChatting/index.vue';
 import { ChatsServices } from '@/services';
+import { mapState } from 'vuex';
+import { store } from '../../store/vuex';
 export default {
   components: {
     BoxChatting,
@@ -11,6 +13,9 @@ export default {
       sms: '',
       isChangeMessage: false,
     };
+  },
+  computed: {
+    ...mapState(['userInfo', 'isAuthenticated']),
   },
   // async created() {
   //   const [
