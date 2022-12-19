@@ -4,7 +4,7 @@ import { throwErr, toOutPut, toPagingOutput } from '@/utils/common';
 import { alphabetSize12 } from '@/utils/randomString';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import AuthService from '../auth/auth.service';
-import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject } from '@/utils/mongoDB';
+import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject, $lookup } from '@/utils/mongoDB';
 import { FilmError, FilmModelToken, FilmErrors, _Film } from '.';
 import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS } from '@/types/Common';
 import { isNil, omit } from 'lodash';
@@ -149,7 +149,15 @@ export class FilmService {
                 ],
               }),
             },
-            $sets: [this.model.$sets.author, this.model.$sets.image],
+            $sets: [
+              this.model.$sets.author,
+              this.model.$sets.image,
+              {
+                $set: {
+                  video: { $first: '$video' },
+                },
+              },
+            ],
             $addFields: {
               ...this.model.$addFields.categories,
               ...this.model.$addFields.images,
@@ -164,6 +172,14 @@ export class FilmService {
                 refTo: 'images',
                 reName: 'images',
                 operation: '$in',
+              }),
+              $lookup({
+                from: 'upload_file',
+                refFrom: '_id',
+                refTo: 'video',
+                select: 'name url',
+                reName: 'video',
+                operation: '$eq',
               }),
             ],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
@@ -214,6 +230,19 @@ export class FilmService {
             reName: 'images',
             operation: '$in',
           }),
+          $lookup({
+            from: 'upload_file',
+            refFrom: '_id',
+            refTo: 'video',
+            select: 'name url',
+            reName: 'video',
+            operation: '$eq',
+          }),
+          {
+            $set: {
+              video: { $first: '$video' },
+            },
+          },
           this.model.$sets.image,
           this.model.$sets.author,
           {
@@ -260,6 +289,19 @@ export class FilmService {
             reName: 'images',
             operation: '$in',
           }),
+          $lookup({
+            from: 'upload_file',
+            refFrom: '_id',
+            refTo: 'video',
+            select: 'name url',
+            reName: 'video',
+            operation: '$eq',
+          }),
+          {
+            $set: {
+              video: { $first: '$video' },
+            },
+          },
           this.model.$sets.image,
           {
             $limit: 1,
@@ -304,6 +346,15 @@ export class FilmService {
               ...this.model.$addFields.images,
               ...this.model.$addFields.comments,
             },
+            $sets: [
+              this.model.$sets.author,
+              this.model.$sets.image,
+              {
+                $set: {
+                  video: { $first: '$video' },
+                },
+              },
+            ],
             $lookups: [
               this.model.$lookups.comments,
               this.model.$lookups.categories,
@@ -313,7 +364,16 @@ export class FilmService {
                 reName: 'images',
                 operation: '$in',
               }),
+              $lookup({
+                from: 'upload_file',
+                refFrom: '_id',
+                refTo: 'video',
+                select: 'name url',
+                reName: 'video',
+                operation: '$eq',
+              }),
             ],
+
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
         ])
