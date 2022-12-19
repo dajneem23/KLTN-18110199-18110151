@@ -1,12 +1,18 @@
 import moment from 'moment';
 import { mapActions, mapState } from 'vuex';
 export default {
-  name: 'Card',
+  props: {
+    data: Object,
+  },
+  data() {
+    return {
+      reacts: [],
+      name: '',
+      image:{},
+    };
+  },
   computed: {
     ...mapState(['urlStrapiServe']),
-  },
-  props: {
-    item: Object,
   },
   watch: {
     data(newData) {
@@ -14,18 +20,16 @@ export default {
         Object.keys(newData).map((key) => {
           if (key == '_v') return;
           this[key] = newData[key];
+          console.log(this[key])
         });
     },
   },
-  mounted() {
-    // this.item.image.url = 'https://zinc-union-365709-strapi-63see6q63q-uc.a.run.app/' + this.item.image.url;
-    console.log(this.urlStrapiServe);
-  },
+  mounted() {},
   created() {
-    if (this.item)
-      Object.keys(this.item).map((key) => {
+    if (this.data)
+      Object.keys(this.data).map((key) => {
         if (key == '_v') return;
-        this[key] = this.item[key];
+        this[key] = this.data[key];
       });
   },
   methods: {

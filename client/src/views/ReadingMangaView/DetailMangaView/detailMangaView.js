@@ -22,6 +22,7 @@ export default {
       categories: [],
       chapters: [],
       views: 0,
+      images:[],
       cmt: {
         source_id: '',
         type: 'manga',

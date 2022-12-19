@@ -1,6 +1,7 @@
 import { HEADER_ITEM } from '../../constants';
 import { mapState } from 'vuex';
 import { store } from '../../store/vuex';
+import {AuthService} from '@/services'
 
 export default {
   name: 'Header',
@@ -12,8 +13,9 @@ export default {
     console.log(this.isPage);
   },
   methods: {
-    logOut() {
-      console.log('Log Out');
+    async logOut() {
+      const [result, error] = await AuthService.logout();
+      console.log(result)
     },
     showtoolTip() {
       const toolTip = document.getElementById('toolTip-user');

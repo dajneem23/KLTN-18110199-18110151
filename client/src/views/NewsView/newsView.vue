@@ -25,10 +25,10 @@
       <div class="hot-news">
         <h2>Nổi bật nhất</h2>
         <div class="news-hot">
-          <Skeleton v-if="isLoading" />
-          <Skeleton v-if="isLoading" />
-          <Skeleton v-if="isLoading" />
-          <Skeleton v-if="isLoading" />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
           <div v-for="(item, key) of hot_items" v-if="!isLoading">
             <CardNews :key="item.id" style_x="card-news-y" :news="item"></CardNews>
           </div>

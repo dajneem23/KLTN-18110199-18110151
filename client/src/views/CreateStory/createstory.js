@@ -42,7 +42,8 @@ export default {
         ...this.story,
       });
       console.log(result);
-      // alert('Tạo bài viết thành công');
+      alert('Tạo bài viết thành công');
+      this.hiddenmodel()
     },
     changeSubmit() {
       let btnUpload = document.getElementById('btn-upload');

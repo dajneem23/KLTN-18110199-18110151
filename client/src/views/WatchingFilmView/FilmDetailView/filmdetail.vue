@@ -3,7 +3,7 @@
     <div class="screen-watching bgc-black">
       <div id="container">
         <video id="player" playsinline controls data-poster="/path/to/poster.jpg">
-          <source src="../../../assets/video/dasaitulucdau.mp4" type="video/mp4" />
+          <source :src="film?.video.url || '../../../assets/video/dasaitulucdau.mp4'" type="video/mp4" />
 
           <!-- Captions are optional -->
           <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default />
@@ -18,6 +18,8 @@
           :src="film?.image?.url || 'https://animehay.club/upload/poster/2691.jpg'"
           :alt="film.name"
         />
+        <!-- {{ film?.video?.url }} -->
+
         <div class="film-info-des row">
           <table>
             <tr>

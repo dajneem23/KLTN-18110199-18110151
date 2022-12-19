@@ -4,7 +4,10 @@ export const AuthService = {
   login(body) {
     return RequestBase.post(`${this.url}/login`, body);
   },
+  logout(body) {
+    return RequestBase.get(`${this.url}/logout`);
+  },
   register(body) {
-    return RequestBase.post(`${this.url}/register`,body);
+    return RequestBase.post(`${this.url}/register`, body);
   },
 };
