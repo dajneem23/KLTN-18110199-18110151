@@ -89,7 +89,7 @@ const expressLoader = (): Express => {
 
   // Parse incoming request bodies in a middleware before your handlers, available under the "req.body" property
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.urlencoded({ extended: true, limit: '500mb' }));
   // Parse Cookie header and populate "req.cookies" with an object keyed by the cookie names.
   app.use(cookieParser());
   // Compress all responses (gzip)
