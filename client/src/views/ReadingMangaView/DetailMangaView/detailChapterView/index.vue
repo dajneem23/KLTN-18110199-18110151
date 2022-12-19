@@ -4,7 +4,7 @@
       <div class="screen-reading">
         <div class="img-manga_item" v-for="image of images">
           <img
-            src="https://s199.imacdn.com/tt24/2022/12/15/697b6ba2005fc74f_958be4739260b749_586897167109379969674.jpg"
+            :src="image?.url || 'https://s199.imacdn.com/tt24/2022/12/15/697b6ba2005fc74f_958be4739260b749_586897167109379969674.jpg'"
             alt=""
           />
         </div>
