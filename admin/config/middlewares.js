@@ -1,34 +1,20 @@
-module.exports = [
-	"strapi::errors",
-	{
-		name: "strapi::security",
-		config: {
-			contentSecurityPolicy: {
-				useDefaults: true,
-				directives: {
-					"connect-src": ["'self'", "https:"],
-					"img-src": ["'self'", "data:", "blob:", "storage.googleapis.com"],
-					"media-src": ["'self'", "data:", "blob:", "storage.googleapis.com"],
-					upgradeInsecureRequests: null,
-				},
-			},
+module.exports = {
+	parser: {
+		enabled: true,
+		multipart: true,
+		formidable: {
+			maxFileSize: 512 * 1024 * 1024, // Defaults to 200mb
 		},
+		jsonLimit: "512mb",
+		formLimit: "512mb",
 	},
-	{
-		name: "strapi::body",
-		config: {
-			formLimit: "512mb", // modify form body
-			jsonLimit: "512mb", // modify JSON body
-			textLimit: "512mb", // modify text body
-			formidable: {
-				maxFileSize: 500 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
-			},
-		},
+	cors: {
+		enabled: true,
+		origin: "*",
+		headers: "*",
+		expose: "*",
+		maxAge: 31536000,
+		credentials: true,
+		methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"],
 	},
-	"strapi::cors",
-	"strapi::poweredBy",
-	"strapi::logger",
-	"strapi::query",
-	"strapi::favicon",
-	"strapi::public",
-];
+};
