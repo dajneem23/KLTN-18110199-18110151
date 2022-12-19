@@ -5,6 +5,7 @@ module.exports = ({ env }) => ({
 			bucketName: "kltn-18110199-18110151",
 			publicFiles: false,
 			uniform: false,
+			sizeLimit: 1000000000,
 			serviceAccount: {
 				type: "service_account",
 				project_id: "zinc-union-365709",

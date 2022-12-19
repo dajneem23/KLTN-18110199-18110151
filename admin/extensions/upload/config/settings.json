@@ -1,0 +1,6 @@
+{
+	"provider": "google-cloud-storage",
+	"providerOptions": {
+		"sizeLimit": 1000000000
+	}
+}
