@@ -1,9 +1,9 @@
 <template>
-  <router-link :to="{ name: 'details', params: { id: slug, filmData: data } }">
+  <router-link :to="{ name: 'details', params: { id: slug, filmData: item } }">
     <div class="card-film">
       <div class="card-image-film">
         <!-- <img :src="item?.image" :alt="item.id" /> -->
-        <img :src="image.url" :alt="image.name" />
+        <img :src="image?.url" :alt="image.name" />
       </div>
       <div class="card-body-film">
         <div class="card-title-film">

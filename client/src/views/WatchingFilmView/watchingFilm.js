@@ -1,26 +1,26 @@
 import FilterFilm from '../../components/Watching/FilterFilm/index.vue';
 import CardFilm from '../../components/CardFilm/index.vue';
 import Loader from '../../components/Loader/index.vue';
-import Skeleton from '../../components/Loader/skeleton.vue'
+import Skeleton from '../../components/Loader/skeleton.vue';
 import { FilmServices } from '@/services';
+import basePagination from '@/template/BasePagination.vue';
 export default {
   components: {
     FilterFilm,
     CardFilm,
     Loader,
-    Skeleton
+    Skeleton,
+    basePagination,
   },
   data() {
     return {
       items: [],
-      new_items: [],
-      hot_items: [],
       pageOfItems: 1,
       page: 1,
       per_page: 15,
       total_count: 0,
       searchString: '',
-      isLoading:true,
+      isLoading: true,
     };
   },
   async mounted() {
@@ -34,10 +34,8 @@ export default {
       per_page: this.per_page,
     });
     this.items = items;
-    this.new_items = items.slice(1, 6);
-    this.hot_items = items.slice(0, 5);
     this.total_count = total_count;
-    console.log(this.items);
+    console.log(items);
     this.isLoading = false;
   },
   methods: {
@@ -55,15 +53,8 @@ export default {
       this.items = items;
       this.total_count = total_count;
     },
-    async searchManga(searchString) {
-      const box_list = document.getElementsByClassName('list-new-box');
-      setTimeout(function () {
-        for (const element of box_list) {
-          element.style.display = 'none';
-        }
-      }, 520);
-
-      console.log(box_list);
+    async searchFilm(searchString) {
+      // this.isLoading= false
       const [
         { items = [], total_count } = {
           items: [],
@@ -74,7 +65,7 @@ export default {
       });
       this.items = items;
       this.total_count = total_count;
-      console.log(this.items);
+      console.log(items);
     },
   },
 };

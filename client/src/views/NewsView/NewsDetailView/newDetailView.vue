@@ -121,7 +121,7 @@
       </div>
     </div>
     <div class="news-relate">
-      <div class="relate-title">Bài viết có thể liên quan</div>
+      <!-- <div class="relate-title">Bài viết có thể liên quan</div> -->
       <div class="relate-list">
         <!-- <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews>
         <CardNews style_x="card-news-y" :data="LIST_FILM.newFilm[0]"></CardNews>
