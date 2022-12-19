@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper" @submit.prevent="login()">
+    <div class="wrapper-login" @submit.prevent="login()">
       <form class="form-login bgc-white">
         <h3>{{ LOGIN_ITEM.headerTitle.title[lang] }}</h3>
         <div class="error-title" v-bind:class="{ 'show-error': LOGIN_ITEM.userName.error }">

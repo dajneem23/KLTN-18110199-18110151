@@ -48,6 +48,7 @@
                   {{ chat.users[1].username }}
                 </h3>
                 <p class="text-muted">{{ chat.messages[chat.messages.length - 1]?.content || '' }}</p>
+                <!-- {{ chat.id }} -->
               </div>
               <!-- <span class="time text-muted small">13:21</span> -->
             </div>

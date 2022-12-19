@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="homePage row">
-      <div class="wrapper-home-left col-md-2" v-if="!isAuthenicated">
+      <div class="wrapper-home-left col-md-2">
         <div class="tab-story">
           <div class="tab-item" :class="{ isActive: isTabHomeData }" @click="handleChageTabHomeData">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -22,15 +22,18 @@
         </div>
         <h3>Đang theo dõi</h3>
         <div class="list-user">
-          <div class="user-item" v-for="user of userInfo.following">
-            <div class="item-left" @click="createChat(user.id)">
-              <img :src="user?.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
-              <div class="user-item--info">
-                <div class="info-name">{{ user.username }}</div>
-                <div class="info-state"></div>
+          <router-link to="/chat/">
+            <div class="user-item" v-for="user of userInfo.following">
+              <div class="item-left" @click="createChat(user.id)">
+                <img :src="user?.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
+                <!-- {{ user.avatar }} -->
+                <div class="user-item--info">
+                  <div class="info-name">{{ user.username }}</div>
+                  <div class="info-state"></div>
+                </div>
               </div>
             </div>
-          </div>
+          </router-link>
         </div>
         <!-- <h3>Noi bat</h3>
         <div class="list-user">

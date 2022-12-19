@@ -116,7 +116,7 @@ export default {
         let up_vote = document.getElementById('triangle-up');
         up_vote.classList.add('up-vote');
         const [result, error] = await NewsServices.upvote(id);
-        console.log([result, error]);
+        // console.log([result, error]);
         if (result) {
           // const { up_votes } = result;
           // this.up_votes = up_votes;

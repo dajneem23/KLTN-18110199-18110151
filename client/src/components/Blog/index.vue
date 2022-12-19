@@ -5,14 +5,14 @@
         <div class="news-header-top">
           <div class="header-top-left">
             <div class="avt-news">
-              <img :src="author.avatar[0].url" alt="" />
+              <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
             </div>
             <div class="news-info">
               <span class="news-user-name">{{ author.username }}</span>
               <span class="news-time text-dark-gray">{{ moment(createdAt).fromNow() }}</span>
             </div>
           </div>
-          <div class="followU-story" v-if="!isIncludeUser" @click="followUser">
+          <div class="followU-story" v-if="!isIncludeUser" @click="followUser(id)" :id="id">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
               <path
                 d="M352 128c0 70.7-57.3 128-128 128s-128-57.3-128-128S153.3 0 224 0s128 57.3 128 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
@@ -23,7 +23,7 @@
         </div>
         <div class="news-header-bottom">
           <div class="news-caption">
-            {{title}}
+            {{ title }}
           </div>
         </div>
       </div>
@@ -85,6 +85,7 @@
             </svg>
             <span :id="id + 'title'"> {{ HOME_ITEM.likeBtn.title[lang] }} </span>
           </button>
+
           <button class="btn-dev btn-transparent like-news" @click="showCmtBox(id + 'cmt')">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
               <path

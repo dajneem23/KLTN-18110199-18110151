@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper wrapper_1" @submit.prevent="register">
+    <div class="wrapper-login wrapper_1" @submit.prevent="register">
       <form class="form-login bgc-white">
         <!-- Input User Name -->
         <h3>{{ REGISTER_ITEM.headerTitle.title[lang] }}</h3>

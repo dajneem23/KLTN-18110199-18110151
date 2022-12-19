@@ -10,9 +10,9 @@
         </div>
         <div class="user-name">{{ userInfo?.username }}</div>
         <div class="user-email text-dark-gray">{{ userInfo?.email }}</div>
-        <router-link to="/profile/edit">
+        <!-- <router-link to="/profile/edit">
           <button class="btn-defaultt bgc-blue_3 cl-white">Chỉnh sửa</button>
-        </router-link>
+        </router-link> -->
         <div class="box-info--footer">
           <div class="box-footer-item text-dark-gray">
             <div>FOLLOWING</div>

@@ -17,7 +17,7 @@ export default {
       page: 1,
       per_page: 10,
       messages: [],
-      users:[],
+      users: [],
     };
   },
   computed: {
@@ -46,6 +46,8 @@ export default {
     const [result, error] = await ChatsServices.getChatById(this.dataChat);
     if (result) {
       this.posts = result.messages;
+      this.chat = result;
+      console.log(this.posts);
     }
     this.users = result.users;
   },

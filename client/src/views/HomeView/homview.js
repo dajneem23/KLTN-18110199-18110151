@@ -41,7 +41,7 @@ export default {
       if (!items.length) {
         $state.complete();
       }
-      this.posts.push(...items);
+      this.posts.push(...items.reverse());
       this.page++;
       $state.loaded();
     },
@@ -65,8 +65,8 @@ export default {
           users: [id],
         });
         console.log(result);
-        window.location.href = '/chat/';
       }
+      // window.location.href = '/chat/';
     },
     showProfileUser() {
       this.isShowUserProfile = true;

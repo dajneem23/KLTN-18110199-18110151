@@ -30,6 +30,7 @@ export default {
         images: [],
         reply_to: null,
       },
+      title: '',
       reacts: [],
       comments: [],
       img: [],
@@ -58,15 +59,15 @@ export default {
       });
   },
   mounted() {
-    if (this.author.id == this.userInfo._id) {
+    if (this.author.id === this.userInfo._id) {
       this.isIncludeUser = true;
-      return
+      return;
     }
     // console.log(this.author.id);
     this.userInfo.following.forEach((user) => {
-      if (user.id == this.author.id ) {
+      if (user.id == this.author.id) {
         this.isIncludeUser = true;
-        return
+        return;
       }
     });
   },
@@ -112,11 +113,15 @@ export default {
         this.cmt.content = '';
       }
     },
-    async followUser() {
+    async followUser(id) {
       const [result, error] = await UserService.followUser(this.author.id);
       if (result) {
-        this.userInfo.following.push(this.author.id);
+        this.userInfo.following.push(this.author);
+        const btnFL = document.getElementById(id);
+        btnFL.style.display = 'none';
+        // console.log(this.author);
       }
+      // console.log(this.author)
     },
     getTime() {
       data.created_at = data.created_at.toLocaleDateString('en-US');
