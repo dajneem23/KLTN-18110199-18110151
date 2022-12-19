@@ -20,8 +20,10 @@
       "targetField": "name",
       "required": true
     },
-    "weight": {
-      "type": "integer"
+    "rank": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
     }
   }
 }

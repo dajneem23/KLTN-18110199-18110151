@@ -9,6 +9,7 @@ import { FilmController } from '@/modules/film/film.controller';
 import { CommentController } from '@/modules/comment/comment.controller';
 import { ChatController } from '@/modules/chat/chat.controller';
 import StorageController from '@/modules/storage/storage.controller';
+import { CategoryController } from '@/modules/category/category.controller';
 
 const route = Router();
 
@@ -29,5 +30,6 @@ export default (app: Application) => {
     CommentController,
     ChatController,
     StorageController,
+    CategoryController,
   ]);
 };
