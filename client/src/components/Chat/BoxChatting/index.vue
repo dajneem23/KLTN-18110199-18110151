@@ -4,12 +4,21 @@
       <div class="friend-drawer no-gutters friend-drawer">
         <img
           class="profile-image"
-          src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
+          :src="users[0].avatar[0].url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'"
           alt=""
+          v-if="users[1].id === userInfo._id"
+        />
+        <img
+          class="profile-image"
+          :src="users[1].avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'"
+          alt=""
+          v-if="users[1].id !== userInfo._id"
         />
         <div class="text">
           <div class="chat-name">
-            <h3 v-for="user of users">{{ user.username }},</h3>
+            <h3 v-if="users[1].id === userInfo._id">{{ users[0].username }}</h3>
+            <h3 v-if="users[1].id !== userInfo._id">{{ users[1].username }}</h3>
+            <!-- <h3>{{ users[1].username }}</h3> -->
           </div>
           <p class="text-muted e">
             <!-- <span> </span> -->

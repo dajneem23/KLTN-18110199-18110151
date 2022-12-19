@@ -31,7 +31,22 @@
       <div class="list-all-box">
         <h2>Tất cả</h2>
         <div class="list-all">
-          <div v-for="(item, key) of items">
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <Skeleton v-if="isLoading" isManga />
+          <div v-for="(item, key) of items" v-if="!isLoading">
             <CardManga :data="item"></CardManga>
           </div>
         </div>

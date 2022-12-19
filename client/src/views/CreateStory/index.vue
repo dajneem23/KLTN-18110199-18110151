@@ -10,11 +10,11 @@
         <textarea placeholder="Hãy viết gì đó......" v-model="story.content" @input="changeSubmit"></textarea>
       </div>
       <div class="box-images">
-        <DropzoneFileUpload multiple class="upload-file"></DropzoneFileUpload>
+        <DropzoneFileUpload @upload-success="onDropZoneUploadSuccess"></DropzoneFileUpload>
       </div>
       <div class="button-box">
         <button @click="hiddenmodel" class="btn-cancel">Hủy</button>
-        <button @click="createStory()" class="btn-filter" id="btn-upload">Đăng</button>
+        <button @click="createStory" class="btn-filter" id="btn-upload">Đăng</button>
       </div>
     </div>
   </div>

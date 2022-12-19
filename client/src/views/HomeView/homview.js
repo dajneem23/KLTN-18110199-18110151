@@ -55,6 +55,7 @@ export default {
           item.users.forEach((user) => {
             if (user.id === id) {
               isInclude = true;
+              // console.log(user.id);
             }
           });
         }
