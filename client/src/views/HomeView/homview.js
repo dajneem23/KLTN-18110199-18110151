@@ -41,7 +41,7 @@ export default {
       if (!items.length) {
         $state.complete();
       }
-      this.posts.push(...items.reverse());
+      this.posts.push(...items);
       this.page++;
       $state.loaded();
     },
