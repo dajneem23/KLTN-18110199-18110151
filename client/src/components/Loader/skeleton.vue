@@ -5,7 +5,7 @@
       'manga-card': isManga,
     }"
   >
-    <div class="profile-image">
+    <div class="profile-images">
       <img
         class="profile-image__border"
         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVAAAACWCAMAAAC/8CD2AAAAA1BMVEXNzc2ljC/HAAAAR0lEQVR4nO3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF8GxXYAARizDlgAAAAASUVORK5CYII="
@@ -34,7 +34,7 @@ export default {
   display: flex;
   flex-direction: column !important;
   justify-content: space-between !important ;
-  .profile-image {
+  .profile-images {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,18 +47,20 @@ export default {
   }
   .profile-info {
     height: 100%;
-    margin-top: 120px;
+    margin-top: 150px;
   }
 }
 .profile-card {
+  min-height: 170px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.profile-image {
+.profile-images {
   width: 100%;
   display: flex;
   align-items: center;
+  height: 0px;
 }
 .profile-card .profile-image__img {
   width: 100%;
@@ -68,7 +70,7 @@ export default {
 }
 .profile-card .profile-image__border {
   width: 300px;
-  height: 170px;
+  height: 150px;
   /* padding-top: 10%; */
   /* border-radius: 50%; */
   background-color: #ddd;

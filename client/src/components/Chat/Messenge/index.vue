@@ -3,7 +3,7 @@
     <img
       v-if="friendSms"
       class="profile-image"
-      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg"
+      :src="author?.avatar[0].url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'"
       alt=""
     />
     <div
@@ -20,7 +20,7 @@
           'chat-bubble--left': friendSms,
         }"
       >
-        {{ sms }}
+        {{ sms.content }}
       </div>
     </div>
     <div v-if="friendSms" class="btn-utility-mess">

@@ -23,7 +23,7 @@ export default {
       const caretUp = document.getElementById('caret-up');
       if (toolTip.classList.length === 2) {
         toolTip.classList.add('showToolTip');
-        toolTip.style.top = '70px';
+        toolTip.style.top = '60px';
         caretDown.style.display = 'none';
         caretUp.classList.remove('caret-hidden');
       } else {

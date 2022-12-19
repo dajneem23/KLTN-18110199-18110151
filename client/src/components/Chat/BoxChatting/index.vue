@@ -6,7 +6,7 @@
           class="profile-image"
           :src="users[0].avatar[0].url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'"
           alt=""
-          v-if="users[1].id === userInfo._id"
+          v-if="users[1]?.id === userInfo._id"
         />
         <img
           class="profile-image"
@@ -35,8 +35,8 @@
       <infinite-loading direction="top" @infinite="infiniteHandler"></infinite-loading>
 
       <div v-for="(post, index) in posts" :key="index">
-        <Messenge friendSms :sms="post.content" v-if="post.author.id === userInfo.id" />
-        <Messenge mySms :sms="post.content" v-if="post.author.id !== userInfo.id" />
+        <Messenge friendSms :sms="post" v-if="post.author.id !== userInfo._id" />
+        <Messenge mySms :sms="post" v-if="post.author.id === userInfo._id" />
       </div>
       <!-- <Messenge mySms sms="fuck you" />
       <Messenge friendSms sms="Hello motherfucker" />

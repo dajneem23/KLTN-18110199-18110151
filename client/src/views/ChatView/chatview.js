@@ -37,8 +37,8 @@ export default {
       error,
     ] = await ChatsServices.get();
     this.listChat = items;
-    // console.log(this.listChat);
-    this.total_count = total_count;
+    console.log(items);
+    // this.total_count = total_count;
     this.idChat = this.listChat[0].id;
     // console.log(this.idChat, 'mouted');
   },

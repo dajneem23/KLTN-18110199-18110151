@@ -19,6 +19,7 @@ export default {
   data() {
     return {
       story: {
+        title: '',
         name: '',
         content: '',
         images: [],
@@ -26,7 +27,7 @@ export default {
     };
   },
   mounted() {
-    this.changeSubmit();
+    // this.changeSubmit();
   },
   methods: {
     hiddenmodel() {
@@ -35,15 +36,15 @@ export default {
       }
     },
     async createStory() {
-      this.story.name = this.story.content;
+      this.story.title = this.story.content;
       this.story.name = this.story.content;
       console.log({ ...this.story });
-      const result = await StoriesService.create({
+      const [result, error] = await StoriesService.create({
         ...this.story,
       });
-      console.log(result);
+      console.log(result, error);
       alert('Tạo bài viết thành công');
-      this.hiddenmodel()
+      this.hiddenmodel();
     },
     changeSubmit() {
       let btnUpload = document.getElementById('btn-upload');
