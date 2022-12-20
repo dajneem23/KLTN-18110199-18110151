@@ -188,7 +188,7 @@ export class BaseModel {
         from: 'comments',
         refFrom: '_id',
         refTo: 'comments',
-        select: 'content images type replies author',
+        select: 'content images type replies author up_votes down_votes',
         reName: 'comments',
         operation: '$in',
         pipeline: [
@@ -219,7 +219,7 @@ export class BaseModel {
             from: 'comments',
             refFrom: '_id',
             refTo: 'replies',
-            select: 'content images type replies author',
+            select: 'content images type replies author up_votes down_votes',
             reName: 'replies',
             operation: '$in',
             pipeline: [

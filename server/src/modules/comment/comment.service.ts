@@ -70,6 +70,7 @@ export class CommentService {
         {
           ..._comment,
           ..._content,
+          source_id: new ObjectId(source_id),
           ...(_subject && { author: new ObjectId(_subject) }),
         },
       );
