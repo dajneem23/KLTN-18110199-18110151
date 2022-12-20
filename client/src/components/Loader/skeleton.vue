@@ -9,7 +9,8 @@
       <img
         class="profile-image__border"
         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVAAAACWCAMAAAC/8CD2AAAAA1BMVEXNzc2ljC/HAAAAR0lEQVR4nO3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF8GxXYAARizDlgAAAAASUVORK5CYII="
-      />
+        v-if="!isContent"
+        />
       <img class="profile-image__img" />
     </div>
     <div class="profile-info">
@@ -23,6 +24,7 @@
 export default {
   props: {
     isManga: Boolean,
+    isContent:Boolean,
   },
 };
 </script>

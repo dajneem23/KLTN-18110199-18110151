@@ -73,7 +73,6 @@ button {
   border: none;
   padding: 10px;
   border-radius: 5px;
-  
 }
 .btn-defaultt:hover,
 .btn-primary:hover,
@@ -135,7 +134,7 @@ button {
 }
 .btn-like-cmt {
   height: 40px;
-  min-width: 71px;
+  min-width: 55px;
   border-radius: 5px;
   border: 1px;
   cursor: pointer;
@@ -143,10 +142,9 @@ button {
   justify-content: center;
   align-items: center;
   background-color: transparent;
+  padding: 0 !important;
+  margin-right: 15px !important;
   svg {
     width: 20px;
-  }
-  svg + span {
-    margin: 5px;
   }
 }
