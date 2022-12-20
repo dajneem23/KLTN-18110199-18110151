@@ -68,7 +68,7 @@ export class StoryService {
           ..._story,
           ..._content,
           ...((Array.isArray(images) && { images: $toObjectId(images) }) || { images: [$toObjectId(images)] }),
-          categories,
+          categories: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
           ...(_subject && { author: new ObjectId(_subject) }),
         },
       );

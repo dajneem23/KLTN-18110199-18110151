@@ -67,7 +67,7 @@ export class NewsService {
         {
           ..._news,
           ..._content,
-          categories,
+          categories: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
           ...((Array.isArray(images) && { images: $toObjectId(images) }) || { images: [$toObjectId(images)] }),
           ...(_subject && { author: new ObjectId(_subject) }),
         },
