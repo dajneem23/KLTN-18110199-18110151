@@ -189,8 +189,8 @@ export class CommentService {
   async upVote({ _subject, _id }: BaseServiceInput) {
     try {
       const { up_votes, down_votes } = await this.model.update($toMongoFilter({ _id }), {
-        $addToSet: { up_votes: new ObjectId(_subject) },
-        $pull: { down_votes: new ObjectId(_subject) },
+        $addToSet: { up_votes: _subject },
+        $pull: { down_votes: _subject },
       });
       this.logger.debug('update_success', {});
       return toOutPut({
@@ -207,8 +207,8 @@ export class CommentService {
       //ToDO: check if user already up vote
 
       const { down_votes, up_votes } = await this.model.update($toMongoFilter({ _id }), {
-        $addToSet: { down_votes: new ObjectId(_subject) },
-        $pull: { up_votes: new ObjectId(_subject) },
+        $addToSet: { down_votes: _subject },
+        $pull: { up_votes: _subject },
       });
       this.logger.debug('update_success', {});
       return toOutPut({
