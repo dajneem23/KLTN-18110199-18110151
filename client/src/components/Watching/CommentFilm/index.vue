@@ -2,7 +2,7 @@
   <div class="user-cmt">
     <div class="cmt-header">
       <div class="cmt-avt">
-        <img :src="author?.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
+        <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
       </div>
       <div class="cmt-info">
         <span class="cmt-user-name">{{ author?.username || 'Unknown' }}</span>
@@ -12,13 +12,22 @@
     <div class="cmt-content">{{ content }}</div>
     <div class="cmt-footer">
       <div class="vote_cmt">
-        <div :id="id" class="triangle" :class="{ 'up-vote': isVoteUp }" @click="upvote(id)"></div>
+        <div
+          :id="id"
+          class="triangle"
+          :class="{ 'up-vote': up_votes?.includes(userInfo._id) }"
+          v-if="!isVoteUp"
+          @click="upvote(id)"
+        ></div>
+        <div :id="id" class="triangle up-vote" @click="upvote(id)" v-if="isVoteUp"></div>
         <div
           :id="id"
           class="triangle-down"
-          :class="{ 'down-vote': isVoteDown }"
+          :class="{ 'down-vote': down_votes?.includes(userInfo._id) }"
+          v-if="!isVoteDown"
           @click="downvote(id)"
         ></div>
+        <div :id="id" class="triangle-down down-vote" @click="downvote(id)" v-if="isVoteDown"></div>
       </div>
       <!-- <span class="cl-black"> 0 </span> -->
 

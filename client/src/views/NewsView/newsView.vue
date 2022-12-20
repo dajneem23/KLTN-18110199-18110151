@@ -61,13 +61,16 @@
           <div class="list-category">
             <h2>Chủ đề</h2>
             <div class="list-categories">
-              <span class="categories-item" @click="filterArticlesByCategory" id="cat-item"
-                >Quan điểm - Tranh luận</span
+              <span
+                class="categories-item"
+                :class="{ 'actice-category': filterCategory.includes(category.id) }"
+                :id="category.id"
+                @click="filterArticlesByCategory(category.id)"
+                id="cat-item"
+                v-for="(category, key) of categories"
               >
-              <span class="categories-item">Hài hước</span>
-              <span class="categories-item">Anime</span>
-              <span class="categories-item">Thiên nhiên</span>
-              <span class="categories-item">Kinh dị</span>
+                {{ category.name }}
+              </span>
             </div>
           </div>
         </div>

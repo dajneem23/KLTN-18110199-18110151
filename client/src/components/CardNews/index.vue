@@ -2,7 +2,13 @@
   <div :class="style_x" class="card-news">
     <router-link :to="{ name: 'detailnews', params: { id: slug, news: news } }">
       <div class="card-img-news">
-        <img :src="images[0]?.url" alt="" />
+        <img
+          :src="
+            images[0]?.url ||
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVAAAACWCAMAAAC/8CD2AAAAA1BMVEXNzc2ljC/HAAAAR0lEQVR4nO3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF8GxXYAARizDlgAAAAASUVORK5CYII='
+          "
+          alt=""
+        />
       </div>
     </router-link>
     <div class="card-body-news">
