@@ -2,7 +2,8 @@ import { onMounted, ref } from 'vue';
 import DropzoneFileUpload from '../../template/Inputs/DropzoneFileUpload';
 import BaseInput from '../../template/Inputs/BaseInput.vue';
 import DropZone from './dropzone.vue';
-import { NewsServices, UploadServices } from '@/services';
+import { NewsServices, UploadServices, CategoriesServices } from '@/services';
+
 export default {
   name: 'CkEditor',
   components: {
@@ -12,14 +13,19 @@ export default {
   },
   data() {
     return {
+      value: [],
       editor: null,
       editorData: '',
+      listCategories: [],
+      categoriesOfArticles: [],
       news: {
         name: '',
         content: '',
         description: '',
         images: [],
+        categories: [],
       },
+      isShow: false,
     };
   },
   watch: {
@@ -29,15 +35,54 @@ export default {
       }
     },
   },
+  async created() {
+    const [
+      { items = [], total_count } = {
+        items: [],
+      },
+      error,
+    ] = await CategoriesServices.get();
+    this.listCategories = items;
+    // console.log(this.listCategories);
+  },
   methods: {
     async submitText() {
       this.news.content = this.editorData;
+      this.news.categories = [...this.categoriesOfArticles];
       const result = await NewsServices.create({
         ...this.news,
       });
       console.log(this.news);
-      console.log(result)
+      // console.log(result);
+      this.news.name = '';
+      this.news.content = '';
+      this.news.description = '';
+      this.news.images = [];
+      this.news.categories = [];
+      this.editorData = '';
       alert('Tạo bài viết thành công');
+    },
+    showCombobox() {
+      this.isShow = !this.isShow;
+    },
+    changeFunc() {
+      var selectBox = document.getElementById('selectBox');
+      var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+      alert(selectedValue);
+    },
+    addCategory(item) {
+      if (!this.categoriesOfArticles.includes(item)) {
+        this.categoriesOfArticles.push(item);
+      }
+      console.log(this.categoriesOfArticles);
+      // console.log(item);
+    },
+    removeCategory(id) {
+      this.categoriesOfArticles = this.categoriesOfArticles.filter(function (item) {
+        return item.id !== id;
+      });
+      console.log(this.categoriesOfArticles);
+      console.log(id);
     },
     initEditor({
       // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format

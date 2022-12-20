@@ -24,6 +24,18 @@
           ></DropzoneFileUpload> -->
           <DropZone @upload-success="onDropZoneUploadSuccess"></DropZone>
         </div>
+        <div class="cl-black cate-title">Chủ đề:</div>
+        <div class="list-optione">
+          <span v-for="(item, key) of categoriesOfArticles" class="label-category" @click="removeCategory(item.id)">{{ item.name }}</span>
+        </div>
+        <div class="title-cate" @click="showCombobox">Chọn chủ đề</div>
+        <div class="custom-selected">
+          <div class="combox-cate" v-if="isShow">
+            <div v-for="(item, key) of listCategories" class="category-items" @click="addCategory(item)">
+              <div>{{ item.name }}</div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="box-right">
         <div class="box-title">
