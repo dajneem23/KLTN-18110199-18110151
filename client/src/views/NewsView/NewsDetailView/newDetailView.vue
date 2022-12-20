@@ -81,7 +81,7 @@
         <img :src="author?.avatar[0].url || '	https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
         <div>
           <div class="news-auth_name">{{ author?.username }}</div>
-          <div class="news-date">{{ moment(createdAt).fromNow() }}</div>
+          <div class="news-date">{{ moment(createdAt || created_at).fromNow() }}</div>
         </div>
       </div>
       <div class="news-content">

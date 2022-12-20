@@ -19,6 +19,7 @@
     "moment": "^2.29.4",
     "sass": "^1.54.9",
     "sass-loader": "^10.1.1",
+    "socket.io-client": "^4.5.4",
     "vue": "^2.6.11",
     "vue-carousel": "^0.18.0",
     "vue-dropzone": "^1.0.4",

@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="card-body__title">
-        <router-link :to="{ name: 'detailnews', params: { id, news } }">
+        <router-link :to="{ name: 'detailnews', params: { id: slug, news } }">
           <div class="body-title__name" :class="font_title">{{ name }}</div>
           <div class="body-title__des">
             {{ description }}

@@ -8,6 +8,7 @@ import { ChatError, chatModelToken, chatErrors, _chat, messageModelToken } from 
 import { BaseServiceInput, BaseServiceOutput } from '@/types/Common';
 import { isNil, uniq } from 'lodash';
 import { ObjectId } from 'mongodb';
+import { IoToken } from '@/loaders/socketLoader';
 const TOKEN_NAME = '_chatService';
 /**
  * A bridge allows another service access to the Model layer
@@ -26,6 +27,7 @@ export class ChatService {
   private logger = new Logger('ChatService');
 
   private model = Container.get(chatModelToken);
+  Io = Container.get(IoToken);
 
   private messageModel = Container.get(messageModelToken);
 
@@ -300,6 +302,7 @@ export class ChatService {
           },
         },
       );
+      this.Io.to(_id).emit('new_message', { _id: messageId });
     } catch (err) {
       this.logger.error('create_error', err.message);
       throw err;

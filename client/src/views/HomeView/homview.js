@@ -8,7 +8,7 @@ import { StoriesService } from '@/services';
 import { ChatsServices } from '@/services';
 export default {
   components: {
-    InfiniteLoading,
+    // InfiniteLoading,
     Story,
     CreateStory,
   },

@@ -23,7 +23,7 @@
         <h3>Đang theo dõi</h3>
         <div class="list-user">
           <router-link to="/chat/">
-            <div class="user-item" v-for="user of userInfo.following">
+            <div class="user-item" v-for="user of userInfo?.following || []">
               <div class="item-left" @click="createChat(user.id)">
                 <img :src="user?.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
                 <!-- {{ user.avatar }} -->
