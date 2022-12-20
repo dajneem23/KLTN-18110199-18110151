@@ -1,14 +1,18 @@
 import CardNews from '../../../components/CardNews/index.vue';
 import Comment from '../../../components/Watching/CommentFilm';
+import Loader from '../../../components/Loader/skeletonNewsDetail.vue';
 import { mapState } from 'vuex';
 import { NewsServices } from '@/services';
 import { CommentServices } from '@/services';
 import { UserService } from '@/services';
 import moment from 'moment';
+import { ref } from 'vue';
+
 export default {
   components: {
     CardNews,
     Comment,
+    Loader,
   },
   data() {
     return {
@@ -21,6 +25,13 @@ export default {
         images: [],
         reply_to: null,
       },
+      author: {
+        avatar: [
+          {
+            url: '',
+          },
+        ],
+      },
       tags: [],
       up_votes: [],
       down_votes: [],
@@ -29,9 +40,10 @@ export default {
       content: '',
       description: '',
       reacts: [],
-      author: {},
+      categories: [],
       createdAt: '',
       isIncludeUser: false,
+      isLoading: true,
     };
   },
   computed: {
@@ -47,16 +59,25 @@ export default {
   //     console.log(this);
   //   },
   // },
-  mounted() {
+  async mounted() {
+    const { id } = this.$route.params;
+    const [result, error] = await NewsServices.getById(id);
+    if (result) {
+      this.news = result;
+      Object.keys(result).map((key) => {
+        if (key == '_v') return;
+        this[key] = result[key];
+      });
+    }
+    this.isLoading = false;
+    this.totalVote = this.up_votes.length - this.down_votes.length;
     window.addEventListener('scroll', this.handleScroll);
     this.userInfo.following.forEach((user) => {
       if (user.id == this.author.id) {
         this.isIncludeUser = true;
-        return
+        return;
       }
-
     });
-
     // const news
   },
   async created() {
@@ -70,7 +91,14 @@ export default {
       });
     }
     this.totalVote = this.up_votes.length - this.down_votes.length;
-    console.log(this.news)
+    window.addEventListener('scroll', this.handleScroll);
+    this.userInfo.following.forEach((user) => {
+      if (user.id == this.author.id) {
+        this.isIncludeUser = true;
+        return;
+      }
+    });
+    this.isLoading = false;
   },
   methods: {
     moment,
@@ -176,7 +204,7 @@ export default {
     async followUser(user) {
       const [result, error] = await UserService.followUser(this.author.id);
       if (result) {
-        this.userInfo.following.push(this.author.id)
+        this.userInfo.following.push(this.author.id);
       }
     },
   },
