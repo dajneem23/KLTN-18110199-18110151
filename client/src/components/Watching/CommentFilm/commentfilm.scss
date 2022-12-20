@@ -25,6 +25,7 @@
   }
   .cmt-footer {
     display: flex;
+    align-items: center;
   }
 }
 .cmt-rep {
@@ -52,5 +53,33 @@
   }
   textarea:focus-visible {
     outline: none;
+  }
+}
+/*-----------------------------------------*/
+.vote_cmt {
+  padding: 5px 18px;
+  margin-right: 20px;
+  .triangle {
+    cursor: pointer;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 12.5px 21.7px 12.5px;
+    border-color: transparent transparent var(--gray) transparent;
+    margin-bottom: 5px;
+  }
+  .triangle-down {
+    cursor: pointer;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 21.7px 12.5px 0 12.5px;
+    border-color: var(--gray) transparent transparent transparent;
+  }
+  .up-vote {
+    border-color: transparent transparent green transparent !important;
+  }
+  .down-vote {
+    border-color: red transparent transparent transparent !important;
   }
 }

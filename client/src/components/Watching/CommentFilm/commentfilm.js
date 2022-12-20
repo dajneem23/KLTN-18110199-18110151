@@ -16,6 +16,8 @@ export default {
         reply_to: this.data.id,
       },
       replies: [],
+      isVoteUp: false,
+      isVoteDown: false,
     };
   },
   computed: {
@@ -71,6 +73,16 @@ export default {
         repCmtBox.style.display = 'none';
       }
       this.cmt.content = '';
+    },
+    upvote(id) {
+      this.isVoteUp = true;
+      this.isVoteDown = false;
+      console.log(id);
+    },
+    downvote(id) {
+      this.isVoteUp = false;
+      this.isVoteDown = true;
+      console.log(id);
     },
   },
 };
