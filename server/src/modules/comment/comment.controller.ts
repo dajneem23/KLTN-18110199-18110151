@@ -130,7 +130,7 @@ export class CommentController {
       _filter: filter,
       _query: query,
       _subject: _auth._id,
-      _slug: _params.id,
+      _id: _params.id,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
@@ -154,7 +154,7 @@ export class CommentController {
       _filter: filter,
       _query: query,
       _subject: _auth._id,
-      _slug: _params.id,
+      _id: _params.id,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }

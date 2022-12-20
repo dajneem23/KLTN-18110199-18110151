@@ -185,9 +185,9 @@ export class CommentService {
       throw err;
     }
   }
-  async upVote({ _subject, _slug: slug }: BaseServiceInput) {
+  async upVote({ _subject, _id }: BaseServiceInput) {
     try {
-      const { up_votes, down_votes } = await this.model.update($toMongoFilter({ slug }), {
+      const { up_votes, down_votes } = await this.model.update($toMongoFilter({ _id }), {
         $addToSet: { up_votes: _subject },
         $pull: { down_votes: _subject },
       });
@@ -201,11 +201,11 @@ export class CommentService {
       throw err;
     }
   }
-  async downVote({ _subject, _slug: slug }: BaseServiceInput) {
+  async downVote({ _subject, _id }: BaseServiceInput) {
     try {
       //ToDO: check if user already up vote
 
-      const { down_votes, up_votes } = await this.model.update($toMongoFilter({ slug }), {
+      const { down_votes, up_votes } = await this.model.update($toMongoFilter({ _id }), {
         $addToSet: { down_votes: _subject },
         $pull: { up_votes: _subject },
       });
