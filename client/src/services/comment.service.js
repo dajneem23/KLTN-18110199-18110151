@@ -5,4 +5,10 @@ export const CommentServices = {
   comment(body) {
     return RequestBase.post(`${this.url}`, body);
   },
+  upvote(id) {
+    return RequestBase.patch(`${this.url}/upvote/${id}`);
+  },
+  downvote(id) {
+    return RequestBase.patch(`${this.url}/downvote/${id}`);
+  },
 };

@@ -16,8 +16,11 @@ export default {
         reply_to: this.data.id,
       },
       replies: [],
+      up_votes: [],
+      down_votes: [],
       isVoteUp: false,
       isVoteDown: false,
+      vote: 0,
     };
   },
   computed: {
@@ -33,7 +36,10 @@ export default {
     },
   },
   mounted() {
+    this.up_votes = this.data.up_votes;
+    this.down_votes = this.data.down_votes;
     // console.log(this.data);
+    console.log(this.data);
   },
   created() {
     if (this.data)
@@ -43,9 +49,6 @@ export default {
       });
   },
   methods: {
-    likeCmt() {
-      console.log('Like like');
-    },
     repCmt() {
       const repCmtBox = document.getElementById(this.flag + this.data.id);
       if (repCmtBox.style.display == 'none') {
@@ -74,15 +77,22 @@ export default {
       }
       this.cmt.content = '';
     },
-    upvote(id) {
+    async upvote(id) {
       this.isVoteUp = true;
       this.isVoteDown = false;
-      console.log(id);
+      const [up_votes, down_votes] = await CommentServices.upvote(id);
+      this.up_votes = up_votes;
+      this.down_votes = down_votes;
+      console.log(up_votes, down_votes);
     },
-    downvote(id) {
+    async downvote(id) {
       this.isVoteUp = false;
       this.isVoteDown = true;
-      console.log(id);
+      const [down_votes, up_votes] = await CommentServices.downvote(id);
+      this.up_votes = up_votes;
+      this.down_votes = down_votes;
+
+      console.log(up_votes, down_votes);
     },
   },
 };

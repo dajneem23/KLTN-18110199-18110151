@@ -21,7 +21,7 @@
         ></div>
 
         <div class="avt-user">
-          <!-- <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" /> -->
+          <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
         </div>
         <div class="follow-user">
           <svg
@@ -77,15 +77,15 @@
         <Loader v-if="isLoading" />
         <h1 v-if="!isLoading">{{ name }}</h1>
       </div>
-      <div class="news-short-des text-dark-gray" >
-        <Loader v-if="isLoading" isDes/>
+      <div class="news-short-des text-dark-gray">
+        <Loader v-if="isLoading" isDes />
         <div v-if="!isLoading">
           {{ description }}
         </div>
       </div>
       <div class="news-auth">
         <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
-        <Loader v-if="isLoading"/>
+        <Loader v-if="isLoading" />
         <div v-if="!isLoading">
           <div class="news-auth_name">{{ author?.username }}</div>
           <div class="news-date">{{ moment(createdAt || created_at).fromNow() }}</div>
@@ -94,7 +94,7 @@
       <div class="news-content">
         <!-- {{ content }} -->
       </div>
-      <Loader v-if="isLoading" isContent/>
+      <Loader v-if="isLoading" isContent />
       <div contenteditable="false" v-html="content" class="news-content" v-if="!isLoading"></div>
     </div>
     <div class="manga-cmt" id="cmt" v-if="!isLoading">
@@ -108,7 +108,7 @@
         ></textarea>
         <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
-      <div class="news-cmt-box" >
+      <div class="news-cmt-box">
         <div v-for="comment in comments">
           <Comment :data="comment" :sourceId="id" flag="detail_articles"></Comment>
           <div v-if="comment?.replies">

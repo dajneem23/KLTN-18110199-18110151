@@ -1,7 +1,7 @@
 import axios from 'axios';
 import SwitchButton from '../../components/SwitchButton/index.vue';
 import CardNews from '../../components/CardNews/index.vue';
-import { NewsServices } from '@/services';
+import { NewsServices, CategoriesServices } from '@/services';
 import basePagination from '@/template/BasePagination.vue';
 import Loader from '../../components/Loader/index.vue';
 import Skeleton from '../../components/Loader/skeleton.vue';
@@ -18,7 +18,8 @@ export default {
     return {
       customStyles,
       items: [],
-      cate_items: [],
+      categories: [],
+      filterCategory: [],
       new_items: [],
       hot_items: [],
       pageOfItems: 1,
@@ -52,6 +53,10 @@ export default {
     this.items = items;
     // console.log(this.items);
     this.total_count = total_count;
+
+    const [categoriesItem, error_3] = await CategoriesServices.get();
+    this.categories = categoriesItem.items;
+    console.log(this.categories);
   },
   methods: {
     async onChangePage(page) {
@@ -83,10 +88,26 @@ export default {
       }
     },
     async onChangePageFollow(page) {},
-    filterArticlesByCategory() {
-      let cat_item = document.getElementById('cat-item');
-      console.log(cat_item);
-      this.items = this.cate_items;
+    async filterArticlesByCategory(id) {
+      // let cat_item = document.getElementById('cat-item');
+      if (!this.filterCategory.includes(id)) {
+        this.filterCategory.push(id);
+      } else {
+        this.filterCategory = this.filterCategory.filter(function(item) {
+          return item !== id
+      })
+      }
+      const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await NewsServices.get({
+        categories: [...this.filterCategory],
+      });
+      this.items = items;
+      this.total_count = total_count;
+      console.log(this.items);
     },
     async handleChangeTabAll() {
       this.isTab = true;

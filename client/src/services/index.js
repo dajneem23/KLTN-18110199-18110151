@@ -7,3 +7,4 @@ export * from './film.service';
 export * from './comment.service';
 export * from './chat.service';
 export * from './upload.service';
+export * from './categories.service';
