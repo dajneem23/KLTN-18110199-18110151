@@ -19,11 +19,21 @@ export default {
       messages: [],
       users: [
         {
-          id: 0
+          id: 0,
+          avatar: [
+            {
+              url: 'https://www.gravatar.com/avatar/default?s=200&d=mp',
+            },
+          ],
         },
         {
-          id: 1
-        }
+          id: 1,
+          avatar: [
+            {
+              url: 'https://www.gravatar.com/avatar/default?s=200&d=mp',
+            },
+          ],
+        },
       ],
     };
   },

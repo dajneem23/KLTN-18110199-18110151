@@ -1,11 +1,6 @@
 <template lang="">
   <div class="row no-gutters">
-    <img
-      v-if="friendSms"
-      class="profile-image"
-      :src="author?.avatar[0].url"
-      alt=""
-    />
+    <img v-if="friendSms" class="profile-image" :src="sms.author?.avatar[0].url" alt="" />
     <div
       class="col-md-3"
       :class="{

@@ -17,6 +17,8 @@ export default {
   },
   methods: {},
   mounted() {
-    console.log(this.sms);
+    console.log({
+      sms: this.sms,
+    });
   },
 };
