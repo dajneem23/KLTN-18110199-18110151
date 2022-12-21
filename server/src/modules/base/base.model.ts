@@ -192,6 +192,12 @@ export class BaseModel {
         reName: 'comments',
         operation: '$in',
         pipeline: [
+          {
+            $addFields: {
+              votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] },
+            },
+          },
+          { $sort: { votes: -1 } },
           $lookup({
             from: 'users-permissions_user',
             refFrom: '_id',
@@ -223,6 +229,12 @@ export class BaseModel {
             reName: 'replies',
             operation: '$in',
             pipeline: [
+              {
+                $addFields: {
+                  votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] },
+                },
+              },
+              { $sort: { votes: -1 } },
               $lookup({
                 from: 'users-permissions_user',
                 refFrom: '_id',
