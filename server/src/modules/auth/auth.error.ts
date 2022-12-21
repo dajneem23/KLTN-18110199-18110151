@@ -101,6 +101,15 @@ export const errors = Object.freeze({
       vi: 'Không có quyền truy cập',
     },
   },
+  ACCOUNT_BLOCKED: {
+    message: 'This account has been blocked',
+    code: '1005',
+    status: httpStatusCode.UNAUTHORIZED,
+    isPublic: true,
+    locales: {
+      vi: 'Tài khoản đã bị khóa',
+    },
+  },
 });
 
 export class AuthError extends AppError {

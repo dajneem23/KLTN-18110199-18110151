@@ -10,8 +10,8 @@ import { toUserOutput } from './user.util';
 import { UserError } from '@/modules/user/user.error';
 import { DEFAULT_USER_PICTURE } from '@/config/constants';
 import { Filter, ObjectId } from 'mongodb';
-import { BaseQuery, BaseServiceInput, PaginationResult } from '@/types/Common';
-import { $queryByList, withMongoTransaction } from '@/utils/mongoDB';
+import { BaseQuery, BaseServiceInput, COLLECTION_NAMES, PaginationResult } from '@/types/Common';
+import { $lookup, $queryByList, withMongoTransaction } from '@/utils/mongoDB';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import VerificationTokenModel from '@/modules/verificationToken/verificationToken.model';
 import BlocklistService from '@/modules/auth/blocklist.service';
@@ -144,6 +144,14 @@ export class UserService {
               ...this.model.$addFields.following,
             },
           },
+          $lookup({
+            from: COLLECTION_NAMES.upload_file,
+            refFrom: '_id',
+            refTo: 'avatar',
+            select: 'name url',
+            reName: 'avatar',
+            operation: '$eq',
+          }),
           this.model.$lookups.following,
         ])
         .toArray();
