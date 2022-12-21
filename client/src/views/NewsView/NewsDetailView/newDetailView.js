@@ -202,10 +202,12 @@ export default {
       }
     },
     async followUser(user) {
-      const [result, error] = await UserService.followUser(this.author.id);
+      const [result, error] = await UserService.followUser(user.id);
       if (result) {
-        this.userInfo.following.push(this.author.id);
+        this.userInfo.following.push(user);
       }
+      this.isIncludeUser = true;
+      console.log(user);
     },
   },
 };

@@ -27,7 +27,7 @@
       <div class="content-story">
         <div class="content_body cl-black">
           {{
-            content
+            title
           }}
         </div>
       </div>

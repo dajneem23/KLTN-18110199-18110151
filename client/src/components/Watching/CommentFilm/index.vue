@@ -1,16 +1,6 @@
 <template>
   <div class="user-cmt">
     <div class="cmt-header">
-      <div class="cmt-avt">
-        <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
-      </div>
-      <div class="cmt-info">
-        <span class="cmt-user-name">{{ author?.username || 'Unknown' }}</span>
-        <!-- <span class="cmt-time text-gray">{{ created_at }}</span> -->
-      </div>
-    </div>
-    <div class="cmt-content">{{ content }}</div>
-    <div class="cmt-footer">
       <div class="vote_cmt">
         <div
           :id="id"
@@ -20,6 +10,8 @@
           @click="upvote(id)"
         ></div>
         <div :id="id" class="triangle up-vote" @click="upvote(id)" v-if="isVoteUp"></div>
+        {{ (up_votes?.length || 0) - (down_votes?.length || 0) }}
+        <!-- {{ vote }} -->
         <div
           :id="id"
           class="triangle-down"
@@ -29,12 +21,21 @@
         ></div>
         <div :id="id" class="triangle-down down-vote" @click="downvote(id)" v-if="isVoteDown"></div>
       </div>
+      <div class="cmt-avt">
+        <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
+      </div>
+      <div class="cmt-info">
+        <span class="cmt-user-name text-dark">{{ author?.username || 'Unknown' }}</span>
+        <!-- <span class="cmt-time text-gray">{{ created_at }}</span> -->
+      </div>
+    </div>
+    <div class="cmt-content text-dark">{{ content }}</div>
+    <div class="cmt-footer">
       <!-- <span class="cl-black"> 0 </span> -->
-
       <button class="btn-like-cmt" @click="repCmt">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="fill-gray">
           <path
-            d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"
+            d="M205 34.8c11.5 5.1 19 16.6 19 29.2v64H336c97.2 0 176 78.8 176 176c0 113.3-81.5 163.9-100.2 174.1c-2.5 1.4-5.3 1.9-8.1 1.9c-10.9 0-19.7-8.9-19.7-19.7c0-7.5 4.3-14.4 9.8-19.5c9.4-8.8 22.2-26.4 22.2-56.7c0-53-43-96-96-96H224v64c0 12.6-7.4 24.1-19 29.2s-25 3-34.4-5.4l-160-144C3.9 225.7 0 217.1 0 208s3.9-17.7 10.6-23.8l160-144c9.4-8.5 22.9-10.6 34.4-5.4z"
           />
         </svg>
         Trả lời
