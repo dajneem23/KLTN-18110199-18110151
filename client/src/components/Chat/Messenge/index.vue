@@ -3,7 +3,7 @@
     <img
       v-if="friendSms"
       class="profile-image"
-      :src="author?.avatar[0].url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'"
+      :src="author?.avatar[0].url"
       alt=""
     />
     <div

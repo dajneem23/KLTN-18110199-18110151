@@ -12,6 +12,7 @@ export default {
       idChat: '',
       sms: '',
       isChangeMessage: false,
+      items: [],
     };
   },
   computed: {
@@ -31,7 +32,7 @@ export default {
   // },
   async mounted() {
     await this.loadChat();
-    console.log(items);
+    // console.log(items);
     // this.total_count = total_count;
     // console.log(this.idChat, 'mouted');
   },

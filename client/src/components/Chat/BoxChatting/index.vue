@@ -4,7 +4,7 @@
       <div class="friend-drawer no-gutters friend-drawer">
         <img
           class="profile-image"
-          :src="users[0].avatar[0].url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'"
+          :src="users[0].avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'"
           alt=""
           v-if="users[1]?.id === userInfo._id"
         />
@@ -12,12 +12,12 @@
           class="profile-image"
           :src="users[1].avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'"
           alt=""
-          v-if="users[1].id !== userInfo._id"
+          v-if="users[1]?.id !== userInfo._id"
         />
         <div class="text">
           <div class="chat-name">
-            <h3 v-if="users[1].id === userInfo._id">{{ users[0].username }}</h3>
-            <h3 v-if="users[1].id !== userInfo._id">{{ users[1].username }}</h3>
+            <h3 v-if="users[1]?.id === userInfo._id">{{ users[0].username }}</h3>
+            <h3 v-if="users[1]?.id !== userInfo._id">{{ users[1].username }}</h3>
             <!-- <h3>{{ users[1].username }}</h3> -->
           </div>
           <p class="text-muted e">
