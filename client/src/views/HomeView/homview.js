@@ -6,6 +6,8 @@ import { mapState } from 'vuex';
 import { store } from '../../store/vuex';
 import { StoriesService } from '@/services';
 import { ChatsServices } from '@/services';
+import socketClient from '@/socket';
+
 export default {
   components: {
     // InfiniteLoading,
@@ -55,7 +57,6 @@ export default {
           item.users.forEach((user) => {
             if (user.id === id) {
               isInclude = true;
-              // console.log(user.id);
             }
           });
         }
@@ -63,6 +64,9 @@ export default {
       if (!isInclude) {
         const [result, error] = await ChatsServices.createChat({
           users: [id],
+        });
+        socketClient.send('join', {
+          room: this.result.id,
         });
         console.log(result);
       }

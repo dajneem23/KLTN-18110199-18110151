@@ -17,7 +17,14 @@ export default {
       page: 1,
       per_page: 10,
       messages: [],
-      users: [],
+      users: [
+        {
+          id: 0
+        },
+        {
+          id: 1
+        }
+      ],
     };
   },
   computed: {

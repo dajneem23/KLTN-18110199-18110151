@@ -39,7 +39,7 @@ export default {
     this.up_votes = this.data.up_votes;
     this.down_votes = this.data.down_votes;
     // console.log(this.data);
-    console.log(this.data);
+    console.log(this.userInfo);
   },
   created() {
     if (this.data)
