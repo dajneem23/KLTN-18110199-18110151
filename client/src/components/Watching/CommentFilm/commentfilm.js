@@ -80,18 +80,17 @@ export default {
     async upvote(id) {
       this.isVoteUp = true;
       this.isVoteDown = false;
-      const [up_votes, down_votes] = await CommentServices.upvote(id);
-      this.up_votes = up_votes;
-      this.down_votes = down_votes;
-      console.log(up_votes, down_votes);
+      const [up_votes] = await CommentServices.upvote(id);
+      this.up_votes = up_votes.up_votes;
+      this.down_votes = up_votes.down_votes;
+      console.log(up_votes);
     },
     async downvote(id) {
       this.isVoteUp = false;
       this.isVoteDown = true;
-      const [down_votes, up_votes] = await CommentServices.downvote(id);
-      this.up_votes = up_votes;
-      this.down_votes = down_votes;
-
+      const [down_votes] = await CommentServices.downvote(id);
+      this.down_votes = down_votes.down_votes;
+      this.up_votes = down_votes.up_votes;
       console.log(up_votes, down_votes);
     },
   },

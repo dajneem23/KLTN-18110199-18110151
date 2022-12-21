@@ -48,6 +48,7 @@ export default {
   methods: {
     async submitText() {
       this.news.content = this.editorData;
+      this.news.name = this.editorData;
       this.news.categories = [...this.categoriesOfArticles];
       const result = await NewsServices.create({
         ...this.news,
