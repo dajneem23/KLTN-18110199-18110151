@@ -124,6 +124,9 @@ export default class AuthService {
       if (user.status === 'suspended') {
         throwErr(new AuthError('ACCOUNT_SUSPENDED'));
       }
+      if (user.blocked) {
+        throwErr(new AuthError('ACCOUNT_BLOCKED'));
+      }
       // Generate new auth session
       const { tokens } = await this.generateAuthSession(user);
       this.logger.debug('[loginByPassword:success]');
