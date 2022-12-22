@@ -5,6 +5,9 @@ export const StoriesService = {
   get(params) {
     return RequestBase.get(`${this.url}/`, params);
   },
+  getMyStories(params) {
+    return RequestBase.get(`${this.url}/my`, params);
+  },
   getById(id) {
     return RequestBase.get(`${this.url}/${id}`);
   },

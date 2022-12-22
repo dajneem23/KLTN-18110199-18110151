@@ -14,6 +14,8 @@ export default {
     hiddenModel: {
       type: Function,
     },
+    storyProps: Object,
+    isEditing: Boolean,
   },
   computed: {
     ...mapState(['userInfo', 'isAuthenticated']),
@@ -26,11 +28,26 @@ export default {
         content: '',
         images: [],
       },
+      initImage: null,
       isSuccess: false,
       isWarnning: false,
     };
   },
-  mounted() {},
+  watch: {
+    storyProps: {
+      handler(val) {
+        if (this.isEditing) {
+          this.story.title = this.storyProps.title;
+          this.story.name = this.storyProps.name;
+          this.story.content = this.storyProps.content;
+          this.story.images = this.storyProps.images;
+          this.initImage = this.storyProps?.images ? this.storyProps?.images : null;
+          console.log(this.initImage);
+        }
+      },
+      deep: true,
+    },
+  },
   methods: {
     hiddenmodel() {
       if (this.hiddenModel) {
@@ -54,6 +71,9 @@ export default {
           this.isWarnning = true;
         }, 2000);
       }
+    },
+    editStory() {
+      console.log(this.storyProps);
     },
     changeSubmit() {
       let btnUpload = document.getElementById('btn-upload');

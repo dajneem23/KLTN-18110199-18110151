@@ -36,8 +36,6 @@ export default {
       per_page: this.per_page,
     });
     this.items = items;
-    this.new_items = items.slice(0, 5);
-    this.hot_items = items.slice(0, 5);
     this.total_count = total_count;
     // console.log(this.items);
     this.isLoading = false;
