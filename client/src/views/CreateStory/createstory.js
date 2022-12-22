@@ -76,18 +76,38 @@ export default {
       console.log(this.storyProps);
       const [result, error] = await StoriesService.update(this.storyProps.id, {
         title: this.story.content,
+        name: this.story.content,
         content: this.story.content,
         images: this.story.images,
       });
       console.log([result, error], {
         ...this.story,
       });
-      this.$bvModal.hide('confirm-edit-modal');
+      if (result) {
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = false;
+          this.$bvModal.hide('confirm-edit-modal');
+        }, 2000);
+      }
     },
     async deleteStory() {
       const [result, error] = await StoriesService.delete(this.storyProps.id);
       console.log([result, error]);
-      this.$bvModal.hide('confirm-delete-modal');
+      if (result) {
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = true;
+          this.$bvModal.hide('confirm-delete-modal');
+          this.$router.push('/profile');
+        }, 2000);
+      } else {
+        this.isWarnning = true;
+
+        setTimeout(() => {
+          this.isWarnning = false;
+        }, 2000);
+      }
     },
     changeSubmit() {
       let btnUpload = document.getElementById('btn-upload');

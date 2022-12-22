@@ -105,6 +105,24 @@ export default {
         this.isSuccess = true;
         setTimeout(() => {
           this.isSuccess = false;
+          this.$bvModal.hide('confirm-edit-modal');
+        }, 2000);
+      }
+    },
+    async deleteNews() {
+      const [result, error] = await NewsServices.delete(this.newsProps.id);
+      console.log([result, error]);
+      if (!result) {
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = false;
+          this.$bvModal.hide('confirm-delete-modal');
+          this.$router.push('/profile');
+        }, 2000);
+      } else {
+        this.isWarnning = true;
+        setTimeout(() => {
+          this.isWarnning = false;
         }, 2000);
       }
     },

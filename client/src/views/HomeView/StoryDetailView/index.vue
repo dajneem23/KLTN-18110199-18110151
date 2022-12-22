@@ -16,6 +16,7 @@
     </div>
     <div class="boxDetail-right bgc-white">
       <div class="auth">
+        <div class="auth-left">
         <div class="auth_avt">
           <img :src="author?.avatar[0].url || '	https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="">
         </div>
@@ -23,6 +24,27 @@
           <div class="auth_name">{{author.username || 'UnKnown'}}</div>
           <span class="news-time text-dark-gray">{{moment(createdAt).fromNow() }}</span>
         </div>
+      </div>
+        <div v-if="!isMe" class="btn-flloww">
+            <div class="followU-story" v-if="!isIncludeUser" @click="followUser(id)" :id="id">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                <path
+                  d="M352 128c0 70.7-57.3 128-128 128s-128-57.3-128-128S153.3 0 224 0s128 57.3 128 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
+                />
+              </svg>
+              <span>Theo dõi</span>
+            </div>
+            <div
+              class="followU-story  followed-story"
+              v-if="isIncludeUser"
+              @click="unfollowUser(id)"
+              :id="`unfollow-${id}`"
+              style="border-color: #78cb5b"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="fill:green"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+              <span style="color: green">Đã theo dõi</span>
+            </div>
+          </div>
       </div>
       <div class="content-story">
         <div class="content_body cl-black">

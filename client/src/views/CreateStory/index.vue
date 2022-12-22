@@ -23,8 +23,8 @@
       </div>
     </div>
     <div class="toastify-wrapper">
-      <Toastify isSuccess content="Tạo thành công" v-if="isSuccess" />
-      <Toastify isWarnning content="Tạo thất bại" v-if="isWarnning" />
+      <Toastify isSuccess content="Thành công" v-if="isSuccess" />
+      <Toastify isWarnning content="Thất bại" v-if="isWarnning" />
     </div>
     <b-modal id="confirm-edit-modal" hide-footer centered title="Xác nhận chỉnh sửa" class="flex">
       <div class="d-flex justify-content-center" style="gap: 2rem">

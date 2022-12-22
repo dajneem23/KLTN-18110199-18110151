@@ -17,6 +17,9 @@ export const NewsServices = {
   getById(id) {
     return RequestBase.get(`${this.url}/${id}`);
   },
+  delete(id) {
+    return RequestBase.delete(`${this.url}/${id}`);
+  },
   create(body) {
     return RequestBase.post(`${this.url}/`, body);
   },
