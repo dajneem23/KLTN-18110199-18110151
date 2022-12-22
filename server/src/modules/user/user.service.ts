@@ -169,18 +169,16 @@ export class UserService {
    */
   async update(_id: User['id'], data: Partial<User>) {
     try {
-      const { value: user } = await this.model._collection.findOneAndUpdate(
-        { _id: new ObjectId(_id) },
+      const user = await this.model.update(
+        {
+          _id: new ObjectId(_id),
+        },
         {
           $set: {
             ...data,
-            ...(data.name && { _full_name_alias: generateTextAlias(data.name) }),
-            updated_at: new Date(),
           },
         },
-        { returnDocument: 'after' },
       );
-      if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[update:success]', { email: user.email });
       return toUserOutput(user as any);
     } catch (err) {
