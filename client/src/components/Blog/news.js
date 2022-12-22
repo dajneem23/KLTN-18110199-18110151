@@ -1,7 +1,6 @@
 import Comment from '../Watching/CommentFilm/index.vue';
 import DetailStory from '../../views/HomeView/StoryDetailView/index.vue';
 import { HOME_ITEM } from '../../constants/homeview';
-import { onMounted } from 'vue';
 import { Carousel, Slide } from 'vue-carousel';
 import { CommentServices, UserService, StoriesService } from '@/services';
 import { mapState } from 'vuex';
@@ -34,12 +33,18 @@ export default {
       img: [],
       author: { name: 'Unknown' },
       isShowDetail: false,
-      isIncludeUser: false,
+      // isIncludeUser: false,
       isMe: false,
     };
   },
   computed: {
     ...mapState(['userInfo', 'isAuthenticated', 'urlStrapiServe']),
+    isIncludeUser() {
+      if (this.userInfo) {
+        return this.userInfo.following.some((user) => user.id == this.author.id || user.id == this.userInfo._id);
+      }
+      return false;
+    },
   },
   watch: {
     data(newData) {
@@ -50,12 +55,10 @@ export default {
         });
     },
     userInfo() {
-      if (this.userInfo) {
-        console.log('user info', this.userInfo);
-        this.isIncludeUser = this.userInfo.following.some(
-          (user) => user.id == this.author.id || user.id == this.userInfo._id,
-        );
-      }
+      // if (this.userInfo) {
+      // console.log('user info', this.userInfo);
+      // this.isIncludeUser =
+      // }
     },
   },
   created() {
