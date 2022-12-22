@@ -1,7 +1,7 @@
 import { HEADER_ITEM } from '../../constants';
 import { mapState } from 'vuex';
 import { store } from '../../store/vuex';
-import {AuthService} from '@/services'
+import { AuthService } from '@/services';
 
 export default {
   name: 'Header',
@@ -15,7 +15,11 @@ export default {
   methods: {
     async logOut() {
       const [result, error] = await AuthService.logout();
-      console.log(result)
+      console.log(result);
+      if (result) {
+        this.$store.commit('setUserInfo', null);
+        this.$store.commit('setIsAuthenticated', false);
+      }
     },
     showtoolTip() {
       const toolTip = document.getElementById('toolTip-user');
@@ -33,12 +37,8 @@ export default {
         toolTip.classList.remove('showToolTip');
       }
     },
-    showBoxNotification() {
-      
-    },
-    hiddenBoxNotification() {
-      
-    },
+    showBoxNotification() {},
+    hiddenBoxNotification() {},
     onHomeBtnClick: function () {
       // this.$refs.home.classList.add('active');
       // this.$refs.news.classList.remove('active');

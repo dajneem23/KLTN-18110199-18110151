@@ -44,7 +44,12 @@ export class AuthController {
 
   @Get('/auth/logout', [protect()])
   async logout(@Res() res: Response, @Auth() auth: JWTPayload) {
-    res.clearCookie('access_token');
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: env.MODE === 'production',
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      sameSite: 'none',
+    });
     return res.status(httpStatusCode.NO_CONTENT).end();
   }
 
