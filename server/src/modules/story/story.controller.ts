@@ -116,7 +116,17 @@ export class StoryController {
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
-
+  @Get('/my', [protect()])
+  async getMy(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery, @Auth() auth: JWTPayload) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.getMy({
+      _filter: filter,
+      _query: query,
+      _permission: 'public',
+      _subject: auth._id,
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
   @Get('/search', [])
   async search(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery) {
     const { filter, query } = buildQueryFilter(_query);
