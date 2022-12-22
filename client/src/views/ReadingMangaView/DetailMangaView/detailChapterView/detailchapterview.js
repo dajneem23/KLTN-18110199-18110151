@@ -1,9 +1,12 @@
 import { MangaServices } from '@/services';
 import { CommentServices } from '@/services';
+import { mapState } from 'vuex';
 import Comment from '../../../../components/Watching/CommentFilm/index.vue';
+
 export default {
   data() {
     return {
+      isLoading:true,
       chapter: [],
       comments: [],
       name: '',
@@ -16,6 +19,9 @@ export default {
         reply_to: null,
       },
     };
+  },
+  computed: {
+    ...mapState(['userInfo', 'isAuthenticated', 'urlStrapiServe']),
   },
   components: {
     Comment,
@@ -46,6 +52,7 @@ export default {
         this[key] = result[key];
       });
     }
+    this.isLoading = false;
   },
   methods: {
     async sendCmt() {

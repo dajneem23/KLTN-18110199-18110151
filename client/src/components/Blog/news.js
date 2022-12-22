@@ -37,6 +37,7 @@ export default {
       author: { name: 'Unknown' },
       isShowDetail: false,
       isIncludeUser: false,
+      isMe: false,
     };
   },
   computed: {
@@ -60,12 +61,12 @@ export default {
   },
   mounted() {
     if (this.author.id === this.userInfo._id) {
-      this.isIncludeUser = true;
+      this.isMe = true;
       return;
     }
     // console.log(this.author.id);
     this.userInfo.following.forEach((user) => {
-      if (user.id == this.author.id) {
+      if ((user.id == this.author.id) || (user.id == this.userInfo._id)) {
         this.isIncludeUser = true;
         return;
       }
@@ -81,8 +82,6 @@ export default {
           const { reacts } = result;
           this.reacts = reacts;
         }
-      } else {
-        window.location.href = '/login/';
       }
     },
     showCmtBox(string) {
@@ -117,11 +116,27 @@ export default {
       const [result, error] = await UserService.followUser(this.author.id);
       if (result) {
         this.userInfo.following.push(this.author);
-        const btnFL = document.getElementById(id);
-        btnFL.style.display = 'none';
+        // const btnFL = document.getElementById(id);
+        // btnFL.style.display = 'none';
+        this.isIncludeUser = true;
         // console.log(this.author);
       }
       // console.log(this.author)
+    },
+    async unfollowUser(id) {
+      const userID = this.author.id;
+      const [result, error] = await UserService.followUser(this.author.id);
+      if (result) {
+        this.userInfo.following = this.userInfo.following.filter(function (item) {
+          return item.id !== userID;
+        });
+        console.log(this.userInfo.following);
+        // this.userInfo.following.push(this.author);
+        // const btnFL = document.getElementById(id);
+        // btnFL.style.display = 'none';
+        this.isIncludeUser = false;
+        console.log(this.author.id);
+      }
     },
     getTime() {
       data.created_at = data.created_at.toLocaleDateString('en-US');

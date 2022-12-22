@@ -83,6 +83,14 @@ span {
 .ck-editor__editable_inline {
   min-height: 200px;
 }
+.btn-box-edit {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  .btn-deleted {
+    background-color: red;
+  }
+}
 /*-------------------------------------*/
 .cate-title {
   margin: 15px 0;

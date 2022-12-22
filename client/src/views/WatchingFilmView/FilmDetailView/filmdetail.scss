@@ -8,7 +8,12 @@
   max-width: 1912px;
   display: flex;
   justify-content: center;
-  padding: 78px 0;
+  padding: 40px 0;
+  .loading-screen-watching {
+    width: 1490px;
+    height: 800px;
+    background-color: var(--gray);
+  }
 }
 .film-info {
   width: 70%;
@@ -34,6 +39,7 @@
   .film-info-des {
     width: 100%;
     margin-left: 15px;
+    padding: 5px 40px 5px 10px;
     display: flex;
     justify-content: space-between;
     color: var(--black);

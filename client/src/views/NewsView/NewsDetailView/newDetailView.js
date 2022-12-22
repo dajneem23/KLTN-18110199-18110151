@@ -72,7 +72,7 @@ export default {
     this.isLoading = false;
     this.totalVote = this.up_votes.length - this.down_votes.length;
     window.addEventListener('scroll', this.handleScroll);
-    this.userInfo.following.forEach((user) => {
+    this.userInfo?.following.forEach((user) => {
       if (user.id == this.author.id) {
         this.isIncludeUser = true;
         return;
@@ -149,8 +149,6 @@ export default {
           // const { up_votes } = result;
           // this.up_votes = up_votes;
         }
-      } else {
-        window.location.href = '/login/';
       }
 
       const [result_2, error] = await NewsServices.getById(id);
@@ -173,8 +171,6 @@ export default {
           // const { down_votes } = result;
           // this.down_votes = down_votes;
         }
-      } else {
-        window.location.href = '/login/';
       }
       const [result_2, error] = await NewsServices.getById(id);
       console.log([result_2, error]);
@@ -197,8 +193,6 @@ export default {
           const { reacts } = result;
           this.reacts = reacts;
         }
-      } else {
-        window.location.href = '/login/';
       }
     },
     async followUser(user) {

@@ -1,5 +1,6 @@
 // import DropzoneFileUpload from '../../template/Inputs/DropzoneFileUpload';
 import DropzoneFileUpload from './dropzone_story.vue';
+import Toastify from '../../components/ToastifyCustom/index.vue';
 import { mapState } from 'vuex';
 import { store } from '../../store/vuex';
 import { UploadServices, StoriesService } from '@/services';
@@ -7,6 +8,7 @@ export default {
   name: 'CkEditor',
   components: {
     DropzoneFileUpload,
+    Toastify,
   },
   props: {
     hiddenModel: {
@@ -24,11 +26,11 @@ export default {
         content: '',
         images: [],
       },
+      isSuccess: false,
+      isWarnning: false,
     };
   },
-  mounted() {
-    // this.changeSubmit();
-  },
+  mounted() {},
   methods: {
     hiddenmodel() {
       if (this.hiddenModel) {
@@ -38,13 +40,20 @@ export default {
     async createStory() {
       this.story.title = this.story.content;
       this.story.name = this.story.content;
-      console.log({ ...this.story });
       const [result, error] = await StoriesService.create({
         ...this.story,
       });
-      console.log(result, error);
-      alert('Tạo bài viết thành công');
-      this.hiddenmodel();
+      if (result) {
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = false;
+          this.hiddenmodel();
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          this.isWarnning = true;
+        }, 2000);
+      }
     },
     changeSubmit() {
       let btnUpload = document.getElementById('btn-upload');

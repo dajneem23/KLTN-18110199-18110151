@@ -17,6 +17,7 @@ import ProfileView from '../views/ProfileView/profileView.vue';
 import EditProfileView from '../views/ProfileView/EditProfileView/index.vue';
 import StoryDetailView from '../views/HomeView/StoryDetailView/index.vue';
 import CreateNewsView from '../views/CreateNews/index.vue';
+import EditNewsView from '../views/EditNews/editNews.vue';
 import CreateStory from '../views/CreateStory/index.vue';
 import { UserService } from '@/services';
 import { store } from '../store/vuex';
@@ -169,6 +170,16 @@ const routes = [
     beforeEnter: (to, from, next) => {
       authenticate(to, from, next) ? next() : next('/login');
     },
+  },
+  {
+    path: '/edit-news',
+    name: 'editNews',
+    components: {
+      header: Header,
+      default: EditNewsView,
+      // footer: Footer,
+    },
+    props: true,
   },
   {
     path: '/create-story',

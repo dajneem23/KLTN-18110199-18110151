@@ -17,6 +17,10 @@
         <button @click="createStory" class="btn-filter" id="btn-upload">Đăng</button>
       </div>
     </div>
+    <div class="toastify-wrapper">
+      <Toastify isSuccess content="Tạo thành công" v-if="isSuccess" />
+      <Toastify isWarnning content="Tạo thất bại" v-if="isWarnning" />
+    </div>
   </div>
 </template>
 <script src="./createstory.js"></script>
