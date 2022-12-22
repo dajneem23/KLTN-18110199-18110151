@@ -46,7 +46,8 @@ export default {
   watch: {
     file: function (newVal, oldVal) {
       if (newVal) {
-        console.log('manuallyAddFile', { url: newVal });
+        this.$refs.myVueDropzone.removeAllFiles();
+        console.log('.manuallyAddFile', { url: newVal });
         const file = { size: newVal.size || 100, name: newVal.name };
         this.$refs.myVueDropzone.manuallyAddFile(file, newVal.url);
       }

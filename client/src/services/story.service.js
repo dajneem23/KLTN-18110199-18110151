@@ -14,6 +14,12 @@ export const StoriesService = {
   create(body) {
     return RequestBase.post(`${this.url}/`, body);
   },
+  update(id, body) {
+    return RequestBase.put(`${this.url}/${id}`, body);
+  },
+  delete(id) {
+    return RequestBase.delete(`${this.url}/${id}`);
+  },
   react(id) {
     return RequestBase.patch(`${this.url}/react/${id}`);
   },

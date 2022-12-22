@@ -77,107 +77,24 @@ export default {
   props: {
     files: {
       type: Array,
-      default: null,
+      default: [],
     },
   },
   watch: {
-    files: function (newVal, oldVal) {
-      if (newVal) {
-        files.forEach((file) => {
-          console.log('manuallyAddFile', { url: file });
-          const file_ = { size: file.size || 100, name: file.name };
-          this.$refs.myVueDropzone.displayExistingFile(file_, file.url);
-        });
-      }
+    files: {
+      handler(newVal, oldVal) {
+        console.log('files dropzone_story', newVal);
+        if (newVal) {
+          //get new files
+          this.$refs.myVueDropzone.removeAllFiles();
+          newVal.forEach((file) => {
+            console.log('.manuallyAddFile', { url: file.url });
+            this.$refs.myVueDropzone.manuallyAddFile({ size: newVal.size || 100, name: file.name }, file.url);
+          });
+        }
+      },
+      deep: true,
     },
-  },
-  methods: {
-    vfileAdded(file) {
-      // this.fileAdded = true;
-      // console.log('vfileAdded', {
-      //   file,
-      // });
-    },
-    vfilesAdded(file) {
-      this.filesAdded = true;
-      console.log('vfileAdded', {
-        file,
-      });
-      // window.toastr.info('', 'Event : vdropzone-files-added')
-    },
-    vsuccess(files, response) {
-      this.success = true;
-      console.log('vsuccess', {
-        files,
-        response,
-      });
-      files.uploadUrl = response.url;
-      files._id = response._id;
-      this.listImg.push(files._id);
-      console.log(this.listImg);
-      this.$emit('upload-success', this.listImg);
-    },
-    verror(file) {
-      this.error = true;
-      // window.toastr.error(file.upload.filename, 'Event : vdropzone-error - ' + file.status)
-    },
-    vremoved(file, xhr, error) {
-      this.removedFile = true;
-      // window.toastr.warning('', 'Event : vdropzone-removedFile')
-    },
-    vsending(file, xhr, formData) {
-      this.sending = true;
-      // window.toastr.warning('', 'Event : vdropzone-sending')
-    },
-    vsuccessMuliple(files, response) {
-      this.successMultiple = true;
-      console.log('vsuccess', {
-        file,
-        response,
-      });
-      files.uploadUrl = response.url;
-      files._id = response._id;
-      this.$emit('upload-success', files);
-    },
-    vsendingMuliple(file, xhr, formData) {
-      this.sendingMultiple = true;
-      // window.toastr.warning('', 'Event : vdropzone-sending-multiple')
-    },
-    vqueueComplete(file, xhr, formData) {
-      this.queueComplete = true;
-      // window.toastr.success('', 'Event : vdropzone-queue-complete')
-    },
-    vprogress(totalProgress, totalBytes, totalBytesSent) {
-      this.progress = true;
-      this.myProgress = Math.floor(totalProgress);
-      // window.toastr.success('', 'Event : vdropzone-sending')
-    },
-    vmounted() {
-      this.isMounted = true;
-    },
-    vddrop() {
-      this.dDrop = true;
-    },
-    vdstart() {
-      this.dStarted = true;
-    },
-    vdend() {
-      this.dEnded = true;
-    },
-    vdenter() {
-      this.dEntered = true;
-    },
-    vdover() {
-      this.dOver = true;
-    },
-    vdleave() {
-      this.dLeave = true;
-    },
-    vdduplicate() {
-      this.dDuplicate = true;
-    },
-  },
-  watch: {
     fileAdded() {
       let that = this;
       setTimeout(function () {
@@ -285,6 +202,92 @@ export default {
       setTimeout(function () {
         that.dDuplicate = false;
       }, 2000);
+    },
+  },
+  methods: {
+    vfileAdded(file) {
+      // this.fileAdded = true;
+      // console.log('vfileAdded', {
+      //   file,
+      // });
+    },
+    vfilesAdded(file) {
+      this.filesAdded = true;
+      console.log('vfileAdded', {
+        file,
+      });
+      // window.toastr.info('', 'Event : vdropzone-files-added')
+    },
+    vsuccess(files, response) {
+      this.success = true;
+      console.log('vsuccess', {
+        files,
+        response,
+      });
+      files.uploadUrl = response.url;
+      files._id = response._id;
+      this.listImg.push(files._id);
+      console.log(this.listImg);
+      this.$emit('upload-success', this.listImg);
+    },
+    verror(file) {
+      this.error = true;
+      // window.toastr.error(file.upload.filename, 'Event : vdropzone-error - ' + file.status)
+    },
+    vremoved(file, xhr, error) {
+      this.removedFile = true;
+      // window.toastr.warning('', 'Event : vdropzone-removedFile')
+    },
+    vsending(file, xhr, formData) {
+      this.sending = true;
+      // window.toastr.warning('', 'Event : vdropzone-sending')
+    },
+    vsuccessMuliple(files, response) {
+      this.successMultiple = true;
+      console.log('vsuccess', {
+        file,
+        response,
+      });
+      files.uploadUrl = response.url;
+      files._id = response._id;
+      this.$emit('upload-success', files);
+    },
+    vsendingMuliple(file, xhr, formData) {
+      this.sendingMultiple = true;
+      // window.toastr.warning('', 'Event : vdropzone-sending-multiple')
+    },
+    vqueueComplete(file, xhr, formData) {
+      this.queueComplete = true;
+      // window.toastr.success('', 'Event : vdropzone-queue-complete')
+    },
+    vprogress(totalProgress, totalBytes, totalBytesSent) {
+      this.progress = true;
+      this.myProgress = Math.floor(totalProgress);
+      // window.toastr.success('', 'Event : vdropzone-sending')
+    },
+    vmounted() {
+      this.isMounted = true;
+    },
+    vddrop() {
+      this.dDrop = true;
+    },
+    vdstart() {
+      this.dStarted = true;
+    },
+    vdend() {
+      this.dEnded = true;
+    },
+    vdenter() {
+      this.dEntered = true;
+    },
+    vdover() {
+      this.dOver = true;
+    },
+    vdleave() {
+      this.dLeave = true;
+    },
+    vdduplicate() {
+      this.dDuplicate = true;
     },
   },
 };

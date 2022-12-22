@@ -28,7 +28,7 @@ export default {
         content: '',
         images: [],
       },
-      initImage: null,
+      initImages: [],
       isSuccess: false,
       isWarnning: false,
     };
@@ -41,8 +41,8 @@ export default {
           this.story.name = this.storyProps.name;
           this.story.content = this.storyProps.content;
           this.story.images = this.storyProps.images;
-          this.initImage = this.storyProps?.images ? this.storyProps?.images : null;
-          console.log(this.initImage);
+          this.initImages = this.storyProps?.images ? this.storyProps?.images : [];
+          console.log('changes', this.initImages);
         }
       },
       deep: true,
@@ -72,8 +72,22 @@ export default {
         }, 2000);
       }
     },
-    editStory() {
+    async editStory() {
       console.log(this.storyProps);
+      const [result, error] = await StoriesService.update(this.storyProps.id, {
+        title: this.story.content,
+        content: this.story.content,
+        images: this.story.images,
+      });
+      console.log([result, error], {
+        ...this.story,
+      });
+      this.$bvModal.hide('confirm-edit-modal');
+    },
+    async deleteStory() {
+      const [result, error] = await StoriesService.delete(this.storyProps.id);
+      console.log([result, error]);
+      this.$bvModal.hide('confirm-delete-modal');
     },
     changeSubmit() {
       let btnUpload = document.getElementById('btn-upload');

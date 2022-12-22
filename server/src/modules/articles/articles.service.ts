@@ -89,9 +89,12 @@ export class NewsService {
    */
   async update({ _id, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
+      const { name, categories = [], images = [] } = _content;
       await this.model.update($toMongoFilter({ _id }), {
         $set: {
           ..._content,
+          categories: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
+          ...((Array.isArray(images) && { images: $toObjectId(images) }) || { images: [$toObjectId(images)] }),
           ...(_subject && { updated_by: new ObjectId(_subject) }),
         },
       });
@@ -109,12 +112,12 @@ export class NewsService {
    * @param {ObjectId} _subject
    * @returns {Promise<void>}
    */
-  async delete({ _slug: slug, _subject }: BaseServiceInput): Promise<void> {
+  async delete({ _id, _subject }: BaseServiceInput): Promise<void> {
     try {
-      await this.model.delete($toMongoFilter({ slug }), {
+      await this.model.delete($toMongoFilter({ _id }), {
         ...(_subject && { deleted_by: new ObjectId(_subject) }),
       });
-      this.logger.debug('delete_success', { slug });
+      this.logger.debug('delete_success', { _id });
       return;
     } catch (err) {
       this.logger.error('delete_error', err.message);
