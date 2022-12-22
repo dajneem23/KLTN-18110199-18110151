@@ -41,12 +41,9 @@ export default {
         page: this.page,
         per_page: this.per_page,
       });
-      if (!items.length) {
-        $state.complete();
-      }
+
       this.posts.push(...items);
       this.page++;
-      $state.loaded();
     },
   },
   methods: {

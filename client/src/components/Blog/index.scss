@@ -37,6 +37,17 @@
           }
         }
       }
+      .followed-story{
+        &:hover {
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          background-color: #78cb5b;
+          color: var(--white);
+          svg {
+            fill: var(--white);
+          }
+        }
+      }
+
     }
     img {
       width: 50px;

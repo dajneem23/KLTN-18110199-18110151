@@ -3,9 +3,7 @@ import DetailStory from '../../views/HomeView/StoryDetailView/index.vue';
 import { HOME_ITEM } from '../../constants/homeview';
 import { onMounted } from 'vue';
 import { Carousel, Slide } from 'vue-carousel';
-import { StoriesService } from '@/services';
-import { CommentServices } from '@/services';
-import { UserService } from '../../services';
+import { CommentServices, UserService, StoriesService } from '@/services';
 import { mapState } from 'vuex';
 import moment from 'moment';
 
@@ -51,6 +49,14 @@ export default {
           this[key] = newData[key];
         });
     },
+    userInfo() {
+      if (this.userInfo) {
+        console.log('user info', this.userInfo);
+        this.isIncludeUser = this.userInfo.following.some(
+          (user) => user.id == this.author.id || user.id == this.userInfo._id,
+        );
+      }
+    },
   },
   created() {
     if (this.data)
@@ -65,12 +71,6 @@ export default {
       return;
     }
     // console.log(this.author.id);
-    this.userInfo.following.forEach((user) => {
-      if ((user.id == this.author.id) || (user.id == this.userInfo._id)) {
-        this.isIncludeUser = true;
-        return;
-      }
-    });
   },
   methods: {
     moment,
@@ -115,28 +115,30 @@ export default {
     async followUser(id) {
       const [result, error] = await UserService.followUser(this.author.id);
       if (result) {
-        this.userInfo.following.push(this.author);
+        // this.userInfo.following.push(this.author);
         // const btnFL = document.getElementById(id);
         // btnFL.style.display = 'none';
-        this.isIncludeUser = true;
+        // this.isIncludeUser = true;
         // console.log(this.author);
       }
       // console.log(this.author)
+      this.fetchMe();
     },
     async unfollowUser(id) {
       const userID = this.author.id;
       const [result, error] = await UserService.followUser(this.author.id);
-      if (result) {
-        this.userInfo.following = this.userInfo.following.filter(function (item) {
-          return item.id !== userID;
-        });
-        console.log(this.userInfo.following);
-        // this.userInfo.following.push(this.author);
-        // const btnFL = document.getElementById(id);
-        // btnFL.style.display = 'none';
-        this.isIncludeUser = false;
-        console.log(this.author.id);
-      }
+      // if (result) {
+      //   this.userInfo.following = this.userInfo.following.filter(function (item) {
+      //     return item.id !== userID;
+      //   });
+      //   console.log(this.userInfo.following);
+      //   // this.userInfo.following.push(this.author);
+      //   // const btnFL = document.getElementById(id);
+      //   // btnFL.style.display = 'none';
+      //   this.isIncludeUser = false;
+      //   console.log(this.author.id);
+      // }
+      this.fetchMe();
     },
     getTime() {
       data.created_at = data.created_at.toLocaleDateString('en-US');
@@ -146,6 +148,12 @@ export default {
     },
     hiddenModel() {
       this.isShowDetail = false;
+    },
+    async fetchMe() {
+      const [result, eror] = await UserService.me();
+      if (result) {
+        this.$store.commit('setUserInfo', result);
+      }
     },
   },
 };
