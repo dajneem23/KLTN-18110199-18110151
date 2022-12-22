@@ -27,6 +27,7 @@ export default {
       per_page: 10,
       isTabHomeData: true,
       isShowUserProfile: false,
+      loadMethod: 'get',
     };
   },
   watch: {
@@ -45,6 +46,13 @@ export default {
       this.posts.push(...items);
       this.page++;
     },
+    isTabHomeData() {
+      if (this.isTabHomeData) {
+        this.loadMethod = 'get';
+      } else {
+        this.loadMethod = 'getPostsFollow';
+      }
+    },
   },
   methods: {
     async getPosts($state) {
@@ -53,7 +61,7 @@ export default {
           items: [],
         },
         error,
-      ] = await StoriesService.get({
+      ] = await StoriesService[this.loadMethod]({
         page: this.page,
         per_page: this.per_page,
       });
