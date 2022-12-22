@@ -2,8 +2,9 @@ import validate, { Joi, Segments } from '@/core/validation';
 
 export const updateMe = validate({
   [Segments.BODY]: Joi.object({
-    full_name: Joi.string(),
-    picture: Joi.string().uri().allow(''),
+    name: Joi.string(),
+    picture: Joi.string(),
+    avatar: Joi.string(),
     gender: Joi.string().valid('male', 'female', 'other'),
     dob: Joi.date(),
   }),
