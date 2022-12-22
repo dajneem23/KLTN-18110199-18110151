@@ -5,6 +5,12 @@ export const NewsServices = {
   get(params) {
     return RequestBase.get(`${this.url}/`, params);
   },
+  getMyArticles(params) {
+    return RequestBase.get(`${this.url}/my`, params);
+  },
+  updateArticles(id, body) {
+    return RequestBase.put(`${this.url}/${id}`, body);
+  },
   getFollowing(params) {
     return RequestBase.get(`${this.url}/following`, params);
   },

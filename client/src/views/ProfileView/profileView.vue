@@ -19,7 +19,16 @@
           </vue-dropzone>
         </div>
         <div class="flex flex-column justify-content-center">
-          <div class="user-name text-center">{{ userInfo?.username }}</div>
+          <div class="box-edit">
+            <div class="user-name text-center text-dark" v-if="!isEditName">{{ userInfo?.username }}</div>
+            <div class="user-name text-center box-edit-name" v-if="isEditName">
+              <input type="text" v-model="newName" />
+            </div>
+            <button>
+              <img src="../../assets/Icon/icons8-pencil-30.png" alt="" v-if="!isEditName" @click="editName" />
+              <img src="../../assets/Icon/icons8-save-30.png" alt="" v-if="isEditName" @click="updateProfile" />
+            </button>
+          </div>
           <div class="user-email text-dark-gray text-center">{{ userInfo?.email }}</div>
           <div class="box-info--footer">
             <div class="box-footer-item text-dark-gray">
@@ -37,23 +46,78 @@
           <button class="btn-defaultt bgc-blue_3 cl-white">Chỉnh sửa</button>
         </router-link> -->
       </div>
-      <!-- <div class="user-news">
-        <div class="menu-bar">
-          <button class="menu-bar--item bgc-white" id="myNews" @click="openCity('myNewsList', 'myNews')">
-            Bài viết của tôi
-          </button>
-          <button class="menu_bar-item bgc-white" id="myWish" @click="openCity('myWishList', 'myWish')">
-            Bài viết yêu thích
-          </button>
-        </div>
-        <div id="myNewsList" class="news">
-          <p>Đây là box bài viết của tôi đã đăng</p>
-        </div>
-
-        <div id="myWishList" class="news" style="display: none">
-          <p>Đây là box bài viết mà tôi đã yêu thích</p>
-        </div>
-      </div> -->
+    </div>
+    <div class="user-news">
+      <div class="menu-bar">
+        <button
+          class="menu-bar--item bgc-white"
+          :class="{ 'active-btn': isStoriesTab }"
+          id="myNews"
+          @click="changeStories"
+        >
+          Bài viết của tôi
+        </button>
+        <button
+          class="menu_bar-item bgc-white"
+          :class="{ 'active-btn': !isStoriesTab }"
+          id="myWish"
+          @click="changeArticles"
+        >
+          Bài thảo luận của tôi
+        </button>
+      </div>
+      <div id="" class="news">
+        <!-- <div v-for="(item, key) of items" class="my-item"> -->
+        <table id="customers">
+          <tr>
+            <th>Nội dung</th>
+            <th>Lượt thích</th>
+            <th>Lượt bình luận</th>
+            <th>Thao tác</th>
+          </tr>
+          <tr v-for="(item, key) of items">
+            <td class="table-content">{{ item.name }}</td>
+            <td>{{ item.reacts?.length || 0 }}</td>
+            <td>{{ item.commtents?.length || 0 }}</td>
+            <td>
+              <router-link :to="{ name: 'editNews', params: { id: item.slug, item } }" v-if="!isStoriesTab">
+                <button>
+                  <img src="../../assets/Icon/icons8-pencil-30.png" alt="" v-if="!isEditName"  />
+                </button>
+              </router-link>
+                <button @click="editStories(item.slug)">
+                  <img src="../../assets/Icon/icons8-pencil-30.png" alt="" />
+                </button>
+            </td>
+          </tr>
+        </table>
+        <!-- </div> -->
+      </div>
+      <div class="paganition-box">
+        <b-pagination v-model="page" :total-rows="total_count" :per-page="per_page" class="mt-4" @change="onChangePage">
+          <template #first-text><span class="text-info">First</span></template>
+          <template #prev-text><span class="text-info">Prev</span></template>
+          <template #next-text><span class="text-info">Next</span></template>
+          <template #last-text><span class="text-info">Last</span></template>
+          <template #ellipsis-text>
+            <img width="50" height="50" src="../../assets/Icon/Ellipsis-1s-200px.svg" alt="" srcset="" />
+          </template>
+          <template #page="{ page, active }">
+            <b v-if="active">{{ page }}</b>
+            <i v-else>{{ page }}</i>
+          </template>
+        </b-pagination>
+      </div>
+    </div>
+    <div class="toastify-wrapper">
+      <Toastify isSuccess content="Cập nhật thành công" v-if="isSuccess" />
+      <Toastify isWarnning content="Cập nhật thất bại" v-if="isWarnning" />
+    </div>
+    <div class="model-add-story" id="model-add-story">
+      <div class="backround-popup" @click="hiddenModel"></div>
+      <div class="box-add-story">
+        <CreateStory :hiddenModel="hiddenModel" :storyProps="storyProps" isEditing/>
+      </div>
     </div>
   </div>
 </template>

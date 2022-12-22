@@ -74,6 +74,23 @@ export default {
       },
     };
   },
+  props: {
+    files: {
+      type: Array,
+      default: null,
+    },
+  },
+  watch: {
+    files: function (newVal, oldVal) {
+      if (newVal) {
+        files.forEach((file) => {
+          console.log('manuallyAddFile', { url: file });
+          const file_ = { size: file.size || 100, name: file.name };
+          this.$refs.myVueDropzone.displayExistingFile(file_, file.url);
+        });
+      }
+    },
+  },
   methods: {
     vfileAdded(file) {
       // this.fileAdded = true;

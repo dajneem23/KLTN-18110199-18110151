@@ -1,10 +1,17 @@
 import { mapState } from 'vuex';
+import Toastify from '../../components/ToastifyCustom/index.vue';
+import CreateStory from '../../views/CreateStory/index.vue';
 import { store } from '../../store/vuex';
 import vue2Dropzone from 'vue2-dropzone';
+import { UserService, NewsServices, StoriesService } from '@/services';
+import basePagination from '@/template/BasePagination.vue';
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 export default {
   components: {
     vueDropzone: vue2Dropzone,
+    Toastify,
+    basePagination,
+    CreateStory,
   },
   computed: {
     ...mapState(['userInfo', 'isAuthenticated']),
@@ -21,6 +28,23 @@ export default {
   },
   data() {
     return {
+      storyProps: {},
+      isStoriesTab: true,
+      isSuccess: false,
+      isWarnning: false,
+      isEditName: false,
+      items: [],
+      myStories: [],
+      // total_countArticles: 0,
+      pageOfItems: 1,
+      page: 1,
+      per_page: 10,
+      total_count: 0,
+      newName: '',
+      user: {
+        username: '',
+        avatar: '',
+      },
       dropzoneOptions: {
         url: `${process.env.VUE_APP_BASE_URL}/${process.env.VUE_APP_BASE_API_PREFIX}/${process.env.VUE_APP_BASE_API_VERSION}/upload/`,
         thumbnailWidth: 150,
@@ -37,7 +61,17 @@ export default {
       newAvatar: null,
     };
   },
-  mounted() {
+  async mounted() {
+    const [
+      { items = [], total_count } = {
+        items: [],
+      },
+      error,
+    ] = await StoriesService.getMyStories();
+    this.items = items;
+    console.log(items);
+    this.total_count = total_count;
+
     const dropzone = this.$refs.customdropzone;
     console.log({
       dropzone,
@@ -48,19 +82,131 @@ export default {
     }
   },
   methods: {
-    openCity(cityName, idButton) {
-      var i;
-      var x = document.getElementsByClassName('news');
-      for (i = 0; i < x.length; i++) {
-        x[i].style.display = 'none';
-      }
-      document.getElementById(cityName).style.display = 'block';
-      document.getElementById(idButton).classList.add('active-btn');
-      if (idButton === 'myNews') {
-        document.getElementById('myWish').classList.remove('active-btn');
+    async onChangePage(page) {
+      this.page = page;
+      if (!this.isStoriesTab) {
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await NewsServices.getMyArticles({
+          page: this.page,
+          per_page: this.per_page,
+        });
+        this.items = items;
+        this.total_count = total_count;
       } else {
-        document.getElementById('myNews').classList.remove('active-btn');
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await StoriesService.getMyStories({
+          page: this.page,
+          per_page: this.per_page,
+        });
+        this.items = items;
+        this.total_count = total_count;
       }
+    },
+
+    editName() {
+      this.isEditName = true;
+    },
+    hiddenEditName() {
+      this.isEditName = false;
+    },
+    showModel() {
+      const model = document.getElementById('model-add-story');
+      model.style.visibility = 'visible';
+    },
+    hiddenModel() {
+      const model = document.getElementById('model-add-story');
+      model.style.visibility = 'hidden';
+    },
+    async updateProfile() {
+      this.user.username = this.newName;
+      this.user.avatar = this.newAvatar;
+      const [result, error] = await UserService.updateProfile({
+        ...this.user,
+      });
+      if (result) {
+        this.isSuccess = true;
+        console.log(this.user);
+        setTimeout(() => {
+          this.isSuccess = false;
+          this.hiddenEditName();
+        }, 2000);
+        this.userInfo.username = this.newName;
+      }
+    },
+    // async openCity(cityName, idButton) {
+    //   var i;
+    //   var x = document.getElementsByClassName('news');
+    //   for (i = 0; i < x.length; i++) {
+    //     x[i].style.display = 'none';
+    //   }
+    //   document.getElementById(cityName).style.display = 'block';
+    //   document.getElementById(idButton).classList.add('active-btn');
+    //   if (idButton === 'myNews') {
+
+    //   } else {
+    //     this.isStoriesTab = false;
+    //     const [
+    //       { items = [], total_count } = {
+    //         items: [],
+    //       },
+    //       error,
+    //     ] = await NewsServices.getMyArticles({
+    //       page: this.page,
+    //       per_page: this.per_page,
+    //     });
+    //     this.items = items;
+    //     this.total_count = total_count;
+    //   }
+    // },
+    async changeStories() {
+      this.pageOfItems = 1;
+      this.page = 1;
+      this.per_page = 10;
+      this.total_count = 0;
+      this.isStoriesTab = true;
+      const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await StoriesService.getMyStories({
+        page: this.page,
+        per_page: this.per_page,
+      });
+      this.items = items;
+      this.total_count = total_count;
+    },
+    async changeArticles() {
+      this.pageOfItems = 1;
+      this.page = 1;
+      this.per_page = 10;
+      this.total_count = 0;
+      this.isStoriesTab = false;
+      const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await NewsServices.getMyArticles({
+        page: this.page,
+        per_page: this.per_page,
+      });
+      this.items = items;
+      this.total_count = total_count;
+    },
+    async editStories(id) {
+      const [result, error] = await StoriesService.getById(id);
+      console.log(result);
+      this.storyProps = result;
+      this.showModel();
     },
     uploadTemplate() {
       // return `<img :src="userInfo?.avatar[0]?.url" alt="" />`;

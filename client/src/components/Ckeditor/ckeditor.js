@@ -96,10 +96,17 @@ export default {
       this.categoriesOfArticles = [];
       this.editorData = '';
     },
-    editNews() {
+    async editNews() {
       this.news.content = this.editorData;
       this.news.categories = [...this.categoriesOfArticles];
-      console.log(this.news);
+      const [result, error] = await NewsServices.updateArticles(this.newsProps.id, this.news);
+      if (result) {
+        console.log(result);
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = false;
+        }, 2000);
+      }
     },
     showCombobox() {
       this.isShow = !this.isShow;
