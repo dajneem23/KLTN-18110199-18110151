@@ -20,6 +20,18 @@ export default {
         this.$store.commit('setUserInfo', null);
         this.$store.commit('setIsAuthenticated', false);
       }
+      //refresh page
+      window.location.reload();
+    },
+    async fetchMe() {
+      const [result, eror] = await UserService.me();
+      if (result) {
+        this.$store.commit('setUserInfo', result);
+        this.$store.commit('setIsAuthenticated', true);
+      } else {
+        this.$store.commit('setUserInfo', null);
+        this.$store.commit('setIsAuthenticated', false);
+      }
     },
     showtoolTip() {
       const toolTip = document.getElementById('toolTip-user');

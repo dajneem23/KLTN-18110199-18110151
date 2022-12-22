@@ -139,7 +139,7 @@
         <div v-if="isAuthenticated" class="category-item-user">
           <div class="name-user" @click="showtoolTip">
             <span>
-              {{ userInfo?.username }}
+              {{ userInfo ? userInfo?.username : '' }}
             </span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" id="caret-down">
               <path
@@ -175,7 +175,7 @@
                 </div>
               </div>
             </div> -->
-            <router-link to="/login/">
+            <router-link to="#">
               <div class="tooltip-user--item text-dark" @click="logOut">Đăng xuất</div>
             </router-link>
           </div>
