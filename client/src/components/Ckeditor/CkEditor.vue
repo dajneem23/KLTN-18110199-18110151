@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper-createNews">
-    <h1 class="title-create">Tạo bài viết</h1>
+    <h1 class="title-create" v-if="!isEdit">Tạo bài viết</h1>
+    <h1 class="title-create" v-if="isEdit">Chỉnh sửa bài viết</h1>
     <div class="box-create">
       <div class="box-left">
         <div class="box-title">
@@ -8,7 +9,7 @@
           <textarea
             type="text"
             placeholder="Tiêu đề bài viết....."
-            v-model="news.name"
+            v-model=" news.name"
             rows="1"
             cols="50"
             id="input-title_articles"
@@ -26,7 +27,12 @@
         </div>
         <div class="cl-black cate-title">Chủ đề:</div>
         <div class="list-optione">
-          <span v-for="(item, key) of categoriesOfArticles" class="label-category" @click="removeCategory(item.id)">{{ item.name }}</span>
+          <span
+            v-for="(item, key) of  categoriesOfArticles"
+            class="label-category"
+            @click="removeCategory(item.id)"
+            >{{ item.name }}</span
+          >
         </div>
         <div class="title-cate" @click="showCombobox">Chọn chủ đề</div>
         <div class="custom-selected">
@@ -46,8 +52,16 @@
           <div class="cl-black">Nội dung :</div>
           <div id="editor" class="ckeditor-cus"></div>
         </div>
-        <button @click="submitText(editorData)" class="btn-filter">Lưu</button>
+        <div class="btn-box-edit">
+          <button @click="deleteNews()" class="btn-filter btn-deleted" v-if="isEdit">Xóa</button>
+          <button @click="submitText(editorData)" class="btn-filter" v-if="!isEdit">Lưu</button>
+          <button @click="editNews(editorData)" class="btn-filter" v-if="isEdit">Lưu</button>
+        </div>
       </div>
+    </div>
+    <div class="toastify-wrapper">
+      <Toastify isSuccess content="Tạo thành công" v-if="isSuccess" />
+      <Toastify isWarnning content="Tạo thất bại" v-if="isWarnning" />
     </div>
   </div>
 </template>

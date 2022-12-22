@@ -9,7 +9,19 @@
             'up-vote': up_votes?.includes(userInfo?._id),
           }"
           @click="upVote(slug)"
+          v-if="isAuthenticated"
         ></div>
+        <router-link to="/login/">
+          <div
+            id="triangle-up"
+            class="triangle"
+            :class="{
+              'up-vote': up_votes?.includes(userInfo?._id),
+            }"
+            @click="upVote(slug)"
+            v-if="!isAuthenticated"
+          ></div>
+        </router-link>
         <span id="voteCount">{{ (up_votes.length || 0) - (down_votes.length || 0) }}</span>
         <div
           id="triangle-down"
@@ -18,29 +30,51 @@
             'down-vote': down_votes?.includes(userInfo?._id),
           }"
           @click="downVote(slug)"
+          v-if="isAuthenticated"
         ></div>
-
+        <router-link to="/login/">
+          <div
+            id="triangle-down"
+            class="triangle-down"
+            :class="{
+              'down-vote': down_votes?.includes(userInfo?._id),
+            }"
+            @click="downVote(slug)"
+            v-if="!isAuthenticated"
+          ></div>
+        </router-link>
         <div class="avt-user">
           <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
         </div>
         <div class="follow-user">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-            v-if="!isIncludeUser"
-            @click="followUser(author)"
-          >
-            <path
-              d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
-            />
-          </svg>
+          <div v-if="isAuthenticated">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+              v-if="!isIncludeUser"
+              @click="followUser(author)"
+            >
+              <path
+                d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
+              />
+            </svg>
+          </div>
+          <router-link to="/login/">
+            <div v-if="!isAuthenticated">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" v-if="!isIncludeUser">
+                <path
+                  d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
+                />
+              </svg>
+            </div>
+          </router-link>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" v-if="isIncludeUser">
             <path
               d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"
             />
           </svg>
         </div>
-        <div class="add-wish-list" @click="addWishList(slug)">
+        <div class="add-wish-list" @click="addWishList(slug)" v-if="isAuthenticated">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
@@ -54,6 +88,22 @@
             />
           </svg>
         </div>
+        <router-link to="/login/">
+          <div class="add-wish-list">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+              :class="{
+                'fill-red': reacts?.includes(userInfo?._id),
+                'fill-gray': !reacts?.includes(userInfo?._id),
+              }"
+            >
+              <path
+                d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"
+              />
+            </svg>
+          </div>
+        </router-link>
         <div class="go-to-cmt" @click="goToCmtBox">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="fill-gray">
             <path
@@ -108,7 +158,7 @@
         ></textarea>
         <button class="btn-send-cmt bgc-blue_3 cl-white" @click="sendCmt">Gửi</button>
       </div>
-      <div class="news-cmt-box">
+      <div class="news-cmt-box" v-if="isAuthenticated">
         <div v-for="comment in comments">
           <Comment :data="comment" :sourceId="id" flag="detail_articles"></Comment>
           <div v-if="comment?.replies">
@@ -127,6 +177,7 @@
           </div>
         </div>
       </div>
+      <div v-if="!isAuthenticated">Hãy đăng nhập để đọc được bình luận</div>
     </div>
     <div class="news-relate">
       <!-- <div class="relate-title">Bài viết có thể liên quan</div> -->

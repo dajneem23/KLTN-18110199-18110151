@@ -2,6 +2,7 @@ import { onMounted, ref } from 'vue';
 import DropzoneFileUpload from '../../template/Inputs/DropzoneFileUpload';
 import BaseInput from '../../template/Inputs/BaseInput.vue';
 import DropZone from './dropzone.vue';
+import Toastify from '../../components/ToastifyCustom/index.vue';
 import { NewsServices, UploadServices, CategoriesServices } from '@/services';
 
 export default {
@@ -10,9 +11,16 @@ export default {
     DropzoneFileUpload,
     BaseInput,
     DropZone,
+    Toastify,
+  },
+  props: {
+    newsProps: Object,
+    isEdit: Boolean,
   },
   data() {
     return {
+      isSuccess: false,
+      isWarnning: false,
       value: [],
       editor: null,
       editorData: '',
@@ -36,23 +44,48 @@ export default {
     },
   },
   async created() {
-    const [
-      { items = [], total_count } = {
-        items: [],
-      },
-      error,
-    ] = await CategoriesServices.get();
-    this.listCategories = items;
-    // console.log(this.listCategories);
+    if (this.isEdit) {
+      this.news.name = this.newsProps.name;
+      this.news.content = this.newsProps.content;
+      this.news.description = this.newsProps.description;
+      this.news.images = this.newsProps.images;
+      this.news.categories = this.newsProps.categories;
+      this.categoriesOfArticles = this.newsProps.categories;
+      // this.editorData = this.newsProps.content;
+    } else {
+      const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await CategoriesServices.get();
+      this.listCategories = items;
+    }
+  },
+  mounted() {
+    if (this.isEdit) {
+      this.news.name = this.newsProps.name;
+      this.news.content = this.newsProps.content;
+      this.news.description = this.newsProps.description;
+      this.news.images = this.newsProps.images;
+      this.news.categories = this.newsProps.categories;
+      this.categoriesOfArticles = this.newsProps.categories;
+      // this.editorData = this.newsProps.content;
+    }
   },
   methods: {
     async submitText() {
       this.news.content = this.editorData;
-      this.news.name = this.editorData;
       this.news.categories = [...this.categoriesOfArticles];
       const result = await NewsServices.create({
         ...this.news,
       });
+      if (result) {
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = false;
+        }, 2000);
+      }
       console.log(this.news);
       // console.log(result);
       this.news.name = '';
@@ -60,8 +93,13 @@ export default {
       this.news.description = '';
       this.news.images = [];
       this.news.categories = [];
+      this.categoriesOfArticles = [];
       this.editorData = '';
-      alert('Tạo bài viết thành công');
+    },
+    editNews() {
+      this.news.content = this.editorData;
+      this.news.categories = [...this.categoriesOfArticles];
+      console.log(this.news);
     },
     showCombobox() {
       this.isShow = !this.isShow;

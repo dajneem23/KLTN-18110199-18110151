@@ -29,6 +29,26 @@ export default {
       isShowUserProfile: false,
     };
   },
+  watch: {
+    async userInfo() {
+      this.$emit('update:userInfo', this.userInfo);
+      const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await StoriesService.get({
+        page: this.page,
+        per_page: this.per_page,
+      });
+      if (!items.length) {
+        $state.complete();
+      }
+      this.posts.push(...items);
+      this.page++;
+      $state.loaded();
+    },
+  },
   methods: {
     async getPosts($state) {
       const [

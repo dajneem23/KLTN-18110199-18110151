@@ -109,6 +109,7 @@
               }"
               :ref="HEADER_ITEM.chat.ref"
               @click="onChatBtnClick"
+              v-if="isAuthenticated"
             >
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
@@ -174,7 +175,9 @@
                 </div>
               </div>
             </div> -->
-            <div class="tooltip-user--item text-dark" @click="logOut">Đăng xuất</div>
+            <router-link to="/login/">
+              <div class="tooltip-user--item text-dark" @click="logOut">Đăng xuất</div>
+            </router-link>
           </div>
         </div>
         <div v-else>

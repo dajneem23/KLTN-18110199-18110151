@@ -1,5 +1,6 @@
 import { FILMDETAIL_ITEM } from '../../../constants/filmdetail';
 import Commentfilm from '../../../components/Watching/CommentFilm/index.vue';
+import Loader from '../../../components/Loader/skeletonFilmDetail.vue';
 import { FilmServices } from '@/services';
 import { CommentServices } from '@/services';
 import { mapActions, mapState } from 'vuex';
@@ -7,9 +8,11 @@ import moment from 'moment';
 export default {
   components: {
     Commentfilm,
+    Loader
   },
   data() {
     return {
+      isLoading: true,
       film: [],
       filmData: [],
       lang: 'vi',
@@ -19,7 +22,7 @@ export default {
       name: '',
       content: '',
       description: '',
-      views: 0,
+      long: 0,
       cmt: {
         source_id: '',
         type: 'films',
@@ -55,10 +58,15 @@ export default {
         if (key == '_v') return;
         this[key] = result[key];
       });
+      this.isLoading = false;
     }
     const takeDate = new Date(this.film.createdAt);
-    this.film.views++;
     this.film.createdAt = takeDate.getFullYear();
+  },
+  mounted() {
+    let vid = document.getElementById('player');
+    // this.long = vid.duration;
+    console.log(vid, 'Long');
   },
   methods: {
     moment,
