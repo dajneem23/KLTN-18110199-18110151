@@ -9,7 +9,7 @@
           <textarea
             type="text"
             placeholder="Tiêu đề bài viết....."
-            v-model=" news.name"
+            v-model="news.name"
             rows="1"
             cols="50"
             id="input-title_articles"
@@ -23,16 +23,13 @@
             class="upload-file"
             :url="`https://zinc-union-365709-63see6q63q-uc.a.run.app/api/v1/upload/`"
           ></DropzoneFileUpload> -->
-          <DropZone @upload-success="onDropZoneUploadSuccess"></DropZone>
+          <DropZone @upload-success="onDropZoneUploadSuccess" :url="initImageUrl"></DropZone>
         </div>
         <div class="cl-black cate-title">Chủ đề:</div>
         <div class="list-optione">
-          <span
-            v-for="(item, key) of  categoriesOfArticles"
-            class="label-category"
-            @click="removeCategory(item.id)"
-            >{{ item.name }}</span
-          >
+          <span v-for="(item, key) of categoriesOfArticles" class="label-category" @click="removeCategory(item.id)">{{
+            item.name
+          }}</span>
         </div>
         <div class="title-cate" @click="showCombobox">Chọn chủ đề</div>
         <div class="custom-selected">

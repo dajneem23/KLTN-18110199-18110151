@@ -26,6 +26,7 @@ export default {
       editorData: '',
       listCategories: [],
       categoriesOfArticles: [],
+      initImageUrl: '',
       news: {
         name: '',
         content: '',
@@ -42,37 +43,36 @@ export default {
         this.editor?.model.document.on('change:data', () => this.handleChange.call(this, { editor: this.editor }));
       }
     },
+    newsProps: {
+      handler(val) {
+        if (this.isEdit) {
+          this.news.name = this.newsProps.name;
+          this.news.content = this.newsProps.content;
+          this.editorData = this.newsProps.content;
+          this.news.description = this.newsProps.description;
+          this.news.images = this.newsProps.images;
+          this.initImageUrl = this.newsProps.images[0]?.url;
+          this.news.categories = this.newsProps.categories;
+          this.categoriesOfArticles = this.newsProps.categories;
+          // this.editorData = this.newsProps.content;
+        }
+      },
+      deep: true,
+    },
+    editorData(current, pre) {
+      if (this.editor && !pre && current) this.editor.setData(this.editorData);
+    },
   },
   async created() {
-    if (this.isEdit) {
-      this.news.name = this.newsProps.name;
-      this.news.content = this.newsProps.content;
-      this.news.description = this.newsProps.description;
-      this.news.images = this.newsProps.images;
-      this.news.categories = this.newsProps.categories;
-      this.categoriesOfArticles = this.newsProps.categories;
-      // this.editorData = this.newsProps.content;
-    } else {
-      const [
-        { items = [], total_count } = {
-          items: [],
-        },
-        error,
-      ] = await CategoriesServices.get();
-      this.listCategories = items;
-    }
+    const [
+      { items = [], total_count } = {
+        items: [],
+      },
+      error,
+    ] = await CategoriesServices.get();
+    this.listCategories = items;
   },
-  mounted() {
-    if (this.isEdit) {
-      this.news.name = this.newsProps.name;
-      this.news.content = this.newsProps.content;
-      this.news.description = this.newsProps.description;
-      this.news.images = this.newsProps.images;
-      this.news.categories = this.newsProps.categories;
-      this.categoriesOfArticles = this.newsProps.categories;
-      // this.editorData = this.newsProps.content;
-    }
-  },
+  mounted() {},
   methods: {
     async submitText() {
       this.news.content = this.editorData;
@@ -349,7 +349,8 @@ export default {
       })
         .then((_editor) => {
           this.editor = _editor;
-          console.log('Editor was initialized', this.editor);
+          console.log('Editor was initialized', this.editorData, this.editor);
+          // this.editor.setData(this.editorData || '');
         })
         .catch((err) => {
           console.error('%c CKEditor failed to load. ', 'color: red; font-weight: bold;', { err });

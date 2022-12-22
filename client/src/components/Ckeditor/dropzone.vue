@@ -37,6 +37,22 @@ export default {
       },
     };
   },
+  props: {
+    url: {
+      type: String,
+      default: '',
+    },
+  },
+  watch: {
+    url: function (newVal, oldVal) {
+      if (newVal) {
+        console.log('manuallyAddFile', { url: newVal });
+        var file = { size: 123, name: 'Icon', type: 'image/png' };
+        this.$refs.myVueDropzone.manuallyAddFile(file, newVal);
+      }
+    },
+  },
+  mounted() {},
   methods: {
     vfileAdded(file) {
       this.fileAdded = true;

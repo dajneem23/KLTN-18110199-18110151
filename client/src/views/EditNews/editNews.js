@@ -10,10 +10,15 @@ export default {
     };
   },
   async mounted() {
-    const [result, error] = await NewsServices.getById('nui-ba-den');
+    const { id } = this.$route.params;
+    if (!id) return this.$router.push('/not-found');
+    const [result, error] = await NewsServices.getById(id);
     if (result) {
       this.news = result;
     }
-    console.log(this.news)
+    console.log(this.news);
+    if (error) {
+      this.$router.push('/not-found');
+    }
   },
 };

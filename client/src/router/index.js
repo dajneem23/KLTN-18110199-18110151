@@ -172,7 +172,7 @@ const routes = [
     },
   },
   {
-    path: '/edit-news',
+    path: '/edit-news/:id/',
     name: 'editNews',
     components: {
       header: Header,
