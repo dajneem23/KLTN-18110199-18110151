@@ -169,6 +169,7 @@ export class UserService {
    */
   async update(_id: User['id'], data: Partial<User>) {
     try {
+      const { avatar, ...rest } = data;
       const user = await this.model.update(
         {
           _id: new ObjectId(_id),
@@ -176,6 +177,7 @@ export class UserService {
         {
           $set: {
             ...data,
+            avatar: avatar ? new ObjectId(avatar) : undefined,
           },
         },
       );
