@@ -80,14 +80,14 @@
             <td>{{ item.reacts?.length || 0 }}</td>
             <td>{{ item.commtents?.length || 0 }}</td>
             <td>
-              <router-link :to="{ name: 'editNews', params: { id: item.slug, item } }" v-if="!isStoriesTab">
-                <button>
-                  <img src="../../assets/Icon/icons8-pencil-30.png" alt="" v-if="!isEditName"  />
-                </button>
-              </router-link>
-                <button @click="editStories(item.slug)">
+              <router-link :to="{ name: 'editNews', params: { id: item.slug, item } }">
+                <button v-if="!isStoriesTab">
                   <img src="../../assets/Icon/icons8-pencil-30.png" alt="" />
                 </button>
+              </router-link>
+              <button @click="editStories(item.slug)" v-if="isStoriesTab">
+                <img src="../../assets/Icon/icons8-pencil-30.png" alt="" />
+              </button>
             </td>
           </tr>
         </table>
@@ -116,7 +116,7 @@
     <div class="model-add-story" id="model-add-story">
       <div class="backround-popup" @click="hiddenModel"></div>
       <div class="box-add-story">
-        <CreateStory :hiddenModel="hiddenModel" :storyProps="storyProps" isEditing/>
+        <CreateStory :hiddenModel="hiddenModel" :storyProps="storyProps" isEditing />
       </div>
     </div>
   </div>
