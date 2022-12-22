@@ -87,9 +87,9 @@ export class NewsService {
    * @param _subject
    * @returns {Promise<BaseServiceOutput>}
    */
-  async update({ _slug: slug, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async update({ _id, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      await this.model.update($toMongoFilter({ slug }), {
+      await this.model.update($toMongoFilter({ _id }), {
         $set: {
           ..._content,
           ...(_subject && { updated_by: new ObjectId(_subject) }),
