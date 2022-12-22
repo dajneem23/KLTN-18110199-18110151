@@ -13,7 +13,7 @@
     }
   }
   .box-info--user {
-    width: 350px;
+    min-width: 450px;
     position: relative;
     top: -200px;
     left: 30px;
@@ -23,9 +23,11 @@
     align-items: center;
     padding: 30px;
     border: 2px solid var(--gray);
+    gap:2rem;
     .user-avt {
       img {
-        width: 130px;
+        width: 120px;
+        height: 120px;
         border-radius: 50%;
       }
     }
