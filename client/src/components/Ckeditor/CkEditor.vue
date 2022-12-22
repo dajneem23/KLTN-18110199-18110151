@@ -23,7 +23,7 @@
             class="upload-file"
             :url="`https://zinc-union-365709-63see6q63q-uc.a.run.app/api/v1/upload/`"
           ></DropzoneFileUpload> -->
-          <DropZone @upload-success="onDropZoneUploadSuccess" :url="initImageUrl"></DropZone>
+          <DropZone @upload-success="onDropZoneUploadSuccess" :file="initImage"></DropZone>
         </div>
         <div class="cl-black cate-title">Chủ đề:</div>
         <div class="list-optione">

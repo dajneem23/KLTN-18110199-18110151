@@ -148,7 +148,7 @@ export class UserService {
             from: COLLECTION_NAMES.upload_file,
             refFrom: '_id',
             refTo: 'avatar',
-            select: 'name url',
+            select: 'name url size',
             reName: 'avatar',
             operation: '$eq',
           }),

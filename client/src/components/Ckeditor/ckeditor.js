@@ -26,7 +26,7 @@ export default {
       editorData: '',
       listCategories: [],
       categoriesOfArticles: [],
-      initImageUrl: '',
+      initImage: null,
       news: {
         name: '',
         content: '',
@@ -51,7 +51,7 @@ export default {
           this.editorData = this.newsProps.content;
           this.news.description = this.newsProps.description;
           this.news.images = this.newsProps.images;
-          this.initImageUrl = this.newsProps.images[0]?.url;
+          this.initImage = this.newsProps.images[0] ? this.newsProps.images[0] : null;
           this.news.categories = this.newsProps.categories;
           this.categoriesOfArticles = this.newsProps.categories;
           // this.editorData = this.newsProps.content;

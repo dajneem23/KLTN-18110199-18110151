@@ -38,17 +38,17 @@ export default {
     };
   },
   props: {
-    url: {
-      type: String,
-      default: '',
+    file: {
+      type: Object,
+      default: null,
     },
   },
   watch: {
-    url: function (newVal, oldVal) {
+    file: function (newVal, oldVal) {
       if (newVal) {
         console.log('manuallyAddFile', { url: newVal });
-        var file = { size: 123, name: 'Icon', type: 'image/png' };
-        this.$refs.myVueDropzone.manuallyAddFile(file, newVal);
+        const file = { size: newVal.size || 100, name: newVal.name };
+        this.$refs.myVueDropzone.manuallyAddFile(file, newVal.url);
       }
     },
   },
