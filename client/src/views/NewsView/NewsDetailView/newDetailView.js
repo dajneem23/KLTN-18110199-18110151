@@ -142,10 +142,12 @@ export default {
       if (this.isAuthenticated) {
         this.up_votes.length += 1;
         this.down_votes.length -= 1;
-        let down_vote = document.getElementById('triangle-down');
-        down_vote.classList.remove('down-vote');
-        let up_vote = document.getElementById('triangle-up');
-        up_vote.classList.add('up-vote');
+        this.isVoteUp = true;
+        this.isVoteDown = false;
+        // let down_vote = document.getElementById('triangle-down');
+        // down_vote.classList.remove('down-vote');
+        // let up_vote = document.getElementById('triangle-up');
+        // up_vote.classList.add('up-vote');
         const [result, error] = await NewsServices.upvote(id);
         // console.log([result, error]);
         if (result) {
@@ -165,10 +167,12 @@ export default {
       if (this.isAuthenticated) {
         this.up_votes.length -= 1;
         this.down_votes.length += 1;
-        let down_vote = document.getElementById('triangle-down');
-        down_vote.classList.add('down-vote');
-        let up_vote = document.getElementById('triangle-up');
-        up_vote.classList.remove('up-vote');
+        this.isVoteUp = false;
+        this.isVoteDown = true;
+        // let down_vote = document.getElementById('triangle-down');
+        // down_vote.classList.add('down-vote');
+        // let up_vote = document.getElementById('triangle-up');
+        // up_vote.classList.remove('up-vote');
         const [result, error] = await NewsServices.downvote(id);
         if (result) {
           // const { down_votes } = result;
