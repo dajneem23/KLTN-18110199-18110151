@@ -42,15 +42,22 @@ export default {
       reacts: [],
       categories: [],
       createdAt: '',
-      isIncludeUser: false,
+      // isIncludeUser: false,
       isLoading: true,
       isVoteUp: false,
       isVoteDown: false,
       vote: 0,
+      isMe: false,
     };
   },
   computed: {
     ...mapState(['userInfo', 'isAuthenticated']),
+    isIncludeUser() {
+      if (this.userInfo) {
+        return this.userInfo.following.some((user) => user.id == this.author.id || user.id == this.userInfo._id);
+      }
+      return false;
+    },
   },
   // watch: {
   //   data(newData) {
@@ -75,13 +82,10 @@ export default {
     this.isLoading = false;
     this.totalVote = this.up_votes.length - this.down_votes.length;
     window.addEventListener('scroll', this.handleScroll);
-    this.userInfo?.following.forEach((user) => {
-      if (user.id == this.author.id) {
-        this.isIncludeUser = true;
-        return;
-      }
-    });
-    // const news
+    if (this.author.id === this.userInfo._id) {
+      this.isMe = true;
+      return;
+    }
   },
   async created() {
     const { id } = this.$route.params;
@@ -95,12 +99,12 @@ export default {
     }
     this.totalVote = this.up_votes.length - this.down_votes.length;
     window.addEventListener('scroll', this.handleScroll);
-    this.userInfo.following.forEach((user) => {
-      if (user.id == this.author.id) {
-        this.isIncludeUser = true;
-        return;
-      }
-    });
+    // this.userInfo.following.forEach((user) => {
+    //   if (user.id == this.author.id) {
+    //     this.isIncludeUser = true;
+    //     return;
+    //   }
+    // });
     this.isLoading = false;
   },
   methods: {
@@ -205,10 +209,26 @@ export default {
     async followUser(user) {
       const [result, error] = await UserService.followUser(user.id);
       if (result) {
-        this.userInfo.following.push(user);
+        // this.userInfo.following.push(user);
       }
-      this.isIncludeUser = true;
-      console.log(user);
+      // this.isIncludeUser = true;
+      // console.log(user);
+      this.fetchMe();
+    },
+    async unfollowUser(user) {
+      const [result, error] = await UserService.followUser(user.id);
+      if (result) {
+        // this.userInfo.following.push(user);
+      }
+      // this.isIncludeUser = true;
+      // console.log(user);
+      this.fetchMe();
+    },
+    async fetchMe() {
+      const [result, eror] = await UserService.me();
+      if (result) {
+        this.$store.commit('setUserInfo', result);
+      }
     },
   },
 };
