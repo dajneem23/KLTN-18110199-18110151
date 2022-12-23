@@ -54,11 +54,12 @@ $blue: #74b9ff;
 }
 
 .search-box-chat {
-  background: var(--gray);
+  // background: var(--gray);
   padding: 10px 13px;
   height: 80px;
   display: flex;
   justify-content: center;
+  border: 2px #e3e3e3;
   .input-wrapper {
     display: flex;
     justify-content: center;
@@ -190,7 +191,7 @@ hr {
   margin: 10px 30px;
   border-radius: 9px;
   position: relative;
-  animation: fadeIn 1s ease-in;
+  animation: fadeIn 0.25s ease-in;
 
   &:after {
     content: '';
@@ -274,16 +275,20 @@ hr {
   justify-content: center;
   background-color: var(--white);
 }
-
+.emoji{
+  cursor: pointer;
+}
 .box-emoji {
-  visibility: hidden;
   position: absolute;
   bottom: 80px;
   left: 0;
   max-width: 445px;
+  max-height: 500px;
   // height: 200px;
   border-radius: 5px;
-  background-color: #74b9ff;
+  background-color: #accff2;
+  overflow-y: scroll;
+  gap:0.5rem
 }
 .btn-utility-mess {
   opacity: 0;

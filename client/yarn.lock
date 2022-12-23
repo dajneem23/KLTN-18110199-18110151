@@ -1576,6 +1576,11 @@
   optionalDependencies:
     prettier "^1.18.2 || ^2.0.0"
 
+"@vue/composition-api@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.7.1.tgz#aa6831be5a12817d93e89e247460c310dd7a3a32"
+  integrity sha512-xDWoEtxGXhH9Ku3ROYX/rzhcpt4v31hpPU5zF3UeVC/qxA3dChmqU8zvTUYoKh3j7rzpNsoFOwqsWG7XPMlaFA==
+
 "@vue/eslint-config-prettier@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@vue/eslint-config-prettier/-/eslint-config-prettier-6.0.0.tgz#ad5912b308f4ae468458e02a2b05db0b9d246700"
@@ -3596,6 +3601,11 @@ elliptic@^6.5.3:
     inherits "^2.0.4"
     minimalistic-assert "^1.0.1"
     minimalistic-crypto-utils "^1.0.1"
+
+emoji-picker-element@^1.10.1:
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.14.1.tgz#61271967e62627dcc59d6b5179e2ee0ae4894533"
+  integrity sha512-lAPk8ltwU9Cg2bUCCwD89VbN4UCTY2d0kRTODVFyIWCzVYLg/7RZVpqYqrK4Fx0WH3BaOIA4xP4uuc6KWkVp4A==
 
 emoji-regex@^7.0.1:
   version "7.0.3"
@@ -8727,12 +8737,22 @@ vue-carousel@^0.18.0:
     regenerator-runtime "^0.12.1"
     vue "^2.5.17"
 
+vue-demi@^0.12.4:
+  version "0.12.5"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.5.tgz#8eeed566a7d86eb090209a11723f887d28aeb2d1"
+  integrity sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==
+
 vue-dropzone@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/vue-dropzone/-/vue-dropzone-1.0.4.tgz#4c09ac22ea26932992af06bb57243cdd0d80bef0"
   integrity sha512-QaHMijYlsRQaXW03VxFbA7w7peg60BM67Dst5y0kUJbIMfUAPnJyovRx1wBddwLygGvZDgy1H/R0vtuPw9eVpA==
   dependencies:
     dropzone "^4.3.0"
+
+vue-emoji-picker@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/vue-emoji-picker/-/vue-emoji-picker-1.0.3.tgz#168604163e41b3a2a0f9e9a21bb595fd8bac05e4"
+  integrity sha512-t1UyrvPHKgWzj8maqNvMIHfY4B2Hn+filKTiy4ik+xweF0gKMx1r9C0YDg1zgaYnB6PBjctHwr9vwkipb4lUaw==
 
 vue-eslint-parser@^7.0.0:
   version "7.11.0"
@@ -8848,6 +8868,14 @@ vue@^2.5.17, vue@^2.6.11, vue@^2.6.12:
   dependencies:
     "@vue/compiler-sfc" "2.7.10"
     csstype "^3.1.0"
+
+vuemoji-picker@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/vuemoji-picker/-/vuemoji-picker-0.1.4.tgz#e8410e0f2e2cfadf21d79210b04149962913b334"
+  integrity sha512-gy+MkjcUn92mBENC4b/zqNMW0oz+F005KTf7mWhe1DVUuNhJVsEG2VPJQBIOa7yg+Owd68v7CBrF5TDf45jjzw==
+  dependencies:
+    emoji-picker-element "^1.10.1"
+    vue-demi "^0.12.4"
 
 vuex@^3.6.2:
   version "3.6.2"
