@@ -486,6 +486,13 @@ export class NewsService {
       const items = await this.model
         .get([
           {
+            $match: {
+              deleted: {
+                $ne: true,
+              },
+            },
+          },
+          {
             $addFields: {
               votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] },
               ...this.model.$addFields.comments,
@@ -517,6 +524,13 @@ export class NewsService {
       const { per_page = 10 } = _query;
       const items = await this.model
         .get([
+          {
+            $match: {
+              deleted: {
+                $ne: true,
+              },
+            },
+          },
           { $sort: { views: -1 } },
           {
             $limit: per_page,
