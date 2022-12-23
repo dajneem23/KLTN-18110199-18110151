@@ -148,8 +148,8 @@ export default {
       this.$refs.customdropzone.removeAllFiles();
     },
     async updateProfile() {
-      this.user.username = this.newName || this.userInfo.username;
-      this.user.avatar = this.newAvatar || this.userInfo.avatar[0].url;
+      this.user.username = this.newName || this.userInfo.username || this.userInfo.username;
+      this.user.avatar = this.newAvatar || this.userInfo.avatar[0].url || this.userInfo.avatar[0].url;
       const [result, error] = await UserService.updateProfile({
         ...this.user,
       });
