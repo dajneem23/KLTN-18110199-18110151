@@ -154,7 +154,7 @@
           </div>
           <div class="title_tooltip-user bgc-white" id="toolTip-user">
             <router-link to="/profile/">
-              <div class="tooltip-user--item">Trang cá nhân</div>
+              <div class="tooltip-user--item" @click="showtoolTip">Trang cá nhân</div>
             </router-link>
 
             <!-- <div class="tooltip-user--item text-dark" @click="showBoxNotification" id="label_notifi">
