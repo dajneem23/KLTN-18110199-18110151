@@ -2,15 +2,18 @@
   <div class="news-detail-wrapper bgc-white">
     <transition name="fade">
       <div class="sticky-box" id="sticky-box" v-show="scY">
-        <div
-          id="triangle-up"
-          class="triangle"
-          :class="{
-            'up-vote': up_votes?.includes(userInfo?._id),
-          }"
-          @click="upVote(slug)"
-          v-if="isAuthenticated"
-        ></div>
+        <div v-if="isAuthenticated">
+          <div
+            id="triangle-up"
+            class="triangle"
+            :class="{
+              'up-vote': up_votes?.includes(userInfo?._id),
+            }"
+            v-if="!isVoteUp"
+            @click="upVote(slug)"
+          ></div>
+          <div :id="id" class="triangle up-vote" @click="upVote(slug)" v-if="isVoteUp"></div>
+        </div>
         <router-link to="/login/">
           <div
             id="triangle-up"
@@ -23,15 +26,18 @@
           ></div>
         </router-link>
         <span id="voteCount">{{ (up_votes.length || 0) - (down_votes.length || 0) }}</span>
-        <div
-          id="triangle-down"
-          class="triangle-down"
-          :class="{
-            'down-vote': down_votes?.includes(userInfo?._id),
-          }"
-          @click="downVote(slug)"
-          v-if="isAuthenticated"
-        ></div>
+        <div v-if="isAuthenticated">
+          <div
+            id="triangle-down"
+            class="triangle-down"
+            :class="{
+              'down-vote': down_votes?.includes(userInfo?._id),
+            }"
+            @click="downVote(slug)"
+            v-if="!isVoteDown"
+          ></div>
+          <div :id="id" class="triangle-down down-vote" @click="downVote(slug)" v-if="isVoteDown"></div>
+        </div>
         <router-link to="/login/">
           <div
             id="triangle-down"
