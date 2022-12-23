@@ -28,16 +28,15 @@ export default {
     async items() {
       this.$emit('update:items', this.items);
       if (this.isStoriesTab) {
-        
         const [
-        { items = [], total_count } = {
-          items: [],
-        },
-        error,
-      ] = await StoriesService.getMyStories();
-      this.items = items;
-      // console.log(items);
-      this.total_count = total_count;
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await StoriesService.getMyStories();
+        this.items = items;
+        // console.log(items);
+        this.total_count = total_count;
         // console.log(result, 'result');
       }
     },
@@ -140,6 +139,10 @@ export default {
     hiddenModel() {
       const model = document.getElementById('model-add-story');
       model.style.visibility = 'hidden';
+    },
+    closeEdit() {
+      this.isEditName = false;
+      this.$refs.myVueDropzone.removeAllFiles();
     },
     async updateProfile() {
       this.user.username = this.newName;
