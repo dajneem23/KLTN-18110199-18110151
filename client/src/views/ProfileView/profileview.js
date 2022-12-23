@@ -148,19 +148,27 @@ export default {
       this.$refs.customdropzone.removeAllFiles();
     },
     async updateProfile() {
-      this.user.username = this.newName;
-      this.user.avatar = this.newAvatar;
+      this.user.username = this.newName || this.userInfo.username;
+      this.user.avatar = this.newAvatar || this.userInfo.avatar[0].url;
       const [result, error] = await UserService.updateProfile({
         ...this.user,
       });
       if (result) {
         this.isSuccess = true;
-        console.log(this.user);
+        console.log(this.new);
+        const [userTemp, error] = await UserService.me();
+        console.log(userTemp);
+        this.$refs.customdropzone.$el.style.backgroundImage = `url(${userTemp.avatar[0].url})`;
         setTimeout(() => {
+          // console.log(this.userInfo);
           this.isSuccess = false;
+          this.fileAdded = false;
+          this.$refs.customdropzone.removeAllFiles();
+          this.isChangeAvatar = false;
           this.hiddenEditName();
         }, 2000);
-        this.userInfo.username = this.newName;
+
+        this.userInfo.username = this.newName || this.userInfo.username;
       }
     },
     // async openCity(cityName, idButton) {
@@ -271,13 +279,15 @@ export default {
       });
       // window.toastr.info('', 'Event : vdropzone-file-added')
     },
-    vremovedFile(file) {
+    async vremovedFile(file) {
       this.fileAdded = false;
       console.log('vremovedFile', {
         file,
       });
       // window.toastr.info('', 'Event : vdropzone-removed-file')
-      this.$refs.customdropzone.$el.style.backgroundImage = `url(${this.userInfo.avatar[0].url})`;
+      const [userTemp, error] = await UserService.me();
+      console.log(userTemp);
+      this.$refs.customdropzone.$el.style.backgroundImage = `url(${userTemp.avatar[0].url})`;
       this.isChangeAvatar = false;
     },
     vsuccess(file, response) {

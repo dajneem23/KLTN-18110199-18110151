@@ -98,7 +98,7 @@
           <div v-if="comment?.replies">
             <div class="cmt-rep">
               <div v-for="reply in comment.replies">
-                <Comment :data="reply"></Comment>
+                <Comment :data="reply" isReply></Comment>
               </div>
             </div>
           </div>

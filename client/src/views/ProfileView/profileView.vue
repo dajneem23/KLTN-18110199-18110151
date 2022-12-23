@@ -18,7 +18,8 @@
             <div
               class="cancel-update-user-check pointer-event d-flex justify-content-center position-absolute ml-2"
               @click="updateProfile"
-              style="top: 150px"
+              style="top: 160px"
+              v-if="isChangeAvatar"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
                 <path

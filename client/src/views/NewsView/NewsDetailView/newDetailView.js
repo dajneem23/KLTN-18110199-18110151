@@ -44,6 +44,9 @@ export default {
       createdAt: '',
       isIncludeUser: false,
       isLoading: true,
+      isVoteUp: false,
+      isVoteDown: false,
+      vote: 0,
     };
   },
   computed: {
