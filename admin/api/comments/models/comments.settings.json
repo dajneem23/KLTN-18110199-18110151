@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "comments",
+  "info": {
+    "name": "comments",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "string"
+    },
+    "author": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "down_votes": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "down_votes_comment",
+      "dominant": true
+    },
+    "up_votes": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "up_votes_comments",
+      "dominant": true
+    },
+    "deleted": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string"
+    },
+    "replies": {
+      "collection": "comments"
+    },
+    "reply_to": {
+      "model": "comments"
+    }
+  }
+}

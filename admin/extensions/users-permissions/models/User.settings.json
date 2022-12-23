@@ -89,6 +89,14 @@
       "plugin": "users-permissions",
       "collection": "user",
       "via": "followers"
+    },
+    "down_votes_comment": {
+      "via": "down_votes",
+      "collection": "comments"
+    },
+    "up_votes_comments": {
+      "via": "up_votes",
+      "collection": "comments"
     }
   }
 }
