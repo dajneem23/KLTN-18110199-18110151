@@ -75,16 +75,30 @@ export default {
   mounted() {},
   methods: {
     async submitText() {
-      this.news.content = this.editorData;
-      this.news.categories = [...this.categoriesOfArticles];
-      const result = await NewsServices.create({
-        ...this.news,
-      });
-      if (result) {
-        this.isSuccess = true;
+      if (!this.news.name || !this.news.content || !this.news.description) {
+        this.isWarnning = true;
         setTimeout(() => {
-          this.isSuccess = false;
+          this.isWarnning = false;
         }, 2000);
+      }
+      else {
+        this.news.content = this.editorData;
+        this.news.categories = [...this.categoriesOfArticles];
+        const [result, error] = await NewsServices.create({
+          ...this.news,
+        });
+        if (result) {
+          this.isSuccess = true;
+          setTimeout(() => {
+            this.isSuccess = false;
+          }, 2000);
+        }
+        if (error) {
+          this.isWarnning = true;
+          setTimeout(() => {
+            this.isWarnning = false;
+          }, 2000);
+      }
       }
       console.log(this.news);
       // console.log(result);
@@ -97,16 +111,31 @@ export default {
       this.editorData = '';
     },
     async editNews() {
-      this.news.content = this.editorData;
-      this.news.categories = [...this.categoriesOfArticles];
-      const [result, error] = await NewsServices.updateArticles(this.newsProps.id, this.news);
-      if (result) {
-        console.log(result);
-        this.isSuccess = true;
+      if (!this.news.name || !this.news.content || !this.news.description) {
+        this.isWarnning = true;
         setTimeout(() => {
-          this.isSuccess = false;
+          this.isWarnning = false;
           this.$bvModal.hide('confirm-edit-modal');
         }, 2000);
+      } else {
+        this.news.content = this.editorData;
+        this.news.categories = [...this.categoriesOfArticles];
+        const [result, error] = await NewsServices.updateArticles(this.newsProps.id, this.news);
+        if (result) {
+          console.log(result);
+          this.isSuccess = true;
+          setTimeout(() => {
+            this.isSuccess = false;
+            this.$bvModal.hide('confirm-edit-modal');
+          }, 2000);
+        }
+        if (error) {
+          this.isWarnning = true;
+          setTimeout(() => {
+            this.isWarnning = false;
+            this.$bvModal.hide('confirm-edit-modal');
+          }, 2000);
+        }
       }
     },
     async deleteNews() {
