@@ -30,10 +30,11 @@ export default {
       return false;
     },
     isMe() {
+      if (!this.userInfo) return false;
       if (this.author.id === this.userInfo._id) {
         return true;
       }
-    }
+    },
   },
   mounted() {
     if (this.author.id === this.userInfo._id) {
@@ -43,7 +44,6 @@ export default {
   },
   data() {
     return {
-      
       story: [],
       lang: 'vi',
       HOME_ITEM,
@@ -93,6 +93,10 @@ export default {
       }
     },
     async followUser(id) {
+      if (!this.isAuthenticated) {
+        this.$router.push('/login');
+        return;
+      }
       const [result, error] = await UserService.followUser(this.author.id);
       if (result) {
         // this.userInfo.following.push(this.author);
@@ -105,6 +109,10 @@ export default {
       this.fetchMe();
     },
     async unfollowUser(id) {
+      if (!this.isAuthenticated) {
+        this.$router.push('/login');
+        return;
+      }
       const userID = this.author.id;
       const [result, error] = await UserService.followUser(this.author.id);
       // if (result) {

@@ -116,6 +116,10 @@ export default {
       }
     },
     async followUser(id) {
+      if (!this.isAuthenticated) {
+        this.$router.push('/login');
+        return;
+      }
       const [result, error] = await UserService.followUser(this.author.id);
       if (result) {
         // this.userInfo.following.push(this.author);
@@ -128,6 +132,10 @@ export default {
       this.fetchMe();
     },
     async unfollowUser(id) {
+      if (!this.isAuthenticated) {
+        this.$router.push('/login');
+        return;
+      }
       const userID = this.author.id;
       const [result, error] = await UserService.followUser(this.author.id);
       // if (result) {

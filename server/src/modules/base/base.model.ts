@@ -193,6 +193,13 @@ export class BaseModel {
         operation: '$in',
         pipeline: [
           {
+            $match: {
+              deleted: {
+                $ne: true,
+              },
+            },
+          },
+          {
             $addFields: {
               votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] },
             },
@@ -229,6 +236,13 @@ export class BaseModel {
             reName: 'replies',
             operation: '$in',
             pipeline: [
+              {
+                $match: {
+                  deleted: {
+                    $ne: true,
+                  },
+                },
+              },
               {
                 $addFields: {
                   votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] },
