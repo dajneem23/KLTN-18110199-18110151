@@ -41,7 +41,8 @@
 export default {
   props: {
     isContent: Boolean,
-    isDes:Boolean,
+    isDes: Boolean,
+    isImg: Boolean,
   },
 };
 </script>
@@ -52,9 +53,8 @@ export default {
   border-radius: 50%;
   background-color: #ddd;
 }
-.profile-info{
+.profile-info {
   height: 100%;
-
 }
 .profile-info span {
   min-width: 100px;

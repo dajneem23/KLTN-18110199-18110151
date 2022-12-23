@@ -52,7 +52,7 @@
         <div class="avt-user">
           <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
         </div>
-        <div class="follow-user">
+        <div class="follow-user" v-show="!isMe">
           <div v-if="isAuthenticated">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -65,6 +65,16 @@
               />
             </svg>
           </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+            v-if="isIncludeUser"
+            @click="unfollowUser(author)"
+          >
+            <path
+              d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"
+            />
+          </svg>
           <router-link to="/login/">
             <div v-if="!isAuthenticated">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" v-if="!isIncludeUser">
@@ -74,11 +84,6 @@
               </svg>
             </div>
           </router-link>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" v-if="isIncludeUser">
-            <path
-              d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"
-            />
-          </svg>
         </div>
         <div class="add-wish-list" @click="addWishList(slug)" v-if="isAuthenticated">
           <svg
