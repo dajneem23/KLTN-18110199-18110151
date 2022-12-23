@@ -154,7 +154,7 @@
               <div v-if="comment?.replies">
                 <div class="cmt-rep">
                   <div v-for="reply of comment.replies">
-                    <Comment :data="reply" :sourceId="id"></Comment>
+                    <Comment :data="reply" :sourceId="id" isReply></Comment>
                   </div>
                 </div>
               </div>

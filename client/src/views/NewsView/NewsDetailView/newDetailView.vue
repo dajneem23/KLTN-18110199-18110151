@@ -164,7 +164,7 @@
           <div v-if="comment?.replies">
             <div class="cmt-rep">
               <div v-for="reply in comment.replies">
-                <Comment :data="reply"></Comment>
+                <Comment :data="reply" isReply></Comment>
                 <div v-if="reply?.reply_2">
                   <div class="cmt-rep">
                     <div v-for="reply_2 in reply.reply_2">

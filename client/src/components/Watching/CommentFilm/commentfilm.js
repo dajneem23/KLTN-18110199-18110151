@@ -5,6 +5,7 @@ export default {
     data: Object,
     sourceId: String,
     flag: String,
+    isReply: Boolean
   },
   data() {
     return {

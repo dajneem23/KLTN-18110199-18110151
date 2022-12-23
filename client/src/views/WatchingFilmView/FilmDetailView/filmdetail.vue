@@ -107,7 +107,7 @@
           <div v-if="comment?.replies">
             <div class="cmt-rep">
               <div v-for="reply in comment.replies">
-                <Commentfilm :data="reply"></Commentfilm>
+                <Commentfilm :data="reply" isReply></Commentfilm>
               </div>
             </div>
           </div>

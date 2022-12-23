@@ -1,6 +1,6 @@
 .profile-wrapper {
   width: 65%;
-  // height: 100vh;
+  min-height: 100vh;
   margin: 60px auto;
   padding: 20px;
   .row {
@@ -29,6 +29,9 @@
     padding: 30px;
     border: 2px solid var(--gray);
     gap: 2rem;
+    .cancel-update-user-check {
+      // margin-top: 10px;
+    }
     .user-avt {
       img {
         width: 120px;
@@ -138,12 +141,12 @@
 .cancel-update-user {
   margin-right: 10px;
   width: 15px;
-  fill: gray;
+  fill: red;
 }
 .cancel-update-user-check {
   margin-right: 10px;
   width: 25px;
-  fill: gray;
+  fill: green;
 }
 .my-item {
   height: 40px;
