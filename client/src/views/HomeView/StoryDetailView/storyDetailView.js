@@ -29,6 +29,11 @@ export default {
       }
       return false;
     },
+    isMe() {
+      if (this.author.id === this.userInfo._id) {
+        return true;
+      }
+    }
   },
   mounted() {
     if (this.author.id === this.userInfo._id) {
@@ -38,7 +43,7 @@ export default {
   },
   data() {
     return {
-      isMe: false,
+      
       story: [],
       lang: 'vi',
       HOME_ITEM,
@@ -55,9 +60,6 @@ export default {
         reply_to: null,
       },
     };
-  },
-  mounted() {
-    console.log(this.Slug_story);
   },
   methods: {
     moment,

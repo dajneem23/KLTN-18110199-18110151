@@ -27,16 +27,19 @@ export default {
     },
     async items() {
       this.$emit('update:items', this.items);
-      const [
-      { items = [], total_count } = {
-        items: [],
-      },
-      error,
-    ] = await StoriesService.getMyStories();
-    this.items = items;
-    // console.log(items);
-    this.total_count = total_count;
-      // console.log(result, 'result');
+      if (this.isStoriesTab) {
+        
+        const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await StoriesService.getMyStories();
+      this.items = items;
+      // console.log(items);
+      this.total_count = total_count;
+        // console.log(result, 'result');
+      }
     },
   },
   data() {
