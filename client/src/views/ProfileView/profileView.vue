@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="img-banner--user col-md-8">
-        <img src="../../assets/profile_banner.jpg" alt="" />
+        <img src="../../assets/profile_banner.webp" alt="" />
       </div>
     </div>
     <div class="user-news">
