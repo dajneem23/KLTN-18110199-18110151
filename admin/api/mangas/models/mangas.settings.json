@@ -45,6 +45,9 @@
     "slug": {
       "type": "uid",
       "targetField": "name"
+    },
+    "comments": {
+      "collection": "comments"
     }
   }
 }

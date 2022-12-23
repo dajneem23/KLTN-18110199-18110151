@@ -45,6 +45,9 @@
     },
     "categories": {
       "collection": "category"
+    },
+    "comments": {
+      "collection": "comments"
     }
   }
 }
