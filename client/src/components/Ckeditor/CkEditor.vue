@@ -50,16 +50,28 @@
           <div id="editor" class="ckeditor-cus"></div>
         </div>
         <div class="btn-box-edit">
-          <button @click="deleteNews()" class="btn-filter btn-deleted" v-if="isEdit">Xóa</button>
+          <button v-b-modal.confirm-delete-modal class="btn-filter btn-deleted" v-if="isEdit">Xóa</button>
           <button @click="submitText(editorData)" class="btn-filter" v-if="!isEdit">Lưu</button>
-          <button @click="editNews(editorData)" class="btn-filter" v-if="isEdit">Lưu</button>
+          <button v-b-modal.confirm-edit-modal class="btn-filter" v-if="isEdit">Lưu</button>
         </div>
       </div>
     </div>
     <div class="toastify-wrapper">
-      <Toastify isSuccess content="Tạo thành công" v-if="isSuccess" />
-      <Toastify isWarnning content="Tạo thất bại" v-if="isWarnning" />
+      <Toastify isSuccess content="Thành công" v-if="isSuccess" />
+      <Toastify isWarnning content="Thất bại" v-if="isWarnning" />
     </div>
+    <b-modal id="confirm-edit-modal" hide-footer centered title="Xác nhận chỉnh sửa" class="flex">
+      <div class="d-flex justify-content-center" style="gap: 2rem">
+        <b-button variant="outline-primary" @click="editNews(editorData)">OK</b-button>
+        <b-button variant="danger">Cancel</b-button>
+      </div>
+    </b-modal>
+    <b-modal id="confirm-delete-modal" hide-footer centered title="Xác nhận xóa" class="flex">
+      <div class="d-flex justify-content-center" style="gap: 2rem">
+        <b-button variant="outline-primary" @click="deleteNews()">OK</b-button>
+        <b-button variant="danger">Cancel</b-button>
+      </div>
+    </b-modal>
   </div>
 </template>
 

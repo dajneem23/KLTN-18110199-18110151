@@ -186,8 +186,12 @@
   padding: 12px;
   // padding-bottom: 12px;
   text-align: left;
-  background-color: #04aa6d;
+  background-color: var(--primary-blue_3);
   color: white;
+}
+.dz-clickable {
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 /*-------------------------------------*/
 .model-add-story {

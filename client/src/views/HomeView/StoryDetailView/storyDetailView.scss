@@ -32,6 +32,11 @@
     height: 100%;
     .auth {
       display: flex;
+      justify-content: space-between;
+      .auth-left {
+        display: flex;
+        align-items: center;
+      }
       .auth_avt {
         img {
           width: 50px;
@@ -224,5 +229,42 @@
     overflow: auto;
     overflow-y: scroll;
     // overflow-x: hidden;
+  }
+}
+.btn-flloww {
+  padding: 10px 5px;
+}
+.followU-story {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 15px;
+  border: 1px solid var(--primary-blue_3);
+  border-radius: 5px;
+  color: var(--primary-blue_3);
+  cursor: pointer;
+  svg {
+    width: 25px;
+    margin-right: 5px;
+    fill: var(--primary-blue_3);
+  }
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: var(--primary-blue_3);
+    color: var(--white);
+    svg {
+      fill: var(--white);
+    }
+  }
+}
+.followed-story {
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #78cb5b;
+    color: var(--white);
+    svg {
+      fill: var(--white);
+    }
   }
 }

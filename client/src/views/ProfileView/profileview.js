@@ -25,6 +25,22 @@ export default {
       });
       dropzone.$el.style.backgroundImage = `url(${val.avatar[0].url})`;
     },
+    async items() {
+      this.$emit('update:items', this.items);
+      if (this.isStoriesTab) {
+        
+        const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await StoriesService.getMyStories();
+      this.items = items;
+      // console.log(items);
+      this.total_count = total_count;
+        // console.log(result, 'result');
+      }
+    },
   },
   data() {
     return {
