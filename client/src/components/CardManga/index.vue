@@ -1,21 +1,15 @@
 <template>
-  <router-link :to="{ name: 'detailmanga', params: { mangaId: data.id, manaData: data } }">
+  <router-link :to="{ name: 'detailmanga', params: { id: slug, manga: data } }">
     <div class="card-manga">
       <div class="card-left">
-        <img :src="data.img" alt="" />
+        <img :src="images[0].url" alt="" />
+        <div class="card-numchap">
+          <span>{{ chapters?.length }}</span>
+        </div>
       </div>
       <div class="card-right">
-        <div class="card-title-manga">{{ data.title }}</div>
-        <div class="card-info text-dark-gray">
-          <div class="card-numchap">
-            <span>
-              {{ data.numChapter }}
-            </span>
-            tập
-          </div>
-          <div class="card-auth"><span>Tác giả: </span> {{ data.auth }}</div>
-          <div class="card-view">{{ data.views }} lượt xem</div>
-        </div>
+        <div class="card-title-manga">{{ name }}</div>
+        <div class="card-manga-info text-dark-gray"></div>
       </div>
     </div>
   </router-link>

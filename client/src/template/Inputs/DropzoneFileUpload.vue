@@ -18,7 +18,7 @@
       :class="previewClasses"
       ref="previewMultiple"
     >
-      <b-list-group-item class="px-0">
+      <b-list-group-item class="px-0 list-peview--item">
         <b-row class="align-items-center">
           <b-col cols="auto">
             <div class="avatar">
@@ -26,7 +26,7 @@
             </div>
           </b-col>
           <b-col class="ml--3">
-            <h4 class="mb-1" data-dz-name>...</h4>
+            <h4 class="mb-1 image-preview-name" data-dz-name>...</h4>
             <p class="small text-muted mb-0" data-dz-size>...</p>
           </b-col>
           <b-col cols="auto">
@@ -127,6 +127,7 @@ export default {
           if (evt === 'addedfile') {
             this.files.push(data);
             this.$emit('change', this.files);
+            console.log(this.files);
           } else if (evt === 'removedfile') {
             let index = this.files.findIndex((f) => f.upload.uuid === data.upload.uuid);
             if (index !== -1) {

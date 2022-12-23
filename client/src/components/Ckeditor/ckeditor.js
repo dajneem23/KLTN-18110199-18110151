@@ -1,16 +1,40 @@
 import { onMounted, ref } from 'vue';
 import DropzoneFileUpload from '../../template/Inputs/DropzoneFileUpload';
 import BaseInput from '../../template/Inputs/BaseInput.vue';
+import DropZone from './dropzone.vue';
+import Toastify from '../../components/ToastifyCustom/index.vue';
+import { NewsServices, UploadServices, CategoriesServices } from '@/services';
+
 export default {
   name: 'CkEditor',
   components: {
     DropzoneFileUpload,
     BaseInput,
+    DropZone,
+    Toastify,
+  },
+  props: {
+    newsProps: Object,
+    isEdit: Boolean,
   },
   data() {
     return {
+      isSuccess: false,
+      isWarnning: false,
+      value: [],
       editor: null,
-      editorData: 'Hello',
+      editorData: '',
+      listCategories: [],
+      categoriesOfArticles: [],
+      initImage: null,
+      news: {
+        name: '',
+        content: '',
+        description: '',
+        images: [],
+        categories: [],
+      },
+      isShow: false,
     };
   },
   watch: {
@@ -19,10 +43,110 @@ export default {
         this.editor?.model.document.on('change:data', () => this.handleChange.call(this, { editor: this.editor }));
       }
     },
+    newsProps: {
+      handler(val) {
+        if (this.isEdit) {
+          this.news.name = this.newsProps.name;
+          this.news.content = this.newsProps.content;
+          this.editorData = this.newsProps.content;
+          this.news.description = this.newsProps.description;
+          this.news.images = this.newsProps.images;
+          this.initImage = this.newsProps.images[0] ? this.newsProps.images[0] : null;
+          this.news.categories = this.newsProps.categories;
+          this.categoriesOfArticles = this.newsProps.categories;
+          // this.editorData = this.newsProps.content;
+        }
+      },
+      deep: true,
+    },
+    editorData(current, pre) {
+      if (this.editor && !pre && current) this.editor.setData(this.editorData);
+    },
   },
+  async created() {
+    const [
+      { items = [], total_count } = {
+        items: [],
+      },
+      error,
+    ] = await CategoriesServices.get();
+    this.listCategories = items;
+  },
+  mounted() {},
   methods: {
-    submitText() {
-      console.log('submitText', this.editorData);
+    async submitText() {
+      this.news.content = this.editorData;
+      this.news.categories = [...this.categoriesOfArticles];
+      const result = await NewsServices.create({
+        ...this.news,
+      });
+      if (result) {
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = false;
+        }, 2000);
+      }
+      console.log(this.news);
+      // console.log(result);
+      this.news.name = '';
+      this.news.content = '';
+      this.news.description = '';
+      this.news.images = [];
+      this.news.categories = [];
+      this.categoriesOfArticles = [];
+      this.editorData = '';
+    },
+    async editNews() {
+      this.news.content = this.editorData;
+      this.news.categories = [...this.categoriesOfArticles];
+      const [result, error] = await NewsServices.updateArticles(this.newsProps.id, this.news);
+      if (result) {
+        console.log(result);
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = false;
+          this.$bvModal.hide('confirm-edit-modal');
+        }, 2000);
+      }
+    },
+    async deleteNews() {
+      const [result, error] = await NewsServices.delete(this.newsProps.id);
+      console.log([result, error]);
+      if (!result) {
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = false;
+          this.$bvModal.hide('confirm-delete-modal');
+          this.$router.push('/profile');
+        }, 2000);
+      } else {
+        this.isWarnning = true;
+        setTimeout(() => {
+          this.isWarnning = false;
+        }, 2000);
+      }
+    },
+    showCombobox() {
+      this.isShow = !this.isShow;
+    },
+    changeFunc() {
+      var selectBox = document.getElementById('selectBox');
+      var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+      alert(selectedValue);
+    },
+    addCategory(item) {
+      if (!this.categoriesOfArticles.includes(item)) {
+        this.categoriesOfArticles.push(item);
+      }
+      console.log(this.categoriesOfArticles);
+      // console.log(item);
+    },
+    removeCategory(id) {
+      this.categoriesOfArticles = this.categoriesOfArticles.filter(function (item) {
+        return item.id !== id;
+      });
+      console.log(this.categoriesOfArticles);
+      console.log(id);
     },
     initEditor({
       // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
@@ -103,7 +227,7 @@ export default {
         ],
       },
       // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-      placeholder = 'Welcome to CKEditor 5!',
+      placeholder = 'Nội dung bài viết......',
       // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
       fontFamily = {
         options: [
@@ -229,12 +353,8 @@ export default {
         // from a local file system (file://) - load this site via HTTP server if you enable MathType
         'MathType',
       ],
-      onChange = () => {
-        console.log('onChange');
-        // const data = editor.getData();
-        // console.log({ event, editor, data });
-      },
-      extraPlugins = [],
+
+      extraPlugins = [uploadPlugin],
       data = this.editorData,
     } = {}) {
       CKEDITOR.ClassicEditor.create(document.getElementById('editor'), {
@@ -249,13 +369,13 @@ export default {
         link,
         mention,
         removePlugins,
-        onChange,
         extraPlugins,
         data,
       })
         .then((_editor) => {
           this.editor = _editor;
-          console.log('Editor was initialized', this.editor);
+          console.log('Editor was initialized', this.editorData, this.editor);
+          // this.editor.setData(this.editorData || '');
         })
         .catch((err) => {
           console.error('%c CKEditor failed to load. ', 'color: red; font-weight: bold;', { err });
@@ -272,18 +392,82 @@ export default {
     },
 
     handleBlur(editor) {
-      console.log('Editor Blur.', { event, editor });
+      console.log('Editor Blur.', { editor });
     },
 
     handleFocus(editor) {
-      console.log('Editor Focus.', { event, editor });
+      console.log('Editor Focus.', { editor });
     },
 
     handleError(editor) {
-      console.log('%c Editor Error!', 'color:red', { event, editor });
+      console.log('%c Editor Error!', 'color:red', { editor });
+    },
+    onDropZoneUploadSuccess(file) {
+      console.log('onDropZoneUploadSuccess', file);
+      this.news.images = [file._id];
+      // this.news.images.push(file._id);
+      // const reader = new FileReader();
+      // reader.readAsBinaryString(file);
+
+      // reader.onload = function (event) {
+      //   // handle reader success
+
+      //   resolve();
+      // };
+      // files.forEach((file) => {
+      //   const data = new FormData();
+
+      //   data.append('file', file);
+      //   UploadServices.upload(data)
+      //     .then((res) => {
+      //       editor.model.change((writer) => {
+      //         writer.setSelection(editor.model.document.getRoot(), 'end');
+      //       });
+      //       console.log('%c Upload Success', 'color:green', res);
+      //       const [data] = res;
+      //     })
+      //     .catch((err) => {
+      //       console.log('%c Upload Error', 'color:red', err);
+      //     });
+      // });
     },
   },
   mounted() {
     this.initEditor();
   },
 };
+
+function uploadAdapter(loader, editor) {
+  return {
+    upload: () => {
+      return new Promise((resolve, reject) => {
+        console.log('upload');
+        loader.file.then((file) => {
+          const data = new FormData();
+
+          data.append('file', file);
+          UploadServices.upload(data)
+            .then((res) => {
+              editor.model.change((writer) => {
+                writer.setSelection(editor.model.document.getRoot(), 'end');
+              });
+              console.log('%c Upload Success', 'color:green', res);
+              const [data] = res;
+              resolve({
+                default: data.url,
+              });
+            })
+            .catch((err) => {
+              console.log('%c Upload Error', 'color:red', err);
+              reject(err);
+            });
+        });
+      });
+    },
+  };
+}
+function uploadPlugin(editor) {
+  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+    return uploadAdapter(loader, editor);
+  };
+}

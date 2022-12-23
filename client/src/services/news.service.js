@@ -1,15 +1,33 @@
 import { RequestBase } from './request';
 
 export const NewsServices = {
-  url: 'news',
+  url: 'articles',
   get(params) {
     return RequestBase.get(`${this.url}/`, params);
+  },
+  getMyArticles(params) {
+    return RequestBase.get(`${this.url}/my`, params);
+  },
+  updateArticles(id, body) {
+    return RequestBase.put(`${this.url}/${id}`, body);
+  },
+  getFollowing(params) {
+    return RequestBase.get(`${this.url}/following`, params);
   },
   getById(id) {
     return RequestBase.get(`${this.url}/${id}`);
   },
+  delete(id) {
+    return RequestBase.delete(`${this.url}/${id}`);
+  },
   create(body) {
     return RequestBase.post(`${this.url}/`, body);
+  },
+  getHot(params) {
+    return RequestBase.get(`${this.url}/hot/`, params);
+  },
+  getTop(params) {
+    return RequestBase.get(`${this.url}/top/`, params);
   },
   react(id) {
     return RequestBase.patch(`${this.url}/react/${id}`);

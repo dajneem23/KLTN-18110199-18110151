@@ -7,6 +7,8 @@ export interface Manga extends BaseModel {
 
   image?: string;
 
+  images?: string[];
+
   chapters: string[];
 
   contents: any[];
@@ -45,7 +47,9 @@ export interface MangaChapter extends BaseModel {
 
   contents: any[];
 
-  images: string[];
+  image?: string;
+
+  images?: string[];
 
   comments: string[];
 

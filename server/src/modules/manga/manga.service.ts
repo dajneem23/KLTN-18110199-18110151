@@ -9,6 +9,7 @@ import { MangaError, mangaModelToken, mangaErrors, _manga, mangaChapterModelToke
 import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS, RemoveSlugPattern } from '@/types/Common';
 import { isNil, omit } from 'lodash';
 import slugify from 'slugify';
+import { ObjectId } from 'mongodb';
 const TOKEN_NAME = '_mangaService';
 /**
  * A bridge allows another service access to the Model layer
@@ -62,11 +63,11 @@ export class MangaService {
           ..._manga,
           ..._content,
           categories,
-          ...(_subject && { created_by: _subject }),
+          ...(_subject && { author: new ObjectId(_subject) }),
         },
       );
       this.logger.debug('create_success', { _content });
-      return toOutPut({ item: value, keys: this.model._keys });
+      return toOutPut({ item: value });
     } catch (err) {
       this.logger.error('create_error', err.message);
       throw err;
@@ -89,11 +90,11 @@ export class MangaService {
           ..._mangaChapter,
           ..._content,
           categories,
-          ...(_subject && { created_by: _subject }),
+          ...(_subject && { author: new ObjectId(_subject) }),
         },
       );
       this.logger.debug('create_success', { _content });
-      return toOutPut({ item: value, keys: this.model._keys });
+      return toOutPut({ item: value });
     } catch (err) {
       this.logger.error('create_error', err.message);
       throw err;
@@ -107,16 +108,16 @@ export class MangaService {
    * @param _subject
    * @returns {Promise<BaseServiceOutput>}
    */
-  async update({ _id, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async update({ _slug: slug, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      await this.model.update($toMongoFilter({ _id }), {
+      await this.model.update($toMongoFilter({ slug }), {
         $set: {
           ..._content,
-          ...(_subject && { updated_by: _subject }),
+          ...(_subject && { updated_by: new ObjectId(_subject) }),
         },
       });
       this.logger.debug('update_success', { _content });
-      return toOutPut({ item: _content, keys: this.model._keys });
+      return toOutPut({ item: _content });
     } catch (err) {
       this.logger.error('update_error', err.message);
       throw err;
@@ -129,16 +130,16 @@ export class MangaService {
    * @param _subject
    * @returns {Promise<BaseServiceOutput>}
    */
-  async updateChapter({ _id, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async updateChapter({ _slug: slug, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      await this.mangaChapterModel.update($toMongoFilter({ _id }), {
+      await this.mangaChapterModel.update($toMongoFilter({ slug }), {
         $set: {
           ..._content,
-          ...(_subject && { updated_by: _subject }),
+          ...(_subject && { updated_by: new ObjectId(_subject) }),
         },
       });
       this.logger.debug('update_success', { _content });
-      return toOutPut({ item: _content, keys: this.model._keys });
+      return toOutPut({ item: _content });
     } catch (err) {
       this.logger.error('update_error', err.message);
       throw err;
@@ -151,12 +152,12 @@ export class MangaService {
    * @param {ObjectId} _subject
    * @returns {Promise<void>}
    */
-  async delete({ _id, _subject }: BaseServiceInput): Promise<void> {
+  async delete({ _slug: slug, _subject }: BaseServiceInput): Promise<void> {
     try {
-      await this.model.delete($toMongoFilter({ _id }), {
-        ...(_subject && { deleted_by: _subject }),
+      await this.model.delete($toMongoFilter({ slug }), {
+        ...(_subject && { deleted_by: new ObjectId(_subject) }),
       });
-      this.logger.debug('delete_success', { _id });
+      this.logger.debug('delete_success', { slug });
       return;
     } catch (err) {
       this.logger.error('delete_error', err.message);
@@ -169,12 +170,12 @@ export class MangaService {
    * @param {ObjectId} _subject
    * @returns {Promise<void>}
    */
-  async deleteChapter({ _id, _subject }: BaseServiceInput): Promise<void> {
+  async deleteChapter({ _slug: slug, _subject }: BaseServiceInput): Promise<void> {
     try {
-      await this.mangaChapterModel.delete($toMongoFilter({ _id }), {
-        ...(_subject && { deleted_by: _subject }),
+      await this.mangaChapterModel.delete($toMongoFilter({ slug }), {
+        ...(_subject && { deleted_by: new ObjectId(_subject) }),
       });
-      this.logger.debug('delete_success', { _id });
+      this.logger.debug('delete_success', { slug });
       return;
     } catch (err) {
       this.logger.error('delete_error', err.message);
@@ -197,7 +198,9 @@ export class MangaService {
         .get(
           $pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 name: { $regex: q, $options: 'i' },
               }),
@@ -205,14 +208,16 @@ export class MangaService {
                 $or: [
                   {
                     categories: {
-                      $in: $toObjectId(categories),
+                      $in: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
                     },
                   },
                 ],
               }),
             },
+            $sets: [this.model.$sets.author],
             $addFields: {
               ...this.model.$addFields.categories,
+              ...this.model.$addFields.comments,
               chapters: {
                 $cond: {
                   if: {
@@ -225,13 +230,27 @@ export class MangaService {
             },
             $lookups: [
               this.model.$lookups.categories,
+              this.model.$lookups.author,
+              this.model.$lookups.comments,
+              this.model.$lookups.upload_files({
+                refTo: 'images',
+                reName: 'images',
+                operation: '$in',
+              }),
               $lookup({
                 from: 'manga-chapters',
                 refFrom: '_id',
                 refTo: 'chapters',
-                select: 'name description images index',
+                select: 'name description images index slug',
                 reName: 'chapters',
                 operation: '$in',
+                pipeline: [
+                  this.model.$lookups.upload_files({
+                    refTo: 'images',
+                    reName: 'images',
+                    operation: '$in',
+                  }),
+                ],
               }),
             ],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
@@ -243,7 +262,7 @@ export class MangaService {
       return toPagingOutput({
         items,
         total_count,
-        keys: this.model._keys,
+        // keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('query_error', err.message);
@@ -265,7 +284,9 @@ export class MangaService {
         .get(
           $pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 name: { $regex: q, $options: 'i' },
               }),
@@ -273,14 +294,17 @@ export class MangaService {
                 $or: [
                   {
                     categories: {
-                      $in: $toObjectId(categories),
+                      $in: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
                     },
                   },
                 ],
               }),
             },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories],
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.comments,
+            },
+            $lookups: [this.model.$lookups.categories, this.model.$lookups.comments],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
@@ -290,7 +314,7 @@ export class MangaService {
       return toPagingOutput({
         items,
         total_count,
-        keys: this.model._keys,
+        //  keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('query_error', err.message);
@@ -302,20 +326,22 @@ export class MangaService {
    * @param id - Manga ID
    * @returns { Promise<BaseServiceOutput> } - Manga
    */
-  async getById({ _id, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async getById({ _slug: slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
       const [item] = await this.model
         .get([
           {
             $match: {
               ...$toMongoFilter({
-                _id,
+                slug,
               }),
             },
           },
           {
             $addFields: {
               ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
               chapters: {
                 $cond: {
                   if: {
@@ -328,16 +354,32 @@ export class MangaService {
             },
           },
           this.model.$lookups.categories,
+          this.model.$lookups.comments,
+
           $lookup({
             from: 'manga-chapters',
             refFrom: '_id',
             refTo: 'chapters',
-            select: 'name description images index',
+            select: 'name description images index slug',
             reName: 'chapters',
+            operation: '$in',
+            pipeline: [
+              this.model.$lookups.upload_files({
+                refTo: 'images',
+                reName: 'images',
+                operation: '$in',
+              }),
+            ],
+          }),
+          this.model.$lookups.upload_files({
+            refTo: 'images',
+            reName: 'images',
             operation: '$in',
           }),
           this.model.$lookups.author,
           this.model.$sets.author,
+          this.model.$lookups.upload_files(),
+          this.model.$sets.image,
           {
             $limit: 1,
           },
@@ -356,23 +398,35 @@ export class MangaService {
    * @param id - Manga ID
    * @returns { Promise<BaseServiceOutput> } - Manga
    */
-  async getChapterById({ _id, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async getChapterById({ _slug: slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
       const [item] = await this.mangaChapterModel
         .get([
           {
             $match: {
               ...$toMongoFilter({
-                _id,
+                slug,
               }),
             },
           },
           {
-            $addFields: this.model.$addFields.categories,
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
           },
           this.model.$lookups.categories,
           this.model.$lookups.author,
           this.model.$sets.author,
+          this.model.$lookups.comments,
+          this.model.$lookups.upload_files(),
+          this.model.$lookups.upload_files({
+            refTo: 'images',
+            reName: 'images',
+            operation: '$in',
+          }),
+          this.model.$sets.image,
           {
             $limit: 1,
           },
@@ -400,7 +454,9 @@ export class MangaService {
         .get([
           ...$pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 $or: [
                   { $text: { $search: q } },
@@ -410,30 +466,44 @@ export class MangaService {
                 ],
               }),
             },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories],
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
+            $lookups: [
+              this.model.$lookups.comments,
+              this.model.$lookups.categories,
+              this.model.$lookups.upload_files(),
+              this.model.$lookups.author,
+              this.model.$lookups.upload_files({
+                refTo: 'images',
+                reName: 'images',
+                operation: '$in',
+              }),
+            ],
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
         ])
         .toArray();
       this.logger.debug('query_success', { total_count, items });
-      return toPagingOutput({ items, total_count, keys: this.model._keys });
+      return toPagingOutput({ items, total_count });
     } catch (err) {
       this.logger.error('query_error', err.message);
       throw err;
     }
   }
 
-  async react({ _subject, _id }: BaseServiceInput) {
+  async react({ _subject, _slug: slug }: BaseServiceInput) {
     try {
       //todo: check if user already react
       const [item] = await this.model
         .get([
           {
             $match: {
-              _id,
+              slug,
               reacts: {
-                $in: [_subject],
+                $in: [new ObjectId(_subject)],
               },
             },
           },
@@ -441,21 +511,21 @@ export class MangaService {
         .toArray();
       const { reacts } = item
         ? await this.model.update(
-            { _id },
+            { slug },
             {
-              $pull: { reacts: _subject },
+              $pull: { reacts: new ObjectId(_subject) },
             },
           )
         : await this.model.update(
-            { _id },
+            { slug },
             {
-              $addToSet: { reacts: _subject },
+              $addToSet: { reacts: new ObjectId(_subject) },
             },
           );
       this.logger.debug('update_success', {});
       return toOutPut({
         item: { reacts },
-        keys: this.model._keys,
+        //  keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('react_error', err.message);
@@ -479,8 +549,8 @@ export class MangaService {
           lower: true,
           remove: RemoveSlugPattern,
         });
-        const _id = (await this.mangaChapterModel._collection.findOne({
-          _id: _name,
+        const slug = (await this.mangaChapterModel._collection.findOne({
+          slug: _name,
         }))
           ? _name + '-' + new Date().getTime()
           : _name;
@@ -489,16 +559,18 @@ export class MangaService {
           lastErrorObject: { updatedExisting },
         } = await this.mangaChapterModel._collection.findOneAndUpdate(
           {
-            _id,
+            slug,
           },
           {
             $set: {
               ...((update && {
-                _id,
+                slug,
                 name,
                 updated_at: new Date(),
                 ...content,
-                deleted: false,
+                deleted: {
+                  $ne: true,
+                },
                 updated_by: _subject,
               }) ||
                 {}),
@@ -512,16 +584,18 @@ export class MangaService {
         if (!updatedExisting) {
           const { value: newValue } = await this.mangaChapterModel._collection.findOneAndUpdate(
             {
-              _id,
+              slug,
             },
             {
               $setOnInsert: {
-                _id,
+                slug,
                 name,
                 ...content,
                 updated_at: new Date(),
                 created_at: new Date(),
-                deleted: false,
+                deleted: {
+                  $ne: true,
+                },
                 created_by: _subject,
               },
             },

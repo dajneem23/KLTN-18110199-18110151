@@ -1,5 +1,18 @@
 import Container from 'typedi';
-import { Controller, Res, Post, Body, Get, Query, Put, Params, Delete, Req, Auth } from '@/utils/expressDecorators';
+import {
+  Controller,
+  Res,
+  Post,
+  Body,
+  Get,
+  Query,
+  Put,
+  Params,
+  Delete,
+  Req,
+  Auth,
+  Patch,
+} from '@/utils/expressDecorators';
 import { Request, Response } from 'express';
 import { Film, FilmServiceToken } from '.';
 import { buildQueryFilter } from '@/utils/common';
@@ -26,7 +39,7 @@ export class FilmController {
   ) {
     const result = await this.service.create({
       _content: _body,
-      _subject: _auth.id,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.CREATED).json(result);
   }
@@ -47,7 +60,7 @@ export class FilmController {
     const result = await this.service.update({
       _id: _params.id,
       _content: _body,
-      _subject: _auth.id,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.CREATED).json(result);
   }
@@ -68,7 +81,7 @@ export class FilmController {
     await this.service.delete({
       _id: _params.id,
       _content: _body,
-      _subject: _auth.id,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.NO_CONTENT).end();
   }
@@ -76,6 +89,16 @@ export class FilmController {
   async search(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery) {
     const { filter, query } = buildQueryFilter(_query);
     const result = await this.service.search({
+      _filter: filter,
+      _query: query,
+      _permission: 'public',
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+  @Get('/', [])
+  async get(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.query({
       _filter: filter,
       _query: query,
       _permission: 'public',
@@ -95,8 +118,32 @@ export class FilmController {
   ) {
     const { filter, query } = buildQueryFilter(_query);
     const result = await this.service.getById({
-      _id: _params.id,
+      _slug: _params.id,
       _filter: filter,
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+  @Patch('/react/:id', [
+    protect({
+      weight: RolesWeight.user,
+    }),
+  ])
+  async react(
+    @Res() _res: Response,
+    @Req() _req: Request,
+    @Query() _query: BaseQuery,
+    @Auth() _auth: JWTPayload,
+    @Params()
+    _params: {
+      id: string;
+    },
+  ) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.react({
+      _slug: _params.id,
+      _filter: filter,
+      _query: query,
+      _subject: _auth._id,
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }

@@ -65,6 +65,15 @@ export const errors = Object.freeze({
       vi: 'Đã tồn tại',
     },
   },
+  'common.collection_not_found': {
+    message: 'Collection not found',
+    code: null,
+    status: httpStatusCode.BAD_REQUEST,
+    isPublic: true,
+    locales: {
+      vi: 'Collection Not found',
+    },
+  },
 });
 
 export class SystemError extends AppError {

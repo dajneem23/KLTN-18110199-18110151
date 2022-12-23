@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "manga-chapters",
+  "info": {
+    "name": "Manga-chapters",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "mangas": {
+      "model": "mangas"
+    },
+    "deleted": {
+      "type": "boolean"
+    },
+    "index": {
+      "type": "integer",
+      "required": true,
+      "unique": true,
+      "min": 1
+    }
+  }
+}

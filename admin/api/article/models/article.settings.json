@@ -1,0 +1,77 @@
+{
+  "kind": "collectionType",
+  "collectionName": "articles",
+  "info": {
+    "name": "article",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {},
+      "unique": false
+    },
+    "description": {
+      "type": "text",
+      "required": true,
+      "pluginOptions": {}
+    },
+    "content": {
+      "type": "richtext",
+      "required": true,
+      "pluginOptions": {}
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files",
+        "images",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "author": {
+      "via": "articles",
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "reacts": {
+      "plugin": "users-permissions",
+      "collection": "user"
+    },
+    "up_votes": {
+      "plugin": "users-permissions",
+      "collection": "user"
+    },
+    "down_votes": {
+      "plugin": "users-permissions",
+      "collection": "user"
+    },
+    "categories": {
+      "columnName": "slug",
+      "collection": "category"
+    },
+    "deleted": {
+      "type": "boolean",
+      "default": false
+    },
+    "comments": {
+      "collection": "comments"
+    }
+  }
+}

@@ -63,6 +63,12 @@ button {
     padding-left: 10px;
   }
 }
+.btn-cancel {
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+}
 .btn-send-cmt {
   border: none;
   padding: 10px;
@@ -106,7 +112,7 @@ button {
     margin: 5px;
   }
 }
-.btn-transparent{
+.btn-transparent {
   background-color: transparent;
   height: 40px;
   width: 100px;
@@ -123,12 +129,12 @@ button {
     margin: 5px;
   }
 }
-.btn-transparent:hover{
+.btn-transparent:hover {
   background-color: var(--gray);
 }
 .btn-like-cmt {
   height: 40px;
-  min-width: 71px;
+  min-width: 55px;
   border-radius: 5px;
   border: 1px;
   cursor: pointer;
@@ -136,10 +142,9 @@ button {
   justify-content: center;
   align-items: center;
   background-color: transparent;
+  padding: 0 !important;
+  margin-right: 15px !important;
   svg {
     width: 20px;
-  }
-  svg + span {
-    margin: 5px;
   }
 }

@@ -2,3 +2,5 @@
 client/yarn.lock
 client/.env
 client/.env
+admin/.cache/**
+client/.env

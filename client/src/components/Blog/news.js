@@ -1,13 +1,15 @@
 import Comment from '../Watching/CommentFilm/index.vue';
+import DetailStory from '../../views/HomeView/StoryDetailView/index.vue';
 import { HOME_ITEM } from '../../constants/homeview';
-import { onMounted } from 'vue';
 import { Carousel, Slide } from 'vue-carousel';
-import { StoriesService } from '@/services';
+import { CommentServices, UserService, StoriesService } from '@/services';
 import { mapState } from 'vuex';
-import moment from 'moment'; 
+import moment from 'moment';
+
 export default {
   components: {
     Comment,
+    DetailStory,
     Carousel,
     Slide,
   },
@@ -18,14 +20,31 @@ export default {
     return {
       lang: 'vi',
       HOME_ITEM,
-      cmt: '',
+      cmt: {
+        source_id: '',
+        type: 'stories',
+        content: '',
+        images: [],
+        reply_to: null,
+      },
+      title: '',
       reacts: [],
       comments: [],
+      img: [],
       author: { name: 'Unknown' },
+      isShowDetail: false,
+      // isIncludeUser: false,
+      isMe: false,
     };
   },
   computed: {
-    ...mapState(['userInfo', 'isAuthenticated']),
+    ...mapState(['userInfo', 'isAuthenticated', 'urlStrapiServe']),
+    isIncludeUser() {
+      if (this.userInfo) {
+        return this.userInfo.following.some((user) => user.id == this.author.id || user.id == this.userInfo._id);
+      }
+      return false;
+    },
   },
   watch: {
     data(newData) {
@@ -34,28 +53,38 @@ export default {
           if (key == '_v') return;
           this[key] = newData[key];
         });
-      // console.log(this);
+    },
+    userInfo() {
+      // if (this.userInfo) {
+      // console.log('user info', this.userInfo);
+      // this.isIncludeUser =
+      // }
     },
   },
   created() {
     if (this.data)
       Object.keys(this.data).map((key) => {
-        // console.log(key);
         if (key == '_v') return;
         this[key] = this.data[key];
       });
   },
-  mounted() {},
+  mounted() {
+    if (this.author.id === this.userInfo._id) {
+      this.isMe = true;
+      return;
+    }
+    // console.log(this.author.id);
+  },
   methods: {
     moment,
     async likePost(id) {
-      console.log(id);
-      const [result, error] = await StoriesService.react(id);
-      console.log([result, error]);
-      if (result) {
-        const { reacts } = result;
-        this.reacts = reacts;
-        // console.log(this.reacts, reacts);
+      if (this.isAuthenticated) {
+        const [result, error] = await StoriesService.react(id);
+        console.log([result, error]);
+        if (result) {
+          const { reacts } = result;
+          this.reacts = reacts;
+        }
       }
     },
     showCmtBox(string) {
@@ -72,11 +101,62 @@ export default {
         return;
       }
     },
-    sendCmt() {
-      console.log(this.cmt);
+    async sendCmt() {
+      if (this.cmt.content !== '') {
+        this.cmt.source_id = this.data.id;
+        const result = await CommentServices.comment({
+          ...this.cmt,
+        });
+        const [result_2, error] = await StoriesService.getById(this.data.slug);
+        console.log([result_2, error]);
+        if (result) {
+          this.comments.push(result_2.comments[result_2.comments.length - 1]);
+        }
+        this.cmt.content = '';
+      }
+    },
+    async followUser(id) {
+      const [result, error] = await UserService.followUser(this.author.id);
+      if (result) {
+        // this.userInfo.following.push(this.author);
+        // const btnFL = document.getElementById(id);
+        // btnFL.style.display = 'none';
+        // this.isIncludeUser = true;
+        // console.log(this.author);
+      }
+      // console.log(this.author)
+      this.fetchMe();
+    },
+    async unfollowUser(id) {
+      const userID = this.author.id;
+      const [result, error] = await UserService.followUser(this.author.id);
+      // if (result) {
+      //   this.userInfo.following = this.userInfo.following.filter(function (item) {
+      //     return item.id !== userID;
+      //   });
+      //   console.log(this.userInfo.following);
+      //   // this.userInfo.following.push(this.author);
+      //   // const btnFL = document.getElementById(id);
+      //   // btnFL.style.display = 'none';
+      //   this.isIncludeUser = false;
+      //   console.log(this.author.id);
+      // }
+      this.fetchMe();
     },
     getTime() {
       data.created_at = data.created_at.toLocaleDateString('en-US');
+    },
+    showModel(slug) {
+      this.isShowDetail = true;
+    },
+    hiddenModel() {
+      this.isShowDetail = false;
+    },
+    async fetchMe() {
+      const [result, eror] = await UserService.me();
+      if (result) {
+        this.$store.commit('setUserInfo', result);
+      }
     },
   },
 };

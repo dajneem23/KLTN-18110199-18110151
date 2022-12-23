@@ -4,10 +4,11 @@ import { throwErr, toOutPut, toPagingOutput } from '@/utils/common';
 import { alphabetSize12 } from '@/utils/randomString';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import AuthService from '../auth/auth.service';
-import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject } from '@/utils/mongoDB';
+import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject, $lookup } from '@/utils/mongoDB';
 import { FilmError, FilmModelToken, FilmErrors, _Film } from '.';
 import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS } from '@/types/Common';
 import { isNil, omit } from 'lodash';
+import { ObjectId } from 'mongodb';
 const TOKEN_NAME = '_FilmService';
 /**
  * A bridge allows another service access to the Model layer
@@ -64,11 +65,11 @@ export class FilmService {
           ..._Film,
           ..._content,
           categories,
-          ...(_subject && { created_by: _subject }),
+          ...(_subject && { author: new ObjectId(_subject) }),
         },
       );
       this.logger.debug('create_success', { _content });
-      return toOutPut({ item: value, keys: this.model._keys });
+      return toOutPut({ item: value });
     } catch (err) {
       this.logger.error('create_error', err.message);
       throw err;
@@ -82,16 +83,16 @@ export class FilmService {
    * @param _subject
    * @returns {Promise<BaseServiceOutput>}
    */
-  async update({ _id, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async update({ _slug: slug, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      await this.model.update($toMongoFilter({ _id }), {
+      await this.model.update($toMongoFilter({ slug }), {
         $set: {
           ..._content,
-          ...(_subject && { updated_by: _subject }),
+          ...(_subject && { updated_by: new ObjectId(_subject) }),
         },
       });
       this.logger.debug('update_success', { _content });
-      return toOutPut({ item: _content, keys: this.model._keys });
+      return toOutPut({ item: _content });
     } catch (err) {
       this.logger.error('update_error', err.message);
       throw err;
@@ -104,12 +105,12 @@ export class FilmService {
    * @param {ObjectId} _subject
    * @returns {Promise<void>}
    */
-  async delete({ _id, _subject }: BaseServiceInput): Promise<void> {
+  async delete({ _slug: slug, _subject }: BaseServiceInput): Promise<void> {
     try {
-      await this.model.delete($toMongoFilter({ _id }), {
-        ...(_subject && { deleted_by: _subject }),
+      await this.model.delete($toMongoFilter({ slug }), {
+        ...(_subject && { deleted_by: new ObjectId(_subject) }),
       });
-      this.logger.debug('delete_success', { _id });
+      this.logger.debug('delete_success', { slug });
       return;
     } catch (err) {
       this.logger.error('delete_error', err.message);
@@ -132,7 +133,9 @@ export class FilmService {
         .get(
           $pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 name: { $regex: q, $options: 'i' },
               }),
@@ -140,14 +143,45 @@ export class FilmService {
                 $or: [
                   {
                     categories: {
-                      $in: $toObjectId(categories),
+                      $in: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
                     },
                   },
                 ],
               }),
             },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories],
+            $sets: [
+              this.model.$sets.author,
+              this.model.$sets.image,
+              {
+                $set: {
+                  video: { $first: '$video' },
+                },
+              },
+            ],
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
+            $lookups: [
+              this.model.$lookups.categories,
+              this.model.$lookups.author,
+              this.model.$lookups.upload_files(),
+              this.model.$lookups.comments,
+              this.model.$lookups.upload_files({
+                refTo: 'images',
+                reName: 'images',
+                operation: '$in',
+              }),
+              $lookup({
+                from: 'upload_file',
+                refFrom: '_id',
+                refTo: 'video',
+                select: 'name url size',
+                reName: 'video',
+                operation: '$eq',
+              }),
+            ],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
@@ -157,7 +191,7 @@ export class FilmService {
       return toPagingOutput({
         items,
         total_count,
-        keys: this.model._keys,
+        // keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('query_error', err.message);
@@ -169,22 +203,47 @@ export class FilmService {
    * @param id - Film ID
    * @returns { Promise<BaseServiceOutput> } - Film
    */
-  async getById({ _id, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async getById({ _slug: slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
       const [item] = await this.model
         .get([
           {
             $match: {
               ...$toMongoFilter({
-                _id,
+                slug,
               }),
             },
           },
           {
-            $addFields: this.model.$addFields.categories,
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
           },
           this.model.$lookups.categories,
           this.model.$lookups.author,
+          this.model.$lookups.comments,
+          this.model.$lookups.upload_files(),
+          this.model.$lookups.upload_files({
+            refTo: 'images',
+            reName: 'images',
+            operation: '$in',
+          }),
+          $lookup({
+            from: 'upload_file',
+            refFrom: '_id',
+            refTo: 'video',
+            select: 'name url size',
+            reName: 'video',
+            operation: '$eq',
+          }),
+          {
+            $set: {
+              video: { $first: '$video' },
+            },
+          },
+          this.model.$sets.image,
           this.model.$sets.author,
           {
             $limit: 1,
@@ -214,11 +273,36 @@ export class FilmService {
             },
           },
           {
-            $addFields: this.model.$addFields.categories,
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
           },
           this.model.$lookups.categories,
           this.model.$lookups.author,
           this.model.$sets.author,
+          this.model.$lookups.comments,
+          this.model.$lookups.upload_files(),
+          this.model.$lookups.upload_files({
+            refTo: 'images',
+            reName: 'images',
+            operation: '$in',
+          }),
+          $lookup({
+            from: 'upload_file',
+            refFrom: '_id',
+            refTo: 'video',
+            select: 'name url size',
+            reName: 'video',
+            operation: '$eq',
+          }),
+          {
+            $set: {
+              video: { $first: '$video' },
+            },
+          },
+          this.model.$sets.image,
           {
             $limit: 1,
           },
@@ -245,7 +329,9 @@ export class FilmService {
         .get([
           ...$pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 $or: [
                   { $text: { $search: q } },
@@ -255,16 +341,86 @@ export class FilmService {
                 ],
               }),
             },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories],
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
+            $sets: [
+              this.model.$sets.author,
+              this.model.$sets.image,
+              {
+                $set: {
+                  video: { $first: '$video' },
+                },
+              },
+            ],
+            $lookups: [
+              this.model.$lookups.comments,
+              this.model.$lookups.categories,
+              this.model.$lookups.author,
+              this.model.$lookups.upload_files(),
+              this.model.$lookups.upload_files({
+                refTo: 'images',
+                reName: 'images',
+                operation: '$in',
+              }),
+              $lookup({
+                from: 'upload_file',
+                refFrom: '_id',
+                refTo: 'video',
+                select: 'name url size',
+                reName: 'video',
+                operation: '$eq',
+              }),
+            ],
+
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
         ])
         .toArray();
       this.logger.debug('query_success', { total_count, items });
-      return toPagingOutput({ items, total_count, keys: this.model._keys });
+      return toPagingOutput({ items, total_count });
     } catch (err) {
       this.logger.error('query_error', err.message);
+      throw err;
+    }
+  }
+  async react({ _subject, _slug: slug }: BaseServiceInput) {
+    try {
+      // TODO: check if user already react
+      const [item] = await this.model
+        .get([
+          {
+            $match: {
+              slug,
+              reacts: {
+                $in: [new ObjectId(_subject)],
+              },
+            },
+          },
+        ])
+        .toArray();
+      const { reacts } = item
+        ? await this.model.update(
+            { slug },
+            {
+              $pull: { reacts: new ObjectId(_subject) },
+            },
+          )
+        : await this.model.update(
+            { slug },
+            {
+              $addToSet: { reacts: new ObjectId(_subject) },
+            },
+          );
+      this.logger.debug('update_success', {});
+      return toOutPut({
+        item: { reacts },
+        //  keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('react_error', err.message);
       throw err;
     }
   }

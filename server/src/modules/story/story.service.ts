@@ -8,6 +8,8 @@ import { $toObjectId, $pagination, $toMongoFilter, $queryByList, $keysToProject 
 import { StoryError, storyModelToken, storyErrors, _story } from '.';
 import { BaseServiceInput, BaseServiceOutput, PRIVATE_KEYS } from '@/types/Common';
 import { isNil, omit } from 'lodash';
+import { ObjectId } from 'mongodb';
+import { userModelToken } from '../user';
 const TOKEN_NAME = '_storyService';
 /**
  * A bridge allows another service access to the Model layer
@@ -26,6 +28,8 @@ export class StoryService {
   private logger = new Logger('StoryService');
 
   private model = Container.get(storyModelToken);
+
+  private userModel = Container.get(userModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;
@@ -55,20 +59,21 @@ export class StoryService {
    */
   async create({ _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      const { name, categories = [] } = _content;
+      const { name, categories = [], images = [] } = _content;
       const value = await this.model.create(
         {
-          // name,
+          name,
         },
         {
           ..._story,
           ..._content,
-          categories,
-          ...(_subject && { created_by: _subject }),
+          ...((Array.isArray(images) && { images: $toObjectId(images) }) || { images: [$toObjectId(images)] }),
+          categories: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
+          ...(_subject && { author: new ObjectId(_subject) }),
         },
       );
       this.logger.debug('create_success', { _content });
-      return toOutPut({ item: value, keys: this.model._keys });
+      return toOutPut({ item: value });
     } catch (err) {
       this.logger.error('create_error', err.message);
       throw err;
@@ -77,21 +82,26 @@ export class StoryService {
 
   /**
    * Update category
-   * @param _id
+   * @param _slug
    * @param _content
    * @param _subject
    * @returns {Promise<BaseServiceOutput>}
    */
   async update({ _id, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
+      const { name, categories = [], images = [] } = _content;
+
       await this.model.update($toMongoFilter({ _id }), {
         $set: {
           ..._content,
-          ...(_subject && { updated_by: _subject }),
+          ...((Array.isArray(images) && { images: $toObjectId(images) }) || { images: [$toObjectId(images)] }),
+          categories: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
+
+          ...(_subject && { updated_by: new ObjectId(_subject) }),
         },
       });
       this.logger.debug('update_success', { _content });
-      return toOutPut({ item: _content, keys: this.model._keys });
+      return toOutPut({ item: _content });
     } catch (err) {
       this.logger.error('update_error', err.message);
       throw err;
@@ -107,7 +117,7 @@ export class StoryService {
   async delete({ _id, _subject }: BaseServiceInput): Promise<void> {
     try {
       await this.model.delete($toMongoFilter({ _id }), {
-        ...(_subject && { deleted_by: _subject }),
+        ...(_subject && { deleted_by: new ObjectId(_subject) }),
       });
       this.logger.debug('delete_success', { _id });
       return;
@@ -132,7 +142,9 @@ export class StoryService {
         .get(
           $pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 name: { $regex: q, $options: 'i' },
               }),
@@ -140,14 +152,27 @@ export class StoryService {
                 $or: [
                   {
                     categories: {
-                      $in: $toObjectId(categories),
+                      $in: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
                     },
                   },
                 ],
               }),
             },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories, this.model.$lookups.author],
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
+            $lookups: [
+              this.model.$lookups.categories,
+              this.model.$lookups.author,
+              this.model.$lookups.comments,
+              this.model.$lookups.upload_files({
+                refTo: 'images',
+                reName: 'images',
+                operation: '$in',
+              }),
+            ],
             $sets: [this.model.$sets.author],
             ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
@@ -158,7 +183,84 @@ export class StoryService {
       return toPagingOutput({
         items,
         total_count,
-        keys: this.model._keys,
+        //  keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('query_error', err.message);
+      throw err;
+    }
+  }
+
+  /**
+   *  Query news
+   * @param {any} _filter
+   * @param {BaseQuery} _query
+   * @returns {Promise<BaseServiceOutput>}
+   *
+   **/
+  async queryFollowing({ _filter, _query, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
+    try {
+      const { q, categories = [] } = _filter;
+      const { page = 1, per_page = 10, sort_by, sort_order } = _query;
+      let following = [];
+      if (_subject) {
+        const { following: _following = [] } = await this.userModel._collection.findOne({
+          _id: new ObjectId(_subject),
+        });
+        following = _following;
+      }
+      const [{ total_count } = { total_count: 0 }, ...items] = await this.model
+        .get(
+          $pagination({
+            $match: {
+              deleted: {
+                $ne: true,
+              },
+              ...(q && {
+                name: { $regex: q, $options: 'i' },
+              }),
+              ...(categories.length && {
+                $or: [
+                  {
+                    categories: {
+                      $in: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
+                    },
+                  },
+                ],
+              }),
+              ...(following.length && {
+                author: {
+                  $in: $toObjectId(following),
+                },
+              }),
+            },
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
+            $lookups: [
+              this.model.$lookups.categories,
+              this.model.$lookups.author,
+              this.model.$lookups.comments,
+              this.model.$lookups.upload_files(),
+              this.model.$lookups.upload_files({
+                refTo: 'images',
+                reName: 'images',
+                operation: '$in',
+              }),
+            ],
+            $sets: [this.model.$sets.author],
+            ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
+            ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
+          }),
+        )
+        .toArray();
+      this.logger.debug('query_success', { total_count, items });
+      return toPagingOutput({
+        items,
+        total_count,
+        //  keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('query_error', err.message);
@@ -170,23 +272,35 @@ export class StoryService {
    * @param id - Story ID
    * @returns { Promise<BaseServiceOutput> } - Story
    */
-  async getById({ _id, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async getById({ _slug, _filter, _permission = 'public' }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
       const [item] = await this.model
         .get([
           {
             $match: {
               ...$toMongoFilter({
-                _id,
+                slug: _slug,
               }),
             },
           },
           {
-            $addFields: this.model.$addFields.categories,
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
           },
           this.model.$lookups.categories,
           this.model.$lookups.author,
           this.model.$sets.author,
+          this.model.$lookups.comments,
+          this.model.$lookups.upload_files(),
+          this.model.$sets.image,
+          this.model.$lookups.upload_files({
+            refTo: 'images',
+            reName: 'images',
+            operation: '$in',
+          }),
           {
             $limit: 1,
           },
@@ -215,11 +329,24 @@ export class StoryService {
             },
           },
           {
-            $addFields: this.model.$addFields.categories,
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
           },
           this.model.$lookups.categories,
+          this.model.$lookups.comments,
+
           this.model.$lookups.author,
           this.model.$sets.author,
+          this.model.$lookups.upload_files(),
+          this.model.$sets.image,
+          this.model.$lookups.upload_files({
+            refTo: 'images',
+            reName: 'images',
+            operation: '$in',
+          }),
           {
             $limit: 1,
           },
@@ -246,7 +373,9 @@ export class StoryService {
         .get([
           ...$pagination({
             $match: {
-              deleted: false,
+              deleted: {
+                $ne: true,
+              },
               ...(q && {
                 $or: [
                   { $text: { $search: q } },
@@ -256,29 +385,33 @@ export class StoryService {
                 ],
               }),
             },
-            $addFields: this.model.$addFields.categories,
-            $lookups: [this.model.$lookups.categories],
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
+            $lookups: [this.model.$lookups.categories, this.model.$lookups.comments],
             ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
           }),
         ])
         .toArray();
       this.logger.debug('query_success', { total_count, items });
-      return toPagingOutput({ items, total_count, keys: this.model._keys });
+      return toPagingOutput({ items, total_count });
     } catch (err) {
       this.logger.error('query_error', err.message);
       throw err;
     }
   }
-  async react({ _subject, _id }: BaseServiceInput) {
+  async react({ _subject, _slug: slug }: BaseServiceInput) {
     try {
       // TODO: check if user already react
       const [item] = await this.model
         .get([
           {
             $match: {
-              _id,
+              slug,
               reacts: {
-                $in: [_subject],
+                $in: [new ObjectId(_subject)],
               },
             },
           },
@@ -286,24 +419,83 @@ export class StoryService {
         .toArray();
       const { reacts } = item
         ? await this.model.update(
-            { _id },
+            { slug },
             {
-              $pull: { reacts: _subject },
+              $pull: { reacts: new ObjectId(_subject) },
             },
           )
         : await this.model.update(
-            { _id },
+            { slug },
             {
-              $addToSet: { reacts: _subject },
+              $addToSet: { reacts: new ObjectId(_subject) },
             },
           );
       this.logger.debug('update_success', {});
       return toOutPut({
         item: { reacts },
-        keys: this.model._keys,
+        //  keys: this.model._keys,
       });
     } catch (err) {
       this.logger.error('react_error', err.message);
+      throw err;
+    }
+  }
+  async getMy({ _subject, _filter, _query }: BaseServiceInput) {
+    try {
+      const { q, categories = [] } = _filter;
+      const { page = 1, per_page = 10, sort_by, sort_order } = _query;
+
+      const [{ total_count } = { total_count: 0 }, ...items] = await this.model
+        .get(
+          $pagination({
+            $match: {
+              deleted: {
+                $ne: true,
+              },
+              ...(q && {
+                name: { $regex: q, $options: 'i' },
+              }),
+              ...(categories.length && {
+                $or: [
+                  {
+                    categories: {
+                      $in: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
+                    },
+                  },
+                ],
+              }),
+              author: new ObjectId(_subject),
+            },
+            $addFields: {
+              ...this.model.$addFields.categories,
+              ...this.model.$addFields.images,
+              ...this.model.$addFields.comments,
+            },
+            $lookups: [
+              this.model.$lookups.categories,
+              this.model.$lookups.author,
+              this.model.$lookups.comments,
+              this.model.$lookups.upload_files(),
+              this.model.$lookups.upload_files({
+                refTo: 'images',
+                reName: 'images',
+                operation: '$in',
+              }),
+            ],
+            $sets: [this.model.$sets.author],
+            ...(sort_by && sort_order && { $sort: { [sort_by]: sort_order == 'asc' ? 1 : -1 } }),
+            ...(per_page && page && { items: [{ $skip: +per_page * (+page - 1) }, { $limit: +per_page }] }),
+          }),
+        )
+        .toArray();
+      this.logger.debug('query_success', { total_count, items });
+      return toPagingOutput({
+        items,
+        total_count,
+        //  keys: this.model._keys,
+      });
+    } catch (err) {
+      this.logger.error('getMyStories_error', err.message);
       throw err;
     }
   }

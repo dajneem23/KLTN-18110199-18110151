@@ -10,18 +10,23 @@ import { toUserOutput } from './user.util';
 import { UserError } from '@/modules/user/user.error';
 import { DEFAULT_USER_PICTURE } from '@/config/constants';
 import { Filter, ObjectId } from 'mongodb';
-import { BaseQuery, PaginationResult } from '@/types/Common';
-import { $queryByList, withMongoTransaction } from '@/utils/mongoDB';
+import { BaseQuery, BaseServiceInput, COLLECTION_NAMES, PaginationResult } from '@/types/Common';
+import { $lookup, $queryByList, withMongoTransaction } from '@/utils/mongoDB';
 import AuthSessionModel from '@/modules/auth/authSession.model';
 import VerificationTokenModel from '@/modules/verificationToken/verificationToken.model';
 import BlocklistService from '@/modules/auth/blocklist.service';
 import { generateTextAlias } from '@/utils/text';
+import e from 'express';
+import { Category } from '../category/category.type';
+import { categoryModelToken } from '../category/category.model';
 
 @Service()
 export class UserService {
   private logger = new Logger('UserService');
 
   public model: UserModel = Container.get(userModelToken);
+
+  public categoriesModel = Container.get(categoryModelToken);
 
   @Inject()
   private authSessionModel: AuthSessionModel;
@@ -98,10 +103,10 @@ export class UserService {
       if (isDuplicated) throwErr(new AuthError('EMAIL_ALREADY_EXISTS'));
       // Create user
       const now = new Date();
-      const user: User = {
+      const user = {
         ...userInput,
         // _full_name_alias: generateTextAlias(userInput.full_name),
-        picture: userInput.picture || DEFAULT_USER_PICTURE, // Should set a default avatar picture
+        avatar: userInput.avatar || new ObjectId('63a1a4a4a82a2a90e96f2b7c'), // Should set a default avatar picture
         id: await UserService.generateID(),
         email_verified: false,
         roles: ['user'],
@@ -110,7 +115,7 @@ export class UserService {
         updated_at: now,
       };
       // Insert user to database
-      const { acknowledged } = await this.model._collection.insertOne(user);
+      const { acknowledged } = await this.model._collection.insertOne(user as any);
       if (!acknowledged) {
         throwErr(new SystemError(`MongoDB insertOne() failed! Payload: ${JSON.stringify(user)}`));
       }
@@ -125,11 +130,33 @@ export class UserService {
   /**
    * Get user by ID
    */
-  async getById(id: User['id']) {
+  async getById(_id: User['id']) {
     try {
-      const user = await this.model._collection.findOne({ id });
+      const [user] = await this.model._collection
+        .aggregate([
+          {
+            $match: {
+              _id: new ObjectId(_id),
+            },
+          },
+          {
+            $addFields: {
+              ...this.model.$addFields.following,
+            },
+          },
+          $lookup({
+            from: COLLECTION_NAMES.upload_file,
+            refFrom: '_id',
+            refTo: 'avatar',
+            select: 'name url size',
+            reName: 'avatar',
+            operation: '$eq',
+          }),
+          this.model.$lookups.following,
+        ])
+        .toArray();
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
-      this.logger.debug('[getById:success]', { id, email: user.email });
+      this.logger.debug('[getById:success]', { _id, email: user.email });
       return toUserOutput(user as any);
     } catch (err) {
       this.logger.error('[getById:error]', err.message);
@@ -140,20 +167,20 @@ export class UserService {
   /**
    * Update user
    */
-  async update(id: User['id'], data: Partial<User>) {
+  async update(_id: User['id'], data: Partial<User>) {
     try {
-      const { value: user } = await this.model._collection.findOneAndUpdate(
-        { id },
+      const { avatar, ...rest } = data;
+      const user = await this.model.update(
+        {
+          _id: new ObjectId(_id),
+        },
         {
           $set: {
             ...data,
-            ...(data.name && { _full_name_alias: generateTextAlias(data.name) }),
-            updated_at: new Date(),
+            avatar: avatar ? new ObjectId(avatar) : undefined,
           },
         },
-        { returnDocument: 'after' },
       );
-      if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[update:success]', { email: user.email });
       return toUserOutput(user as any);
     } catch (err) {
@@ -224,14 +251,14 @@ export class UserService {
     }
   }
 
-  async push(id: any, ...data: any) {
+  async push(_id: any, ...data: any) {
     try {
       const {
         value: user,
         ok,
         lastErrorObject: { updatedExisting },
       } = await this.model._collection.findOneAndUpdate(
-        { id },
+        { _id: new ObjectId(_id) },
         {
           $set: {
             updated_at: new Date(),
@@ -243,23 +270,24 @@ export class UserService {
         { returnDocument: 'after' },
       );
       if (!updatedExisting) throwErr(new UserError('USER_NOT_FOUND'));
-      if (!ok) throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ id, data })}`));
+      if (!ok)
+        throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ _id, data })}`));
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[update:success]', { email: user.email });
-      return toOutPut({ item: user, keys: this.model._keys });
+      return toOutPut({ item: user });
     } catch (err) {
       this.logger.error('[update:error]', err.message);
       throw err;
     }
   }
-  async pull(id: any, ...data: any) {
+  async pull(_id: any, ...data: any) {
     try {
       const {
         value: user,
         ok,
         lastErrorObject: { updatedExisting },
       } = await this.model._collection.findOneAndUpdate(
-        { id },
+        { _id: new ObjectId(_id) },
         {
           $set: {
             updated_at: new Date(),
@@ -271,12 +299,143 @@ export class UserService {
         { returnDocument: 'after' },
       );
       if (!updatedExisting) throwErr(new UserError('USER_NOT_FOUND'));
-      if (!ok) throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ id, data })}`));
+      if (!ok)
+        throwErr(new SystemError(`MongoDB findOneAndUpdate() failed! Payload: ${JSON.stringify({ _id, data })}`));
       if (!user) throwErr(new UserError('USER_NOT_FOUND'));
       this.logger.debug('[update:success]', { email: user.email });
-      return toOutPut({ item: user, keys: this.model._keys });
+      return toOutPut({ item: user });
     } catch (err) {
       this.logger.error('[update:error]', err.message);
+      throw err;
+    }
+  }
+  async followUser({ _subject, _id }: BaseServiceInput) {
+    try {
+      //todo: check if user exist
+      const [userToFollow] = await this.model
+        .get([
+          {
+            $match: { _id: new ObjectId(_id) },
+          },
+        ])
+        .toArray();
+      if (!userToFollow) throwErr(new UserError('USER_NOT_FOUND'));
+      //todo: check if user already react
+      const [item] = await this.model
+        .get([
+          {
+            $match: {
+              _id: new ObjectId(_subject),
+              following: {
+                $in: [new ObjectId(_id)],
+              },
+            },
+          },
+        ])
+        .toArray();
+
+      if (item) {
+        const { following } = await this.model.update(
+          { _id: new ObjectId(_subject) },
+          {
+            $pull: { following: new ObjectId(_id) },
+          },
+        );
+        await this.model.update(
+          { _id: new ObjectId(_id) },
+          {
+            $pull: { followers: new ObjectId(_subject) },
+          },
+        );
+        return toOutPut({
+          item: { following },
+          //  keys: this.model._keys,
+        });
+      } else {
+        const { following } = await this.model.update(
+          { _id: new ObjectId(_subject) },
+          {
+            $addToSet: { following: new ObjectId(_id) },
+          },
+        );
+        await this.model.update(
+          { _id: new ObjectId(_id) },
+          {
+            $addToSet: { followers: new ObjectId(_subject) },
+          },
+        );
+        return toOutPut({
+          item: { following },
+          //  keys: this.model._keys,
+        });
+      }
+    } catch (err) {
+      this.logger.error('react_error', err.message);
+      throw err;
+    }
+  }
+
+  async followCategory({ _subject, _id }: BaseServiceInput) {
+    try {
+      //todo: check if user exist
+      const [categoryToFollow] = await this.categoriesModel
+        .get([
+          {
+            $match: { _id: new ObjectId(_id) },
+          },
+        ])
+        .toArray();
+      if (!categoryToFollow) throwErr(new UserError('CATEGORY_NOT_FOUND'));
+      //todo: check if user already react
+      const [item] = await this.model
+        .get([
+          {
+            $match: {
+              _id: new ObjectId(_subject),
+              categories: {
+                $in: [new ObjectId(_id)],
+              },
+            },
+          },
+        ])
+        .toArray();
+      if (item) {
+        const { categories } = await this.model.update(
+          { _id: new ObjectId(_subject) },
+          {
+            $pull: { categories: new ObjectId(_id) },
+          },
+        );
+        await this.categoriesModel.update(
+          { _id: new ObjectId(_id) },
+          {
+            $pull: { users: new ObjectId(_subject) },
+          },
+        );
+        return toOutPut({
+          item: { categories },
+          //  keys: this.model._keys,
+        });
+      } else {
+        const { categories } = await this.model.update(
+          { _id: new ObjectId(_subject) },
+          {
+            $addToSet: { categories: new ObjectId(_id) },
+          },
+        );
+        await this.categoriesModel.update(
+          { _id: new ObjectId(_id) },
+          {
+            $addToSet: { users: new ObjectId(_subject) },
+          },
+        );
+        return toOutPut({
+          item: { categories },
+          //  keys: this.model._keys,
+        });
+      }
+    } catch (err) {
+      this.logger.error('react_error', err.message);
       throw err;
     }
   }

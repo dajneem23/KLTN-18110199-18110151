@@ -3,7 +3,7 @@ import { User } from './user.type';
 import { keys } from 'ts-transformer-keys';
 import { BaseModel } from '../base/base.model';
 
-const COLLECTION_NAME = 'users';
+const COLLECTION_NAME = 'users-permissions_user';
 const TOKEN_NAME = '_userModel';
 export const userModelToken = new Token<UserModel>(TOKEN_NAME);
 @Service(userModelToken)

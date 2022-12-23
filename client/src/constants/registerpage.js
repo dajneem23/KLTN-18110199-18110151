@@ -19,6 +19,13 @@ export const REGISTER_ITEM = {
     },
     error: '',
   },
+  passWordConfirm: {
+    title: {
+      vi: 'Xác nhận mật khẩu',
+      en: 'Confirm Password',
+    },
+    error: '',
+  },
   name: {
     title: {
       vi: 'Họ và tên',

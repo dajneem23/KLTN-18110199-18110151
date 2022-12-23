@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { Inject, Service } from 'typedi';
 import AuthService from '@/modules/auth/auth.service';
 import httpStatusCode from 'http-status';
-import { Controller, Post, Res, Body, Auth } from '@/utils/expressDecorators';
+import { Controller, Post, Res, Body, Auth, Get } from '@/utils/expressDecorators';
 import * as authValidation from './auth.validation';
 import { protect } from '@/api/middlewares/protect';
 import { JWTPayload } from '@/modules/auth/authSession.type';
@@ -40,6 +40,17 @@ export class AuthController {
       sameSite: 'none',
     });
     return res.status(httpStatusCode.OK).json(result);
+  }
+
+  @Get('/auth/logout', [protect()])
+  async logout(@Res() res: Response, @Auth() auth: JWTPayload) {
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: env.MODE === 'production',
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      sameSite: 'none',
+    });
+    return res.status(httpStatusCode.NO_CONTENT).end();
   }
 
   /**

@@ -1,0 +1,69 @@
+{
+  "kind": "collectionType",
+  "collectionName": "films",
+  "info": {
+    "name": "Films",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "deleted": {
+      "type": "boolean"
+    },
+    "author": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "reacts": {
+      "plugin": "users-permissions",
+      "collection": "user"
+    },
+    "views": {
+      "type": "biginteger"
+    },
+    "video": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "comments": {
+      "collection": "comments"
+    }
+  }
+}

@@ -1,19 +1,37 @@
 import { HEADER_ITEM } from '../../constants';
 import { mapState } from 'vuex';
 import { store } from '../../store/vuex';
-var mark = 'home';
+import { AuthService } from '@/services';
 
 export default {
   name: 'Header',
   computed: {
-    ...mapState(['userInfo', 'isAuthenticated']),
+    ...mapState(['userInfo', 'isAuthenticated', 'isPage']),
   },
   mounted() {
-    // console.log(store.state.isAuthenticated);
+    // store.commit('setIsPage', 'home');
+    console.log(this.isPage);
   },
   methods: {
-    logOut() {
-      console.log('Log Out');
+    async logOut() {
+      const [result, error] = await AuthService.logout();
+      console.log(result);
+      if (result) {
+        this.$store.commit('setUserInfo', null);
+        this.$store.commit('setIsAuthenticated', false);
+      }
+      //refresh page
+      window.location.reload();
+    },
+    async fetchMe() {
+      const [result, eror] = await UserService.me();
+      if (result) {
+        this.$store.commit('setUserInfo', result);
+        this.$store.commit('setIsAuthenticated', true);
+      } else {
+        this.$store.commit('setUserInfo', null);
+        this.$store.commit('setIsAuthenticated', false);
+      }
     },
     showtoolTip() {
       const toolTip = document.getElementById('toolTip-user');
@@ -21,7 +39,7 @@ export default {
       const caretUp = document.getElementById('caret-up');
       if (toolTip.classList.length === 2) {
         toolTip.classList.add('showToolTip');
-        toolTip.style.top = '70px';
+        toolTip.style.top = '60px';
         caretDown.style.display = 'none';
         caretUp.classList.remove('caret-hidden');
       } else {
@@ -31,56 +49,64 @@ export default {
         toolTip.classList.remove('showToolTip');
       }
     },
+    showBoxNotification() {},
+    hiddenBoxNotification() {},
     onHomeBtnClick: function () {
-      this.$refs.home.classList.add('active');
-      this.$refs.news.classList.remove('active');
-      this.$refs.manga.classList.remove('active');
-      this.$refs.movie.classList.remove('active');
-      this.$refs.chat.classList.remove('active');
-      mark = 'home';
-      console.log(mark);
+      // this.$refs.home.classList.add('active');
+      // this.$refs.news.classList.remove('active');
+      // this.$refs.manga.classList.remove('active');
+      // this.$refs.movie.classList.remove('active');
+      // this.$refs.chat.classList.remove('active');
+      // mark = 'home';
+      // console.log(mark);
+      store.commit('setIsPage', 'home');
     },
     onNewsBtnClick: function () {
-      this.$refs.news.classList.add('active');
-      this.$refs.home.classList.remove('active');
-      this.$refs.manga.classList.remove('active');
-      this.$refs.movie.classList.remove('active');
-      this.$refs.chat.classList.remove('active');
-      mark = 'home';
-      console.log(mark);
+      // this.$refs.news.classList.add('active');
+      // this.$refs.home.classList.remove('active');
+      // this.$refs.manga.classList.remove('active');
+      // this.$refs.movie.classList.remove('active');
+      // this.$refs.chat.classList.remove('active');
+      // mark = 'home';
+      // console.log(mark);
+      store.commit('setIsPage', 'articles');
     },
     onMangaBtnClick: function () {
-      this.$refs.manga.classList.add('active');
-      this.$refs.news.classList.remove('active');
-      this.$refs.home.classList.remove('active');
-      this.$refs.movie.classList.remove('active');
-      this.$refs.chat.classList.remove('active');
-      mark = 'manga';
-      console.log(mark);
+      // this.$refs.manga.classList.add('active');
+      // this.$refs.news.classList.remove('active');
+      // this.$refs.home.classList.remove('active');
+      // this.$refs.movie.classList.remove('active');
+      // this.$refs.chat.classList.remove('active');
+      // mark = 'manga';
+      // console.log(mark);
+      store.commit('setIsPage', 'manga');
     },
     onMovieBtnClick: function () {
-      this.$refs.movie.classList.add('active');
-      this.$refs.news.classList.remove('active');
-      this.$refs.manga.classList.remove('active');
-      this.$refs.home.classList.remove('active');
-      this.$refs.chat.classList.remove('active');
-      mark = 'movie';
-      console.log(mark);
+      // this.$refs.movie.classList.add('active');
+      // this.$refs.news.classList.remove('active');
+      // this.$refs.manga.classList.remove('active');
+      // this.$refs.home.classList.remove('active');
+      // this.$refs.chat.classList.remove('active');
+      // mark = 'movie';
+      // console.log(mark);
+      store.commit('setIsPage', 'movie');
     },
     onChatBtnClick: function () {
-      this.$refs.chat.classList.add('active');
-      this.$refs.news.classList.remove('active');
-      this.$refs.movie.classList.remove('active');
-      this.$refs.manga.classList.remove('active');
-      this.$refs.home.classList.remove('active');
-      mark = 'chat';
-      console.log(mark);
+      // this.$refs.chat.classList.add('active');
+      // this.$refs.news.classList.remove('active');
+      // this.$refs.movie.classList.remove('active');
+      // this.$refs.manga.classList.remove('active');
+      // this.$refs.home.classList.remove('active');
+      // mark = 'chat';
+      // console.log(mark);
+      store.commit('setIsPage', 'chat');
     },
   },
   data() {
     return {
       lang: 'vi',
       HEADER_ITEM,
+      isShowNotifi: false,
     };
   },
 };

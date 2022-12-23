@@ -9,7 +9,14 @@
       <div class="header-nav_left">
         <div class="category">
           <router-link :to="HEADER_ITEM.home.path">
-            <div class="category-item" :ref="HEADER_ITEM.home.ref" @click="onHomeBtnClick">
+            <div
+              class="category-item"
+              :class="{
+                active: isPage == 'home',
+              }"
+              :ref="HEADER_ITEM.home.ref"
+              @click="onHomeBtnClick"
+            >
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                   <path
@@ -24,7 +31,14 @@
             <!-- {{ HEADER_ITEM.home.title[lang] }} -->
           </router-link>
           <router-link :to="HEADER_ITEM.news.path">
-            <div class="category-item" :ref="HEADER_ITEM.news.ref" @click="onNewsBtnClick">
+            <div
+              class="category-item"
+              :class="{
+                active: isPage == 'articles',
+              }"
+              :ref="HEADER_ITEM.news.ref"
+              @click="onNewsBtnClick"
+            >
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <path
@@ -39,7 +53,14 @@
             <!-- {{ HEADER_ITEM.home.title[lang] }} -->
           </router-link>
           <router-link :to="HEADER_ITEM.manga.path">
-            <div class="category-item" :ref="HEADER_ITEM.manga.ref" @click="onMangaBtnClick">
+            <div
+              class="category-item"
+              :class="{
+                active: isPage == 'manga',
+              }"
+              :ref="HEADER_ITEM.manga.ref"
+              @click="onMangaBtnClick"
+            >
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                   <path
@@ -56,7 +77,14 @@
           }} -->
           </router-link>
           <router-link :to="HEADER_ITEM.movie.path">
-            <div class="category-item" :ref="HEADER_ITEM.movie.ref" @click="onMovieBtnClick">
+            <div
+              class="category-item"
+              :class="{
+                active: isPage == 'movie',
+              }"
+              :ref="HEADER_ITEM.movie.ref"
+              @click="onMovieBtnClick"
+            >
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
@@ -74,7 +102,15 @@
           }} -->
           </router-link>
           <router-link :to="HEADER_ITEM.chat.path">
-            <div class="category-item" :ref="HEADER_ITEM.chat.ref" @click="onChatBtnClick">
+            <div
+              class="category-item"
+              :class="{
+                active: isPage == 'chat',
+              }"
+              :ref="HEADER_ITEM.chat.ref"
+              @click="onChatBtnClick"
+              v-if="isAuthenticated"
+            >
               <div class="category-item_icon fill-blue_3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
                   <path
@@ -86,6 +122,7 @@
                 {{ HEADER_ITEM.chat.title[lang] }}
               </div>
             </div>
+
             <!-- {{
             HEADER_ITEM.chat.title[lang]
           }} -->
@@ -96,13 +133,13 @@
         <!-- <router-link to="/about">
           <button type="button" class="btn-none">Về Vrum</button>
         </router-link> -->
-        <div class="picture-user">
-          <img :src="userInfo?.picture" alt="" />
-        </div>
+        <!-- <div class="picture-user">
+          <img :src="userInfo?.avatar[0].url" alt="" />
+        </div> -->
         <div v-if="isAuthenticated" class="category-item-user">
           <div class="name-user" @click="showtoolTip">
             <span>
-              {{ userInfo?.name }}
+              {{ userInfo ? userInfo?.username : '' }}
             </span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" id="caret-down">
               <path
@@ -117,9 +154,30 @@
           </div>
           <div class="title_tooltip-user bgc-white" id="toolTip-user">
             <router-link to="/profile/">
-              <div class="tooltip-user--item">Trang cá nhân</div>
+              <div class="tooltip-user--item" @click="showtoolTip">Trang cá nhân</div>
             </router-link>
-            <div class="tooltip-user--item" @click="logOut">Đăng xuất</div>
+
+            <!-- <div class="tooltip-user--item text-dark" @click="showBoxNotification" id="label_notifi">
+              Thông báo
+              <span>3</span>
+              <div class="title_tooltip-user bgc-white" id="toolTip_notification">
+                <div class="tooltip-user--item">
+                  <div class="content_notifi">Tran Hoang Long đã theo dõi bạn</div>
+                  <div class="btn_follow">Theo dõi lại</div>
+                </div>
+                <div class="tooltip-user--item text-dark">
+                  <div class="content_notifi">Tran Hoang Long đã theo dõi bạn</div>
+                  <div class="btn_follow">Theo dõi lại</div>
+                </div>
+                <div class="tooltip-user--item text-dark">
+                  <div class="content_notifi">Tran Hoang Long đã theo dõi bạn</div>
+                  <div class="btn_follow">Theo dõi lại</div>
+                </div>
+              </div>
+            </div> -->
+            <router-link to="#">
+              <div class="tooltip-user--item text-dark" @click="logOut">Đăng xuất</div>
+            </router-link>
           </div>
         </div>
         <div v-else>

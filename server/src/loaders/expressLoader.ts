@@ -19,7 +19,7 @@ import { CommonError, UnknownError } from '@/core/errors/CommonError';
 /**
  * Convert any error to AppError
  */
-const convertError = (err: any): AppError => {
+export const convertError = (err: any): AppError => {
   if (err instanceof AppError) return err;
   // Convert validation error
   if (isCelebrateError(err)) {
@@ -51,7 +51,7 @@ const buildErrorResponse = (err: AppError, language?: string) => {
  * Handle Express error
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   const error = convertError(err);
   const errorResponse = buildErrorResponse(error, req.headers['accept-language']);
   return res.status(error.status).json({ error: errorResponse });
@@ -60,7 +60,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 /**
  * Catch 404 error
  */
-const notFoundHandler: RequestHandler = (req, res, next) => {
+export const notFoundHandler: RequestHandler = (req, res, next) => {
   return next(new CommonError('common.not_found'));
 };
 
@@ -89,7 +89,7 @@ const expressLoader = (): Express => {
 
   // Parse incoming request bodies in a middleware before your handlers, available under the "req.body" property
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.urlencoded({ extended: true, limit: '500mb' }));
   // Parse Cookie header and populate "req.cookies" with an object keyed by the cookie names.
   app.use(cookieParser());
   // Compress all responses (gzip)
@@ -128,14 +128,14 @@ const expressLoader = (): Express => {
   // Mount API routes
   // ----------------------------------------------------------------
 
-  APIRoutesV1(app);
+  // APIRoutesV1(app);
 
   // ----------------------------------------------------------------
   // Error handlers
   // ----------------------------------------------------------------
 
-  app.use(notFoundHandler);
-  app.use(errorHandler);
+  // app.use(notFoundHandler);
+  // app.use(errorHandler);
 
   logger.success('Express Application loaded');
 

@@ -23,16 +23,44 @@ export class UserController {
 
   @Get('/users/me', [protect({})])
   async getMe(@Res() res: Response, @Auth() auth: JWTPayload) {
-    const user = await this.userService.getById(auth.id);
+    const user = await this.userService.getById(auth._id);
     res.status(httpStatusCode.OK).json(user);
   }
 
   @Put('/users/me', [userValidation.updateMe, protect()])
   async updateMe(@Res() res: Response, @Body() body: any, @Auth() auth: JWTPayload) {
-    const user = await this.userService.update(auth.id, body);
+    const user = await this.userService.update(auth._id, body);
     res.status(httpStatusCode.OK).json(user);
   }
 
+  @Patch('/users/follow_user/:id', [protect()])
+  async followUser(
+    @Res() res: Response,
+    @Body() body: any,
+    @Auth() auth: JWTPayload,
+    @Params() params: { id: string },
+  ) {
+    const user = await this.userService.followUser({
+      _id: params.id,
+      _subject: auth._id,
+      _content: {},
+    });
+    res.status(httpStatusCode.OK).json(user);
+  }
+  @Patch('/users/follow_category/:id', [protect()])
+  async followCategory(
+    @Res() res: Response,
+    @Body() body: any,
+    @Auth() auth: JWTPayload,
+    @Params() params: { id: string },
+  ) {
+    const user = await this.userService.followCategory({
+      _id: params.id,
+      _subject: auth._id,
+      _content: {},
+    });
+    res.status(httpStatusCode.OK).json(user);
+  }
   // ----------------------------------------------------------------
   // PRIVATE ROUTES
   // ----------------------------------------------------------------
@@ -46,13 +74,13 @@ export class UserController {
 
   @Get('/private/users/me', [protect()])
   async privateGetMe(@Res() res: Response, @Auth() auth: JWTPayload) {
-    const user = await this.userService.getById(auth.id);
+    const user = await this.userService.getById(auth._id);
     res.status(httpStatusCode.OK).json(user);
   }
 
   @Put('/private/users/me', [userValidation.updateMe, protect()])
   async privateUpdateMe(@Res() res: Response, @Body() body: any, @Auth() auth: JWTPayload) {
-    const user = await this.userService.update(auth.id, body);
+    const user = await this.userService.update(auth._id, body);
     res.status(httpStatusCode.OK).json(user);
   }
 

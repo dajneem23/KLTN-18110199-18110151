@@ -116,7 +116,7 @@ export const toPagingOutput = ({
 }: {
   items: any;
   total_count: number;
-  keys: string[] | (string | number | symbol)[];
+  keys?: string[] | (string | number | symbol)[];
   nullable?: boolean;
 }): {
   total_count: number;

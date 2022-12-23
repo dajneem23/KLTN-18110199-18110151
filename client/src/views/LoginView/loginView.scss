@@ -1,7 +1,7 @@
-.wrapper {
+.wrapper-login {
   height: 100vh;
   // background: linear-gradient(-135deg, var(--primary-blue), var(--primary-blue_3));
-  background: url(../../assets//Icon//anime-bg-4.jpg);
+  background: url('https://cdn.mos.cms.futurecdn.net/HuGGeENt6kGyixe3hT9tnY.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   // opacity: 0.85;
@@ -10,7 +10,7 @@
   align-items: center;
 }
 .wrapper_1 {
-  background: url(../../assets//Icon//anime-bg-3.jpg);
+  background: url('https://www.openaccessgovernment.org/wp-content/uploads/2019/09/dreamstime_xxl_123015144.jpg');
 }
 h3 {
   text-align: center;
@@ -48,6 +48,7 @@ h3 {
   border: 0;
   padding: 0 10px;
   border-radius: 5px;
+  color: var(--dark-gray);
 }
 .form-input:focus-visible {
   outline: none;

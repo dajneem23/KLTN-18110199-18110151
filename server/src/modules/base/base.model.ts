@@ -19,7 +19,6 @@ import { $refValidation } from '@/utils/validation';
 import { COLLECTION_NAMES, PRIVATE_KEYS, RemoveSlugPattern, T } from '@/types';
 import slugify from 'slugify';
 import { omit } from 'lodash';
-import { locale } from 'dayjs';
 
 /**
  * @class BaseModel
@@ -33,7 +32,9 @@ export class BaseModel {
   readonly _keys: (string | number | symbol)[];
 
   readonly _defaultFilter = {
-    deleted: false,
+    deleted: {
+      $ne: true,
+    },
   };
   readonly _defaultKeys = ['author', 'id'];
   // Get Db instance from DI
@@ -46,135 +47,66 @@ export class BaseModel {
   }
 
   get $lookups(): {
-    country: any;
-    products: any;
-    projects: any;
     categories: any;
     author: any;
-    team: any;
-    directors: any;
-    cryptocurrencies: any;
-    event_tags: any;
-    person_tags: any;
-    product_tags: any;
-    company_tags: any;
-    coin_tags: any;
-    speakers: any;
     sub_categories: any;
+    upload_files: any;
+    comments: any;
+    chat_users: any;
+    messages: any;
+    following: any;
   } {
     return {
-      products: $lookup({
-        from: 'products',
-        refFrom: '_id',
-        refTo: 'products',
-        select: 'name',
-        reName: 'products',
-        operation: '$in',
-      }),
-      projects: $lookup({
-        from: 'projects',
-        refFrom: '_id',
-        refTo: 'projects',
-        select: 'name',
-        reName: 'projects',
-        operation: '$in',
-      }),
       categories: $lookup({
         from: 'categories',
         refFrom: '_id',
         refTo: 'categories',
-        select: 'title type',
+        select: 'name type slug',
         reName: 'categories',
         operation: '$in',
       }),
       author: $lookup({
-        from: 'users',
-        refFrom: 'id',
-        refTo: 'created_by',
-        select: 'name picture avatar',
+        from: 'users-permissions_user',
+        refFrom: '_id',
+        refTo: 'author',
+        select: 'username avatar',
         reName: 'author',
         operation: '$eq',
+        pipeline: [
+          $lookup({
+            from: COLLECTION_NAMES.upload_file,
+            refFrom: '_id',
+            refTo: 'avatar',
+            select: 'name url size',
+            reName: 'avatar',
+            operation: '$eq',
+          }),
+        ],
       }),
-      team: $lookup({
-        from: 'team',
-        refFrom: '_id',
-        refTo: 'team',
-        select: 'name avatar',
-        reName: 'team',
-        operation: '$in',
-      }),
-      directors: $lookup({
-        from: 'persons',
-        refFrom: '_id',
-        refTo: 'director',
-        select: 'name avatar',
-        reName: 'director',
-        operation: '$eq',
-      }),
-      cryptocurrencies: $lookup({
-        from: 'coins',
-        refFrom: '_id',
-        refTo: 'cryptocurrencies',
-        select: 'name token_id',
-        reName: 'cryptocurrencies',
-        operation: '$in',
-      }),
-      country: $lookup({
-        from: 'countries',
-        refFrom: 'code',
-        refTo: 'country',
-        select: 'name',
-        reName: 'country',
-        operation: '$eq',
-      }),
-      coin_tags: $lookup({
-        from: 'coins',
-        refFrom: '_id',
-        refTo: 'coin_tags',
-        select: 'name',
-        reName: 'coin_tags',
-        operation: '$in',
-      }),
-      company_tags: $lookup({
-        from: 'companies',
-        refFrom: '_id',
-        refTo: 'company_tags',
-        select: 'name',
-        reName: 'company_tags',
-        operation: '$in',
-      }),
-      product_tags: $lookup({
-        from: 'products',
-        refFrom: '_id',
-        refTo: 'product_tags',
-        select: 'name',
-        reName: 'product_tags',
-        operation: '$in',
-      }),
-      person_tags: $lookup({
-        from: 'persons',
-        refFrom: '_id',
-        refTo: 'person_tags',
-        select: 'name',
-        reName: 'person_tags',
-        operation: '$in',
-      }),
-      event_tags: $lookup({
-        from: 'events',
-        refFrom: '_id',
-        refTo: 'event_tags',
-        select: 'name avatar',
-        reName: 'event_tags',
-        operation: '$in',
-      }),
-      speakers: $lookup({
-        from: 'persons',
-        refFrom: '_id',
-        refTo: 'speakers',
-        select: 'name avatar',
-        reName: 'speakers',
-        operation: '$in',
-      }),
+      upload_files: ({
+        from = COLLECTION_NAMES.upload_file,
+        refFrom = '_id',
+        refTo = 'image',
+        select = 'name url size',
+        reName = 'image',
+        operation = '$eq',
+      }: {
+        from?: COLLECTION_NAMES;
+        refFrom?: string;
+        refTo?: string;
+        select?: string;
+        reName?: string;
+        operation?: '$eq' | '$in';
+      } = {}) =>
+        $lookup({
+          from,
+          refFrom,
+          refTo,
+          select,
+          reName,
+          operation,
+        }),
+
       sub_categories: $lookup({
         from: 'categories',
         refFrom: '_id',
@@ -183,12 +115,159 @@ export class BaseModel {
         reName: 'sub_categories',
         operation: '$in',
       }),
+      chat_users: $lookup({
+        from: 'users-permissions_user',
+        refFrom: '_id',
+        refTo: 'users',
+        select: 'username avatar',
+        reName: 'users',
+        operation: '$in',
+        pipeline: [
+          $lookup({
+            from: COLLECTION_NAMES.upload_file,
+            refFrom: '_id',
+            refTo: 'avatar',
+            select: 'name url size',
+            reName: 'avatar',
+            operation: '$eq',
+          }),
+        ],
+      }),
+      following: $lookup({
+        from: 'users-permissions_user',
+        refFrom: '_id',
+        refTo: 'following',
+        select: 'username avatar',
+        reName: 'following',
+        operation: '$in',
+        pipeline: [
+          $lookup({
+            from: COLLECTION_NAMES.upload_file,
+            refFrom: '_id',
+            refTo: 'avatar',
+            select: 'name url size',
+            reName: 'avatar',
+            operation: '$eq',
+          }),
+        ],
+      }),
+      messages: $lookup({
+        from: 'messages',
+        refFrom: '_id',
+        refTo: 'messages',
+        select: 'content images type author',
+        reName: 'messages',
+        operation: '$in',
+        pipeline: [
+          $lookup({
+            from: 'users-permissions_user',
+            refFrom: '_id',
+            refTo: 'author',
+            select: 'username avatar',
+            reName: 'author',
+            operation: '$eq',
+            pipeline: [
+              $lookup({
+                from: COLLECTION_NAMES.upload_file,
+                refFrom: '_id',
+                refTo: 'avatar',
+                select: 'name url size',
+                reName: 'avatar',
+                operation: '$eq',
+              }),
+            ],
+          }),
+          {
+            $set: {
+              author: { $first: '$author' },
+            },
+          },
+        ],
+      }),
+      comments: $lookup({
+        from: 'comments',
+        refFrom: '_id',
+        refTo: 'comments',
+        select: 'content images type replies author up_votes down_votes',
+        reName: 'comments',
+        operation: '$in',
+        pipeline: [
+          {
+            $addFields: {
+              votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] },
+            },
+          },
+          { $sort: { votes: -1 } },
+          $lookup({
+            from: 'users-permissions_user',
+            refFrom: '_id',
+            refTo: 'author',
+            select: 'username avatar',
+            reName: 'author',
+            operation: '$eq',
+            pipeline: [
+              $lookup({
+                from: COLLECTION_NAMES.upload_file,
+                refFrom: '_id',
+                refTo: 'avatar',
+                select: 'name url size',
+                reName: 'avatar',
+                operation: '$eq',
+              }),
+            ],
+          }),
+          {
+            $set: {
+              author: { $first: '$author' },
+            },
+          },
+          $lookup({
+            from: 'comments',
+            refFrom: '_id',
+            refTo: 'replies',
+            select: 'content images type replies author up_votes down_votes',
+            reName: 'replies',
+            operation: '$in',
+            pipeline: [
+              {
+                $addFields: {
+                  votes: { $subtract: [{ $size: '$up_votes' }, { $size: '$down_votes' }] },
+                },
+              },
+              { $sort: { votes: -1 } },
+              $lookup({
+                from: 'users-permissions_user',
+                refFrom: '_id',
+                refTo: 'author',
+                select: 'username avatar',
+                reName: 'author',
+                operation: '$eq',
+                pipeline: [
+                  $lookup({
+                    from: COLLECTION_NAMES.upload_file,
+                    refFrom: '_id',
+                    refTo: 'avatar',
+                    select: 'name url size',
+                    reName: 'avatar',
+                    operation: '$eq',
+                  }),
+                ],
+              }),
+              {
+                $set: {
+                  author: { $first: '$author' },
+                },
+              },
+            ],
+          }),
+        ],
+      }),
     };
   }
   get $sets(): {
-    country: {
+    image: {
       $set: {
-        country: { $first: '$country' };
+        image: { $first: '$image' };
       };
     };
     author: {
@@ -196,32 +275,25 @@ export class BaseModel {
         author: { $first: '$author' };
       };
     };
-    trans: {
-      $set: {
-        trans: { $first: '$trans' };
-      };
-    };
   } {
     return {
-      country: {
-        $set: {
-          country: { $first: '$country' },
-        },
-      },
       author: {
         $set: {
           author: { $first: '$author' },
         },
       },
-      trans: {
+      image: {
         $set: {
-          trans: { $first: '$trans' },
+          image: { $first: '$image' },
         },
       },
     };
   }
   get $addFields(): {
     categories: any;
+    images: any;
+    comments: any;
+    following: any;
   } {
     return {
       categories: {
@@ -232,6 +304,39 @@ export class BaseModel {
             },
             then: [],
             else: '$categories',
+          },
+        },
+      },
+      images: {
+        images: {
+          $cond: {
+            if: {
+              $ne: [{ $type: '$images' }, 'array'],
+            },
+            then: [],
+            else: '$images',
+          },
+        },
+      },
+      comments: {
+        comments: {
+          $cond: {
+            if: {
+              $ne: [{ $type: '$comments' }, 'array'],
+            },
+            then: [],
+            else: '$comments',
+          },
+        },
+      },
+      following: {
+        following: {
+          $cond: {
+            if: {
+              $ne: [{ $type: '$following' }, 'array'],
+            },
+            then: [],
+            else: '$following',
           },
         },
       },
@@ -255,31 +360,31 @@ export class BaseModel {
     this._keys = [..._keys, ...this._defaultKeys].filter((v, i, a) => a.indexOf(v) === i);
     this._collectionName = collectionName;
     this._collection = this.db.collection<any>(collectionName);
-    Promise.allSettled(
-      indexes.map(
-        ({
-          field,
-          options = {},
-        }: {
-          field: {
-            [key: string]: IndexDirection;
-          };
-          options?: CreateIndexesOptions;
-        }) => {
-          return this._collection.createIndex(field, options);
-        },
-      ),
-    ).then((results) => {
-      results.forEach((result) => {
-        if (result.status === 'rejected') {
-          this.logger.error(`error`, `[createIndex:${this._collectionName}:error]`, result.reason);
-          throwErr(this.error('common.database'));
-        } else {
-          // this.logger.debug('success', `[createIndex:${this._collectionName}:success]`, result.value);
-        }
-      });
-      this.logger.debug('success', `[createIndex:${this._collectionName}]`);
-    });
+    // Promise.allSettled(
+    //   indexes.map(
+    //     ({
+    //       field,
+    //       options = {},
+    //     }: {
+    //       field: {
+    //         [key: string]: IndexDirection;
+    //       };
+    //       options?: CreateIndexesOptions;
+    //     }) => {
+    //       return this._collection.createIndex(field, options);
+    //     },
+    //   ),
+    // ).then((results) => {
+    //   results.forEach((result) => {
+    //     if (result.status === 'rejected') {
+    //       this.logger.error(`error`, `[createIndex:${this._collectionName}:error]`, result.reason);
+    //       throwErr(this.error('common.database'));
+    //     } else {
+    //       // this.logger.debug('success', `[createIndex:${this._collectionName}:success]`, result.value);
+    //     }
+    //   });
+    //   this.logger.debug('success', `[createIndex:${this._collectionName}]`);
+    // });
   }
 
   /**
@@ -291,7 +396,15 @@ export class BaseModel {
    */
   async create(
     { ...filter }: any,
-    { updated_at = new Date(), created_at = new Date(), deleted = false, created_by, ..._content }: any,
+    {
+      updated_at = new Date().toISOString(),
+      created_at = new Date().toISOString(),
+      updatedAt = new Date().toISOString(),
+      createdAt = new Date().toISOString(),
+      deleted = false,
+      created_by,
+      ..._content
+    }: any,
     { upsert = true, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
@@ -303,7 +416,7 @@ export class BaseModel {
       } = await this._collection.findOneAndUpdate(
         {
           ...filter,
-          _id: _content._id,
+          // _id: _content._id,
         },
         {
           $setOnInsert: {
@@ -311,6 +424,8 @@ export class BaseModel {
             created_by,
             created_at,
             updated_at,
+            updatedAt,
+            createdAt,
             deleted,
           },
         },
@@ -349,7 +464,10 @@ export class BaseModel {
    */
   async update(
     { ...filter }: any,
-    { $set: { updated_at = new Date(), ..._content } = {}, ..._updateFilter }: any,
+    {
+      $set: { updated_at = new Date().toISOString(), updatedAt = new Date().toISOString(), ..._content } = {},
+      ..._updateFilter
+    }: any,
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
@@ -364,6 +482,7 @@ export class BaseModel {
           $set: {
             ..._content,
             updated_at,
+            updatedAt,
           },
           ..._updateFilter,
         },
@@ -454,7 +573,7 @@ export class BaseModel {
   }
   async _validate({ ..._content }: any): Promise<any> {
     try {
-      const { categories = [], sub_categories = [], name, _id } = _content;
+      const { categories = [], sub_categories = [], name, slug } = _content;
       categories.length &&
         (await $refValidation({ collection: 'categories', list: $toObjectId(categories) })) &&
         (_content.categories = $toObjectId(categories));
@@ -475,9 +594,9 @@ export class BaseModel {
           remove: RemoveSlugPattern,
         });
       name &&
-        !_id &&
-        (_content._id = (await this._collection.findOne({
-          _id: _name,
+        !slug &&
+        (_content.slug = (await this._collection.findOne({
+          slug: _name,
         }))
           ? _name + '-' + new Date().getTime()
           : _name);

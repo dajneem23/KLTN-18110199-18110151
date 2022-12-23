@@ -1,7 +1,11 @@
+import Toastify from '../../components/ToastifyCustom/index.vue';
 import { REGISTER_ITEM } from '../../constants/registerpage';
 import { AuthService } from '@/services';
 export default {
   name: 'LoginView',
+  components: {
+    Toastify,
+  },
   data() {
     return {
       lang: 'vi',
@@ -9,15 +13,18 @@ export default {
       account: {
         email: '',
         password: '',
-        name: '',
-        phone:'094100117  '
+        username: '',
+        phone: '094100117',
       },
+      passWordConfirm: '',
+      isSuccess: false,
+      isWarnning: false,
     };
   },
   methods: {
     fullnameValidate() {
       REGISTER_ITEM.name.error = '';
-      if (!this.account.name.trim()) {
+      if (!this.account.username.trim()) {
         REGISTER_ITEM.name.error = 'Name is required';
       }
     },
@@ -30,13 +37,25 @@ export default {
     passwordValiate() {
       REGISTER_ITEM.passWord.error = '';
       if (!this.account.password.trim()) {
-        REGISTER_ITEM.passWord.error = 'Password is required';
+        REGISTER_ITEM.passWord.error = 'Passworld is required';
       }
+    },
+    passWorldConfirmValidate() {
+      REGISTER_ITEM.passWordConfirm.error = '';
+      if (!this.passWordConfirm.trim()) {
+        REGISTER_ITEM.passWordConfirm.error = 'Confirm password is required';
+        return;
+      }
+      if (this.account.password != this.passWordConfirm) {
+        REGISTER_ITEM.passWordConfirm.error = 'Confirm password is not match';
+      }
+      console.log(REGISTER_ITEM.passWordConfirm.error);
     },
     validate() {
       this.fullnameValidate();
       this.usernameValidate();
       this.passwordValiate();
+      this.passWorldConfirmValidate();
     },
     async register() {
       this.validate();
@@ -44,12 +63,20 @@ export default {
       const [result, error] = await AuthService.register(this.account);
       console.log([result, error]);
       if (result) {
-        console.log('Đăng ký thành công !');
-        const { user } = result;
-        console.log(user)
-
+        this.isSuccess = true;
+        this.account.username = '';
+        this.account.email = '';
+        this.account.password = '';
+        this.passWordConfirm = '';
+        setTimeout(() => {
+          this.isSuccess = false;
+        }, 2000);
+      } else {
+        this.isWarnning = true;
+        setTimeout(() => {
+          this.isWarnning = false;
+        }, 2000);
       }
-      console.log(this.account);
     },
   },
 };

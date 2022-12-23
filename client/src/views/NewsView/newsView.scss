@@ -1,17 +1,17 @@
 .news-wrapper {
-  width: 100%;
-  padding-top: 70px;
+  // width: 100%;
+  padding-top: 60px;
   .img-banner {
     max-width: 1912px;
-    min-height: 515px;
+    min-height: 220px;
     background: url('../../assets//Icon/perspectives_rebrand_banner.png');
     background-repeat: no-repeat;
     background-size: cover;
   }
   .button-create_news {
     width: 80%;
-    position: relative;
-    top: -300px;
+    position: absolute;
+    top: 140px;
     display: flex;
     justify-content: end;
     button {
@@ -28,7 +28,7 @@
     .popular-news {
       width: 100%;
 
-      h3 {
+      h2 {
         margin-bottom: 20px;
       }
       padding: 20px;
@@ -46,7 +46,7 @@
     .hot-news {
       background-color: rgb(240, 240, 240);
       padding-bottom: 20px;
-      h3 {
+      h2 {
         padding: 20px;
         width: 65%;
         margin: auto;
@@ -64,19 +64,45 @@
       }
     }
     .main-news {
-      width: 50%;
-      padding: 0 20px;
+      width: 65%;
       margin: auto;
-      // margin-bottom: 20px;
       padding-bottom: 40px;
       .main-news-button {
         padding: 20px 0;
       }
       .news-box {
-        // margin-bottom: 40px;
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        grid-gap: 40px;
+        display: flex;
+        justify-content: space-around;
+        .list-news-all {
+          width: 100%;
+          margin-right: 30px;
+          .news-item {
+            width: 100%;
+          }
+          .news-item + .news-item {
+            margin-top: 20px;
+          }
+        }
+        .list-category {
+          width: 35%;
+          .list-categories {
+            .categories-item {
+              cursor: pointer;
+              display: inline-block;
+              padding: 5px 15px;
+              margin: 5px;
+              border: 1px solid var(--gray);
+              border-radius: 20px;
+              font-size: 15px;
+            }
+            .actice-category {
+              background-color: var(--gray);
+            }
+            .categories-item + .categories-item {
+              margin-top: 10px;
+            }
+          }
+        }
       }
     }
   }

@@ -12,10 +12,13 @@ import Header from '../components/Header/index.vue';
 import Footer from '../components/Footer/index.vue';
 import Details from '../views/WatchingFilmView/FilmDetailView/filmdetail.vue';
 import DetailManga from '../views/ReadingMangaView/DetailMangaView/detailMangaView.vue';
+import DetailChapter from '../views/ReadingMangaView/DetailMangaView/detailChapterView/index.vue';
 import ProfileView from '../views/ProfileView/profileView.vue';
 import EditProfileView from '../views/ProfileView/EditProfileView/index.vue';
 import StoryDetailView from '../views/HomeView/StoryDetailView/index.vue';
 import CreateNewsView from '../views/CreateNews/index.vue';
+import EditNewsView from '../views/EditNews/editNews.vue';
+import CreateStory from '../views/CreateStory/index.vue';
 import { UserService } from '@/services';
 import { store } from '../store/vuex';
 
@@ -29,7 +32,7 @@ const routes = [
     components: {
       header: Header,
       default: HomeView,
-      footer: Footer,
+      // footer: Footer,
     },
   },
   {
@@ -40,15 +43,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
   },
-  {
-    path: '/error',
-    name: 'error',
-    components: {
-      // header: Header,
-      default: Error,
-      // footer: Footer
-    },
-  },
+
   {
     path: '/manga/',
     name: 'manga',
@@ -73,7 +68,7 @@ const routes = [
     components: {
       header: Header,
       default: Chatting,
-      footer: Footer,
+      // footer: Footer,
     },
   },
   {
@@ -114,7 +109,7 @@ const routes = [
     component: Register,
   },
   {
-    path: '/movie/:filmId/',
+    path: '/movie/:id/',
     name: 'details',
     components: {
       header: Header,
@@ -124,11 +119,21 @@ const routes = [
     props: true,
   },
   {
-    path: '/manga/:mangaId/',
+    path: '/manga/:id/',
     name: 'detailmanga',
     components: {
       header: Header,
       default: DetailManga,
+      footer: Footer,
+    },
+    props: true,
+  },
+  {
+    path: '/manga/chapter/:id/',
+    name: 'detailchapter',
+    components: {
+      header: Header,
+      default: DetailChapter,
       footer: Footer,
     },
     props: true,
@@ -154,18 +159,53 @@ const routes = [
     props: true,
   },
   {
-    path: '/createNews',
+    path: '/create-news',
     name: 'createNews',
     components: {
       header: Header,
       default: CreateNewsView,
-      footer: Footer,
+      // footer: Footer,
+    },
+    props: true,
+    beforeEnter: (to, from, next) => {
+      authenticate(to, from, next) ? next() : next('/login');
+    },
+  },
+  {
+    path: '/edit-news/:id/',
+    name: 'editNews',
+    components: {
+      header: Header,
+      default: EditNewsView,
+      // footer: Footer,
     },
     props: true,
   },
   {
+    path: '/create-story',
+    name: 'createStory',
+    components: {
+      header: Header,
+      default: CreateStory,
+      footer: Footer,
+    },
+    props: true,
+    beforeEnter: (to, from, next) => {
+      authenticate(to, from, next) ? next() : next('/not-found');
+    },
+  },
+  {
     path: '/test',
     component: () => import('../components/Ckeditor/CkEditor.vue'),
+  },
+  {
+    path: '/not-found',
+    name: 'error',
+    components: {
+      // header: Header,
+      default: Error,
+      // footer: Footer
+    },
   },
 ];
 
@@ -174,6 +214,10 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+const authenticate = (to, from, next) => {
+  console.log('ftgy6', store.state);
+  return store.state.isAuthenticated;
+};
 
 router.beforeEach(async (to, from, next) => {
   let [user, error] = await UserService.me();

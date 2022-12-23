@@ -1,5 +1,3 @@
-# 1fox.co Backend
-
 # Prerequisites
 
 To build and run this app you will need a few things:

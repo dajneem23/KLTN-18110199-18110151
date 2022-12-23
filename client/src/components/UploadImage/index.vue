@@ -7,7 +7,7 @@
       <img class="np-preview" :src="imageFile" />
     </div>
     <div v-if="imageFile != null && imageFile.length != 0 && !isImageUploading" class="box-button-uploadimg">
-      <button @click="clearImage" class="np-upload-btn np-upload-btn-cancel">Cancel</button>
+      <button @click="clearImage" class="np-upload-btn np-upload-btn-cancel">Hủy</button>
     </div>
   </div>
 </template>

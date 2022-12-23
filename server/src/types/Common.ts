@@ -89,9 +89,13 @@ export type BaseModel = {
 
   updated_at?: Date;
 
+  updatedAt?: Date;
+
   created_by?: string;
 
   created_at?: Date;
+
+  createdAt?: Date;
 
   deleted_by?: string;
 
@@ -121,7 +125,9 @@ export const _defaultBaseModel: BaseModel = {
   reporters: [],
   _histories: [],
   created_at: new Date(),
+  createdAt: new Date(),
   updated_at: new Date(),
+  updatedAt: new Date(),
 };
 
 export type ContractAddress = {
@@ -154,7 +160,7 @@ export type Agenda = {
 };
 
 export const defaultFilter = {
-  deleted: false,
+  deleted: { $ne: true },
 };
 export type BaseServiceInput = {
   _slug?: string;
@@ -214,15 +220,20 @@ export const PRIVATE_KEYS = [
 
 export enum COLLECTION_NAMES {
   stories = 'stories',
-  users = 'users',
+  'users-permissions_user' = 'users-permissions_user',
   verifications = 'verifications',
   'auth-sessions' = 'auth-sessions',
   coins = 'coins',
-  news = 'news',
+  articles = 'articles',
   manga = 'manga',
   films = 'films',
   settings = 'settings',
   'manga-chapters' = 'manga-chapters',
+  'comments' = 'comments',
+  'chats' = 'chats',
+  'categories' = 'categories',
+  'upload_file' = 'upload_file',
+  'messages' = 'messages',
 }
 /**
  *  @description - Remove all special characters from a string to make it a valid URL
