@@ -81,22 +81,24 @@ export default {
           this.isWarnning = false;
         }, 2000);
       }
-      this.news.content = this.editorData;
-      this.news.categories = [...this.categoriesOfArticles];
-      const [result, error] = await NewsServices.create({
-        ...this.news,
-      });
-      if (result) {
-        this.isSuccess = true;
-        setTimeout(() => {
-          this.isSuccess = false;
-        }, 2000);
+      else {
+        this.news.content = this.editorData;
+        this.news.categories = [...this.categoriesOfArticles];
+        const [result, error] = await NewsServices.create({
+          ...this.news,
+        });
+        if (result) {
+          this.isSuccess = true;
+          setTimeout(() => {
+            this.isSuccess = false;
+          }, 2000);
+        }
+        if (error) {
+          this.isWarnning = true;
+          setTimeout(() => {
+            this.isWarnning = false;
+          }, 2000);
       }
-      if (error) {
-        this.isWarnning = true;
-        setTimeout(() => {
-          this.isWarnning = false;
-        }, 2000);
       }
       console.log(this.news);
       // console.log(result);
