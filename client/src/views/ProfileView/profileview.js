@@ -189,6 +189,7 @@ export default {
     //   }
     // },
     async changeStories() {
+      this.items = [];
       this.pageOfItems = 1;
       this.page = 1;
       this.per_page = 10;
@@ -207,6 +208,7 @@ export default {
       this.total_count = total_count;
     },
     async changeArticles() {
+      this.items = [];
       this.pageOfItems = 1;
       this.page = 1;
       this.per_page = 10;
