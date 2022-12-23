@@ -3,7 +3,7 @@
     <div class="row">
       <div class="box-profile col-md-4">
         <div class="box-info--user bgc-white flex flex-row justify-content-between">
-          <div class="user-avt">
+          <div class="user-avt d-flex justify-content-center">
             <vue-dropzone
               ref="customdropzone"
               id="customdropzone"
@@ -15,11 +15,22 @@
               @vdropzone-removed-file="vremovedFile"
             >
             </vue-dropzone>
+            <div
+              class="cancel-update-user-check pointer-event d-flex justify-content-center position-absolute ml-2"
+              @click="updateProfile"
+              style="top: 150px"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
+                <path
+                  d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+            </div>
           </div>
           <div class="flex flex-column justify-content-center">
             <div class="box-edit">
-              <div class="user-name text-center text-dark" v-if="!isEditName">{{ userInfo?.username }}</div>
-              <div class="user-name text-center box-edit-name" v-if="isEditName">
+              <div class="user-name text-center text-dark" v-show="!isEditName">{{ userInfo?.username }}</div>
+              <div class="user-name text-center box-edit-name" v-show="isEditName">
                 <input type="text" v-model="newName" />
               </div>
               <button>
@@ -32,7 +43,7 @@
                       />
                     </svg>
                   </div>
-                  <div class="cancel-update-user-check">
+                  <div class="cancel-update-user-check" @click="updateProfile">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                       <path
                         d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
@@ -43,15 +54,17 @@
                 </div>
               </button>
             </div>
-            <div class="user-email text-dark-gray text-center">{{ userInfo?.email }}</div>
-            <div class="box-info--footer">
-              <div class="box-footer-item text-dark-gray">
-                <div>FOLLOWING</div>
-                <span>{{ userInfo?.following?.length || 0 }}</span>
-              </div>
-              <div class="box-footer-item text-dark-gray">
-                <div>SPIDERS</div>
-                <span>{{ items?.length }}</span>
+            <div>
+              <div class="user-email text-dark-gray text-center">{{ userInfo?.email }}</div>
+              <div class="box-info--footer">
+                <div class="box-footer-item text-dark-gray">
+                  <div>FOLLOWING</div>
+                  <span>{{ userInfo?.following?.length || 0 }}</span>
+                </div>
+                <div class="box-footer-item text-dark-gray">
+                  <div>SPIDERS</div>
+                  <span>{{ items?.length }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -62,7 +75,7 @@
         </div>
       </div>
       <div class="img-banner--user col-md-8">
-        <img src="../../assets/Icon/perspectives_rebrand_banner.png" alt="" />
+        <img src="../../assets/profile_banner.jpg" alt="" />
       </div>
     </div>
     <div class="user-news">

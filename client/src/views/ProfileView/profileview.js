@@ -23,6 +23,7 @@ export default {
         val,
         dropzone,
       });
+      this.newName = this.useInfo.username;
       dropzone.$el.style.backgroundImage = `url(${val.avatar[0].url})`;
     },
     async items() {
@@ -55,11 +56,12 @@ export default {
       page: 1,
       per_page: 10,
       total_count: 0,
-      newName: '',
+      newName: this.useInfo?.username || '',
       user: {
         username: '',
         avatar: '',
       },
+      isChangeAvatar: false,
       dropzoneOptions: {
         url: `${process.env.VUE_APP_BASE_URL}/${process.env.VUE_APP_BASE_API_PREFIX}/${process.env.VUE_APP_BASE_API_VERSION}/upload/`,
         thumbnailWidth: 150,
@@ -70,8 +72,8 @@ export default {
         acceptedFiles: 'image/*',
         multiple: false,
         previewTemplate: this.uploadTemplate(),
-        dictRemoveFile:
-          '<i class="fa-solid fa-trash " data-dz-remove style="color:red;cursor:pointer;font-size: 1.5rem;"> </i>',
+        dictRemoveFile: `<i class="fa-solid fa-trash " data-dz-remove style="color:red;cursor:pointer;font-size: 1.5rem;"> </i>
+          `,
       },
       newAvatar: null,
     };
@@ -94,6 +96,7 @@ export default {
     });
     if (this.userInfo) {
       dropzone.$el.style.backgroundImage = `url(${this.userInfo.avatar[0].url})`;
+      this.newName = this.useInfo.username;
     }
   },
   methods: {
@@ -142,7 +145,7 @@ export default {
     },
     closeEdit() {
       this.isEditName = false;
-      this.$refs.myVueDropzone.removeAllFiles();
+      this.$refs.customdropzone.removeAllFiles();
     },
     async updateProfile() {
       this.user.username = this.newName;
@@ -244,6 +247,9 @@ export default {
           thumbnailElement = ref[j];
           thumbnailElement.alt = file.name;
           thumbnailElement.style.backgroundImage = 'url("' + dataUrl + '")';
+          thumbnailElement.style.backgroundSize = 'cover';
+          thumbnailElement.style.backgroundPosition = 'center';
+          thumbnailElement.style.backgroundRepeat = 'no-repeat';
           this.$refs.customdropzone.$el.style.backgroundImage = `none`;
         }
         return setTimeout(
@@ -270,6 +276,7 @@ export default {
       });
       // window.toastr.info('', 'Event : vdropzone-removed-file')
       this.$refs.customdropzone.$el.style.backgroundImage = `url(${this.userInfo.avatar[0].url})`;
+      this.isChangeAvatar = false;
     },
     vsuccess(file, response) {
       this.success = true;
@@ -280,6 +287,7 @@ export default {
       file.uploadUrl = response.url;
       file._id = response._id;
       this.newAvatar = response._id;
+      this.isChangeAvatar = true;
       // window.toastr.success('', 'Event : vdropzone-success')
     },
   },
