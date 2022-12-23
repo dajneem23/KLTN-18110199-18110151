@@ -504,6 +504,7 @@ export class NewsService {
             $limit: per_page,
           },
           this.model.$lookups.author,
+          this.model.$sets.author,
           this.model.$lookups.comments,
           this.model.$lookups.upload_files({
             refTo: 'images',
@@ -542,6 +543,7 @@ export class NewsService {
             },
           },
           this.model.$lookups.author,
+          this.model.$sets.author,
           this.model.$lookups.comments,
           this.model.$lookups.upload_files({
             refTo: 'images',
