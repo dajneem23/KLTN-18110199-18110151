@@ -55,14 +55,14 @@ export default {
       }
     },
     async createStory() {
-      if (!this.story.title || this.story.name || this.story.content) {
+      this.story.title = this.story.content;
+      this.story.name = this.story.content;
+      if (!this.story.title || !this.story.name || !this.story.content) {
         this.isWarnning = true;
         setTimeout(() => {
           this.isWarnning = false;
         }, 2000);
       } else {
-        this.story.title = this.story.content;
-        this.story.name = this.story.content;
         const [result, error] = await StoriesService.create({
           ...this.story,
         });
@@ -107,10 +107,10 @@ export default {
         }
         if (error) {
           this.isWarnning = true;
-        setTimeout(() => {
-          this.isWarnning = false;
-          this.$bvModal.hide('confirm-edit-modal');
-        }, 2000);
+          setTimeout(() => {
+            this.isWarnning = false;
+            this.$bvModal.hide('confirm-edit-modal');
+          }, 2000);
         }
       }
     },
