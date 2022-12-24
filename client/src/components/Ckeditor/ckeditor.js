@@ -75,6 +75,8 @@ export default {
   mounted() {},
   methods: {
     async submitText() {
+      this.news.content = this.editorData;
+      this.news.categories = [...this.categoriesOfArticles];
       if (!this.news.name || !this.news.content || !this.news.description) {
         this.isWarnning = true;
         setTimeout(() => {
@@ -82,8 +84,6 @@ export default {
         }, 2000);
       }
       else {
-        this.news.content = this.editorData;
-        this.news.categories = [...this.categoriesOfArticles];
         const [result, error] = await NewsServices.create({
           ...this.news,
         });

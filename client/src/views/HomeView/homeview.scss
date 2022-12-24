@@ -19,16 +19,18 @@
   padding: 20px;
   top: 80px;
   .btn-add--story {
-    width: 200px;
+    width: 60px;
     height: 60px;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: var(--white);
     border: 3px solid var(--primary-blue_3);
-    border-radius: 10px;
+    border-radius: 50%;
     svg {
       fill: var(--primary-blue_3);
       width: 25px;
-      margin-right: 10px;
+      // margin-right: 10px;
     }
     span {
       font-weight: 600;
@@ -161,6 +163,9 @@
   height: 100%;
   background-color: hsla(0, 0%, 100%, 0.8);
   backdrop-filter: blur(0px);
+}
+.toolTip-create {
+  background-color: var(--white) !important;
 }
 /*--------------------Model add story-------------------*/
 .model-add-story {
