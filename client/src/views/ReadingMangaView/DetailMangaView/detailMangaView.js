@@ -1,5 +1,6 @@
 import Comment from '../../../components/Watching/CommentFilm/index.vue';
 import Loader from '../../../components/Loader/skeletonMangadetail.vue';
+import MangaChapter from './detailChapterView/index.vue';
 import { Carousel, Slide } from 'vue-carousel';
 import { MangaServices } from '@/services';
 import { mapState } from 'vuex';
@@ -11,9 +12,11 @@ export default {
     Carousel,
     Slide,
     Loader,
+    MangaChapter,
   },
   data() {
     return {
+      slug_chapter:'',
       isLoading: true,
       manga: [],
       lang: 'vi',
@@ -33,6 +36,7 @@ export default {
         images: [],
         reply_to: null,
       },
+      isShowDetail: false,
     };
   },
   computed: {
@@ -65,6 +69,7 @@ export default {
     const takeDate = new Date(this.manga.createdAt);
     this.manga.createdAt = takeDate.getFullYear();
     this.isLoading = false;
+
   },
   methods: {
     moment,
@@ -92,8 +97,12 @@ export default {
       }
     },
     // function change chapter
-    goToChapter(id) {
-      console.log(id);
+    showChapter(id) {
+      this.isShowDetail = true;
+      this.slug_chapter = id;
+    },
+    hiddenModel() {
+      this.isShowDetail = false;
     },
   },
 };

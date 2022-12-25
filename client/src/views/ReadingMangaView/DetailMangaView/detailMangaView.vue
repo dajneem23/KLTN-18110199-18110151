@@ -76,9 +76,9 @@
     </div>
     <div class="manga-chapter">
       <div v-for="(item, index) in chapters">
-        <router-link :to="{ name: 'detailchapter', params: { id: item.slug, chapterData: item } }">
-          <button @click="goToChapter(item.slug)">{{ index + 1 }}</button>
-        </router-link>
+        <!-- <router-link :to="{ name: 'detailchapter', params: { id: item.slug, mangaData: manga } }"> -->
+        <button @click="showChapter(item.slug)">{{ index + 1 }}</button>
+        <!-- </router-link> -->
       </div>
     </div>
     <div class="manga-cmt bgc-white">
@@ -105,6 +105,12 @@
         </div>
       </div>
       <div v-if="!isAuthenticated">Hãy đăng nhập để đọc được bình luận</div>
+    </div>
+    <div class="model-detail-story" id="model-detail-story" v-if="isShowDetail">
+      <div class="backround-popup" @click="hiddenModel"></div>
+      <div class="box-detail-story">
+        <MangaChapter :slug="slug_chapter" :isShowDetail="isShowDetail" :hiddenModel="hiddenModel" />
+      </div>
     </div>
   </div>
 </template>

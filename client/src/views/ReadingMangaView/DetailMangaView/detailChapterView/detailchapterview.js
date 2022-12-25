@@ -4,9 +4,16 @@ import { mapState } from 'vuex';
 import Comment from '../../../../components/Watching/CommentFilm/index.vue';
 
 export default {
+  props: {
+    slug: String,
+    isShowDetail: Boolean,
+    hiddenModel: {
+      type: Function,
+    },
+  },
   data() {
     return {
-      isLoading:true,
+      isLoading: true,
       chapter: [],
       comments: [],
       name: '',
@@ -35,14 +42,12 @@ export default {
         });
     },
   },
-  mounted() {
-    console.log(this.chapter);
-  },
+  mounted() {},
   async created() {
-    const id = this.$route.params.id;
-    console.log(id);
-    console.log(this.$route.params.id);
-    const [result, error] = await MangaServices.getChapterById(this.$route.params.id);
+    // const id = this.$route.params.id;
+    // console.log(id);
+    // console.log(this.$route.params.id);
+    const [result, error] = await MangaServices.getChapterById(this.slug);
     console.log([result, error]);
     if (result) {
       this.chapter = result;
@@ -53,6 +58,12 @@ export default {
       });
     }
     this.isLoading = false;
+    let that = this;
+    document.addEventListener('keyup', function (evt) {
+      if (evt.keyCode === 27) {
+        that.hiddenModel();
+      }
+    });
   },
   methods: {
     async sendCmt() {
