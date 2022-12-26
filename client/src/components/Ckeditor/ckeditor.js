@@ -111,6 +111,8 @@ export default {
       this.editorData = '';
     },
     async editNews() {
+      this.news.content = this.editorData;
+      this.news.categories = [...this.categoriesOfArticles];
       if (!this.news.name || !this.news.content || !this.news.description) {
         this.isWarnning = true;
         setTimeout(() => {
@@ -118,8 +120,6 @@ export default {
           this.$bvModal.hide('confirm-edit-modal');
         }, 2000);
       } else {
-        this.news.content = this.editorData;
-        this.news.categories = [...this.categoriesOfArticles];
         const [result, error] = await NewsServices.updateArticles(this.newsProps.id, this.news);
         if (result) {
           console.log(result);

@@ -28,22 +28,43 @@ export default {
     },
     async items() {
       this.$emit('update:items', this.items);
-      if (this.isStoriesTab) {
-        const [
-          { items = [], total_count } = {
-            items: [],
-          },
-          error,
-        ] = await StoriesService.getMyStories();
-        this.items = items;
-        // console.log(items);
-        this.total_count = total_count;
-        // console.log(result, 'result');
+      if (this.isMe) {
+        if (this.isStoriesTab) {
+          const [
+            { items = [], total_count } = {
+              items: [],
+            },
+            error,
+          ] = await StoriesService.getMyStories();
+          this.items = items;
+          // console.log(items);
+          this.total_count = total_count;
+          // console.log(result, 'result');
+        }
+      } else {
+        if (this.isStoriesTab) {
+          const id = this.$route.params.id;
+          const [
+            { items = [], total_count } = {
+              items: [],
+            },
+            error,
+          ] = await StoriesService.get({
+            page: this.page,
+            per_page: this.per_page,
+          });
+          this.items = items.filter((item) => {
+            return item.author.id === id;
+          });
+          this.total_count = total_count;
+        }
       }
     },
   },
   data() {
     return {
+      User: {},
+      isMe: false,
       storyProps: {},
       isStoriesTab: true,
       isSuccess: false,
@@ -54,7 +75,7 @@ export default {
       // total_countArticles: 0,
       pageOfItems: 1,
       page: 1,
-      per_page: 10,
+      per_page: 20,
       total_count: 0,
       newName: this.useInfo?.username || '',
       user: {
@@ -79,53 +100,119 @@ export default {
     };
   },
   async mounted() {
-    const [
-      { items = [], total_count } = {
-        items: [],
-      },
-      error,
-    ] = await StoriesService.getMyStories();
-    this.items = items;
-    console.log(items);
-    this.total_count = total_count;
+    const id = this.$route.params.id;
+    if (id === this.userInfo._id) {
+      this.isMe = true;
+      const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await StoriesService.getMyStories();
+      this.items = items;
+      console.log(items);
+      this.total_count = total_count;
 
-    const dropzone = this.$refs.customdropzone;
-    console.log({
-      dropzone,
-      user: this.userInfo,
-    });
-    if (this.userInfo) {
-      dropzone.$el.style.backgroundImage = `url(${this.userInfo.avatar[0].url})`;
-      this.newName = this.useInfo.username;
+      const dropzone = this.$refs.customdropzone;
+      console.log({
+        dropzone,
+        user: this.userInfo,
+      });
+      if (this.userInfo) {
+        dropzone.$el.style.backgroundImage = `url(${this.userInfo.avatar[0].url})`;
+        this.newName = this.useInfo.username;
+      }
+      console.log('mouted-isMe');
+    } else {
+      this.isMe = false;
+      const [user, erorr] = await UserService.getUserById(id);
+      if (user) {
+        this.User = user;
+      }
+      const [
+        { items = [], total_count } = {
+          items: [],
+        },
+        error,
+      ] = await StoriesService.get({
+        page: this.page,
+        per_page: this.per_page,
+      });
+      this.items = items.filter((item) => {
+        return item.author.id === id;
+      });
+      console.log(items);
+      console.log(this.items, 'item');
+      this.total_count = total_count;
+      console.log('mouted-!isMe');
     }
   },
   methods: {
     async onChangePage(page) {
+      const id = this.$route.params.id;
       this.page = page;
-      if (!this.isStoriesTab) {
-        const [
-          { items = [], total_count } = {
-            items: [],
-          },
-          error,
-        ] = await NewsServices.getMyArticles({
-          page: this.page,
-          per_page: this.per_page,
-        });
-        this.items = items;
-        this.total_count = total_count;
+      if (id === this.userInfo._id) {
+        if (!this.isStoriesTab) {
+          const [
+            { items = [], total_count } = {
+              items: [],
+            },
+            error,
+          ] = await NewsServices.getMyArticles({
+            page: this.page,
+            per_page: this.per_page,
+          });
+          this.items = items;
+          this.total_count = total_count;
+          console.log('changPagenews-isme');
+        } else {
+          const [
+            { items = [], total_count } = {
+              items: [],
+            },
+            error,
+          ] = await StoriesService.getMyStories({
+            page: this.page,
+            per_page: this.per_page,
+          });
+          this.items = items;
+          this.total_count = total_count;
+          console.log('changPagestory-isme');
+        }
       } else {
-        const [
-          { items = [], total_count } = {
-            items: [],
-          },
-          error,
-        ] = await StoriesService.getMyStories({
-          page: this.page,
-          per_page: this.per_page,
-        });
-        this.items = items;
-        this.total_count = total_count;
+        if (!this.isStoriesTab) {
+          const [
+            { items = [], total_count } = {
+              items: [],
+            },
+            error,
+          ] = await NewsServices.get({
+            page: this.page,
+            per_page: this.per_page,
+          });
+          this.items = items;
+          this.items = this.items.filter((item) => {
+            return item.author.id === id;
+          });
+          this.total_count = total_count;
+          console.log('changPagenews-!isme');
+        } else {
+          const [
+            { items = [], total_count } = {
+              items: [],
+            },
+            error,
+          ] = await StoriesService.get({
+            page: this.page,
+            per_page: this.per_page,
+          });
+          this.items = items;
+          this.items = this.items.filter((item) => {
+            return item.author.id === id;
+          });
+          this.total_count = total_count;
+          console.log('changPagesotry-!isme');
+        }
       }
     },
 
@@ -203,17 +290,38 @@ export default {
       this.per_page = 10;
       this.total_count = 0;
       this.isStoriesTab = true;
-      const [
-        { items = [], total_count } = {
-          items: [],
-        },
-        error,
-      ] = await StoriesService.getMyStories({
-        page: this.page,
-        per_page: this.per_page,
-      });
-      this.items = items;
-      this.total_count = total_count;
+      const id = this.$route.params.id;
+      if (this.isMe) {
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await StoriesService.getMyStories({
+          page: this.page,
+          per_page: this.per_page,
+        });
+        this.items = items;
+        this.total_count = total_count;
+        console.log('changestr-isme');
+      } else {
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await StoriesService.get({
+          page: this.page,
+          per_page: this.per_page,
+        });
+        this.items = items;
+        this.items = this.items.filter((item) => {
+          return item.author.id === id;
+        });
+        this.total_count = total_count;
+        console.log(this.items, 'changeItems');
+        console.log('changestr-!isme');
+      }
     },
     async changeArticles() {
       this.items = [];
@@ -222,17 +330,35 @@ export default {
       this.per_page = 10;
       this.total_count = 0;
       this.isStoriesTab = false;
-      const [
-        { items = [], total_count } = {
-          items: [],
-        },
-        error,
-      ] = await NewsServices.getMyArticles({
-        page: this.page,
-        per_page: this.per_page,
-      });
-      this.items = items;
-      this.total_count = total_count;
+      const id = this.$route.params.id;
+      if (this.isMe) {
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await NewsServices.getMyArticles({
+          page: this.page,
+          per_page: this.per_page,
+        });
+        this.items = items;
+        this.total_count = total_count;
+      } else {
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await NewsServices.get({
+          page: this.page,
+          per_page: this.per_page,
+        });
+        this.items = items;
+        this.items = this.items.filter((item) => {
+          return item.author.id === id;
+        });
+        this.total_count = total_count;
+      }
     },
     async editStories(id) {
       const [result, error] = await StoriesService.getById(id);

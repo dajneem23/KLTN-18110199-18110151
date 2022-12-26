@@ -153,7 +153,7 @@
             </svg>
           </div>
           <div class="title_tooltip-user bgc-white" id="toolTip-user">
-            <router-link to="/profile/">
+            <router-link :to="{ name: 'profile', params: { id: userInfo?._id } }">
               <div class="tooltip-user--item" @click="showtoolTip">Trang cá nhân</div>
             </router-link>
 
