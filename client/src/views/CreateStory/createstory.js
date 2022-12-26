@@ -81,7 +81,9 @@ export default {
       }
     },
     async editStory() {
-      if (!this.story.title || this.story.name || this.story.content) {
+      this.story.title = this.story.content;
+      this.story.name = this.story.content;
+      if (!this.story.title || !this.story.name || !this.story.content) {
         this.isWarnning = true;
         setTimeout(() => {
           this.isWarnning = false;

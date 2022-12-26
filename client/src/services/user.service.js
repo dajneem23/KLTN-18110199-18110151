@@ -5,6 +5,9 @@ export const UserService = {
   me() {
     return RequestBase.get(`${this.url}/me`);
   },
+  getUserById(id) {
+    return RequestBase.get(`${this.url}/${id}`);
+  },
   updateProfile(body) {
     return RequestBase.put(`${this.url}/me`, body);
   },
