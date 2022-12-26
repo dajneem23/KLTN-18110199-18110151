@@ -1,5 +1,5 @@
 <template>
-  <div class="detailmanga-wrapper bgc-white">
+  <div class="detailmanga-wrapper detail-chapter bgc-white">
     <div class="bgc-black">
       <div class="screen-reading">
         <div class="loading-sreen-reading" v-if="isLoading"></div>

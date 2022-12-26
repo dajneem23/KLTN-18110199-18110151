@@ -1617,6 +1617,9 @@ export default {
       this.isShowEmojiBox = !this.isShowEmojiBox;
     },
     async sendSms() {
+      if (this.isSending) {
+        return
+      }
       if (!this.sms.content || !this.sms.content.length) return;
       const body = {
         content: this.sms.content,

@@ -57,38 +57,61 @@ export default {
     async createStory() {
       this.story.title = this.story.content;
       this.story.name = this.story.content;
-      const [result, error] = await StoriesService.create({
-        ...this.story,
-      });
-      if (result) {
-        this.isSuccess = true;
+      if (!this.story.title || !this.story.name || !this.story.content) {
+        this.isWarnning = true;
         setTimeout(() => {
-          this.isSuccess = false;
-          this.hiddenmodel();
+          this.isWarnning = false;
         }, 2000);
       } else {
-        setTimeout(() => {
+        const [result, error] = await StoriesService.create({
+          ...this.story,
+        });
+        if (result) {
+          this.isSuccess = true;
+          setTimeout(() => {
+            this.isSuccess = false;
+            this.hiddenmodel();
+          }, 2000);
+        } else {
           this.isWarnning = true;
-        }, 2000);
+          setTimeout(() => {
+            this.isWarnning = false;
+          }, 2000);
+        }
       }
     },
     async editStory() {
-      console.log(this.storyProps);
-      const [result, error] = await StoriesService.update(this.storyProps.id, {
-        title: this.story.content,
-        name: this.story.content,
-        content: this.story.content,
-        images: this.story.images,
-      });
-      console.log([result, error], {
-        ...this.story,
-      });
-      if (result) {
-        this.isSuccess = true;
+      if (!this.story.title || this.story.name || this.story.content) {
+        this.isWarnning = true;
         setTimeout(() => {
-          this.isSuccess = false;
+          this.isWarnning = false;
           this.$bvModal.hide('confirm-edit-modal');
         }, 2000);
+      } else {
+        console.log(this.storyProps);
+        const [result, error] = await StoriesService.update(this.storyProps.id, {
+          title: this.story.content,
+          name: this.story.content,
+          content: this.story.content,
+          images: this.story.images,
+        });
+        console.log([result, error], {
+          ...this.story,
+        });
+        if (result) {
+          this.isSuccess = true;
+          setTimeout(() => {
+            this.isSuccess = false;
+            this.$bvModal.hide('confirm-edit-modal');
+          }, 2000);
+        }
+        if (error) {
+          this.isWarnning = true;
+          setTimeout(() => {
+            this.isWarnning = false;
+            this.$bvModal.hide('confirm-edit-modal');
+          }, 2000);
+        }
       }
     },
     async deleteStory() {
