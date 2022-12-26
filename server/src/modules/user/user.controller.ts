@@ -61,6 +61,12 @@ export class UserController {
     });
     res.status(httpStatusCode.OK).json(user);
   }
+
+  @Get('/users/:id', [])
+  async getById(@Res() res: Response, @Params() params: { id: string }) {
+    const user = await this.userService.getById(params.id);
+    res.status(httpStatusCode.OK).json(user);
+  }
   // ----------------------------------------------------------------
   // PRIVATE ROUTES
   // ----------------------------------------------------------------
