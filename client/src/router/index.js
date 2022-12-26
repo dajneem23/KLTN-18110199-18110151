@@ -81,7 +81,7 @@ const routes = [
     },
   },
   {
-    path: '/profile/',
+    path: '/profile/:id/',
     name: 'profile',
     components: {
       header: Header,

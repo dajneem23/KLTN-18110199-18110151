@@ -3,7 +3,7 @@
     <div class="row">
       <div class="box-profile col-md-4">
         <div class="box-info--user bgc-white flex flex-row justify-content-between">
-          <div class="user-avt d-flex justify-content-center">
+          <div class="user-avt d-flex justify-content-center" v-if="isMe">
             <vue-dropzone
               ref="customdropzone"
               id="customdropzone"
@@ -28,8 +28,11 @@
               </svg>
             </div>
           </div>
+          <div class="user-avt d-flex justify-content-center" v-if="!isMe">
+            <img :src="User.avatar[0]?.url" />
+          </div>
           <div class="flex flex-column justify-content-center">
-            <div class="box-edit">
+            <div class="box-edit" v-if="isMe">
               <div class="user-name text-center text-dark" v-show="!isEditName">{{ userInfo?.username }}</div>
               <div class="user-name text-center box-edit-name" v-show="isEditName">
                 <input type="text" v-model="newName" />
@@ -55,12 +58,17 @@
                 </div>
               </button>
             </div>
+            <div v-if="!isMe">
+              <div class="user-name text-center text-dark">{{ User?.username }}</div>
+            </div>
             <div>
-              <div class="user-email text-dark-gray text-center">{{ userInfo?.email }}</div>
+              <div class="user-email text-dark-gray text-center" v-if="isMe">{{ userInfo?.email }}</div>
+              <div class="user-email text-dark-gray text-center" v-if="!isMe">{{ User?.email }}</div>
               <div class="box-info--footer">
                 <div class="box-footer-item text-dark-gray">
                   <div>FOLLOWING</div>
-                  <span>{{ userInfo?.following?.length || 0 }}</span>
+                  <span v-if="isMe">{{ userInfo?.following?.length || 0 }}</span>
+                  <span v-if="!isMe">{{ User?.following?.length || 0 }}</span>
                 </div>
                 <div class="box-footer-item text-dark-gray">
                   <div>SPIDERS</div>
@@ -114,7 +122,7 @@
             <td class="">
               <div v-if="!isStoriesTab" class="table-action">
                 <router-link :to="{ name: 'editNews', params: { id: item.slug, item } }">
-                  <button>
+                  <button v-if="isMe">
                     <img src="../../assets/Icon/icons8-pencil-30.png" alt="" />
                   </button>
                 </router-link>
@@ -131,7 +139,7 @@
               </div>
               <div v-if="isStoriesTab" class="table-action">
                 <button @click="editStories(item.slug)">
-                  <img src="../../assets/Icon/icons8-pencil-30.png" alt="" />
+                  <img src="../../assets/Icon/icons8-pencil-30.png" alt="" v-if="isMe" />
                 </button>
                 <router-link :to="{ name: '', params: { id: item.slug, item } }">
                   <!-- <button>

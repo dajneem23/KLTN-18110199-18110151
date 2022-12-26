@@ -3,15 +3,17 @@
     <div class="news bgc-white">
       <div class="news-header">
         <div class="news-header-top">
-          <div class="header-top-left">
-            <div class="avt-news">
-              <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
+          <router-link :to="{ name: 'profile', params: { id: author.id } }">
+            <div class="header-top-left">
+              <div class="avt-news">
+                <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
+              </div>
+              <div class="news-info">
+                <span class="news-user-name">{{ author.username }}</span>
+                <span class="news-time text-dark-gray">{{ moment(createdAt).fromNow() }}</span>
+              </div>
             </div>
-            <div class="news-info">
-              <span class="news-user-name">{{ author.username }}</span>
-              <span class="news-time text-dark-gray">{{ moment(createdAt).fromNow() }}</span>
-            </div>
-          </div>
+          </router-link>
           <div v-if="!isMe" class="btn-flloww">
             <div class="followU-story" v-if="!isIncludeUser" @click="followUser(id)" :id="id">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
