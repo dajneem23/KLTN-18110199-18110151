@@ -15,7 +15,7 @@ v16.13.0
 ```
 
 2. **Install [Yarn](https://yarnpkg.com/)**
-
+-
 ```shell
 # Check version
 $ yarn -v
