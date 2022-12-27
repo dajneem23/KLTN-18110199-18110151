@@ -116,6 +116,7 @@ export class StoryController {
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
+
   @Get('/my', [protect()])
   async getMy(@Res() _res: Response, @Req() _req: Request, @Query() _query: BaseQuery, @Auth() auth: JWTPayload) {
     const { filter, query } = buildQueryFilter(_query);
@@ -133,6 +134,25 @@ export class StoryController {
     const result = await this.service.search({
       _filter: filter,
       _query: query,
+      _permission: 'public',
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
+  @Get('/user/:id', [])
+  async getByUserId(
+    @Res() _res: Response,
+    @Req() _req: Request,
+    @Query() _query: BaseQuery,
+    @Params()
+    _params: {
+      id: string;
+    },
+  ) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.getByUserId({
+      _filter: filter,
+      _query: query,
+      _id: _params.id,
       _permission: 'public',
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);

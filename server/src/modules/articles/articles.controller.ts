@@ -95,6 +95,25 @@ export class NewsController {
     } as BaseServiceInput);
     _res.status(httpStatus.OK).json(result);
   }
+  @Get('/user/:id', [])
+  async getByUserId(
+    @Res() _res: Response,
+    @Req() _req: Request,
+    @Query() _query: BaseQuery,
+    @Params()
+    _params: {
+      id: string;
+    },
+  ) {
+    const { filter, query } = buildQueryFilter(_query);
+    const result = await this.service.getByUserId({
+      _filter: filter,
+      _query: query,
+      _id: _params.id,
+      _permission: 'public',
+    } as BaseServiceInput);
+    _res.status(httpStatus.OK).json(result);
+  }
   @Patch('/react/:id', [
     protect({
       weight: RolesWeight.user,
