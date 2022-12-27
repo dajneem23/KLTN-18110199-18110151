@@ -49,9 +49,11 @@
             v-if="!isAuthenticated"
           ></div>
         </router-link>
+        <router-link :to="{ name: 'profile', params: { id: author.id } }">
         <div class="avt-user">
           <img :src="author.avatar[0]?.url || 'https://www.gravatar.com/avatar/default?s=200&d=mp'" alt="" />
         </div>
+      </router-link>
         <div class="follow-user" v-show="!isMe">
           <div v-if="isAuthenticated">
             <svg

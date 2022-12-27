@@ -152,11 +152,11 @@
           <div class="notifi-login-cmt" v-if="!isAuthenticated">Hãy đăng nhập để được xem bình luận</div>
           <div class="news-cmt-box">
             <div v-for="comment of comments">
-              <Comment :data="comment" :sourceId="id" flag="card_stories"></Comment>
+              <Comment :data="comment" :sourceId="id" flag="card_stories" ></Comment>
               <div v-if="comment?.replies">
                 <div class="cmt-rep">
                   <div v-for="reply of comment.replies">
-                    <Comment :data="reply" :sourceId="id" isReply></Comment>
+                    <Comment :data="reply" :sourceId="id" isReply ></Comment>
                   </div>
                 </div>
               </div>

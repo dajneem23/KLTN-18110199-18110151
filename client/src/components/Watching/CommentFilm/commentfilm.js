@@ -5,10 +5,13 @@ export default {
     data: Object,
     sourceId: String,
     flag: String,
-    isReply: Boolean
+    isReply: Boolean,
   },
   data() {
     return {
+      isMe: false,
+      isEdit: false,
+      newCmt: '',
       cmt: {
         source_id: '',
         type: 'stories',
@@ -41,6 +44,10 @@ export default {
     this.down_votes = this.data.down_votes;
     // console.log(this.data);
     console.log(this.userInfo);
+    if (this.author.id === this.userInfo._id) {
+      this.isMe = true;
+      return;
+    }
   },
   created() {
     if (this.data)
@@ -58,6 +65,19 @@ export default {
         repCmtBox.style.display = 'none';
       }
     },
+    editCmt() {
+      this.isEdit = true;
+    },
+    closeEditCmt() {
+      this.isEdit = false;
+      this.newCmt = '';
+      console.log('cancel');
+    },
+    updateCmt() {
+      this.cmt.content = this.newCmt || this.cmt.content;
+      console.log(this.cmt);
+    },
+    deleteCmt() {},
     async sendRepCmt() {
       this.cmt.source_id = this.sourceId;
       const result = await CommentServices.comment({

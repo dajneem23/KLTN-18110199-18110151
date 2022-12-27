@@ -14,6 +14,9 @@ export const NewsServices = {
   getFollowing(params) {
     return RequestBase.get(`${this.url}/following`, params);
   },
+  getByUserId(id,params) {
+    return RequestBase.get(`${this.url}/user/${id}`,params);
+  },
   getById(id) {
     return RequestBase.get(`${this.url}/${id}`);
   },

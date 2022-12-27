@@ -49,12 +49,9 @@ export default {
               items: [],
             },
             error,
-          ] = await StoriesService.get({
+          ] = await StoriesService.getByUserId(id, {
             page: this.page,
             per_page: this.per_page,
-          });
-          this.items = items.filter((item) => {
-            return item.author.id === id;
           });
           this.total_count = total_count;
         }
@@ -63,7 +60,13 @@ export default {
   },
   data() {
     return {
-      User: {},
+      User: {
+        avatar: [
+          {
+            url:''
+          }
+        ]
+      },
       isMe: false,
       storyProps: {},
       isStoriesTab: true,
@@ -134,13 +137,11 @@ export default {
           items: [],
         },
         error,
-      ] = await StoriesService.get({
+      ] = await StoriesService.getByUserId(id, {
         page: this.page,
         per_page: this.per_page,
       });
-      this.items = items.filter((item) => {
-        return item.author.id === id;
-      });
+      this.items=items
       console.log(items);
       console.log(this.items, 'item');
       this.total_count = total_count;
@@ -186,14 +187,12 @@ export default {
               items: [],
             },
             error,
-          ] = await NewsServices.get({
+          ] = await NewsServices.getByUserId(id, {
             page: this.page,
             per_page: this.per_page,
           });
           this.items = items;
-          this.items = this.items.filter((item) => {
-            return item.author.id === id;
-          });
+
           this.total_count = total_count;
           console.log('changPagenews-!isme');
         } else {
@@ -202,14 +201,12 @@ export default {
               items: [],
             },
             error,
-          ] = await StoriesService.get({
+          ] = await StoriesService.getByUserId(id, {
             page: this.page,
             per_page: this.per_page,
           });
           this.items = items;
-          this.items = this.items.filter((item) => {
-            return item.author.id === id;
-          });
+
           this.total_count = total_count;
           console.log('changPagesotry-!isme');
         }
@@ -310,14 +307,12 @@ export default {
             items: [],
           },
           error,
-        ] = await StoriesService.get({
+        ] = await StoriesService.getByUserId(id, {
           page: this.page,
           per_page: this.per_page,
         });
         this.items = items;
-        this.items = this.items.filter((item) => {
-          return item.author.id === id;
-        });
+
         this.total_count = total_count;
         console.log(this.items, 'changeItems');
         console.log('changestr-!isme');
@@ -349,14 +344,12 @@ export default {
             items: [],
           },
           error,
-        ] = await NewsServices.get({
+        ] = await NewsServices.getByUserId(id, {
           page: this.page,
           per_page: this.per_page,
         });
         this.items = items;
-        this.items = this.items.filter((item) => {
-          return item.author.id === id;
-        });
+
         this.total_count = total_count;
       }
     },
