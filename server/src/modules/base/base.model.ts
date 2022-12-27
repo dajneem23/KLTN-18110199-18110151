@@ -155,10 +155,17 @@ export class BaseModel {
         from: 'messages',
         refFrom: '_id',
         refTo: 'messages',
-        select: 'content images type author',
+        select: 'content images type author deleted createdAt updatedAt',
         reName: 'messages',
         operation: '$in',
         pipeline: [
+          {
+            $match: {
+              deleted: {
+                $ne: true,
+              },
+            },
+          },
           $lookup({
             from: 'users-permissions_user',
             refFrom: '_id',
@@ -188,7 +195,7 @@ export class BaseModel {
         from: 'comments',
         refFrom: '_id',
         refTo: 'comments',
-        select: 'content images type replies author up_votes down_votes',
+        select: 'content images type replies author up_votes down_votes deleted',
         reName: 'comments',
         operation: '$in',
         pipeline: [
@@ -232,7 +239,7 @@ export class BaseModel {
             from: 'comments',
             refFrom: '_id',
             refTo: 'replies',
-            select: 'content images type replies author up_votes down_votes',
+            select: 'content images type replies author up_votes down_votes deleted',
             reName: 'replies',
             operation: '$in',
             pipeline: [
