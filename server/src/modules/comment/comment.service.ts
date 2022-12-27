@@ -113,9 +113,9 @@ export class CommentService {
    * @param _subject
    * @returns {Promise<BaseServiceOutput>}
    */
-  async update({ _slug: slug, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
+  async update({ _id, _content, _subject }: BaseServiceInput): Promise<BaseServiceOutput> {
     try {
-      await this.model.update($toMongoFilter({ slug }), {
+      await this.model.update($toMongoFilter({ _id }), {
         $set: {
           ..._content,
           ...(_subject && { updated_by: new ObjectId(_subject) }),
@@ -135,12 +135,12 @@ export class CommentService {
    * @param {ObjectId} _subject
    * @returns {Promise<void>}
    */
-  async delete({ _slug: slug, _subject }: BaseServiceInput): Promise<void> {
+  async delete({ _id, _subject }: BaseServiceInput): Promise<void> {
     try {
-      await this.model.delete($toMongoFilter({ slug }), {
+      await this.model.delete($toMongoFilter({ _id }), {
         ...(_subject && { deleted_by: new ObjectId(_subject) }),
       });
-      this.logger.debug('delete_success', { slug });
+      this.logger.debug('delete_success', { _id });
       return;
     } catch (err) {
       this.logger.error('delete_error', err.message);
