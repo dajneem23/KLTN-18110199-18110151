@@ -73,11 +73,23 @@ export default {
       this.newCmt = '';
       console.log('cancel');
     },
-    updateCmt() {
-      this.cmt.content = this.newCmt || this.cmt.content;
-      console.log(this.cmt);
+    async updateCmt(id) {
+      const [result, error] = await CommentServices.update(id, {
+        content: this.newCmt,
+      });
+      if (result) {
+        this.isEdit = false;
+      }
+      this.content = this.newCmt;
+      console.log(this.cmt.content);
     },
-    deleteCmt() {},
+    async deleteCmt(id) {
+      console.log(id);
+      const [result, error] = await CommentServices.delete(id);
+      if (result) {
+        this.isEdit = false;
+      }
+    },
     async sendRepCmt() {
       this.cmt.source_id = this.sourceId;
       const result = await CommentServices.comment({

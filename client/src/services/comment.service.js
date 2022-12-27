@@ -5,6 +5,12 @@ export const CommentServices = {
   comment(body) {
     return RequestBase.post(`${this.url}`, body);
   },
+  update(id, body) {
+    return RequestBase.put(`${this.url}/${id}`, body);
+  },
+  delete(id) {
+    return RequestBase.delete(`${this.url}/${id}`);
+  },
   upvote(id) {
     return RequestBase.patch(`${this.url}/upvote/${id}`);
   },
