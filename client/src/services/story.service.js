@@ -11,6 +11,9 @@ export const StoriesService = {
   getById(id) {
     return RequestBase.get(`${this.url}/${id}`);
   },
+  getByUserId(id,params) {
+    return RequestBase.get(`${this.url}/user/${id}`,params);
+  },
   create(body) {
     return RequestBase.post(`${this.url}/`, body);
   },
