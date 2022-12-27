@@ -21,9 +21,42 @@
       }
     }
   }
-  .cmt-content {
-    margin: 10px;
-    margin-left: 45px;
+  .box-content-cmt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .cmt-content {
+      margin: 10px;
+      margin-left: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      input {
+        border-radius: 0px;
+        min-width: 400px;
+        border-bottom: 1px solid var(--gray);
+        margin-right: 10px;
+      }
+      .edit-action {
+        display: flex;
+        align-items: center;
+        .cancel-update-user {
+          margin-right: 10px;
+          width: 15px;
+          fill: red;
+        }
+        .cancel-update-user-check {
+          margin-right: 10px;
+          width: 25px;
+          fill: green;
+        }
+      }
+    }
+    .cmt-action {
+      svg {
+        width: 5px;
+      }
+    }
   }
   .cmt-footer {
     display: flex;

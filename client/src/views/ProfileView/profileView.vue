@@ -110,12 +110,14 @@
         <!-- <div v-for="(item, key) of items" class="my-item"> -->
         <table id="customers">
           <tr>
+            <th></th>
             <th>Nội dung</th>
             <th>Lượt thích</th>
             <th>Lượt bình luận</th>
             <th>Thao tác</th>
           </tr>
           <tr v-for="(item, key) of items">
+            <td><img :src="item.images[0]?.url" alt="" /></td>
             <td class="table-content">{{ item.name }}</td>
             <td>{{ item.reacts?.length || 0 }}</td>
             <td>{{ item.commtents?.length || 0 }}</td>
