@@ -1,5 +1,5 @@
 <template>
-  <div class="user-cmt">
+  <div class="user-cmt" :id="id">
     <div class="cmt-header">
       <div class="vote_cmt">
         <div

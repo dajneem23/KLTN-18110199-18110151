@@ -37,21 +37,32 @@ export default {
     },
   },
   mounted() {
-    if (this.author.id === this.userInfo._id) {
-      this.isMe = true;
-      return;
+    if (this.isAuthenticated) {
+      if (this.author.id === this.userInfo._id) {
+        this.isMe = true;
+        return;
+      }
     }
   },
   data() {
     return {
+      id: '',
+      title: '',
       story: [],
       lang: 'vi',
       HOME_ITEM,
       reacts: [],
       comments: [],
       images: [],
-      author: { name: 'Unknown' },
-      created_at: new Date(),
+      author: {
+        name: 'Unknown',
+        avatar: [
+          {
+            url: '',
+          },
+        ],
+      },
+      createdAt: new Date(),
       cmt: {
         source_id: '',
         type: 'stories',
@@ -78,18 +89,20 @@ export default {
       }
     },
     async sendCmt() {
-      if (this.cmt.content !== '') {
-        this.cmt.source_id = this.id;
-        const result = await CommentServices.comment({
-          ...this.cmt,
-        });
-        const [result_2, error] = await StoriesService.getById(this.slug);
-        console.log([result_2, error]);
-        if (result) {
-          this.comments.push(result_2.comments[result_2.comments.length - 1]);
-          // this.comments = result_2.comments;
+      if (this.isAuthenticated) {
+        if (this.cmt.content !== '') {
+          this.cmt.source_id = this.id;
+          const result = await CommentServices.comment({
+            ...this.cmt,
+          });
+          const [result_2, error] = await StoriesService.getById(this.slug);
+          console.log([result_2, error]);
+          if (result) {
+            this.comments.push(result_2.comments[result_2.comments.length - 1]);
+            // this.comments = result_2.comments;
+          }
+          this.cmt.content = '';
         }
-        this.cmt.content = '';
       }
     },
     async followUser(id) {

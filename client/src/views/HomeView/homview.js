@@ -112,29 +112,35 @@ export default {
       model.style.visibility = 'hidden';
     },
     async handleChageTabHomeData($state) {
-      this.isTabHomeData = true;
-      const [
-        { items = [], total_count } = {
-          items: [],
-        },
-        error,
-      ] = await StoriesService.get({});
-      this.posts = items;
-      console.log(items, total_count);
-    },
-    async handleChageTabFollowData() {
-      if (this.userInfo.following.length == 0) {
-        // this.post = [];
-      } else {
-        this.isTabHomeData = false;
+      if (this.isAuthenticated) {
+        this.isTabHomeData = true;
         const [
           { items = [], total_count } = {
             items: [],
           },
           error,
-        ] = await StoriesService.getPostsFollow({});
+        ] = await StoriesService.get({});
         this.posts = items;
         console.log(items, total_count);
+      }
+    },
+    async handleChageTabFollowData() {
+      if (this.isAuthenticated) {
+        if (this.userInfo.following.length == 0) {
+          // this.post = [];
+        } else {
+          this.isTabHomeData = false;
+          const [
+            { items = [], total_count } = {
+              items: [],
+            },
+            error,
+          ] = await StoriesService.getPostsFollow({});
+          this.posts = items;
+          console.log(items, total_count);
+        }
+      } else {
+        this.$router.push('/login')
       }
     },
   },

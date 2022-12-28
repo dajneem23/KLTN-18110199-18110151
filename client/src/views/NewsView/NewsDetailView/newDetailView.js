@@ -82,9 +82,11 @@ export default {
     this.isLoading = false;
     this.totalVote = this.up_votes.length - this.down_votes.length;
     window.addEventListener('scroll', this.handleScroll);
-    if (this.author.id === this.userInfo._id) {
-      this.isMe = true;
-      return;
+    if (this.isAuthenticated) {
+      if (this.author.id === this.userInfo._id) {
+        this.isMe = true;
+        return;
+      }
     }
   },
   async created() {
@@ -124,18 +126,20 @@ export default {
       });
     },
     async sendCmt() {
-      if (this.cmt.content !== '') {
-        this.cmt.source_id = this.news.id;
-        const result = await CommentServices.comment({
-          ...this.cmt,
-        });
-        const [result_2, error] = await NewsServices.getById(this.news.slug);
-        console.log([result_2, error]);
-        if (result_2) {
-          this.comments.push(result_2.comments[result_2.comments.length - 1]);
-          // this.comments = result_2.comments;
+      if (this.isAuthenticated) {
+        if (this.cmt.content !== '') {
+          this.cmt.source_id = this.news.id;
+          const result = await CommentServices.comment({
+            ...this.cmt,
+          });
+          const [result_2, error] = await NewsServices.getById(this.news.slug);
+          console.log([result_2, error]);
+          if (result_2) {
+            this.comments.push(result_2.comments[result_2.comments.length - 1]);
+            // this.comments = result_2.comments;
+          }
+          this.cmt.content = '';
         }
-        this.cmt.content = '';
       }
     },
     goToCmtBox() {
