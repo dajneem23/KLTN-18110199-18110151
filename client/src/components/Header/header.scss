@@ -106,6 +106,13 @@ button:focus {
     width: 20px;
   }
 }
+.picture-user {
+  margin-right: 10px;
+  img {
+    width: 50px;
+    height: 40px;
+  }
+}
 .title_tooltip {
   display: none;
   // position: absolute;
