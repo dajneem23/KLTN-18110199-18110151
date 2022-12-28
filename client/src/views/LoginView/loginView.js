@@ -2,6 +2,7 @@ import { LOGIN_ITEM } from '../../constants/loginpage';
 import Toastify from '../../components/ToastifyCustom/index.vue';
 import { AuthService } from '@/services';
 import { mapState } from 'vuex';
+import axios from 'axios';
 export default {
   name: 'LoginView',
   data() {
@@ -63,7 +64,51 @@ export default {
           this.isWarnning = false;
         }, 2000);
       }
-      
+    },
+    async googleLogin() {
+      try {
+        // const googleUser = await this.$gAuth.signIn();
+        // console.log({
+        //   googleUser,
+        // });
+        const client = google.accounts.oauth2.initTokenClient({
+          client_id: '239259098538-f5psal7n3msj632vps7fb5c47ecloqi0.apps.googleusercontent.com',
+          scope: 'profile email',
+          ux_mode: 'popup',
+          callback: async (response) => {
+            console.log({ response });
+            if (response.access_token) {
+              const [result, error] = await AuthService.googleLogin({
+                token: response.access_token,
+              });
+              if (result) {
+                this.isSuccess = true;
+                const { user } = result;
+                this.$store.commit('setUserInfo', user);
+                this.$store.commit('setIsAuthenticated', true);
+                console.log(this.$store.state.isAuthenticated);
+                setTimeout(() => {
+                  this.isSuccess = false;
+                  this.$router.push('/');
+                }, 2000);
+              } else {
+                this.isWarnning = true;
+                setTimeout(() => {
+                  this.isWarnning = false;
+                }, 2000);
+              }
+            }
+            // axios
+            //   .get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + response.access_token)
+            //   .then((response) => {
+            //     console.log({ response });
+            //   });
+          },
+        });
+        client.requestAccessToken();
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

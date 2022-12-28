@@ -4,6 +4,9 @@ export const AuthService = {
   login(body) {
     return RequestBase.post(`${this.url}/login`, body);
   },
+  googleLogin(body) {
+    return RequestBase.post(`${this.url}/google-login`, body);
+  },
   logout(body) {
     return RequestBase.get(`${this.url}/logout`);
   },
