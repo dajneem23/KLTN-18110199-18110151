@@ -133,11 +133,11 @@
         <!-- <router-link to="/about">
           <button type="button" class="btn-none">Về Vrum</button>
         </router-link> -->
-        <!-- <div class="picture-user">
-          <img :src="userInfo?.avatar[0].url" alt="" />
-        </div> -->
         <div v-if="isAuthenticated" class="category-item-user">
           <div class="name-user" @click="showtoolTip">
+            <div class="picture-user">
+              <img :src="userInfo?.avatar[0].url" alt="" />
+            </div>
             <span>
               {{ userInfo ? userInfo?.username : '' }}
             </span>
