@@ -231,4 +231,23 @@ router.beforeEach(async (to, from, next) => {
   }
   next();
 });
+router.afterEach((to, from) => {
+  const view = to.path.split('/')[1];
+  switch (view) {
+    case 'manga':
+      store.commit('setIsPage', 'manga');
+      break;
+    case 'movie':
+      store.commit('setIsPage', 'movie');
+      break;
+    case 'chat':
+      store.commit('setIsPage', 'chat');
+      break;
+    case 'news':
+      store.commit('setIsPage', 'articles');
+      break;
+    default:
+      store.commit('setIsPage', 'home');
+  }
+});
 export default router;

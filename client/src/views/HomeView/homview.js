@@ -28,6 +28,7 @@ export default {
       isTabHomeData: true,
       isShowUserProfile: false,
       loadMethod: 'get',
+      infiniteState: null,
     };
   },
   watch: {
@@ -52,6 +53,7 @@ export default {
       } else {
         this.loadMethod = 'getPostsFollow';
       }
+      this.infiniteState.reset();
     },
   },
   methods: {
@@ -66,11 +68,13 @@ export default {
         per_page: this.per_page,
       });
       if (!items.length) {
+        console.log('no more data');
         $state.complete();
       }
       this.posts.push(...items);
       this.page++;
       $state.loaded();
+      this.infiniteState = $state;
     },
 
     async createChat(id) {
@@ -140,7 +144,7 @@ export default {
           console.log(items, total_count);
         }
       } else {
-        this.$router.push('/login')
+        this.$router.push('/login');
       }
     },
   },
