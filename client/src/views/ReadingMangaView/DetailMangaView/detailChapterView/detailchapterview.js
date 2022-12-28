@@ -67,19 +67,21 @@ export default {
   },
   methods: {
     async sendCmt() {
-      this.cmt.source_id = this.chapter.id;
-      const result = await CommentServices.comment({
-        ...this.cmt,
-      });
-      const [result_2, error] = await MangaServices.getChapterById(this.chapter.slug);
-      console.log([result_2, error]);
-      if (result) {
-        this.comments.push(result_2.comments[result_2.comments.length - 1]);
-        // this.comments = result_2.comments;
+      if (this.isAuthenticated) {
+        this.cmt.source_id = this.chapter.id;
+        const result = await CommentServices.comment({
+          ...this.cmt,
+        });
+        const [result_2, error] = await MangaServices.getChapterById(this.chapter.slug);
+        console.log([result_2, error]);
+        if (result) {
+          this.comments.push(result_2.comments[result_2.comments.length - 1]);
+          // this.comments = result_2.comments;
+        }
+        console.log(result);
+        this.comments.push(result[0]);
+        this.cmt.content = '';
       }
-      console.log(result);
-      this.comments.push(result[0]);
-      this.cmt.content = '';
     },
     goToPrev(index) {
       console.log(index);

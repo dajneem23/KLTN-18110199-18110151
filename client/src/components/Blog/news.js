@@ -69,9 +69,11 @@ export default {
       });
   },
   mounted() {
-    if (this.author.id === this.userInfo._id) {
-      this.isMe = true;
-      return;
+    if (this.isAuthenticated) {
+      if (this.author.id === this.userInfo._id) {
+        this.isMe = true;
+        return;
+      }
     }
     // console.log(this.author.id);
   },
@@ -102,17 +104,19 @@ export default {
       }
     },
     async sendCmt() {
-      if (this.cmt.content !== '') {
-        this.cmt.source_id = this.data.id;
-        const result = await CommentServices.comment({
-          ...this.cmt,
-        });
-        const [result_2, error] = await StoriesService.getById(this.data.slug);
-        console.log([result_2, error]);
-        if (result) {
-          this.comments.push(result_2.comments[result_2.comments.length - 1]);
+      if (this.isAuthenticated) {
+        if (this.cmt.content !== '') {
+          this.cmt.source_id = this.data.id;
+          const result = await CommentServices.comment({
+            ...this.cmt,
+          });
+          const [result_2, error] = await StoriesService.getById(this.data.slug);
+          console.log([result_2, error]);
+          if (result) {
+            this.comments.push(result_2.comments[result_2.comments.length - 1]);
+          }
+          this.cmt.content = '';
         }
-        this.cmt.content = '';
       }
     },
     async followUser(id) {
