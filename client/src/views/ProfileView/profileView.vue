@@ -95,7 +95,7 @@
           id="myNews"
           @click="changeStories"
         >
-          Bài viết của tôi
+          Bài viết
         </button>
         <button
           class="menu_bar-item bgc-white"
@@ -103,7 +103,7 @@
           id="myWish"
           @click="changeArticles"
         >
-          Bài thảo luận của tôi
+          Bài thảo luận
         </button>
       </div>
       <div id="" class="news">

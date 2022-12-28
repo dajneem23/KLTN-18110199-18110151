@@ -67,10 +67,6 @@ export default {
     },
     async googleLogin() {
       try {
-        // const googleUser = await this.$gAuth.signIn();
-        // console.log({
-        //   googleUser,
-        // });
         const client = google.accounts.oauth2.initTokenClient({
           client_id: '239259098538-f5psal7n3msj632vps7fb5c47ecloqi0.apps.googleusercontent.com',
           scope: 'profile email',
@@ -98,11 +94,6 @@ export default {
                 }, 2000);
               }
             }
-            // axios
-            //   .get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + response.access_token)
-            //   .then((response) => {
-            //     console.log({ response });
-            //   });
           },
         });
         client.requestAccessToken();

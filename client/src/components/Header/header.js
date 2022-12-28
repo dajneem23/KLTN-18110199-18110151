@@ -34,20 +34,20 @@ export default {
       }
     },
     showtoolTip() {
-      const toolTip = document.getElementById('toolTip-user');
-      const caretDown = document.getElementById('caret-down');
-      const caretUp = document.getElementById('caret-up');
-      if (toolTip.classList.length === 2) {
-        toolTip.classList.add('showToolTip');
-        toolTip.style.top = '60px';
-        caretDown.style.display = 'none';
-        caretUp.classList.remove('caret-hidden');
-      } else {
-        toolTip.style.top = '-100px';
-        caretDown.style.display = 'inline';
-        caretUp.classList.add('caret-hidden');
-        toolTip.classList.remove('showToolTip');
-      }
+      // const toolTip = document.getElementById('toolTip-user');
+      // const caretDown = document.getElementById('caret-down');
+      // const caretUp = document.getElementById('caret-up');
+      // if (toolTip.classList.length === 2) {
+      //   toolTip.classList.add('showToolTip');
+      //   toolTip.style.top = '60px';
+      //   caretDown.style.display = 'none';
+      //   caretUp.classList.remove('caret-hidden');
+      // } else {
+      //   toolTip.style.top = '-100px';
+      //   caretDown.style.display = 'inline';
+      //   caretUp.classList.add('caret-hidden');
+      //   toolTip.classList.remove('showToolTip');
+      // }
     },
     showBoxNotification() {},
     hiddenBoxNotification() {},
@@ -107,6 +107,7 @@ export default {
       lang: 'vi',
       HEADER_ITEM,
       isShowNotifi: false,
+      isShowToolTip: false,
     };
   },
 };

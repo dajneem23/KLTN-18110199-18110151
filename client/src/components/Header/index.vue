@@ -134,7 +134,7 @@
           <button type="button" class="btn-none">Về Vrum</button>
         </router-link> -->
         <div v-if="isAuthenticated" class="category-item-user">
-          <div class="name-user" @click="showtoolTip">
+          <div class="name-user" @click="isShowToolTip = !isShowToolTip">
             <div class="picture-user">
               <img :src="userInfo?.avatar[0].url" alt="" />
             </div>
@@ -152,7 +152,12 @@
               />
             </svg>
           </div>
-          <div class="title_tooltip-user bgc-white" id="toolTip-user">
+          <div
+            @mouseleave="isShowToolTip = false"
+            v-show="isShowToolTip"
+            class="title_tooltip-user bgc-white"
+            id="toolTip-user"
+          >
             <router-link :to="{ name: 'profile', params: { id: userInfo?._id } }">
               <div class="tooltip-user--item" @click="showtoolTip">Trang cá nhân</div>
             </router-link>

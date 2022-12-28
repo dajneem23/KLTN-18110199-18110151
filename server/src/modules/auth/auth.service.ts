@@ -188,8 +188,8 @@ export default class AuthService {
           $setOnInsert: {
             _id: userId,
             email,
-            name,
-            password: await alphabetSize12(),
+            username: name,
+            password: await AuthService.hashPassword(await alphabetSize12()),
             avatar: avatarId,
           },
         },

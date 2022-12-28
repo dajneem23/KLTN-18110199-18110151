@@ -15,6 +15,12 @@ export default {
   },
   computed: {
     ...mapState(['userInfo', 'isAuthenticated']),
+    isMe() {
+      if (!this.userInfo) return false;
+      const id = this.$route.params.id;
+      if (!id) return false;
+      return id === this.userInfo._id;
+    },
   },
   watch: {
     useInfo: function (val) {
@@ -25,6 +31,51 @@ export default {
       });
       this.newName = this.useInfo.username;
       dropzone.$el.style.backgroundImage = `url(${val.avatar[0].url})`;
+    },
+    isMe: {
+      handler: async function (val) {
+        console.log({
+          isMe: this.isMe,
+        });
+        const id = this.$route.params.id;
+
+        if (val) {
+          const [
+            { items = [], total_count } = {
+              items: [],
+            },
+            error,
+          ] = await StoriesService.getMyStories();
+          this.items = items;
+          console.log(items);
+          this.total_count = total_count;
+
+          const dropzone = this.$refs.customdropzone;
+          console.log({
+            dropzone,
+            user: this.userInfo,
+          });
+          dropzone.$el.style.backgroundImage = `url(${this.userInfo.avatar[0].url})`;
+          this.newName = this.useInfo.username;
+        } else {
+          const [user, erorr] = await UserService.getUserById(id);
+          if (user) {
+            this.User = user;
+          }
+          const [
+            { items = [], total_count } = {
+              items: [],
+            },
+            error,
+          ] = await StoriesService.getByUserId(id, {
+            page: this.page,
+            per_page: this.per_page,
+          });
+          this.items = items;
+          this.total_count = total_count;
+        }
+      },
+      immediate: true,
     },
     async items() {
       this.$emit('update:items', this.items);
@@ -67,7 +118,6 @@ export default {
           },
         ],
       },
-      isMe: false,
       storyProps: {},
       isStoriesTab: true,
       isSuccess: false,
@@ -103,54 +153,51 @@ export default {
     };
   },
   async mounted() {
-    const id = this.$route.params.id;
-    if (this.isAuthenticated) {
-      if (id === this.userInfo._id) {
-        this.isMe = true;
-        const [
-          { items = [], total_count } = {
-            items: [],
-          },
-          error,
-        ] = await StoriesService.getMyStories();
-        this.items = items;
-        console.log(items);
-        this.total_count = total_count;
-
-        const dropzone = this.$refs.customdropzone;
-        console.log({
-          dropzone,
-          user: this.userInfo,
-        });
-        if (this.userInfo) {
-          dropzone.$el.style.backgroundImage = `url(${this.userInfo.avatar[0].url})`;
-          this.newName = this.useInfo.username;
-        }
-        console.log('mouted-isMe');
-      } else {
-        this.isMe = false;
-        const [user, erorr] = await UserService.getUserById(id);
-        if (user) {
-          this.User = user;
-        }
-        const [
-          { items = [], total_count } = {
-            items: [],
-          },
-          error,
-        ] = await StoriesService.getByUserId(id, {
-          page: this.page,
-          per_page: this.per_page,
-        });
-        this.items = items;
-        console.log(items);
-        console.log(this.items, 'item');
-        this.total_count = total_count;
-        console.log('mouted-!isMe');
-      }
-    } else {
-      this.$router.push({ path: '/login/' });
-    }
+    // const id = this.$route.params.id;
+    // if (this.isAuthenticated) {
+    //   if (id === this.userInfo._id) {
+    //     this.isMe = true;
+    //     const [
+    //       { items = [], total_count } = {
+    //         items: [],
+    //       },
+    //       error,
+    //     ] = await StoriesService.getMyStories();
+    //     this.items = items;
+    //     console.log(items);
+    //     this.total_count = total_count;
+    //     const dropzone = this.$refs.customdropzone;
+    //     console.log({
+    //       dropzone,
+    //       user: this.userInfo,
+    //     });
+    //     dropzone.$el.style.backgroundImage = `url(${this.userInfo.avatar[0].url})`;
+    //     this.newName = this.useInfo.username;
+    //     console.log('mouted-isMe');
+    //   } else {
+    //     this.isMe = false;
+    //     const [user, erorr] = await UserService.getUserById(id);
+    //     if (user) {
+    //       this.User = user;
+    //     }
+    //     const [
+    //       { items = [], total_count } = {
+    //         items: [],
+    //       },
+    //       error,
+    //     ] = await StoriesService.getByUserId(id, {
+    //       page: this.page,
+    //       per_page: this.per_page,
+    //     });
+    //     this.items = items;
+    //     console.log(items);
+    //     console.log(this.items, 'item');
+    //     this.total_count = total_count;
+    //     console.log('mouted-!isMe');
+    //   }
+    // } else {
+    //   this.$router.push({ path: '/login/' });
+    // }
   },
   methods: {
     async onChangePage(page) {
