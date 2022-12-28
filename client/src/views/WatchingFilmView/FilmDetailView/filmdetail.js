@@ -8,7 +8,7 @@ import moment from 'moment';
 export default {
   components: {
     Commentfilm,
-    Loader
+    Loader,
   },
   data() {
     return {
@@ -71,18 +71,20 @@ export default {
   methods: {
     moment,
     async sendCmt() {
-      if (this.cmt.content !== '') {
-        this.cmt.source_id = this.film.id;
-        const result = await CommentServices.comment({
-          ...this.cmt,
-        });
-        const [result_2, error] = await FilmServices.getById(this.film.slug);
-        console.log([result_2, error]);
-        if (result) {
-          this.comments.push(result_2.comments[result_2.comments.length - 1]);
-          // this.comments = result_2.comments;
+      if (this.isAuthenticated) {
+        if (this.cmt.content !== '') {
+          this.cmt.source_id = this.film.id;
+          const result = await CommentServices.comment({
+            ...this.cmt,
+          });
+          const [result_2, error] = await FilmServices.getById(this.film.slug);
+          console.log([result_2, error]);
+          if (result) {
+            this.comments.push(result_2.comments[result_2.comments.length - 1]);
+            // this.comments = result_2.comments;
+          }
+          this.cmt.content = '';
         }
-        this.cmt.content = '';
       }
     },
     async likeFilms(slug) {

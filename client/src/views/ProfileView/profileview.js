@@ -63,9 +63,9 @@ export default {
       User: {
         avatar: [
           {
-            url:''
-          }
-        ]
+            url: '',
+          },
+        ],
       },
       isMe: false,
       storyProps: {},
@@ -104,48 +104,52 @@ export default {
   },
   async mounted() {
     const id = this.$route.params.id;
-    if (id === this.userInfo._id) {
-      this.isMe = true;
-      const [
-        { items = [], total_count } = {
-          items: [],
-        },
-        error,
-      ] = await StoriesService.getMyStories();
-      this.items = items;
-      console.log(items);
-      this.total_count = total_count;
+    if (this.isAuthenticated) {
+      if (id === this.userInfo._id) {
+        this.isMe = true;
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await StoriesService.getMyStories();
+        this.items = items;
+        console.log(items);
+        this.total_count = total_count;
 
-      const dropzone = this.$refs.customdropzone;
-      console.log({
-        dropzone,
-        user: this.userInfo,
-      });
-      if (this.userInfo) {
-        dropzone.$el.style.backgroundImage = `url(${this.userInfo.avatar[0].url})`;
-        this.newName = this.useInfo.username;
+        const dropzone = this.$refs.customdropzone;
+        console.log({
+          dropzone,
+          user: this.userInfo,
+        });
+        if (this.userInfo) {
+          dropzone.$el.style.backgroundImage = `url(${this.userInfo.avatar[0].url})`;
+          this.newName = this.useInfo.username;
+        }
+        console.log('mouted-isMe');
+      } else {
+        this.isMe = false;
+        const [user, erorr] = await UserService.getUserById(id);
+        if (user) {
+          this.User = user;
+        }
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await StoriesService.getByUserId(id, {
+          page: this.page,
+          per_page: this.per_page,
+        });
+        this.items = items;
+        console.log(items);
+        console.log(this.items, 'item');
+        this.total_count = total_count;
+        console.log('mouted-!isMe');
       }
-      console.log('mouted-isMe');
     } else {
-      this.isMe = false;
-      const [user, erorr] = await UserService.getUserById(id);
-      if (user) {
-        this.User = user;
-      }
-      const [
-        { items = [], total_count } = {
-          items: [],
-        },
-        error,
-      ] = await StoriesService.getByUserId(id, {
-        page: this.page,
-        per_page: this.per_page,
-      });
-      this.items=items
-      console.log(items);
-      console.log(this.items, 'item');
-      this.total_count = total_count;
-      console.log('mouted-!isMe');
+      this.$router.push({ path: '/login/' });
     }
   },
   methods: {

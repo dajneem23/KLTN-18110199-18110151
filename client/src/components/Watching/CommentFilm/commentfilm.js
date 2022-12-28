@@ -9,6 +9,7 @@ export default {
   },
   data() {
     return {
+      isDeleted: false,
       isMe: false,
       isEdit: false,
       newCmt: '',
@@ -84,11 +85,13 @@ export default {
       console.log(this.cmt.content);
     },
     async deleteCmt(id) {
+      const cmt_box = document.getElementById(id);
       console.log(id);
       const [result, error] = await CommentServices.delete(id);
       if (result) {
         this.isEdit = false;
       }
+      cmt_box.style.display = 'none';
     },
     async sendRepCmt() {
       this.cmt.source_id = this.sourceId;
