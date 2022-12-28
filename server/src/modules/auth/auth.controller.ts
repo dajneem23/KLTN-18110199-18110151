@@ -42,6 +42,19 @@ export class AuthController {
     return res.status(httpStatusCode.OK).json(result);
   }
 
+  @Post('/auth/google-login', [authValidation.googleLogin])
+  async googleLogin(@Res() res: Response, @Body() body: any) {
+    if (!body.token) return res.status(httpStatusCode.BAD_REQUEST).json({ message: 'Token is required' });
+    const result = await this.authService.loginByGoogle(body.token);
+    res.cookie('access_token', result.tokens.access_token, {
+      httpOnly: true,
+      secure: env.MODE === 'production',
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      sameSite: 'none',
+    });
+    return res.status(httpStatusCode.OK).json(result);
+  }
+
   @Get('/auth/logout', [protect()])
   async logout(@Res() res: Response, @Auth() auth: JWTPayload) {
     res.clearCookie('access_token', {

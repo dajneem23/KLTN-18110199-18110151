@@ -1,4 +1,4 @@
-import { Inject, Service } from 'typedi';
+import Container, { Inject, Service } from 'typedi';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import ms from 'ms';
@@ -17,7 +17,9 @@ import { alphabetSize12, alphabetSize24 } from '@/utils/randomString';
 import { UserError } from '@/modules/user/user.error';
 import { MailJob } from '@/modules/mailer/mail.job';
 import VerificationTokenService from '@/modules/verificationToken/verificationToken.service';
-import { Filter, WithId } from 'mongodb';
+import { Filter, ObjectId, WithId } from 'mongodb';
+import axios from 'axios';
+import { DIMongoDB } from '@/loaders/mongoDBLoader';
 // import { DIRedisClient } from '@/loaders/redisClientLoader';
 // import { RedisClientType } from 'redis';
 
@@ -116,6 +118,88 @@ export default class AuthService {
       if (!user || !(await AuthService.verifyPassword(password, user.password))) {
         throwErr(new AuthError('INCORRECT_LOGIN_ID_OR_PASSWORD'));
       }
+      // Check whitelist roles
+      // if (!intersection(user.roles, whiteListRoles).length) {
+      //   throwErr(new AuthError('PERMISSION_DENIED'));
+      // }
+      // Check account suspended
+      if (user.status === 'suspended') {
+        throwErr(new AuthError('ACCOUNT_SUSPENDED'));
+      }
+      if (user.blocked) {
+        throwErr(new AuthError('ACCOUNT_BLOCKED'));
+      }
+      // Generate new auth session
+      const { tokens } = await this.generateAuthSession(user);
+      this.logger.debug('[loginByPassword:success]');
+      return { user: toUserOutput(user), tokens };
+    } catch (err) {
+      this.logger.error('[loginByPassword:error]', err);
+      throw err;
+    }
+  }
+  /**
+   * Login by login ID and password
+   *
+   * @param loginID The Login ID (Username or Email)
+   * @param password The user password
+   * @param whiteListRoles Allowed roles
+   */
+  async loginByGoogle(access_token: string) {
+    try {
+      const { data } = await axios.get(
+        'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + access_token,
+      );
+
+      const { email, name, picture } = data;
+
+      // Get user
+      const userId = new ObjectId();
+      const { insertedId: avatarId } = await Container.get(DIMongoDB)
+        .collection('upload_file')
+        .insertOne({
+          _id: new ObjectId(),
+          name: 'user-avatar-' + userId,
+          alternativeText: '',
+          caption: '',
+          hash: 'user-avatar-' + userId,
+          ext: '.jpg',
+          mime: 'image/jpeg',
+          size: 100,
+          url: picture,
+          provider: 'google-cloud-storage',
+          width: 200,
+          height: 200,
+          related: [] as any,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          created_by: userId,
+          updated_by: userId,
+        });
+      const {
+        value: user,
+        ok,
+        lastErrorObject: { updatedExisting },
+      } = await this.userService.model._collection.findOneAndUpdate(
+        {
+          email,
+        },
+        {
+          $setOnInsert: {
+            _id: userId,
+            email,
+            name,
+            password: await alphabetSize12(),
+            avatar: avatarId,
+          },
+        },
+        {
+          upsert: true,
+          returnDocument: 'after',
+        },
+      );
+
+      if (!ok) throwErr(new AuthError('INCORRECT_LOGIN_ID_OR_PASSWORD'));
       // Check whitelist roles
       // if (!intersection(user.roles, whiteListRoles).length) {
       //   throwErr(new AuthError('PERMISSION_DENIED'));

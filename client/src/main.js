@@ -11,12 +11,15 @@ import { store } from './store/vuex';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import socketClient from './socket';
 import InfiniteLoading from 'vue-infinite-loading';
-
+// import GAuth from 'vue-google-oauth2';
+// const gauthOption = {
+//   clientId: '239259098538-f5psal7n3msj632vps7fb5c47ecloqi0.apps.googleusercontent.com',
+//   scope: 'profile email',
+//   prompt: 'select_account',
+// };
+// Vue.use(GAuth, gauthOption);
 // import CKEditor from 'ckeditor4-vue';
 // import CKEditor from '@ckeditor/ckeditor5-vue2';
-console.log({
-  socketClient,
-});
 // Vue.use(CKEditor);
 Vue.use(VueCarousel);
 Vue.use(VuePlyr);

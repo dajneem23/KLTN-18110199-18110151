@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper-login" @submit.prevent="login()">
+    <div class="wrapper-login">
       <form class="form-login bgc-white">
         <h3>{{ LOGIN_ITEM.headerTitle.title[lang] }}</h3>
         <div class="error-title" v-bind:class="{ 'show-error': LOGIN_ITEM.userName.error }">
@@ -46,15 +46,34 @@
           <span>{{ LOGIN_ITEM.rememberMe.title[lang] }} </span>
         </div> -->
         <div class="form-button">
-          <button class="btn-primary bgc-blue cl-white" type="submit">{{ LOGIN_ITEM.loginButton.title[lang] }}</button>
-          <!-- <button class="btn-google">
+          <button
+            class="btn-primary bgc-blue cl-white"
+            @click="
+              (e) => {
+                e.preventDefault();
+                login();
+              }
+            "
+            type="submit"
+          >
+            {{ LOGIN_ITEM.loginButton.title[lang] }}
+          </button>
+          <button
+            class="btn-google"
+            @click="
+              (e) => {
+                e.preventDefault();
+                googleLogin();
+              }
+            "
+          >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
               <path
                 d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
               />
             </svg>
             <span> {{ LOGIN_ITEM.googleButton.title[lang] }} </span>
-          </button> -->
+          </button>
         </div>
         <div class="form-more">
           <router-link to="">

@@ -24,6 +24,7 @@
     "vue": "^2.6.11",
     "vue-carousel": "^0.18.0",
     "vue-dropzone": "^1.0.4",
+    "vue-google-oauth2": "^1.5.8",
     "vue-infinite-loading": "^2.4.5",
     "vue-lazytube": "^1.1.1",
     "vue-loader": "15.10.0",

@@ -7,6 +7,12 @@ export const login = validate({
   }),
 });
 
+export const googleLogin = validate({
+  [Segments.BODY]: Joi.object({
+    token: Joi.string().required(),
+  }),
+});
+
 export const register = validate({
   [Segments.BODY]: Joi.object({
     username: Joi.string().required(),
