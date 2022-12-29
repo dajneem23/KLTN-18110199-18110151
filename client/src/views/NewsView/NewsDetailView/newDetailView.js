@@ -148,8 +148,8 @@ export default {
     },
     async upVote(id) {
       if (this.isAuthenticated) {
-        this.up_votes.length += 1;
-        this.down_votes.length -= 1;
+        // this.up_votes.length += 1;
+        // this.down_votes.length -= 1;
         this.isVoteUp = true;
         this.isVoteDown = false;
         // let down_vote = document.getElementById('triangle-down');
@@ -173,8 +173,8 @@ export default {
     },
     async downVote(id) {
       if (this.isAuthenticated) {
-        this.up_votes.length -= 1;
-        this.down_votes.length += 1;
+        // this.up_votes.length -= 1;
+        // this.down_votes.length += 1;
         this.isVoteUp = false;
         this.isVoteDown = true;
         // let down_vote = document.getElementById('triangle-down');
