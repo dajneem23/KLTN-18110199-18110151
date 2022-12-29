@@ -482,7 +482,13 @@ export class BaseModel {
    */
   async update(
     { ...filter }: any,
-    { $set: { updated_at, updatedAt, ..._content }, ..._updateFilter }: any,
+    {
+      $set: { updated_at, updatedAt, ..._content } = {
+        updated_at: new Date(),
+        updatedAt: new Date(),
+      },
+      ..._updateFilter
+    }: any,
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
