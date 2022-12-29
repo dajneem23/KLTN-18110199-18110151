@@ -93,9 +93,9 @@ export default {
       if (!this.filterCategory.includes(id)) {
         this.filterCategory.push(id);
       } else {
-        this.filterCategory = this.filterCategory.filter(function(item) {
-          return item !== id
-      })
+        this.filterCategory = this.filterCategory.filter(function (item) {
+          return item !== id;
+        });
       }
       const [
         { items = [], total_count } = {
@@ -124,19 +124,24 @@ export default {
       this.total_count = total_count;
     },
     async handleChangeTabFollow() {
-      this.isTab = false;
-      const [
-        { items = [], total_count } = {
-          items: [],
-        },
-        error,
-      ] = await NewsServices.getFollowing({
-        page: this.page,
-        per_page: this.per_page,
-      });
-      this.items = items;
-      console.log(this.items);
-      this.total_count = total_count;
+      if (this.isAuthenicated) {
+        this.isTab = false;
+        const [
+          { items = [], total_count } = {
+            items: [],
+          },
+          error,
+        ] = await NewsServices.getFollowing({
+          page: this.page,
+          per_page: this.per_page,
+        });
+        this.items = items;
+        console.log(this.items);
+        this.total_count = total_count;
+      } else {
+        this.items = [];
+        this.total_count = 0;
+      }
     },
   },
 };

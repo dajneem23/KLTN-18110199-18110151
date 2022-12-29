@@ -45,9 +45,11 @@ export default {
     this.down_votes = this.data.down_votes;
     // console.log(this.data);
     console.log(this.userInfo);
-    if (this.author.id === this.userInfo._id) {
-      this.isMe = true;
-      return;
+    if (this.isAuthenticated) {
+      if (this.author.id === this.userInfo._id) {
+        this.isMe = true;
+        return;
+      }
     }
   },
   created() {

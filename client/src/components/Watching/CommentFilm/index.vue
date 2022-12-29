@@ -5,7 +5,7 @@
         <div
           :id="id"
           class="triangle"
-          :class="{ 'up-vote': up_votes?.includes(userInfo._id) }"
+          :class="{ 'up-vote': up_votes?.includes(userInfo?._id) || '' }"
           v-if="!isVoteUp"
           @click="upvote(id)"
         ></div>
@@ -15,7 +15,7 @@
         <div
           :id="id"
           class="triangle-down"
-          :class="{ 'down-vote': down_votes?.includes(userInfo._id) }"
+          :class="{ 'down-vote': down_votes?.includes(userInfo?._id) ||'' }"
           v-if="!isVoteDown"
           @click="downvote(id)"
         ></div>
