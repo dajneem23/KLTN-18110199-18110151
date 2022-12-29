@@ -170,7 +170,7 @@ export const $pagination = ({
     ]) || [
       {
         $sort: {
-          created_at: -1,
+          createdAt: -1,
         },
       },
     ]),

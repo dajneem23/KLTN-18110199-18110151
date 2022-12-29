@@ -417,19 +417,16 @@ export class BaseModel {
    */
   async create(
     { ...filter }: any,
-    {
-      updated_at = new Date().toISOString(),
-      created_at = new Date().toISOString(),
-      updatedAt = new Date().toISOString(),
-      createdAt = new Date().toISOString(),
-      deleted = false,
-      created_by,
-      ..._content
-    }: any,
+    { updated_at, created_at, updatedAt, createdAt, deleted = false, created_by, ..._content }: any,
     { upsert = true, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
       _content = await this._validate(_content);
+      created_at = created_at || new Date();
+      updated_at = updated_at || new Date();
+      createdAt = createdAt || new Date();
+      updatedAt = updatedAt || new Date();
+
       const {
         value,
         ok,
@@ -485,13 +482,12 @@ export class BaseModel {
    */
   async update(
     { ...filter }: any,
-    {
-      $set: { updated_at = new Date().toISOString(), updatedAt = new Date().toISOString(), ..._content } = {},
-      ..._updateFilter
-    }: any,
+    { $set: { updated_at, updatedAt, ..._content }, ..._updateFilter }: any,
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
+      updated_at = updated_at || new Date();
+      updatedAt = updatedAt || new Date();
       _content = await this._validate(_content);
       const {
         value,
@@ -542,10 +538,11 @@ export class BaseModel {
    */
   async delete(
     { ...filter },
-    { deleted_at = new Date(), deleted_by, deleted = true }: any,
+    { deleted_at, deleted_by, deleted = true }: any,
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<void> {
     try {
+      deleted_at = deleted_at || new Date();
       const {
         value,
         ok,
