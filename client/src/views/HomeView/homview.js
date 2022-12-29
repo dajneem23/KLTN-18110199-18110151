@@ -94,10 +94,12 @@ export default {
         const [result, error] = await ChatsServices.createChat({
           users: [id],
         });
-        socketClient.send('join', {
-          room: this.result.id,
-        });
-        console.log(result);
+        if (result) {
+          socketClient.send('join', {
+            room: this.result.id,
+          });
+          console.log(result);
+        }
       }
       // window.location.href = '/chat/';
     },

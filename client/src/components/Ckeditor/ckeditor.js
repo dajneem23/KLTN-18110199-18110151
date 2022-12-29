@@ -40,7 +40,7 @@ export default {
   watch: {
     editor() {
       if (this.editor) {
-        this.editor?.model.document.on('change:data', () => this.handleChange.call(this, { editor: this.editor }));
+        this.editor.model.document.on('change:data', () => this.handleChange.call(this, { editor: this.editor }));
       }
     },
     newsProps: {
@@ -60,7 +60,7 @@ export default {
       deep: true,
     },
     editorData(current, pre) {
-      if (this.editor && !pre && current) this.editor.setData(this.editorData);
+      // if (this.editor && !pre && current) this.editor.setData(this.editorData);
     },
   },
   async created() {
@@ -82,8 +82,7 @@ export default {
         setTimeout(() => {
           this.isWarnning = false;
         }, 2000);
-      }
-      else {
+      } else {
         const [result, error] = await NewsServices.create({
           ...this.news,
         });
@@ -98,7 +97,7 @@ export default {
           setTimeout(() => {
             this.isWarnning = false;
           }, 2000);
-      }
+        }
       }
       console.log(this.news);
       // console.log(result);
@@ -384,7 +383,7 @@ export default {
       ],
 
       extraPlugins = [uploadPlugin],
-      data = this.editorData,
+      data = '',
     } = {}) {
       CKEDITOR.ClassicEditor.create(document.getElementById('editor'), {
         toolbar,
