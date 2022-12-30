@@ -45,6 +45,9 @@ export class BaseModel {
   private error(msg: keyof typeof errors, detail?: any[]): any {
     return new CommonError(msg, detail);
   }
+  getNow(): Date {
+    return new Date();
+  }
 
   get $lookups(): {
     categories: any;
@@ -422,10 +425,10 @@ export class BaseModel {
   ): Promise<WithId<T> | null> {
     try {
       _content = await this._validate(_content);
-      created_at = created_at || Date.now();
-      updated_at = updated_at || Date.now();
-      createdAt = createdAt || Date.now();
-      updatedAt = updatedAt || Date.now();
+      created_at = created_at || this.getNow();
+      updated_at = updated_at || this.getNow();
+      createdAt = createdAt || this.getNow();
+      updatedAt = updatedAt || this.getNow();
       const {
         value,
         ok,
@@ -438,11 +441,11 @@ export class BaseModel {
         {
           $setOnInsert: {
             ..._content,
-            created_by: '$$NOW',
-            created_at: '$$NOW',
-            updated_at: '$$NOW',
-            updatedAt: '$$NOW',
-            createdAt: '$$NOW',
+            created_by,
+            created_at,
+            updated_at,
+            updatedAt,
+            createdAt,
             deleted,
           },
         },
@@ -483,16 +486,16 @@ export class BaseModel {
     { ...filter }: any,
     {
       $set: { updated_at, updatedAt, ..._content } = {
-        updated_at: Date.now(),
-        updatedAt: Date.now(),
+        updated_at: this.getNow(),
+        updatedAt: this.getNow(),
       },
       ..._updateFilter
     }: any,
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
-      updated_at = updated_at || Date.now();
-      updatedAt = updatedAt || Date.now();
+      updated_at = updated_at || this.getNow();
+      updatedAt = updatedAt || this.getNow();
       _content = await this._validate(_content);
       const {
         value,
@@ -503,8 +506,8 @@ export class BaseModel {
         {
           $set: {
             ..._content,
-            updated_at: '$$NOW',
-            updatedAt: '$$NOW',
+            updated_at,
+            updatedAt,
           },
           ..._updateFilter,
         },
@@ -547,7 +550,7 @@ export class BaseModel {
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<void> {
     try {
-      deleted_at = deleted_at || Date.now();
+      deleted_at = deleted_at || this.getNow();
       const {
         value,
         ok,
@@ -558,7 +561,7 @@ export class BaseModel {
           $set: {
             deleted,
             deleted_by,
-            deleted_at: '$$NOW',
+            deleted_at,
           },
         },
         {
