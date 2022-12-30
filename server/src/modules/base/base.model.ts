@@ -438,11 +438,11 @@ export class BaseModel {
         {
           $setOnInsert: {
             ..._content,
-            created_by,
-            created_at,
-            updated_at,
-            updatedAt,
-            createdAt,
+            created_by: '$$NOW',
+            created_at: '$$NOW',
+            updated_at: '$$NOW',
+            updatedAt: '$$NOW',
+            createdAt: '$$NOW',
             deleted,
           },
         },
@@ -503,8 +503,8 @@ export class BaseModel {
         {
           $set: {
             ..._content,
-            updated_at,
-            updatedAt,
+            updated_at: '$$NOW',
+            updatedAt: '$$NOW',
           },
           ..._updateFilter,
         },
@@ -558,7 +558,7 @@ export class BaseModel {
           $set: {
             deleted,
             deleted_by,
-            deleted_at,
+            deleted_at: '$$NOW',
           },
         },
         {
