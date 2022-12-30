@@ -422,11 +422,10 @@ export class BaseModel {
   ): Promise<WithId<T> | null> {
     try {
       _content = await this._validate(_content);
-      created_at = created_at || new Date();
-      updated_at = updated_at || new Date();
-      createdAt = createdAt || new Date();
-      updatedAt = updatedAt || new Date();
-
+      created_at = created_at || Date.now();
+      updated_at = updated_at || Date.now();
+      createdAt = createdAt || Date.now();
+      updatedAt = updatedAt || Date.now();
       const {
         value,
         ok,
@@ -484,16 +483,16 @@ export class BaseModel {
     { ...filter }: any,
     {
       $set: { updated_at, updatedAt, ..._content } = {
-        updated_at: new Date(),
-        updatedAt: new Date(),
+        updated_at: Date.now(),
+        updatedAt: Date.now(),
       },
       ..._updateFilter
     }: any,
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
-      updated_at = updated_at || new Date();
-      updatedAt = updatedAt || new Date();
+      updated_at = updated_at || Date.now();
+      updatedAt = updatedAt || Date.now();
       _content = await this._validate(_content);
       const {
         value,
@@ -548,7 +547,7 @@ export class BaseModel {
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<void> {
     try {
-      deleted_at = deleted_at || new Date();
+      deleted_at = deleted_at || Date.now();
       const {
         value,
         ok,
