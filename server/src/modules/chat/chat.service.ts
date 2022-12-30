@@ -65,6 +65,10 @@ export class ChatService {
           messages,
           type: users.length > 2 ? 'group' : 'private',
           users,
+          created_at: new Date(),
+          updated_at: new Date(),
+          updatedAt: new Date(),
+          createdAt: new Date(),
           ...(_subject && { author: new ObjectId(_subject) }),
         },
       );
@@ -89,6 +93,8 @@ export class ChatService {
         $set: {
           ..._content,
           ...(_subject && { updated_by: new ObjectId(_subject) }),
+          updated_at: new Date(),
+          updatedAt: new Date(),
         },
       });
       this.logger.debug('update_success', { _content });

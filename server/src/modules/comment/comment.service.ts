@@ -70,6 +70,10 @@ export class CommentService {
         {
           ..._comment,
           ..._content,
+          created_at: new Date(),
+          updated_at: new Date(),
+          updatedAt: new Date(),
+          createdAt: new Date(),
           source_id: new ObjectId(source_id),
           ...(_subject && { author: new ObjectId(_subject) }),
         },

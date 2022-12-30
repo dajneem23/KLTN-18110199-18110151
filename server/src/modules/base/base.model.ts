@@ -425,10 +425,6 @@ export class BaseModel {
   ): Promise<WithId<T> | null> {
     try {
       _content = await this._validate(_content);
-      created_at = created_at || this.getNow();
-      updated_at = updated_at || this.getNow();
-      createdAt = createdAt || this.getNow();
-      updatedAt = updatedAt || this.getNow();
       const {
         value,
         ok,
@@ -494,8 +490,6 @@ export class BaseModel {
     { upsert = false, returnDocument = 'after', ...options }: FindOneAndUpdateOptions = {},
   ): Promise<WithId<T> | null> {
     try {
-      updated_at = updated_at || this.getNow();
-      updatedAt = updatedAt || this.getNow();
       _content = await this._validate(_content);
       const {
         value,

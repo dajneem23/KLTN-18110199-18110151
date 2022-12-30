@@ -178,6 +178,8 @@ export class UserService {
           $set: {
             ...data,
             avatar: avatar ? new ObjectId(avatar) : undefined,
+            updated_at: new Date(),
+            updatedAt: new Date(),
           },
         },
       );

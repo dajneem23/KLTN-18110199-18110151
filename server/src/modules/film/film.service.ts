@@ -65,6 +65,10 @@ export class FilmService {
           ..._Film,
           ..._content,
           categories,
+          created_at: new Date(),
+          updated_at: new Date(),
+          updatedAt: new Date(),
+          createdAt: new Date(),
           ...(_subject && { author: new ObjectId(_subject) }),
         },
       );
@@ -89,6 +93,8 @@ export class FilmService {
         $set: {
           ..._content,
           ...(_subject && { updated_by: new ObjectId(_subject) }),
+          updated_at: new Date(),
+          updatedAt: new Date(),
         },
       });
       this.logger.debug('update_success', { _content });

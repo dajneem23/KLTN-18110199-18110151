@@ -67,6 +67,10 @@ export class NewsService {
         {
           ..._news,
           ..._content,
+          created_at: new Date(),
+          updated_at: new Date(),
+          updatedAt: new Date(),
+          createdAt: new Date(),
           categories: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
           ...((Array.isArray(images) && { images: $toObjectId(images) }) || { images: [$toObjectId(images)] }),
           ...(_subject && { author: new ObjectId(_subject) }),
@@ -96,6 +100,8 @@ export class NewsService {
           categories: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
           ...((Array.isArray(images) && { images: $toObjectId(images) }) || { images: [$toObjectId(images)] }),
           ...(_subject && { updated_by: new ObjectId(_subject) }),
+          updated_at: new Date(),
+          updatedAt: new Date(),
         },
       });
       this.logger.debug('update_success', { _content });

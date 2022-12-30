@@ -67,6 +67,10 @@ export class StoryService {
         {
           ..._story,
           ..._content,
+          created_at: new Date(),
+          updated_at: new Date(),
+          updatedAt: new Date(),
+          createdAt: new Date(),
           ...((Array.isArray(images) && { images: $toObjectId(images) }) || { images: [$toObjectId(images)] }),
           categories: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
           ...(_subject && { author: new ObjectId(_subject) }),
@@ -96,7 +100,8 @@ export class StoryService {
           ..._content,
           ...((Array.isArray(images) && { images: $toObjectId(images) }) || { images: [$toObjectId(images)] }),
           categories: Array.isArray(categories) ? $toObjectId(categories) : [$toObjectId(categories)],
-
+          updated_at: new Date(),
+          updatedAt: new Date(),
           ...(_subject && { updated_by: new ObjectId(_subject) }),
         },
       });
